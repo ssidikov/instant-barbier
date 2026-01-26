@@ -60,13 +60,14 @@ export default function Home() {
 
             <div className='space-y-6 text-cream/85 text-lg leading-relaxed max-w-3xl mx-auto'>
               <p>
-                Niché au cœur du Marais, L&apos;Instant Barbier est un sanctuaire dédié à l&apos;homme
-                moderne. Dans un cadre sobre et raffiné, nos maîtres barbiers perpétuent un savoir-faire
-                d&apos;exception, alliant techniques traditionnelles et tendances contemporaines.
+                Niché au cœur du Marais, L&apos;Instant Barbier est un sanctuaire dédié à
+                l&apos;homme moderne. Dans un cadre sobre et raffiné, nos maîtres barbiers
+                perpétuent un savoir-faire d&apos;exception, alliant techniques traditionnelles et
+                tendances contemporaines.
               </p>
               <p>
-                Chaque visite est une parenthèse hors du temps — un moment de calme et d&apos;attention
-                où votre style prend forme sous les mains expertes de nos artisans.
+                Chaque visite est une parenthèse hors du temps — un moment de calme et
+                d&apos;attention où votre style prend forme sous les mains expertes de nos artisans.
               </p>
             </div>
 
@@ -97,8 +98,8 @@ export default function Home() {
               <div className='text-gold text-4xl mb-6'>✂</div>
               <h3 className='text-2xl font-title text-gold mb-4'>Cheveux</h3>
               <p className='text-cream/75 text-sm leading-relaxed mb-6'>
-                Coupes sur-mesure, dégradés précis et finitions impeccables.
-                Chaque coupe est pensée pour révéler votre personnalité.
+                Coupes sur-mesure, dégradés précis et finitions impeccables. Chaque coupe est pensée
+                pour révéler votre personnalité.
               </p>
               <Link
                 href='/prestations#cheveux'
@@ -112,8 +113,8 @@ export default function Home() {
               <div className='text-gold text-4xl mb-6'>𐂂</div>
               <h3 className='text-2xl font-title text-gold mb-4'>Barbe</h3>
               <p className='text-cream/75 text-sm leading-relaxed mb-6'>
-                Taille, sculpture et rasage traditionnel. Maîtrisez votre barbe
-                avec l&apos;art du barbier à l&apos;ancienne.
+                Taille, sculpture et rasage traditionnel. Maîtrisez votre barbe avec l&apos;art du
+                barbier à l&apos;ancienne.
               </p>
               <Link
                 href='/prestations#barbe'
@@ -127,8 +128,8 @@ export default function Home() {
               <div className='text-gold text-4xl mb-6'>◈</div>
               <h3 className='text-2xl font-title text-gold mb-4'>Soins</h3>
               <p className='text-cream/75 text-sm leading-relaxed mb-6'>
-                Soins du visage, serviettes chaudes et produits premium.
-                Une expérience complète de bien-être masculin.
+                Soins du visage, serviettes chaudes et produits premium. Une expérience complète de
+                bien-être masculin.
               </p>
               <Link
                 href='/prestations#soins'
@@ -161,9 +162,8 @@ export default function Home() {
                 Un Cadre d&apos;Exception
               </h2>
               <p className='text-cream/80 leading-relaxed'>
-                Matériaux nobles, lumière tamisée et atmosphère feutrée.
-                L&apos;Instant Barbier a été conçu comme un refuge où chaque détail
-                invite à la détente et au lâcher-prise.
+                Matériaux nobles, lumière tamisée et atmosphère feutrée. L&apos;Instant Barbier a
+                été conçu comme un refuge où chaque détail invite à la détente et au lâcher-prise.
               </p>
               <Link
                 href='/galerie'
@@ -182,9 +182,8 @@ export default function Home() {
                 L&apos;Expérience L&apos;Instant
               </h2>
               <p className='text-cream/80 leading-relaxed'>
-                Plus qu&apos;une simple coupe, une véritable cérémonie.
-                Prenez le temps de vous accorder un moment de soin et de style,
-                accompagné par nos experts passionnés.
+                Plus qu&apos;une simple coupe, une véritable cérémonie. Prenez le temps de vous
+                accorder un moment de soin et de style, accompagné par nos experts passionnés.
               </p>
             </div>
           </div>
@@ -206,7 +205,9 @@ export default function Home() {
               <div className='absolute inset-0 flex items-center justify-center'>
                 <div className='text-center'>
                   <p className='text-gold font-title text-2xl'>Le Marais</p>
-                  <p className='text-cream/70 text-sm mt-2'>Paris III<sup>e</sup></p>
+                  <p className='text-cream/70 text-sm mt-2'>
+                    Paris III<sup>e</sup>
+                  </p>
                 </div>
               </div>
             </div>
@@ -249,12 +250,10 @@ export default function Home() {
       <Section className='bg-navy border-t border-gold/10'>
         <Container>
           <div className='max-w-3xl mx-auto text-center space-y-8'>
-            <h2 className='text-3xl md:text-5xl font-title text-gold'>
-              Réservez Votre Instant
-            </h2>
+            <h2 className='text-3xl md:text-5xl font-title text-gold'>Réservez Votre Instant</h2>
             <p className='text-cream/75 text-lg max-w-xl mx-auto'>
-              Offrez-vous un moment d&apos;exception. Prenez rendez-vous en quelques clics
-              et laissez-nous prendre soin de votre style.
+              Offrez-vous un moment d&apos;exception. Prenez rendez-vous en quelques clics et
+              laissez-nous prendre soin de votre style.
             </p>
             <div className='pt-4'>
               <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
