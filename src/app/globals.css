@@ -1,22 +1,67 @@
 @import "tailwindcss";
 
-:root {
-{{ ... }}
-  --foreground: #171717;
+@theme {
+  --color-navy: #0b1622;
+  --color-gold: #9c8358;
+  --color-cream: #f4f1ec;
+  --color-dark: #0f0f0f;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foregrou@import "tailwindcss";
+@layer base {
+  body {
+    background-color: var(--color-navy);
+    color: var(--color-cream);
+    font-family: var(--font-muli);
+  }
 
-h1, h2, h3, h4 {
-  @apply font-title text-gold;
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-playfair);
+    color: var(--color-gold);
+  }
+
+  p {
+    color: var(--color-cream);
+    line-height: 1.625;
+  }
+
+  a {
+    transition-property: color;
+    transition-duration: 200ms;
+  }
 }
 
-p {
-  @apply text-cream leading-relaxed;
-}
-
-a {
-  @apply transition-colors duration-200;
+@layer utilities {
+  .bg-navy {
+    background-color: var(--color-navy);
+  }
+  .bg-dark {
+    background-color: var(--color-dark);
+  }
+  .text-gold {
+    color: var(--color-gold);
+  }
+  .text-cream {
+    color: var(--color-cream);
+  }
+  .border-gold {
+    border-color: var(--color-gold);
+  }
+  .hover\:bg-gold:hover {
+    background-color: var(--color-gold);
+  }
+  .hover\:text-gold:hover {
+    color: var(--color-gold);
+  }
+  .hover\:text-navy:hover {
+    color: var(--color-navy);
+  }
+  .font-title {
+    font-family: var(--font-playfair);
+  }
+  .font-body {
+    font-family: var(--font-muli);
+  }
 }
