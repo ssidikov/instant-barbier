@@ -219,45 +219,61 @@ export default function Home() {
   useEffect(() => {
     // Hero entrance animation
     const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
-    
+
     // Animate decorative line
     tl.from(heroLineRef.current, {
       scaleY: 0,
       duration: 1.2,
       ease: 'power3.inOut',
     })
-    
-    // Animate subtitle with split effect
-    .from(heroSubtitleRef.current, {
-      x: -100,
-      opacity: 0,
-      duration: 1,
-    }, '-=0.6')
-    
-    // Animate title with stagger
-    .from(heroTitleRef.current?.children || [], {
-      y: 120,
-      opacity: 0,
-      rotationX: -90,
-      stagger: 0.2,
-      duration: 1.2,
-      ease: 'power4.out',
-    }, '-=0.4')
-    
-    // Animate description
-    .from(heroDescriptionRef.current, {
-      y: 50,
-      opacity: 0,
-      duration: 1,
-    }, '-=0.6')
-    
-    // Animate CTA button
-    .from(heroCtaRef.current, {
-      scale: 0,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'back.out(1.7)',
-    }, '-=0.3')
+
+      // Animate subtitle with split effect
+      .from(
+        heroSubtitleRef.current,
+        {
+          x: -100,
+          opacity: 0,
+          duration: 1,
+        },
+        '-=0.6',
+      )
+
+      // Animate title with stagger
+      .from(
+        heroTitleRef.current?.children || [],
+        {
+          y: 120,
+          opacity: 0,
+          rotationX: -90,
+          stagger: 0.2,
+          duration: 1.2,
+          ease: 'power4.out',
+        },
+        '-=0.4',
+      )
+
+      // Animate description
+      .from(
+        heroDescriptionRef.current,
+        {
+          y: 50,
+          opacity: 0,
+          duration: 1,
+        },
+        '-=0.6',
+      )
+
+      // Animate CTA button
+      .from(
+        heroCtaRef.current,
+        {
+          scale: 0,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'back.out(1.7)',
+        },
+        '-=0.3',
+      )
 
     // Parallax effect for background image
     if (parallaxImgRef.current) {
@@ -289,7 +305,6 @@ export default function Home() {
       ease: 'none',
       repeat: -1,
     })
-
   }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -307,7 +322,10 @@ export default function Home() {
         {/* Animated Background Patterns */}
         <div className='absolute inset-0 opacity-10'>
           <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-gold rounded-full blur-[120px] animate-pulse' />
-          <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold rounded-full blur-[120px] animate-pulse' style={{ animationDelay: '1s' }} />
+          <div
+            className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold rounded-full blur-[120px] animate-pulse'
+            style={{ animationDelay: '1s' }}
+          />
         </div>
 
         {/* Background Image with Parallax */}
@@ -320,10 +338,9 @@ export default function Home() {
         </div>
 
         {/* Animated Decorative Gold Line */}
-        <div 
+        <div
           ref={heroLineRef}
-          className='absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-transparent via-gold to-transparent origin-top'
-        >
+          className='absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-transparent via-gold to-transparent origin-top'>
           <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-gold rounded-full shadow-lg shadow-gold/50 animate-pulse' />
         </div>
 
@@ -341,21 +358,31 @@ export default function Home() {
               </p>
               <div className='flex gap-1'>
                 <span className='w-1 h-1 bg-gold rounded-full animate-pulse' />
-                <span className='w-1 h-1 bg-gold rounded-full animate-pulse' style={{ animationDelay: '0.2s' }} />
-                <span className='w-1 h-1 bg-gold rounded-full animate-pulse' style={{ animationDelay: '0.4s' }} />
+                <span
+                  className='w-1 h-1 bg-gold rounded-full animate-pulse'
+                  style={{ animationDelay: '0.2s' }}
+                />
+                <span
+                  className='w-1 h-1 bg-gold rounded-full animate-pulse'
+                  style={{ animationDelay: '0.4s' }}
+                />
               </div>
             </div>
 
             {/* Main Title with perspective */}
-            <h1 ref={heroTitleRef} className='text-6xl md:text-8xl lg:text-9xl font-title text-gold leading-[0.95] [perspective:1000px]'>
+            <h1
+              ref={heroTitleRef}
+              className='text-6xl md:text-8xl lg:text-9xl font-title text-gold leading-[0.95] [perspective:1000px]'>
               <span className='block [transform-style:preserve-3d]'>L&apos;Instant</span>
               <span className='block [transform-style:preserve-3d]'>Barbier</span>
             </h1>
 
             {/* Description with premium styling */}
-            <p ref={heroDescriptionRef} className='text-xl md:text-2xl text-cream/90 max-w-xl font-light leading-relaxed relative pl-6 border-l-2 border-gold/50'>
-              L&apos;excellence du grooming masculin au cœur de Paris.
-              Un savoir-faire traditionnel dans un cadre d&apos;exception.
+            <p
+              ref={heroDescriptionRef}
+              className='text-xl md:text-2xl text-cream/90 max-w-xl font-light leading-relaxed relative pl-6 border-l-2 border-gold/50'>
+              L&apos;excellence du grooming masculin au cœur de Paris. Un savoir-faire traditionnel
+              dans un cadre d&apos;exception.
             </p>
 
             {/* CTA Button with glow effect */}
@@ -367,15 +394,25 @@ export default function Home() {
             {/* Social Proof / Stats */}
             <div className='flex gap-12 pt-8'>
               <div className='group cursor-default'>
-                <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>12+</div>
-                <div className='text-xs text-cream/60 uppercase tracking-wider'>Années d&apos;expérience</div>
+                <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
+                  12+
+                </div>
+                <div className='text-xs text-cream/60 uppercase tracking-wider'>
+                  Années d&apos;expérience
+                </div>
               </div>
               <div className='group cursor-default'>
-                <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>2000+</div>
-                <div className='text-xs text-cream/60 uppercase tracking-wider'>Clients satisfaits</div>
+                <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
+                  2000+
+                </div>
+                <div className='text-xs text-cream/60 uppercase tracking-wider'>
+                  Clients satisfaits
+                </div>
               </div>
               <div className='group cursor-default'>
-                <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>5★</div>
+                <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
+                  5★
+                </div>
                 <div className='text-xs text-cream/60 uppercase tracking-wider'>Note moyenne</div>
               </div>
             </div>
@@ -384,17 +421,23 @@ export default function Home() {
 
         {/* Scroll Indicator - Premium */}
         <div className='absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 float-element'>
-          <span className='text-cream/40 text-[10px] uppercase tracking-[0.3em] font-light'>Découvrir</span>
+          <span className='text-cream/40 text-[10px] uppercase tracking-[0.3em] font-light'>
+            Découvrir
+          </span>
           <div className='relative w-6 h-10 border border-gold/30 rounded-full flex items-start justify-center p-2'>
             <div className='w-1 h-2 bg-gold rounded-full animate-bounce' />
           </div>
         </div>
 
         {/* Decorative Corner Elements - Animated */}
-        <div className='corner-element absolute top-32 right-16 w-24 h-24 border-t-2 border-r-2 border-gold/30' style={{ transformOrigin: 'center' }}>
+        <div
+          className='corner-element absolute top-32 right-16 w-24 h-24 border-t-2 border-r-2 border-gold/30'
+          style={{ transformOrigin: 'center' }}>
           <div className='absolute -top-1 -right-1 w-2 h-2 bg-gold rounded-full shadow-lg shadow-gold/50' />
         </div>
-        <div className='corner-element absolute bottom-32 left-16 w-24 h-24 border-b-2 border-l-2 border-gold/30' style={{ transformOrigin: 'center' }}>
+        <div
+          className='corner-element absolute bottom-32 left-16 w-24 h-24 border-b-2 border-l-2 border-gold/30'
+          style={{ transformOrigin: 'center' }}>
           <div className='absolute -bottom-1 -left-1 w-2 h-2 bg-gold rounded-full shadow-lg shadow-gold/50' />
         </div>
 
