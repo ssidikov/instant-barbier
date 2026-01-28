@@ -114,8 +114,8 @@ export default function Header() {
         <div className='absolute right-0 top-1/2 -translate-y-1/2 w-20 h-px bg-gradient-to-l from-gold/40 to-transparent' />
 
         {/* Logo / Brand Name */}
-        <Link href='/' className='flex items-center relative z-10' ref={logoRef}>
-          <div className='relative group'>
+        <Link href='/' className='flex items-center relative z-10'>
+          <div ref={logoRef} className='relative group'>
             <div className='absolute inset-0 bg-gold/20 blur-xl group-hover:bg-gold/30 transition-all duration-500 rounded-full' />
             <Image
               src='/icons/logo.png'
