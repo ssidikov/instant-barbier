@@ -8,6 +8,10 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: var(--color-navy);
     color: var(--color-cream);
@@ -31,6 +35,30 @@
     transition-property: color;
     transition-duration: 200ms;
   }
+
+  /* Custom scrollbar for webkit browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-navy);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-gold);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b89a6a;
+  }
+
+  /* Selection styling */
+  ::selection {
+    background-color: var(--color-gold);
+    color: var(--color-navy);
+  }
 }
 
 @layer utilities {
@@ -40,11 +68,17 @@
   .bg-dark {
     background-color: var(--color-dark);
   }
+  .bg-gold {
+    background-color: var(--color-gold);
+  }
   .text-gold {
     color: var(--color-gold);
   }
   .text-cream {
     color: var(--color-cream);
+  }
+  .text-navy {
+    color: var(--color-navy);
   }
   .border-gold {
     border-color: var(--color-gold);
