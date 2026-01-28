@@ -65,37 +65,127 @@
   .bg-navy {
     background-color: var(--color-navy);
   }
+
   .bg-dark {
     background-color: var(--color-dark);
   }
+
   .bg-gold {
     background-color: var(--color-gold);
   }
+
   .text-gold {
     color: var(--color-gold);
   }
+
   .text-cream {
     color: var(--color-cream);
   }
+
   .text-navy {
     color: var(--color-navy);
   }
+
   .border-gold {
     border-color: var(--color-gold);
   }
+
   .hover\:bg-gold:hover {
     background-color: var(--color-gold);
   }
+
   .hover\:text-gold:hover {
     color: var(--color-gold);
   }
+
   .hover\:text-navy:hover {
     color: var(--color-navy);
   }
+
   .font-title {
     font-family: var(--font-playfair);
   }
+
   .font-body {
     font-family: var(--font-muli);
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PREMIUM ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.2;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-40px) translateX(-10px);
+    opacity: 0.3;
+  }
+  75% {
+    transform: translateY(-20px) translateX(-10px);
+    opacity: 0.6;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(156, 131, 88, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(156, 131, 88, 0.6), 0 0 60px rgba(156, 131, 88, 0.3);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Premium smooth transitions */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
