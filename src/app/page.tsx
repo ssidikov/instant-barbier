@@ -3,7 +3,7 @@
 import Container from '@/components/Container'
 import Section from '@/components/Section'
 import Button from '@/components/Button'
-import { PLANITY_URL, SITE_NAME } from '@/lib/constants'
+import { PLANITY_URL } from '@/lib/constants'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
@@ -215,6 +215,16 @@ export default function Home() {
   const heroCtaRef = useRef<HTMLDivElement>(null)
   const heroLineRef = useRef<HTMLDivElement>(null)
   const parallaxImgRef = useRef<HTMLDivElement>(null)
+
+  // Generate stable particle positions using useState with initializer function
+  const [particles] = useState(() => 
+    Array.from({ length: 20 }, () => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      duration: 5 + Math.random() * 10,
+      delay: Math.random() * 5,
+    }))
+  )
 
   useEffect(() => {
     // Hero entrance animation
@@ -443,15 +453,15 @@ export default function Home() {
 
         {/* Particles Effect */}
         <div className='absolute inset-0 overflow-hidden pointer-events-none'>
-          {[...Array(20)].map((_, i) => (
+          {particles.map((particle, i) => (
             <div
               key={i}
               className='absolute w-1 h-1 bg-gold/20 rounded-full'
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animation: `float ${5 + Math.random() * 10}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 5}s`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
+                animation: `float ${particle.duration}s ease-in-out infinite`,
+                animationDelay: `${particle.delay}s`,
               }}
             />
           ))}
