@@ -1,10 +1,16 @@
 @import "tailwindcss";
 
 @theme {
+  /* Original dark theme colors */
   --color-navy: #0b1622;
   --color-gold: #9c8358;
   --color-cream: #f4f1ec;
   --color-dark: #0f0f0f;
+  
+  /* Light theme colors */
+  --color-navy-light: #0b1622;
+  --color-navy-secondary: #142233;
+  --color-text-primary: #1c1c1c;
 }
 
 @layer base {
@@ -100,6 +106,27 @@
 
   .hover\:text-navy:hover {
     color: var(--color-navy);
+  }
+
+  /* Light theme utilities */
+  .bg-navy-light {
+    background-color: var(--color-navy-light);
+  }
+
+  .bg-navy-secondary {
+    background-color: var(--color-navy-secondary);
+  }
+
+  .text-navy-light {
+    color: var(--color-navy-light);
+  }
+
+  .text-text-primary {
+    color: var(--color-text-primary);
+  }
+
+  .border-navy-light {
+    border-color: var(--color-navy-light);
   }
 
   .font-title {

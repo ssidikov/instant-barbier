@@ -11,12 +11,11 @@ export default function Footer() {
           <div className='text-center md:text-left flex flex-col items-center md:items-start gap-2'>
             <Link href='/' className='flex items-center gap-3 hover:opacity-80 transition-opacity'>
               <Image
-                src='/icons/logo.png'
+                src='/logo/logo-golden.svg'
                 alt="L'Instant Barbier"
                 width={40}
                 height={40}
                 className='h-10 w-10 object-contain'
-                unoptimized
               />
               <span className='font-title text-gold text-xl'>L&apos;Instant Barbier</span>
             </Link>
