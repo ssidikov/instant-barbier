@@ -21,38 +21,38 @@ gsap.registerPlugin(ScrollTrigger)
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 60 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: "easeOut" as const }
-  }
+    transition: { duration: 0.8, ease: 'easeOut' as const },
+  },
 }
 
 const fadeInLeft = {
   hidden: { opacity: 0, x: -80 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     x: 0,
-    transition: { duration: 0.8, ease: "easeOut" as const }
-  }
+    transition: { duration: 0.8, ease: 'easeOut' as const },
+  },
 }
 
 const fadeInRight = {
   hidden: { opacity: 0, x: 80 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     x: 0,
-    transition: { duration: 0.8, ease: "easeOut" as const }
-  }
+    transition: { duration: 0.8, ease: 'easeOut' as const },
+  },
 }
 
 const scaleIn = {
   hidden: { opacity: 0, scale: 0.8 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     scale: 1,
-    transition: { duration: 0.6, ease: "easeOut" as const }
-  }
+    transition: { duration: 0.6, ease: 'easeOut' as const },
+  },
 }
 
 const staggerContainer = {
@@ -61,9 +61,9 @@ const staggerContainer = {
     opacity: 1,
     transition: {
       staggerChildren: 0.15,
-      delayChildren: 0.2
-    }
-  }
+      delayChildren: 0.2,
+    },
+  },
 }
 
 const letterAnimation = {
@@ -75,9 +75,9 @@ const letterAnimation = {
     transition: {
       duration: 0.8,
       delay: i * 0.05,
-      ease: "easeOut" as const
-    }
-  })
+      ease: 'easeOut' as const,
+    },
+  }),
 }
 
 const floatingAnimation = {
@@ -87,9 +87,9 @@ const floatingAnimation = {
     transition: {
       duration: 6,
       repeat: Infinity,
-      ease: "easeInOut" as const
-    }
-  }
+      ease: 'easeInOut' as const,
+    },
+  },
 }
 
 // Magnetic Button Effect Hook
@@ -102,12 +102,12 @@ function useMagnetic(ref: React.RefObject<HTMLElement>) {
       const rect = element.getBoundingClientRect()
       const x = e.clientX - rect.left - rect.width / 2
       const y = e.clientY - rect.top - rect.height / 2
-      
+
       gsap.to(element, {
         x: x * 0.3,
         y: y * 0.3,
         duration: 0.3,
-        ease: 'power2.out'
+        ease: 'power2.out',
       })
     }
 
@@ -116,7 +116,7 @@ function useMagnetic(ref: React.RefObject<HTMLElement>) {
         x: 0,
         y: 0,
         duration: 0.5,
-        ease: 'elastic.out(1, 0.3)'
+        ease: 'elastic.out(1, 0.3)',
       })
     }
 
@@ -133,24 +133,22 @@ function useMagnetic(ref: React.RefObject<HTMLElement>) {
 // Animated Text Component
 function AnimatedText({ text, className }: { text: string; className?: string }) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
-  
+  const isInView = useInView(ref, { once: true, margin: '-100px' })
+
   return (
     <motion.span
       ref={ref}
       className={className}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      aria-label={text}
-    >
+      initial='hidden'
+      animate={isInView ? 'visible' : 'hidden'}
+      aria-label={text}>
       {text.split('').map((char, i) => (
         <motion.span
           key={i}
           custom={i}
           variants={letterAnimation}
-          className="inline-block"
-          style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
-        >
+          className='inline-block'
+          style={{ display: char === ' ' ? 'inline' : 'inline-block' }}>
           {char === ' ' ? '\u00A0' : char}
         </motion.span>
       ))}
@@ -159,22 +157,25 @@ function AnimatedText({ text, className }: { text: string; className?: string })
 }
 
 // Reveal on Scroll Component
-function RevealOnScroll({ children, className, delay = 0 }: { 
-  children: React.ReactNode; 
-  className?: string;
-  delay?: number;
+function RevealOnScroll({
+  children,
+  className,
+  delay = 0,
+}: {
+  children: React.ReactNode
+  className?: string
+  delay?: number
 }) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
-  
+  const isInView = useInView(ref, { once: true, margin: '-100px' })
+
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 75 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 75 }}
       transition={{ duration: 0.8, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className={className}
-    >
+      className={className}>
       {children}
     </motion.div>
   )
@@ -185,16 +186,16 @@ function ParallaxImage({ src, alt, className }: { src: string; alt: string; clas
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "end start"]
+    offset: ['start end', 'end start'],
   })
-  
+
   const y = useTransform(scrollYProgress, [0, 1], [-50, 50])
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.1, 1, 1.1])
-  
+
   return (
     <motion.div ref={ref} className={`overflow-hidden ${className}`}>
-      <motion.div style={{ y, scale }} className="w-full h-full">
-        <Image src={src} alt={alt} fill className="object-cover" />
+      <motion.div style={{ y, scale }} className='w-full h-full'>
+        <Image src={src} alt={alt} fill className='object-cover' />
       </motion.div>
     </motion.div>
   )
@@ -517,12 +518,11 @@ export default function HomeAlt() {
           ref={heroRef}
           className='lg:pr-148 relative min-h-screen flex items-center overflow-hidden'>
           {/* Background Image with Parallax */}
-          <motion.div 
+          <motion.div
             className='absolute inset-0'
             initial={{ scale: 1.2 }}
             animate={{ scale: 1 }}
-            transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
+            transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}>
             <div ref={parallaxImgRef} className='absolute inset-0 scale-105'>
               <Image
                 src='/images/hero-barbershop.jpg'
@@ -538,13 +538,13 @@ export default function HomeAlt() {
           </motion.div>
 
           {/* Animated decorative lines */}
-          <motion.div 
+          <motion.div
             className='absolute left-12 md:left-20 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-gold/40 to-transparent'
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
             transition={{ duration: 1.2, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
           />
-          
+
           {/* Floating golden particles */}
           <div className='absolute inset-0 overflow-hidden pointer-events-none'>
             {[...Array(6)].map((_, i) => (
@@ -564,7 +564,7 @@ export default function HomeAlt() {
                   duration: 4 + i,
                   repeat: Infinity,
                   delay: i * 0.5,
-                  ease: "easeInOut"
+                  ease: 'easeInOut',
                 }}
               />
             ))}
@@ -574,13 +574,12 @@ export default function HomeAlt() {
           <Container className='relative z-10 pt-24'>
             <div className='max-w-2xl'>
               {/* Eyebrow with line animation */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className='flex items-center gap-4 mb-8'
-              >
-                <motion.span 
+                className='flex items-center gap-4 mb-8'>
+                <motion.span
                   className='h-px w-12 bg-gold origin-left'
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
@@ -594,22 +593,17 @@ export default function HomeAlt() {
               {/* Title with letter animation */}
               <motion.h1
                 className='text-5xl md:text-7xl lg:text-8xl text-navy leading-[0.9] mb-8'
-                initial="hidden"
-                animate="visible"
-                variants={staggerContainer}
-              >
-                <motion.span 
+                initial='hidden'
+                animate='visible'
+                variants={staggerContainer}>
+                <motion.span
                   className='block font-[var(--font-haarlem)] tracking-[0.15em] overflow-hidden'
-                  variants={fadeInUp}
-                >
+                  variants={fadeInUp}>
                   <AnimatedText text="L'INSTANT" />
                 </motion.span>
-                <motion.span 
-                  className='block mt-2'
-                  variants={fadeInUp}
-                >
+                <motion.span className='block mt-2' variants={fadeInUp}>
                   <span className='text-gold font-[var(--font-sweet)] uppercase tracking-[0.2em]'>
-                    <AnimatedText text="Barbier" />
+                    <AnimatedText text='Barbier' />
                   </span>
                 </motion.span>
               </motion.h1>
@@ -625,22 +619,15 @@ export default function HomeAlt() {
               </motion.p>
 
               {/* CTA with magnetic effect */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.5 }}
-                className='flex flex-wrap items-center gap-6'
-              >
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
+                className='flex flex-wrap items-center gap-6'>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <ButtonAlt href={PLANITY_URL}>Prendre rendez-vous</ButtonAlt>
                 </motion.div>
-                <motion.div
-                  whileHover={{ x: 5 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
+                <motion.div whileHover={{ x: 5 }} transition={{ type: 'spring', stiffness: 400 }}>
                   <Link
                     href='/prestations'
                     className='text-navy text-sm uppercase tracking-widest hover:text-gold transition-colors flex items-center gap-2 group'>
@@ -650,8 +637,7 @@ export default function HomeAlt() {
                       fill='none'
                       stroke='currentColor'
                       viewBox='0 0 24 24'
-                      whileHover={{ x: 5 }}
-                    >
+                      whileHover={{ x: 5 }}>
                       <path
                         strokeLinecap='round'
                         strokeLinejoin='round'
@@ -664,26 +650,23 @@ export default function HomeAlt() {
               </motion.div>
             </div>
           </Container>
-          
+
           {/* Scroll indicator with pulse */}
-          <motion.div 
+          <motion.div
             className='absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2 }}
-          >
-            <motion.span 
+            transition={{ delay: 2 }}>
+            <motion.span
               className='text-navy/40 text-xs uppercase tracking-widest'
               animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
+              transition={{ duration: 2, repeat: Infinity }}>
               Scroll
             </motion.span>
             <motion.div
               className='w-6 h-10 border-2 border-navy/20 rounded-full flex justify-center pt-2'
               animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
+              transition={{ duration: 1.5, repeat: Infinity }}>
               <motion.div
                 className='w-1.5 h-1.5 bg-gold rounded-full'
                 animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
@@ -701,11 +684,10 @@ export default function HomeAlt() {
             <div className='grid lg:grid-cols-2 gap-16 lg:gap-24 items-center'>
               {/* Image Side with parallax */}
               <RevealOnScroll className='relative'>
-                <motion.div 
+                <motion.div
                   className='relative aspect-[4/5] overflow-hidden rounded-sm shadow-2xl shadow-navy/10'
                   whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.5 }}
-                >
+                  transition={{ duration: 0.5 }}>
                   <ParallaxImage
                     src='/images/about-barbershop.jpg'
                     alt='Notre salon'
@@ -719,20 +701,18 @@ export default function HomeAlt() {
                   />
                 </motion.div>
                 {/* Floating accent card - Gold background with animation */}
-                <motion.div 
+                <motion.div
                   className='absolute -bottom-8 -right-8 bg-gold text-navy p-8 shadow-xl'
                   initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
                   whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.3 }}
-                  whileHover={{ scale: 1.05, rotate: 2 }}
-                >
-                  <motion.span 
+                  whileHover={{ scale: 1.05, rotate: 2 }}>
+                  <motion.span
                     className='block text-5xl font-title text-navy'
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                  >
+                    viewport={{ once: true }}>
                     23+
                   </motion.span>
                   <span className='text-sm uppercase tracking-wider text-navy/80'>
@@ -749,13 +729,12 @@ export default function HomeAlt() {
                   align='left'
                 />
 
-                <motion.div 
+                <motion.div
                   className='space-y-6 text-navy/70 text-lg leading-relaxed -mt-8'
                   variants={staggerContainer}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                >
+                  initial='hidden'
+                  whileInView='visible'
+                  viewport={{ once: true }}>
                   <motion.p variants={fadeInUp} className='text-navy/70'>
                     Niché au cœur du Marais, L&apos;Instant Barbier est un sanctuaire dédié à
                     l&apos;homme moderne. Dans un cadre sobre et raffiné, nos maîtres barbiers
@@ -768,27 +747,24 @@ export default function HomeAlt() {
                 </motion.div>
 
                 {/* Features with stagger */}
-                <motion.div 
+                <motion.div
                   className='grid grid-cols-2 gap-4 pt-4'
                   variants={staggerContainer}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                >
+                  initial='hidden'
+                  whileInView='visible'
+                  viewport={{ once: true }}>
                   {['Produits Premium', 'Maîtres Barbiers', 'Cadre Élégant', 'Sur Rendez-vous'].map(
                     (feature, index) => (
-                      <motion.div 
-                        key={feature} 
+                      <motion.div
+                        key={feature}
                         className='flex items-center gap-3'
                         variants={fadeInUp}
-                        whileHover={{ x: 5 }}
-                      >
+                        whileHover={{ x: 5 }}>
                         <motion.div
                           initial={{ scale: 0 }}
                           whileInView={{ scale: 1 }}
                           viewport={{ once: true }}
-                          transition={{ delay: index * 0.1, type: "spring" }}
-                        >
+                          transition={{ delay: index * 0.1, type: 'spring' }}>
                           <FeatureIcon />
                         </motion.div>
                         <span className='text-navy text-sm'>{feature}</span>
@@ -797,10 +773,7 @@ export default function HomeAlt() {
                   )}
                 </motion.div>
 
-                <motion.div
-                  whileHover={{ x: 10 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
+                <motion.div whileHover={{ x: 10 }} transition={{ type: 'spring', stiffness: 400 }}>
                   <Link
                     href='/salon'
                     className='inline-flex items-center gap-3 text-navy text-sm uppercase tracking-widest hover:text-gold transition-colors group pt-4'>
@@ -837,28 +810,26 @@ export default function HomeAlt() {
               />
             </RevealOnScroll>
 
-            <motion.div 
+            <motion.div
               className='grid sm:grid-cols-2 lg:grid-cols-4 gap-6'
               variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-            >
+              initial='hidden'
+              whileInView='visible'
+              viewport={{ once: true, margin: '-100px' }}>
               {services.map((service, index) => (
                 <motion.article
                   key={index}
                   variants={fadeInUp}
-                  whileHover={{ 
-                    y: -10, 
-                    boxShadow: "0 25px 50px -12px rgba(175, 151, 120, 0.25)" 
+                  whileHover={{
+                    y: -10,
+                    boxShadow: '0 25px 50px -12px rgba(175, 151, 120, 0.25)',
                   }}
                   className='group relative p-8 bg-cream/50 hover:bg-cream border border-navy/5 hover:border-gold/30 transition-all duration-500'>
                   {/* Icon with rotation on hover */}
-                  <motion.div 
+                  <motion.div
                     className='text-gold/70 group-hover:text-gold transition-colors duration-300 mb-6'
                     whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                  >
+                    transition={{ duration: 0.6 }}>
                     {service.icon}
                   </motion.div>
 
@@ -869,18 +840,17 @@ export default function HomeAlt() {
                   <p className='text-navy/60 text-sm leading-relaxed mb-6'>{service.description}</p>
 
                   {/* Price with counter animation */}
-                  <motion.p 
+                  <motion.p
                     className='text-gold text-sm font-medium'
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                  >
+                    transition={{ delay: index * 0.1 }}>
                     {service.price}
                   </motion.p>
 
                   {/* Hover accent with animation */}
-                  <motion.div 
+                  <motion.div
                     className='absolute bottom-0 left-0 right-0 h-1 bg-gold origin-left'
                     initial={{ scaleX: 0 }}
                     whileHover={{ scaleX: 1 }}
@@ -891,10 +861,7 @@ export default function HomeAlt() {
             </motion.div>
 
             <RevealOnScroll delay={0.3} className='text-center mt-14'>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <ButtonAlt href='/prestations'>Voir tous les tarifs</ButtonAlt>
               </motion.div>
             </RevealOnScroll>
@@ -905,13 +872,12 @@ export default function HomeAlt() {
             PARALLAX BREAK - Quote with WOW animations
         ═══════════════════════════════════════════════════════════════════ */}
         <section className='relative h-[60vh] md:h-[70vh] overflow-hidden'>
-          <motion.div 
+          <motion.div
             className='absolute inset-0'
             initial={{ scale: 1.1 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1.5 }}
-          >
+            transition={{ duration: 1.5 }}>
             <ParallaxImage
               src='/images/salon-interior-1.jpg'
               alt='Intérieur du salon'
@@ -921,31 +887,28 @@ export default function HomeAlt() {
           </motion.div>
           <div className='absolute inset-0 flex items-center justify-center'>
             <div className='text-center max-w-3xl px-6'>
-              <motion.span 
+              <motion.span
                 className='text-gold text-6xl font-title block'
                 initial={{ scale: 0, rotate: -180 }}
                 whileInView={{ scale: 1, rotate: 0 }}
                 viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 200 }}
-              >
+                transition={{ type: 'spring', stiffness: 200 }}>
                 &ldquo;
               </motion.span>
-              <motion.blockquote 
+              <motion.blockquote
                 className='text-2xl md:text-4xl font-title text-cream leading-relaxed mt-4'
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-              >
+                transition={{ duration: 0.8, delay: 0.3 }}>
                 Le détail fait la perfection, et la perfection n&apos;est pas un détail.
               </motion.blockquote>
-              <motion.cite 
+              <motion.cite
                 className='block mt-8 text-gold/80 text-sm uppercase tracking-widest not-italic'
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-              >
+                transition={{ duration: 0.6, delay: 0.6 }}>
                 — Notre philosophie
               </motion.cite>
             </div>
@@ -965,38 +928,29 @@ export default function HomeAlt() {
               />
             </RevealOnScroll>
 
-            <motion.div 
+            <motion.div
               className='grid md:grid-cols-3 gap-8'
               variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
+              initial='hidden'
+              whileInView='visible'
+              viewport={{ once: true }}>
               {team.map((member, index) => (
-                <motion.article 
-                  key={index} 
+                <motion.article
+                  key={index}
                   className='group'
                   variants={fadeInUp}
-                  whileHover={{ y: -10 }}
-                >
+                  whileHover={{ y: -10 }}>
                   {/* Image with parallax effect */}
-                  <motion.div 
+                  <motion.div
                     className='relative aspect-[3/4] overflow-hidden mb-6 bg-navy/5'
-                    whileHover={{ scale: 1.02 }}
-                  >
+                    whileHover={{ scale: 1.02 }}>
                     <motion.div
                       className='absolute inset-0'
                       whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        className='object-cover'
-                      />
+                      transition={{ duration: 0.6 }}>
+                      <Image src={member.image} alt={member.name} fill className='object-cover' />
                     </motion.div>
-                    <motion.div 
+                    <motion.div
                       className='absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent'
                       initial={{ opacity: 0 }}
                       whileHover={{ opacity: 1 }}
@@ -1004,35 +958,31 @@ export default function HomeAlt() {
                     />
 
                     {/* Hover info with spring animation */}
-                    <motion.div 
+                    <motion.div
                       className='absolute bottom-0 left-0 right-0 p-6'
-                      initial={{ y: "100%" }}
+                      initial={{ y: '100%' }}
                       whileHover={{ y: 0 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <motion.span 
+                      transition={{ type: 'spring', stiffness: 300 }}>
+                      <motion.span
                         className='inline-block bg-gold text-navy text-xs px-3 py-1 uppercase tracking-wider'
-                        whileHover={{ scale: 1.1 }}
-                      >
+                        whileHover={{ scale: 1.1 }}>
                         {member.specialty}
                       </motion.span>
                     </motion.div>
                   </motion.div>
 
                   {/* Info */}
-                  <motion.div 
+                  <motion.div
                     className='text-center'
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    transition={{ delay: index * 0.2 }}
-                  >
+                    transition={{ delay: index * 0.2 }}>
                     <h3 className='text-2xl font-title text-navy mb-1'>{member.name}</h3>
                     <p className='text-navy/60 text-sm mb-2'>{member.role}</p>
-                    <motion.p 
+                    <motion.p
                       className='text-gold text-xs uppercase tracking-wider'
-                      whileHover={{ scale: 1.05 }}
-                    >
+                      whileHover={{ scale: 1.05 }}>
                       {member.experience} d&apos;expérience
                     </motion.p>
                   </motion.div>
@@ -1055,13 +1005,12 @@ export default function HomeAlt() {
               />
             </RevealOnScroll>
 
-            <motion.div 
+            <motion.div
               className='grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6'
               variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-            >
+              initial='hidden'
+              whileInView='visible'
+              viewport={{ once: true, margin: '-50px' }}>
               {galleryImages.map((image, index) => (
                 <motion.div
                   key={index}
@@ -1073,32 +1022,24 @@ export default function HomeAlt() {
                   <motion.div
                     className='absolute inset-0'
                     whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      fill
-                      className='object-cover'
-                    />
+                    transition={{ duration: 0.6 }}>
+                    <Image src={image.src} alt={image.alt} fill className='object-cover' />
                   </motion.div>
-                  <motion.div 
+                  <motion.div
                     className='absolute inset-0 bg-navy/0'
-                    whileHover={{ backgroundColor: "rgba(7, 24, 30, 0.5)" }}
+                    whileHover={{ backgroundColor: 'rgba(7, 24, 30, 0.5)' }}
                     transition={{ duration: 0.3 }}
                   />
 
                   {/* Hover Label with spring animation */}
-                  <motion.div 
+                  <motion.div
                     className='absolute inset-0 flex items-center justify-center'
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileHover={{ opacity: 1, scale: 1 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <motion.span 
+                    transition={{ type: 'spring', stiffness: 300 }}>
+                    <motion.span
                       className='text-cream text-sm uppercase tracking-widest bg-gold/90 px-4 py-2'
-                      whileHover={{ scale: 1.1 }}
-                    >
+                      whileHover={{ scale: 1.1 }}>
                       {image.category}
                     </motion.span>
                   </motion.div>
@@ -1107,7 +1048,7 @@ export default function HomeAlt() {
             </motion.div>
 
             <RevealOnScroll delay={0.3} className='text-center mt-12'>
-              <motion.div whileHover={{ x: 10 }} transition={{ type: "spring", stiffness: 400 }}>
+              <motion.div whileHover={{ x: 10 }} transition={{ type: 'spring', stiffness: 400 }}>
                 <Link
                   href='/galerie'
                   className='inline-flex items-center gap-3 text-navy text-sm uppercase tracking-widest hover:text-gold transition-colors group'>
@@ -1121,11 +1062,11 @@ export default function HomeAlt() {
                       strokeLinecap='round'
                       strokeLinejoin='round'
                       strokeWidth='1.5'
-                    d='M17 8l4 4m0 0l-4 4m4-4H3'
-                  />
-                </svg>
-              </Link>
-            </motion.div>
+                      d='M17 8l4 4m0 0l-4 4m4-4H3'
+                    />
+                  </svg>
+                </Link>
+              </motion.div>
             </RevealOnScroll>
           </Container>
         </Section>
@@ -1139,26 +1080,24 @@ export default function HomeAlt() {
               <SectionHeader eyebrow='Témoignages' title='Ce que disent nos clients' />
             </RevealOnScroll>
 
-            <motion.div 
+            <motion.div
               className='grid md:grid-cols-3 gap-8'
               variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-            >
+              initial='hidden'
+              whileInView='visible'
+              viewport={{ once: true, margin: '-50px' }}>
               {reviews.map((review, index) => (
                 <motion.article
                   key={index}
                   variants={fadeInUp}
-                  whileHover={{ y: -10, boxShadow: "0 25px 50px -12px rgba(7, 24, 30, 0.15)" }}
+                  whileHover={{ y: -10, boxShadow: '0 25px 50px -12px rgba(7, 24, 30, 0.15)' }}
                   className='bg-white p-8 shadow-lg shadow-navy/5 border border-navy/5 relative'>
                   {/* Stars with animation */}
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                  >
+                    transition={{ delay: index * 0.1 }}>
                     <StarRating rating={review.rating} size='md' />
                   </motion.div>
 
@@ -1170,10 +1109,9 @@ export default function HomeAlt() {
                   {/* Author */}
                   <div className='flex items-center justify-between'>
                     <div className='flex items-center gap-4'>
-                      <motion.div 
+                      <motion.div
                         className='w-12 h-12 rounded-full bg-navy flex items-center justify-center'
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                      >
+                        whileHover={{ scale: 1.1, rotate: 5 }}>
                         <span className='text-gold text-lg font-title'>
                           {review.author.charAt(0)}
                         </span>
@@ -1186,7 +1124,7 @@ export default function HomeAlt() {
                   </div>
 
                   {/* Decorative accent with animation */}
-                  <motion.div 
+                  <motion.div
                     className='absolute top-0 left-8 h-1 bg-gold origin-left'
                     initial={{ width: 0 }}
                     whileInView={{ width: 64 }}
@@ -1200,44 +1138,43 @@ export default function HomeAlt() {
             {/* Trust badges with reveal */}
             <RevealOnScroll delay={0.3}>
               <div className='flex flex-wrap items-center justify-center gap-8 mt-16 pt-12 border-t border-navy/10'>
-              <div className='text-center'>
-                <motion.span 
-                  className='block text-4xl font-title text-navy'
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ type: "spring", stiffness: 200 }}
-                >
-                  4.9
-                </motion.span>
-                <span className='text-xs text-navy/50 uppercase tracking-wider'>Note Google</span>
-              </div>
-              <div className='w-px h-12 bg-navy/10' />
-              <div className='text-center'>
-                <motion.span 
-                  className='block text-4xl font-title text-navy'
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ type: "spring", stiffness: 200, delay: 0.1 }}
-                >
-                  2000+
-                </motion.span>
-                <span className='text-xs text-navy/50 uppercase tracking-wider'>Clients</span>
-              </div>
-              <div className='w-px h-12 bg-navy/10' />
-              <div className='text-center'>
-                <motion.span 
-                  className='block text-4xl font-title text-navy'
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
-                >
-                  98%
-                </motion.span>
-                <span className='text-xs text-navy/50 uppercase tracking-wider'>Satisfaction</span>
-              </div>
+                <div className='text-center'>
+                  <motion.span
+                    className='block text-4xl font-title text-navy'
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ type: 'spring', stiffness: 200 }}>
+                    4.9
+                  </motion.span>
+                  <span className='text-xs text-navy/50 uppercase tracking-wider'>Note Google</span>
+                </div>
+                <div className='w-px h-12 bg-navy/10' />
+                <div className='text-center'>
+                  <motion.span
+                    className='block text-4xl font-title text-navy'
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ type: 'spring', stiffness: 200, delay: 0.1 }}>
+                    2000+
+                  </motion.span>
+                  <span className='text-xs text-navy/50 uppercase tracking-wider'>Clients</span>
+                </div>
+                <div className='w-px h-12 bg-navy/10' />
+                <div className='text-center'>
+                  <motion.span
+                    className='block text-4xl font-title text-navy'
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}>
+                    98%
+                  </motion.span>
+                  <span className='text-xs text-navy/50 uppercase tracking-wider'>
+                    Satisfaction
+                  </span>
+                </div>
               </div>
             </RevealOnScroll>
           </Container>
@@ -1258,18 +1195,17 @@ export default function HomeAlt() {
                   light
                 />
 
-                <motion.div 
+                <motion.div
                   className='space-y-0 -mt-6'
                   variants={staggerContainer}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                >
+                  initial='hidden'
+                  whileInView='visible'
+                  viewport={{ once: true }}>
                   {hours.map((item, index) => (
                     <motion.div
                       key={index}
                       variants={fadeInLeft}
-                      whileHover={{ x: 10, backgroundColor: "rgba(175, 151, 120, 0.1)" }}
+                      whileHover={{ x: 10, backgroundColor: 'rgba(175, 151, 120, 0.1)' }}
                       className={`flex justify-between items-center py-4 border-b border-cream/10 px-2 -mx-2 rounded transition-colors ${
                         item.isClosed ? 'opacity-40' : ''
                       }`}>
@@ -1281,22 +1217,20 @@ export default function HomeAlt() {
                   ))}
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                   className='mt-10'
                   whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
+                  whileTap={{ scale: 0.95 }}>
                   <ButtonAlt href={PLANITY_URL}>Réserver maintenant</ButtonAlt>
                 </motion.div>
               </RevealOnScroll>
 
               {/* Location Card */}
               <RevealOnScroll delay={0.2}>
-                <motion.div 
+                <motion.div
                   className='relative aspect-[4/3] overflow-hidden mb-8'
                   whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
-                >
+                  transition={{ duration: 0.4 }}>
                   <ParallaxImage
                     src='/images/salon-interior-2.jpg'
                     alt='Notre salon'
@@ -1305,13 +1239,12 @@ export default function HomeAlt() {
                   <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
 
                   {/* Location overlay */}
-                  <motion.div 
+                  <motion.div
                     className='absolute bottom-0 left-0 right-0 p-8'
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.3 }}
-                  >
+                    transition={{ delay: 0.3 }}>
                     <p className='text-gold text-xs uppercase tracking-widest mb-2'>Adresse</p>
                     <p className='text-cream text-xl font-title'>43 rue de Turenne</p>
                     <p className='text-cream/80'>75003 Paris — Le Marais</p>
@@ -1319,26 +1252,23 @@ export default function HomeAlt() {
                 </motion.div>
 
                 {/* Contact info with hover effects */}
-                <motion.div 
+                <motion.div
                   className='grid grid-cols-2 gap-6'
                   variants={staggerContainer}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                >
-                  <motion.div 
+                  initial='hidden'
+                  whileInView='visible'
+                  viewport={{ once: true }}>
+                  <motion.div
                     className='p-6 border border-cream/10'
                     variants={fadeInUp}
-                    whileHover={{ borderColor: "rgba(175, 151, 120, 0.5)", scale: 1.02 }}
-                  >
+                    whileHover={{ borderColor: 'rgba(175, 151, 120, 0.5)', scale: 1.02 }}>
                     <p className='text-gold text-xs uppercase tracking-widest mb-2'>Téléphone</p>
                     <p className='text-cream'>01 42 72 00 00</p>
                   </motion.div>
-                  <motion.div 
+                  <motion.div
                     className='p-6 border border-cream/10'
                     variants={fadeInUp}
-                    whileHover={{ borderColor: "rgba(175, 151, 120, 0.5)", scale: 1.02 }}
-                  >
+                    whileHover={{ borderColor: 'rgba(175, 151, 120, 0.5)', scale: 1.02 }}>
                     <p className='text-gold text-xs uppercase tracking-widest mb-2'>Email</p>
                     <p className='text-cream text-sm'>contact@linstant-barbier.fr</p>
                   </motion.div>
@@ -1363,18 +1293,17 @@ export default function HomeAlt() {
               </RevealOnScroll>
 
               <RevealOnScroll delay={0.2}>
-                <motion.form 
-                  onSubmit={handleSubmit} 
+                <motion.form
+                  onSubmit={handleSubmit}
                   className='space-y-6'
                   variants={staggerContainer}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                >
+                  initial='hidden'
+                  whileInView='visible'
+                  viewport={{ once: true }}>
                   <div className='grid sm:grid-cols-2 gap-6'>
                     <motion.input
                       variants={fadeInUp}
-                      whileFocus={{ scale: 1.02, borderColor: "#AF9778" }}
+                      whileFocus={{ scale: 1.02, borderColor: '#AF9778' }}
                       type='text'
                       placeholder='Votre nom'
                       value={formData.name}
@@ -1383,7 +1312,7 @@ export default function HomeAlt() {
                     />
                     <motion.input
                       variants={fadeInUp}
-                      whileFocus={{ scale: 1.02, borderColor: "#AF9778" }}
+                      whileFocus={{ scale: 1.02, borderColor: '#AF9778' }}
                       type='tel'
                       placeholder='Téléphone'
                       value={formData.phone}
@@ -1394,7 +1323,7 @@ export default function HomeAlt() {
 
                   <motion.input
                     variants={fadeInUp}
-                    whileFocus={{ scale: 1.02, borderColor: "#AF9778" }}
+                    whileFocus={{ scale: 1.02, borderColor: '#AF9778' }}
                     type='email'
                     placeholder='Email'
                     value={formData.email}
@@ -1404,7 +1333,7 @@ export default function HomeAlt() {
 
                   <motion.textarea
                     variants={fadeInUp}
-                    whileFocus={{ scale: 1.02, borderColor: "#AF9778" }}
+                    whileFocus={{ scale: 1.02, borderColor: '#AF9778' }}
                     placeholder='Votre message'
                     rows={5}
                     value={formData.message}
@@ -1414,7 +1343,7 @@ export default function HomeAlt() {
 
                   <motion.button
                     variants={fadeInUp}
-                    whileHover={{ scale: 1.02, backgroundColor: "#AF9778", color: "#07181E" }}
+                    whileHover={{ scale: 1.02, backgroundColor: '#AF9778', color: '#07181E' }}
                     whileTap={{ scale: 0.98 }}
                     type='submit'
                     className='w-full bg-navy text-cream py-4 uppercase tracking-widest text-sm font-medium transition-all duration-300'>

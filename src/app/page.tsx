@@ -21,38 +21,38 @@ gsap.registerPlugin(ScrollTrigger)
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 60 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: "easeOut" as const }
-  }
+    transition: { duration: 0.8, ease: 'easeOut' as const },
+  },
 }
 
 const fadeInLeft = {
   hidden: { opacity: 0, x: -80 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     x: 0,
-    transition: { duration: 0.8, ease: "easeOut" as const }
-  }
+    transition: { duration: 0.8, ease: 'easeOut' as const },
+  },
 }
 
 const fadeInRight = {
   hidden: { opacity: 0, x: 80 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     x: 0,
-    transition: { duration: 0.8, ease: "easeOut" as const }
-  }
+    transition: { duration: 0.8, ease: 'easeOut' as const },
+  },
 }
 
 const scaleIn = {
   hidden: { opacity: 0, scale: 0.8 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     scale: 1,
-    transition: { duration: 0.6, ease: "easeOut" as const }
-  }
+    transition: { duration: 0.6, ease: 'easeOut' as const },
+  },
 }
 
 const staggerContainer = {
@@ -61,59 +61,74 @@ const staggerContainer = {
     opacity: 1,
     transition: {
       staggerChildren: 0.15,
-      delayChildren: 0.2
-    }
-  }
+      delayChildren: 0.2,
+    },
+  },
 }
 
 const cardHover = {
   rest: { scale: 1, y: 0 },
-  hover: { 
-    scale: 1.02, 
+  hover: {
+    scale: 1.02,
     y: -8,
-    transition: { duration: 0.3, ease: "easeOut" as const }
-  }
+    transition: { duration: 0.3, ease: 'easeOut' as const },
+  },
 }
 
 const imageReveal = {
-  hidden: { clipPath: "inset(0 100% 0 0)" },
-  visible: { 
-    clipPath: "inset(0 0% 0 0)",
-    transition: { duration: 1.2, ease: "easeInOut" as const }
-  }
+  hidden: { clipPath: 'inset(0 100% 0 0)' },
+  visible: {
+    clipPath: 'inset(0 0% 0 0)',
+    transition: { duration: 1.2, ease: 'easeInOut' as const },
+  },
 }
 
 // Reveal on scroll component
-function RevealOnScroll({ children, className = "", delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) {
+function RevealOnScroll({
+  children,
+  className = '',
+  delay = 0,
+}: {
+  children: React.ReactNode
+  className?: string
+  delay?: number
+}) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
-  
+  const isInView = useInView(ref, { once: true, margin: '-100px' })
+
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 60 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-      transition={{ duration: 0.8, delay, ease: "easeOut" }}
-      className={className}
-    >
+      transition={{ duration: 0.8, delay, ease: 'easeOut' }}
+      className={className}>
       {children}
     </motion.div>
   )
 }
 
 // Parallax Image component
-function ParallaxImage({ src, alt, className = "" }: { src: string, alt: string, className?: string }) {
+function ParallaxImage({
+  src,
+  alt,
+  className = '',
+}: {
+  src: string
+  alt: string
+  className?: string
+}) {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "end start"]
+    offset: ['start end', 'end start'],
   })
-  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"])
-  
+  const y = useTransform(scrollYProgress, [0, 1], ['-10%', '10%'])
+
   return (
     <motion.div ref={ref} className={`overflow-hidden ${className}`}>
-      <motion.div style={{ y }} className="w-full h-full">
-        <Image src={src} alt={alt} fill className="object-cover" />
+      <motion.div style={{ y }} className='w-full h-full'>
+        <Image src={src} alt={alt} fill className='object-cover' />
       </motion.div>
     </motion.div>
   )
@@ -261,44 +276,40 @@ function SectionTitle({
   className?: string
 }) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-50px" })
-  
+  const isInView = useInView(ref, { once: true, margin: '-50px' })
+
   return (
-    <motion.div 
+    <motion.div
       ref={ref}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+      initial='hidden'
+      animate={isInView ? 'visible' : 'hidden'}
       variants={staggerContainer}
-      className={`text-center mb-16 ${className}`}
-    >
+      className={`text-center mb-16 ${className}`}>
       {subtitle && (
         <motion.div variants={fadeInUp} className='flex items-center justify-center gap-4 mb-4'>
-          <motion.span 
+          <motion.span
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className='w-12 h-px bg-gold/40 origin-right' 
+            className='w-12 h-px bg-gold/40 origin-right'
           />
           <span className='text-gold text-xs uppercase tracking-[0.3em]'>{subtitle}</span>
-          <motion.span 
+          <motion.span
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className='w-12 h-px bg-gold/40 origin-left' 
+            className='w-12 h-px bg-gold/40 origin-left'
           />
         </motion.div>
       )}
-      <motion.h2 
-        variants={fadeInUp}
-        className='text-3xl md:text-5xl font-title text-gold'
-      >
+      <motion.h2 variants={fadeInUp} className='text-3xl md:text-5xl font-title text-gold'>
         {title}
       </motion.h2>
     </motion.div>
   )
 }
 
-function StarRating({ rating, animate = false }: { rating: number, animate?: boolean }) {
+function StarRating({ rating, animate = false }: { rating: number; animate?: boolean }) {
   return (
     <div className='flex gap-1'>
       {[...Array(5)].map((_, i) => (
@@ -482,8 +493,8 @@ export default function Home() {
           <div className='absolute inset-0 bg-[linear-gradient(rgba(156,131,88,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(156,131,88,0.03)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]' />
 
           {/* Content */}
-          <Container className='lg:pr-148 relative z-10'>
-            <div className='max-w-3xl mr-auto space-y-10'>
+          <Container className='lg:pr-148 relative z-10 pt-24 md:pt-32 lg:pt-0'>
+            <div className='max-w-3xl mr-auto space-y-10 md:space-y-8 lg:space-y-10'>
               {/* Subtitle with animated line */}
               <div ref={heroSubtitleRef} className='flex items-center gap-4'>
                 <span className='w-16 h-[1px] bg-gradient-to-r from-transparent to-gold' />
@@ -506,7 +517,7 @@ export default function Home() {
               {/* Main Title with perspective */}
               <h1
                 ref={heroTitleRef}
-                className='text-6xl md:text-8xl lg:text-9xl font-title text-gold leading-[0.95] [perspective:1000px]'>
+                className='text-5xl md:text-6xl lg:text-8xl xl:text-9xl font-title text-gold leading-[0.95] [perspective:1000px]'>
                 <span className='block [transform-style:preserve-3d]'>L&apos;Instant</span>
                 <span className='block [transform-style:preserve-3d]'>Barbier</span>
               </h1>
@@ -600,65 +611,61 @@ export default function Home() {
             <div className='grid lg:grid-cols-2 gap-12 lg:gap-20 items-center'>
               {/* Image Side */}
               <RevealOnScroll className='relative'>
-                <motion.div 
+                <motion.div
                   className='relative aspect-4/5 overflow-hidden'
                   whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
-                >
+                  transition={{ duration: 0.4 }}>
                   <div className="absolute inset-0 bg-[url('/images/about-barbershop.jpg')] bg-cover bg-center" />
                   <div className='absolute inset-0 bg-navy/20' />
                   {/* Shine effect on hover */}
-                  <motion.div 
+                  <motion.div
                     className='absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full'
-                    whileHover={{ translateX: "100%" }}
+                    whileHover={{ translateX: '100%' }}
                     transition={{ duration: 0.6 }}
                   />
                 </motion.div>
                 {/* Decorative Frame - Animated */}
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, x: 20, y: 20 }}
                   whileInView={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
                   viewport={{ once: true }}
-                  className='absolute -bottom-4 -right-4 w-full h-full border border-gold/30 -z-10' 
+                  className='absolute -bottom-4 -right-4 w-full h-full border border-gold/30 -z-10'
                 />
                 {/* Experience Badge - Animated */}
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, scale: 0 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.5, type: "spring" }}
+                  transition={{ duration: 0.6, delay: 0.5, type: 'spring' }}
                   viewport={{ once: true }}
                   whileHover={{ scale: 1.1, rotate: -5 }}
-                  className='absolute -bottom-6 -left-6 bg-gold text-navy p-6 text-center cursor-default'
-                >
+                  className='absolute -bottom-6 -left-6 bg-gold text-navy p-6 text-center cursor-default'>
                   <span className='block text-4xl font-title font-bold'>23+</span>
                   <span className='text-xs uppercase tracking-wider'>Ans d&apos;expérience</span>
                 </motion.div>
               </RevealOnScroll>
 
               {/* Content Side */}
-              <motion.div 
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
+              <motion.div
+                initial='hidden'
+                whileInView='visible'
+                viewport={{ once: true, margin: '-100px' }}
                 variants={staggerContainer}
-                className='space-y-8'
-              >
+                className='space-y-8'>
                 <div>
                   <motion.div variants={fadeInUp} className='flex items-center gap-3 mb-4'>
-                    <motion.span 
+                    <motion.span
                       initial={{ scaleX: 0 }}
                       whileInView={{ scaleX: 1 }}
                       transition={{ duration: 0.6 }}
                       viewport={{ once: true }}
-                      className='w-10 h-px bg-gold origin-left' 
+                      className='w-10 h-px bg-gold origin-left'
                     />
                     <span className='text-gold text-xs uppercase tracking-[0.3em]'>À propos</span>
                   </motion.div>
-                  <motion.h2 
+                  <motion.h2
                     variants={fadeInUp}
-                    className='text-3xl md:text-5xl font-title text-gold leading-tight'
-                  >
+                    className='text-3xl md:text-5xl font-title text-gold leading-tight'>
                     L&apos;Art du Barbier
                     <br />
                     Parisien
@@ -679,29 +686,24 @@ export default function Home() {
                 </motion.div>
 
                 {/* Features - Staggered */}
-                <motion.div 
-                  variants={staggerContainer}
-                  className='grid grid-cols-2 gap-6 pt-4'
-                >
+                <motion.div variants={staggerContainer} className='grid grid-cols-2 gap-6 pt-4'>
                   {[
                     'Produits Premium',
                     'Maîtres Barbiers',
                     'Cadre Élégant',
-                    'Service Personnalisé'
+                    'Service Personnalisé',
                   ].map((feature, i) => (
-                    <motion.div 
+                    <motion.div
                       key={i}
                       variants={fadeInUp}
                       whileHover={{ x: 5 }}
-                      className='flex items-center gap-3'
-                    >
-                      <motion.span 
+                      className='flex items-center gap-3'>
+                      <motion.span
                         initial={{ scale: 0 }}
                         whileInView={{ scale: 1 }}
                         transition={{ delay: i * 0.1 }}
                         viewport={{ once: true }}
-                        className='text-gold text-2xl'
-                      >
+                        className='text-gold text-2xl'>
                         ✓
                       </motion.span>
                       <span className='text-cream/90 text-sm'>{feature}</span>
@@ -714,10 +716,7 @@ export default function Home() {
                     href='/salon'
                     className='inline-flex items-center gap-2 text-gold text-sm uppercase tracking-widest hover:text-cream transition-colors group'>
                     En savoir plus
-                    <motion.span 
-                      className='inline-block'
-                      whileHover={{ x: 5 }}
-                    >
+                    <motion.span className='inline-block' whileHover={{ x: 5 }}>
                       →
                     </motion.span>
                   </Link>
@@ -734,55 +733,51 @@ export default function Home() {
           <Container>
             <SectionTitle subtitle='Nos Services' title='Prestations' />
 
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
+            <motion.div
+              initial='hidden'
+              whileInView='visible'
+              viewport={{ once: true, margin: '-50px' }}
               variants={staggerContainer}
-              className='grid sm:grid-cols-2 lg:grid-cols-4 gap-8'
-            >
+              className='grid sm:grid-cols-2 lg:grid-cols-4 gap-8'>
               {services.map((service, index) => (
                 <motion.article
                   key={index}
                   variants={fadeInUp}
-                  initial="rest"
-                  whileHover="hover"
-                  className='group text-center p-8 border border-gold/20 hover:border-gold/50 hover:bg-gold/5 transition-all duration-300'
-                >
+                  initial='rest'
+                  whileHover='hover'
+                  className='group text-center p-8 border border-gold/20 hover:border-gold/50 hover:bg-gold/5 transition-all duration-300'>
                   {/* Icon */}
                   <div className='flex justify-center mb-6'>
-                    <motion.div 
+                    <motion.div
                       className='text-gold'
                       variants={{
                         rest: { scale: 1, rotate: 0 },
-                        hover: { scale: 1.2, rotate: 5 }
+                        hover: { scale: 1.2, rotate: 5 },
                       }}
-                      transition={{ duration: 0.3 }}
-                    >
+                      transition={{ duration: 0.3 }}>
                       {service.icon}
                     </motion.div>
                   </div>
 
                   {/* Title */}
-                  <motion.h3 
+                  <motion.h3
                     className='text-xl font-title text-gold mb-4 uppercase tracking-wide'
                     variants={{
                       rest: { y: 0 },
-                      hover: { y: -3 }
-                    }}
-                  >
+                      hover: { y: -3 },
+                    }}>
                     {service.title}
                   </motion.h3>
 
                   {/* Description */}
                   <p className='text-cream/70 text-sm leading-relaxed'>{service.description}</p>
-                  
+
                   {/* Decorative line on hover */}
-                  <motion.div 
+                  <motion.div
                     className='mt-6 h-px bg-gold/50 mx-auto'
                     variants={{
                       rest: { width: 0 },
-                      hover: { width: "50%" }
+                      hover: { width: '50%' },
                     }}
                     transition={{ duration: 0.3 }}
                   />
@@ -803,21 +798,19 @@ export default function Home() {
           <Container>
             <SectionTitle subtitle='Les Experts' title='Notre Équipe' />
 
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
+            <motion.div
+              initial='hidden'
+              whileInView='visible'
+              viewport={{ once: true, margin: '-50px' }}
               variants={staggerContainer}
-              className='grid md:grid-cols-3 gap-8'
-            >
+              className='grid md:grid-cols-3 gap-8'>
               {team.map((member, index) => (
-                <motion.article 
-                  key={index} 
+                <motion.article
+                  key={index}
                   variants={fadeInUp}
                   whileHover={{ y: -10 }}
                   transition={{ duration: 0.3 }}
-                  className='group relative overflow-hidden'
-                >
+                  className='group relative overflow-hidden'>
                   {/* Image */}
                   <div className='relative aspect-3/4 overflow-hidden bg-navy'>
                     <motion.div
@@ -830,17 +823,15 @@ export default function Home() {
                   </div>
 
                   {/* Info Overlay - Animated */}
-                  <motion.div 
+                  <motion.div
                     className='absolute bottom-0 left-0 right-0 p-6 text-center'
                     initial={{ y: 20, opacity: 0 }}
                     whileInView={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3 }}
-                    viewport={{ once: true }}
-                  >
-                    <motion.div 
+                    viewport={{ once: true }}>
+                    <motion.div
                       className='bg-navy/80 backdrop-blur-sm border border-gold/30 p-4'
-                      whileHover={{ borderColor: "rgba(175, 151, 120, 0.6)" }}
-                    >
+                      whileHover={{ borderColor: 'rgba(175, 151, 120, 0.6)' }}>
                       <h3 className='text-xl font-title text-gold mb-1'>{member.name}</h3>
                       <p className='text-cream/90 text-sm mb-2'>{member.role}</p>
                       <p className='text-gold/70 text-xs uppercase tracking-wider'>
@@ -850,7 +841,7 @@ export default function Home() {
                   </motion.div>
 
                   {/* Decorative Corner - Animated */}
-                  <motion.div 
+                  <motion.div
                     className='absolute top-4 right-4 w-8 h-8 border-t border-r border-gold/40'
                     initial={{ opacity: 0, scale: 0 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -872,19 +863,17 @@ export default function Home() {
             <SectionTitle subtitle='Notre Travail' title='Galerie' />
 
             {/* Gallery Grid */}
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
+            <motion.div
+              initial='hidden'
+              whileInView='visible'
+              viewport={{ once: true, margin: '-50px' }}
               variants={staggerContainer}
-              className='grid grid-cols-2 md:grid-cols-3 gap-4'
-            >
+              className='grid grid-cols-2 md:grid-cols-3 gap-4'>
               {/* Large Image */}
-              <motion.div 
+              <motion.div
                 variants={scaleIn}
                 whileHover={{ scale: 0.98 }}
-                className='col-span-2 row-span-2 relative aspect-square md:aspect-auto overflow-hidden group cursor-pointer'
-              >
+                className='col-span-2 row-span-2 relative aspect-square md:aspect-auto overflow-hidden group cursor-pointer'>
                 <motion.div
                   className='absolute inset-0 bg-cover bg-center'
                   style={{ backgroundImage: `url(${galleryImages[0].src})` }}
@@ -893,17 +882,15 @@ export default function Home() {
                 />
                 <div className='absolute inset-0 bg-navy/20 group-hover:bg-navy/10 transition-colors' />
                 {/* View overlay */}
-                <motion.div 
+                <motion.div
                   className='absolute inset-0 flex items-center justify-center bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity'
                   initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                >
-                  <motion.span 
+                  whileHover={{ opacity: 1 }}>
+                  <motion.span
                     className='text-gold text-4xl'
                     initial={{ scale: 0 }}
                     whileHover={{ scale: 1 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
+                    transition={{ type: 'spring', stiffness: 300 }}>
                     +
                   </motion.span>
                 </motion.div>
@@ -911,12 +898,11 @@ export default function Home() {
 
               {/* Smaller Images */}
               {galleryImages.slice(1).map((image, index) => (
-                <motion.div 
-                  key={index} 
+                <motion.div
+                  key={index}
                   variants={scaleIn}
                   whileHover={{ scale: 0.95 }}
-                  className='relative aspect-square overflow-hidden group cursor-pointer'
-                >
+                  className='relative aspect-square overflow-hidden group cursor-pointer'>
                   <motion.div
                     className='absolute inset-0 bg-cover bg-center'
                     style={{ backgroundImage: `url(${image.src})` }}
@@ -937,10 +923,7 @@ export default function Home() {
                 href='/galerie'
                 className='inline-flex items-center gap-2 text-gold text-sm uppercase tracking-widest hover:text-cream transition-colors group'>
                 Voir plus
-                <motion.span 
-                  className='inline-block'
-                  whileHover={{ x: 5 }}
-                >
+                <motion.span className='inline-block' whileHover={{ x: 5 }}>
                   →
                 </motion.span>
               </Link>
@@ -952,7 +935,7 @@ export default function Home() {
           INTERIOR IMAGE BREAK - with Parallax
       ═══════════════════════════════════════════════════════════════════ */}
         <section className='relative h-[50vh] md:h-[60vh] overflow-hidden'>
-          <motion.div 
+          <motion.div
             className="absolute inset-0 bg-[url('/images/salon-interior-1.jpg')] bg-cover bg-center"
             initial={{ scale: 1.2 }}
             whileInView={{ scale: 1 }}
@@ -961,34 +944,31 @@ export default function Home() {
             style={{ backgroundAttachment: 'fixed' }}
           />
           <div className='absolute inset-0 bg-navy/60' />
-          <motion.div 
+          <motion.div
             className='absolute inset-0 flex items-center justify-center'
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
-            viewport={{ once: true }}
-          >
+            viewport={{ once: true }}>
             <div className='text-center'>
-              <motion.p 
+              <motion.p
                 initial={{ y: 30, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className='text-gold text-xs uppercase tracking-[0.4em] mb-4'
-              >
+                className='text-gold text-xs uppercase tracking-[0.4em] mb-4'>
                 Le Marais, Paris
               </motion.p>
-              <motion.h2 
+              <motion.h2
                 initial={{ y: 50, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 viewport={{ once: true }}
-                className='text-4xl md:text-6xl font-title text-gold'
-              >
+                className='text-4xl md:text-6xl font-title text-gold'>
                 Un Cadre d&apos;Exception
               </motion.h2>
               {/* Decorative line */}
-              <motion.div 
+              <motion.div
                 className='mt-8 mx-auto h-px bg-gold/50'
                 initial={{ width: 0 }}
                 whileInView={{ width: 100 }}
@@ -1006,51 +986,46 @@ export default function Home() {
           <Container>
             <SectionTitle subtitle='Témoignages' title='Avis Clients' />
 
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
+            <motion.div
+              initial='hidden'
+              whileInView='visible'
+              viewport={{ once: true, margin: '-50px' }}
               variants={staggerContainer}
-              className='grid md:grid-cols-3 gap-8'
-            >
+              className='grid md:grid-cols-3 gap-8'>
               {reviews.map((review, index) => (
-                <motion.article 
-                  key={index} 
+                <motion.article
+                  key={index}
                   variants={fadeInUp}
                   whileHover={{ y: -10, scale: 1.02 }}
                   transition={{ duration: 0.3 }}
-                  className='bg-dark/50 border border-gold/20 p-8 relative hover:border-gold/40 cursor-default'
-                >
+                  className='bg-dark/50 border border-gold/20 p-8 relative hover:border-gold/40 cursor-default'>
                   {/* Quote Icon - Animated */}
-                  <motion.div 
+                  <motion.div
                     className='absolute -top-4 left-8'
                     initial={{ scale: 0, rotate: -45 }}
                     whileInView={{ scale: 1, rotate: 0 }}
-                    transition={{ type: "spring", stiffness: 200, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
+                    transition={{ type: 'spring', stiffness: 200, delay: index * 0.1 }}
+                    viewport={{ once: true }}>
                     <span className='text-gold text-5xl font-title'>&ldquo;</span>
                   </motion.div>
 
                   {/* Content */}
                   <div className='pt-4'>
-                    <motion.p 
+                    <motion.p
                       className='text-cream/80 text-sm leading-relaxed mb-6 italic'
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       transition={{ delay: 0.3 }}
-                      viewport={{ once: true }}
-                    >
+                      viewport={{ once: true }}>
                       {review.text}
                     </motion.p>
 
                     {/* Author */}
                     <div className='flex items-center justify-between'>
                       <div className='flex items-center gap-3'>
-                        <motion.div 
+                        <motion.div
                           className='w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center'
-                          whileHover={{ scale: 1.1, backgroundColor: "rgba(175, 151, 120, 0.4)" }}
-                        >
+                          whileHover={{ scale: 1.1, backgroundColor: 'rgba(175, 151, 120, 0.4)' }}>
                           <span className='text-gold text-sm font-title'>
                             {review.author.charAt(0)}
                           </span>
@@ -1073,28 +1048,26 @@ export default function Home() {
           <Container>
             <div className='grid lg:grid-cols-2 gap-12 lg:gap-20 items-center'>
               {/* Hours Table */}
-              <motion.div 
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
+              <motion.div
+                initial='hidden'
+                whileInView='visible'
+                viewport={{ once: true, margin: '-50px' }}
                 variants={staggerContainer}
-                className='order-2 lg:order-1'
-              >
+                className='order-2 lg:order-1'>
                 <motion.div variants={fadeInUp} className='flex items-center gap-3 mb-6'>
-                  <motion.span 
+                  <motion.span
                     initial={{ scaleX: 0 }}
                     whileInView={{ scaleX: 1 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className='w-10 h-px bg-gold origin-left' 
+                    className='w-10 h-px bg-gold origin-left'
                   />
                   <span className='text-gold text-xs uppercase tracking-[0.3em]'>Horaires</span>
                 </motion.div>
 
-                <motion.h2 
+                <motion.h2
                   variants={fadeInUp}
-                  className='text-3xl md:text-4xl font-title text-gold mb-10'
-                >
+                  className='text-3xl md:text-4xl font-title text-gold mb-10'>
                   Horaires d&apos;Ouverture
                 </motion.h2>
 
@@ -1103,47 +1076,42 @@ export default function Home() {
                     <motion.div
                       key={index}
                       variants={fadeInUp}
-                      whileHover={{ x: 10, backgroundColor: "rgba(175, 151, 120, 0.05)" }}
+                      whileHover={{ x: 10, backgroundColor: 'rgba(175, 151, 120, 0.05)' }}
                       transition={{ duration: 0.2 }}
                       className={`flex justify-between items-center py-3 px-2 border-b border-gold/10 ${
                         item.hours === 'Fermé' ? 'opacity-50' : ''
                       }`}>
                       <span className='text-cream/90'>{item.day}</span>
-                      <motion.span 
+                      <motion.span
                         className={`${item.hours === 'Fermé' ? 'text-cream/50' : 'text-gold'}`}
-                        whileHover={{ scale: 1.05 }}
-                      >
+                        whileHover={{ scale: 1.05 }}>
                         {item.hours}
                       </motion.span>
                     </motion.div>
                   ))}
                 </motion.div>
 
-                <motion.div 
-                  variants={fadeInUp}
-                  className='mt-10'
-                >
+                <motion.div variants={fadeInUp} className='mt-10'>
                   <Button href={PLANITY_URL}>Réserver un créneau</Button>
                 </motion.div>
               </motion.div>
 
               {/* Image */}
               <RevealOnScroll className='relative order-1 lg:order-2'>
-                <motion.div 
+                <motion.div
                   className='relative aspect-4/3 overflow-hidden'
                   whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
-                >
+                  transition={{ duration: 0.4 }}>
                   <div className="absolute inset-0 bg-[url('/images/salon-interior-2.jpg')] bg-cover bg-center" />
                   <div className='absolute inset-0 bg-navy/20' />
                 </motion.div>
                 {/* Decorative Frame - Animated */}
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, x: -20, y: -20 }}
                   whileInView={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
                   viewport={{ once: true }}
-                  className='absolute -top-4 -left-4 w-full h-full border border-gold/30 -z-10' 
+                  className='absolute -top-4 -left-4 w-full h-full border border-gold/30 -z-10'
                 />
               </RevealOnScroll>
             </div>
@@ -1160,40 +1128,38 @@ export default function Home() {
             <div className='grid lg:grid-cols-2 gap-12 lg:gap-20'>
               {/* Map / Image Side */}
               <RevealOnScroll className='relative'>
-                <motion.div 
+                <motion.div
                   className='relative aspect-4/3 overflow-hidden'
                   whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
-                >
+                  transition={{ duration: 0.4 }}>
                   <div className="absolute inset-0 bg-[url('/images/marais-paris.jpg')] bg-cover bg-center" />
                   <div className='absolute inset-0 bg-navy/40' />
                 </motion.div>
 
                 {/* Info Overlay - Animated */}
-                <motion.div 
+                <motion.div
                   className='absolute bottom-0 left-0 right-0 p-6'
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.3 }}
-                  viewport={{ once: true }}
-                >
-                  <motion.div 
+                  viewport={{ once: true }}>
+                  <motion.div
                     className='bg-navy/90 backdrop-blur-sm border border-gold/30 p-6 space-y-4'
-                    whileHover={{ borderColor: "rgba(175, 151, 120, 0.5)" }}
-                  >
+                    whileHover={{ borderColor: 'rgba(175, 151, 120, 0.5)' }}>
                     {[
                       { label: 'Adresse', value: '43 rue de Turenne, 75003 Paris' },
                       { label: 'Téléphone', value: '+33 1 42 72 00 00' },
-                      { label: 'Email', value: 'contact@linstant-barbier.fr' }
+                      { label: 'Email', value: 'contact@linstant-barbier.fr' },
                     ].map((item, i) => (
-                      <motion.div 
+                      <motion.div
                         key={i}
                         initial={{ x: -20, opacity: 0 }}
                         whileInView={{ x: 0, opacity: 1 }}
                         transition={{ delay: 0.4 + i * 0.1 }}
-                        viewport={{ once: true }}
-                      >
-                        <p className='text-gold text-xs uppercase tracking-widest mb-2'>{item.label}</p>
+                        viewport={{ once: true }}>
+                        <p className='text-gold text-xs uppercase tracking-widest mb-2'>
+                          {item.label}
+                        </p>
                         <p className='text-cream'>{item.value}</p>
                       </motion.div>
                     ))}
@@ -1203,25 +1169,23 @@ export default function Home() {
 
               {/* Form Side */}
               <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                variants={staggerContainer}
-              >
+                initial='hidden'
+                whileInView='visible'
+                viewport={{ once: true, margin: '-50px' }}
+                variants={staggerContainer}>
                 <motion.p variants={fadeInUp} className='text-cream/70 mb-8 leading-relaxed'>
                   Remplissez vos coordonnées et nous vous recontacterons pour planifier votre
                   prochain rendez-vous.
                 </motion.p>
 
-                <motion.form 
+                <motion.form
                   variants={staggerContainer}
-                  onSubmit={handleSubmit} 
-                  className='space-y-6'
-                >
+                  onSubmit={handleSubmit}
+                  className='space-y-6'>
                   <motion.div variants={fadeInUp} className='grid sm:grid-cols-2 gap-6'>
                     <motion.div whileFocus={{ scale: 1.02 }}>
                       <motion.input
-                        whileFocus={{ borderColor: "rgba(175, 151, 120, 1)" }}
+                        whileFocus={{ borderColor: 'rgba(175, 151, 120, 1)' }}
                         type='text'
                         placeholder='Votre nom'
                         value={formData.name}
@@ -1231,7 +1195,7 @@ export default function Home() {
                     </motion.div>
                     <motion.div whileFocus={{ scale: 1.02 }}>
                       <motion.input
-                        whileFocus={{ borderColor: "rgba(175, 151, 120, 1)" }}
+                        whileFocus={{ borderColor: 'rgba(175, 151, 120, 1)' }}
                         type='tel'
                         placeholder='Téléphone'
                         value={formData.phone}
@@ -1243,7 +1207,7 @@ export default function Home() {
 
                   <motion.div variants={fadeInUp}>
                     <motion.input
-                      whileFocus={{ borderColor: "rgba(175, 151, 120, 1)" }}
+                      whileFocus={{ borderColor: 'rgba(175, 151, 120, 1)' }}
                       type='email'
                       placeholder='Email'
                       value={formData.email}
@@ -1254,7 +1218,7 @@ export default function Home() {
 
                   <motion.div variants={fadeInUp}>
                     <motion.textarea
-                      whileFocus={{ borderColor: "rgba(175, 151, 120, 1)" }}
+                      whileFocus={{ borderColor: 'rgba(175, 151, 120, 1)' }}
                       placeholder='Message'
                       rows={4}
                       value={formData.message}
@@ -1265,7 +1229,7 @@ export default function Home() {
 
                   <motion.button
                     variants={fadeInUp}
-                    whileHover={{ scale: 1.02, backgroundColor: "rgba(175, 151, 120, 0.9)" }}
+                    whileHover={{ scale: 1.02, backgroundColor: 'rgba(175, 151, 120, 0.9)' }}
                     whileTap={{ scale: 0.98 }}
                     type='submit'
                     className='w-full bg-gold text-navy py-4 uppercase tracking-widest text-sm font-medium hover:bg-gold/90 transition-colors'>
@@ -1280,31 +1244,27 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           BOTTOM CTA & FOOTER INFO
       ═══════════════════════════════════════════════════════════════════ */}
-        <motion.section 
+        <motion.section
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className='bg-dark py-16 border-t border-gold/10'
-        >
+          className='bg-dark py-16 border-t border-gold/10'>
           <Container>
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
+            <motion.div
+              initial='hidden'
+              whileInView='visible'
               viewport={{ once: true }}
               variants={staggerContainer}
-              className='flex flex-col lg:flex-row items-center justify-between gap-8'
-            >
+              className='flex flex-col lg:flex-row items-center justify-between gap-8'>
               {/* Address */}
-              <motion.div 
+              <motion.div
                 variants={fadeInUp}
                 whileHover={{ x: 5 }}
-                className='flex items-center gap-4'
-              >
-                <motion.div 
+                className='flex items-center gap-4'>
+                <motion.div
                   className='w-10 h-10 border border-gold/30 flex items-center justify-center'
-                  whileHover={{ borderColor: "rgba(175, 151, 120, 0.6)", scale: 1.1 }}
-                >
+                  whileHover={{ borderColor: 'rgba(175, 151, 120, 0.6)', scale: 1.1 }}>
                   <svg
                     className='w-5 h-5 text-gold'
                     fill='none'
@@ -1330,15 +1290,13 @@ export default function Home() {
               </motion.div>
 
               {/* Phone */}
-              <motion.div 
+              <motion.div
                 variants={fadeInUp}
                 whileHover={{ x: 5 }}
-                className='flex items-center gap-4'
-              >
-                <motion.div 
+                className='flex items-center gap-4'>
+                <motion.div
                   className='w-10 h-10 border border-gold/30 flex items-center justify-center'
-                  whileHover={{ borderColor: "rgba(175, 151, 120, 0.6)", scale: 1.1 }}
-                >
+                  whileHover={{ borderColor: 'rgba(175, 151, 120, 0.6)', scale: 1.1 }}>
                   <svg
                     className='w-5 h-5 text-gold'
                     fill='none'
@@ -1358,11 +1316,10 @@ export default function Home() {
               </motion.div>
 
               {/* Logo */}
-              <motion.div 
+              <motion.div
                 variants={scaleIn}
                 whileHover={{ scale: 1.05 }}
-                className='flex items-center gap-3'
-              >
+                className='flex items-center gap-3'>
                 <Image
                   src='/logo/logo-golden.svg'
                   alt="L'Instant Barbier"
@@ -1374,24 +1331,26 @@ export default function Home() {
               </motion.div>
 
               {/* Social Links */}
-              <motion.div 
-                variants={fadeInUp}
-                className='flex items-center gap-4'
-              >
+              <motion.div variants={fadeInUp} className='flex items-center gap-4'>
                 {['instagram', 'twitter'].map((social, i) => (
                   <motion.a
                     key={social}
                     href='#'
-                    whileHover={{ scale: 1.1, backgroundColor: "rgba(175, 151, 120, 0.1)" }}
+                    whileHover={{ scale: 1.1, backgroundColor: 'rgba(175, 151, 120, 0.1)' }}
                     whileTap={{ scale: 0.95 }}
-                    className='w-10 h-10 border border-gold/30 flex items-center justify-center hover:bg-gold/10 transition-colors'
-                  >
+                    className='w-10 h-10 border border-gold/30 flex items-center justify-center hover:bg-gold/10 transition-colors'>
                     {social === 'instagram' ? (
-                      <svg className='w-5 h-5 text-cream/80' fill='currentColor' viewBox='0 0 24 24'>
+                      <svg
+                        className='w-5 h-5 text-cream/80'
+                        fill='currentColor'
+                        viewBox='0 0 24 24'>
                         <path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z' />
                       </svg>
                     ) : (
-                      <svg className='w-5 h-5 text-cream/80' fill='currentColor' viewBox='0 0 24 24'>
+                      <svg
+                        className='w-5 h-5 text-cream/80'
+                        fill='currentColor'
+                        viewBox='0 0 24 24'>
                         <path d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z' />
                       </svg>
                     )}
