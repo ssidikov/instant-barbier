@@ -99,22 +99,10 @@ const services = [
 
 const team = [
   {
-    name: 'Laurent',
-    role: 'Maître Barbier',
-    experience: "12 ans d'expérience",
-    image: '/images/team/team-1.jpg',
-  },
-  {
-    name: 'Marc',
-    role: 'Barbier Senior',
-    experience: "8 ans d'expérience",
-    image: '/images/team/team-2.jpg',
-  },
-  {
-    name: 'Sophie',
-    role: 'Coiffeuse Experte',
-    experience: "6 ans d'expérience",
-    image: '/images/team/team-3.jpg',
+    name: 'RICCARDO',
+    role: 'Coiffeur-barbier et directeur artistique',
+    experience: "23 ans d'expérience",
+    image: '/images/team/Riccardo.avif',
   },
 ]
 
@@ -488,7 +476,7 @@ export default function Home() {
                 <div className='absolute -bottom-4 -right-4 w-full h-full border border-gold/30 -z-10' />
                 {/* Experience Badge */}
                 <div className='absolute -bottom-6 -left-6 bg-gold text-navy p-6 text-center'>
-                  <span className='block text-4xl font-title font-bold'>15+</span>
+                  <span className='block text-4xl font-title font-bold'>23+</span>
                   <span className='text-xs uppercase tracking-wider'>Ans d&apos;expérience</span>
                 </div>
               </div>

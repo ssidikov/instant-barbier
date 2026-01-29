@@ -2,15 +2,19 @@
 
 @theme {
   /* Original dark theme colors */
-  --color-navy: #0b1622;
-  --color-gold: #9c8358;
+  --color-navy: #07181E;
+  --color-gold: #AF9778;
   --color-cream: #f4f1ec;
   --color-dark: #0f0f0f;
 
   /* Light theme colors */
-  --color-navy-light: #0b1622;
+  --color-navy-light: #07181E;
   --color-navy-secondary: #142233;
   --color-text-primary: #1c1c1c;
+
+  /* Brand fonts */
+  --font-haarlem: 'Haarlem Deco DEMO', serif;
+  --font-sweet: 'Source Sans Pro', sans-serif;
 }
 
 @layer base {

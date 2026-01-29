@@ -16,6 +16,10 @@ const muli = Mulish({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='fr' className={`${playfair.variable} ${muli.variable}`}>
+      <head>
+        <link href='https://fonts.cdnfonts.com/css/haarlem-deco-demo' rel='stylesheet' />
+        <link href='https://fonts.cdnfonts.com/css/source-sans-pro-2' rel='stylesheet' />
+      </head>
       <body className='bg-navy text-cream font-body antialiased flex flex-col min-h-screen'>
         {children}
       </body>
