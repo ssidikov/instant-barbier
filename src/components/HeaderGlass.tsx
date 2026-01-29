@@ -97,34 +97,40 @@ export default function HeaderGlass() {
           : 'transparent',
         backdropFilter: scrolled ? 'blur(24px) saturate(200%)' : 'none',
         WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(200%)' : 'none',
-        borderBottom: scrolled
-          ? '1px solid rgba(156, 131, 88, 0.4)'
-          : '1px solid transparent',
+        borderBottom: scrolled ? '1px solid rgba(156, 131, 88, 0.4)' : '1px solid transparent',
         boxShadow: scrolled
           ? '0 8px 32px rgba(11, 22, 34, 0.15), 0 2px 8px rgba(156, 131, 88, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 0 rgba(156, 131, 88, 0.1)'
           : 'none',
       }}>
-      
       {/* Liquid glass shimmer/refraction effect - only on scroll */}
-      <div 
+      <div
         className={`absolute inset-0 pointer-events-none overflow-hidden transition-opacity duration-500 ${scrolled ? 'opacity-40' : 'opacity-0'}`}
         style={{
-          background: 'linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.4) 45%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.4) 55%, transparent 60%)',
+          background:
+            'linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.4) 45%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.4) 55%, transparent 60%)',
           backgroundSize: '200% 100%',
           animation: scrolled ? 'shimmer 8s ease-in-out infinite' : 'none',
         }}
       />
-      
+
       {/* Top highlight line - only visible on scroll */}
-      <div className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/60 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`} />
-      
+      <div
+        className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/60 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`}
+      />
+
       {/* Gold accent line - only visible on scroll */}
-      <div className={`absolute top-[1px] left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold/40 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`} />
+      <div
+        className={`absolute top-[1px] left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold/40 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`}
+      />
 
       <div className='max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative'>
         {/* Decorative glass side elements - only on scroll */}
-        <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-24 h-px bg-gradient-to-r from-gold/50 via-gold/20 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`} />
-        <div className={`absolute right-0 top-1/2 -translate-y-1/2 w-24 h-px bg-gradient-to-l from-gold/50 via-gold/20 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`} />
+        <div
+          className={`absolute left-0 top-1/2 -translate-y-1/2 w-24 h-px bg-gradient-to-r from-gold/50 via-gold/20 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`}
+        />
+        <div
+          className={`absolute right-0 top-1/2 -translate-y-1/2 w-24 h-px bg-gradient-to-l from-gold/50 via-gold/20 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`}
+        />
 
         {/* Logo / Brand Name */}
         <Link href='/' className='flex items-center relative z-10'>
@@ -187,7 +193,8 @@ export default function HeaderGlass() {
       <div
         className={`lg:hidden absolute top-24 left-0 right-0 transition-all duration-500 ${isMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4'}`}
         style={{
-          background: 'linear-gradient(180deg, rgba(244, 241, 236, 0.95) 0%, rgba(244, 241, 236, 0.9) 100%)',
+          background:
+            'linear-gradient(180deg, rgba(244, 241, 236, 0.95) 0%, rgba(244, 241, 236, 0.9) 100%)',
           backdropFilter: 'blur(24px) saturate(200%)',
           WebkitBackdropFilter: 'blur(24px) saturate(200%)',
           borderBottom: '1px solid rgba(156, 131, 88, 0.3)',
@@ -219,8 +226,12 @@ export default function HeaderGlass() {
       {/* CSS for shimmer animation */}
       <style jsx>{`
         @keyframes shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
+          0% {
+            background-position: 200% 0;
+          }
+          100% {
+            background-position: -200% 0;
+          }
         }
       `}</style>
     </header>

@@ -4,11 +4,7 @@ type ButtonLightProps = {
   variant?: 'primary' | 'secondary'
 }
 
-export default function ButtonLight({
-  children,
-  href,
-  variant = 'primary',
-}: ButtonLightProps) {
+export default function ButtonLight({ children, href, variant = 'primary' }: ButtonLightProps) {
   const isPrimary = variant === 'primary'
 
   return (
@@ -16,9 +12,7 @@ export default function ButtonLight({
       {/* Background layers */}
       <span
         className={`absolute inset-0 border-2 transition-all duration-500 group-hover:scale-105 ${
-          isPrimary
-            ? 'bg-navy-light border-navy-light'
-            : 'bg-transparent border-navy-light'
+          isPrimary ? 'bg-navy-light border-navy-light' : 'bg-transparent border-navy-light'
         }`}
       />
       <span
