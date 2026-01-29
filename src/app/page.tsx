@@ -11,8 +11,113 @@ import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 
 gsap.registerPlugin(ScrollTrigger)
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ANIMATION VARIANTS - Framer Motion
+// ═══════════════════════════════════════════════════════════════════════════
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.8, ease: "easeOut" as const }
+  }
+}
+
+const fadeInLeft = {
+  hidden: { opacity: 0, x: -80 },
+  visible: { 
+    opacity: 1, 
+    x: 0,
+    transition: { duration: 0.8, ease: "easeOut" as const }
+  }
+}
+
+const fadeInRight = {
+  hidden: { opacity: 0, x: 80 },
+  visible: { 
+    opacity: 1, 
+    x: 0,
+    transition: { duration: 0.8, ease: "easeOut" as const }
+  }
+}
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { 
+    opacity: 1, 
+    scale: 1,
+    transition: { duration: 0.6, ease: "easeOut" as const }
+  }
+}
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2
+    }
+  }
+}
+
+const cardHover = {
+  rest: { scale: 1, y: 0 },
+  hover: { 
+    scale: 1.02, 
+    y: -8,
+    transition: { duration: 0.3, ease: "easeOut" as const }
+  }
+}
+
+const imageReveal = {
+  hidden: { clipPath: "inset(0 100% 0 0)" },
+  visible: { 
+    clipPath: "inset(0 0% 0 0)",
+    transition: { duration: 1.2, ease: "easeInOut" as const }
+  }
+}
+
+// Reveal on scroll component
+function RevealOnScroll({ children, className = "", delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+      transition={{ duration: 0.8, delay, ease: "easeOut" }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+// Parallax Image component
+function ParallaxImage({ src, alt, className = "" }: { src: string, alt: string, className?: string }) {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  })
+  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"])
+  
+  return (
+    <motion.div ref={ref} className={`overflow-hidden ${className}`}>
+      <motion.div style={{ y }} className="w-full h-full">
+        <Image src={src} alt={alt} fill className="object-cover" />
+      </motion.div>
+    </motion.div>
+  )
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 // DATA - Données du site
@@ -155,31 +260,58 @@ function SectionTitle({
   title: string
   className?: string
 }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-50px" })
+  
   return (
-    <div className={`text-center mb-16 ${className}`}>
+    <motion.div 
+      ref={ref}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={staggerContainer}
+      className={`text-center mb-16 ${className}`}
+    >
       {subtitle && (
-        <div className='flex items-center justify-center gap-4 mb-4'>
-          <span className='w-12 h-px bg-gold/40' />
+        <motion.div variants={fadeInUp} className='flex items-center justify-center gap-4 mb-4'>
+          <motion.span 
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className='w-12 h-px bg-gold/40 origin-right' 
+          />
           <span className='text-gold text-xs uppercase tracking-[0.3em]'>{subtitle}</span>
-          <span className='w-12 h-px bg-gold/40' />
-        </div>
+          <motion.span 
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className='w-12 h-px bg-gold/40 origin-left' 
+          />
+        </motion.div>
       )}
-      <h2 className='text-3xl md:text-5xl font-title text-gold'>{title}</h2>
-    </div>
+      <motion.h2 
+        variants={fadeInUp}
+        className='text-3xl md:text-5xl font-title text-gold'
+      >
+        {title}
+      </motion.h2>
+    </motion.div>
   )
 }
 
-function StarRating({ rating }: { rating: number }) {
+function StarRating({ rating, animate = false }: { rating: number, animate?: boolean }) {
   return (
     <div className='flex gap-1'>
       {[...Array(5)].map((_, i) => (
-        <svg
+        <motion.svg
           key={i}
+          initial={animate ? { opacity: 0, scale: 0, rotate: -180 } : {}}
+          animate={animate ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+          transition={{ duration: 0.4, delay: i * 0.1 }}
           className={`w-4 h-4 ${i < rating ? 'text-gold' : 'text-cream/20'}`}
           fill='currentColor'
           viewBox='0 0 20 20'>
           <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
-        </svg>
+        </motion.svg>
       ))}
     </div>
   )
@@ -467,35 +599,73 @@ export default function Home() {
           <Container>
             <div className='grid lg:grid-cols-2 gap-12 lg:gap-20 items-center'>
               {/* Image Side */}
-              <div className='relative'>
-                <div className='relative aspect-4/5 overflow-hidden'>
+              <RevealOnScroll className='relative'>
+                <motion.div 
+                  className='relative aspect-4/5 overflow-hidden'
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.4 }}
+                >
                   <div className="absolute inset-0 bg-[url('/images/about-barbershop.jpg')] bg-cover bg-center" />
                   <div className='absolute inset-0 bg-navy/20' />
-                </div>
-                {/* Decorative Frame */}
-                <div className='absolute -bottom-4 -right-4 w-full h-full border border-gold/30 -z-10' />
-                {/* Experience Badge */}
-                <div className='absolute -bottom-6 -left-6 bg-gold text-navy p-6 text-center'>
+                  {/* Shine effect on hover */}
+                  <motion.div 
+                    className='absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full'
+                    whileHover={{ translateX: "100%" }}
+                    transition={{ duration: 0.6 }}
+                  />
+                </motion.div>
+                {/* Decorative Frame - Animated */}
+                <motion.div 
+                  initial={{ opacity: 0, x: 20, y: 20 }}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  viewport={{ once: true }}
+                  className='absolute -bottom-4 -right-4 w-full h-full border border-gold/30 -z-10' 
+                />
+                {/* Experience Badge - Animated */}
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.5, type: "spring" }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.1, rotate: -5 }}
+                  className='absolute -bottom-6 -left-6 bg-gold text-navy p-6 text-center cursor-default'
+                >
                   <span className='block text-4xl font-title font-bold'>23+</span>
                   <span className='text-xs uppercase tracking-wider'>Ans d&apos;expérience</span>
-                </div>
-              </div>
+                </motion.div>
+              </RevealOnScroll>
 
               {/* Content Side */}
-              <div className='space-y-8'>
+              <motion.div 
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={staggerContainer}
+                className='space-y-8'
+              >
                 <div>
-                  <div className='flex items-center gap-3 mb-4'>
-                    <span className='w-10 h-px bg-gold' />
+                  <motion.div variants={fadeInUp} className='flex items-center gap-3 mb-4'>
+                    <motion.span 
+                      initial={{ scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      transition={{ duration: 0.6 }}
+                      viewport={{ once: true }}
+                      className='w-10 h-px bg-gold origin-left' 
+                    />
                     <span className='text-gold text-xs uppercase tracking-[0.3em]'>À propos</span>
-                  </div>
-                  <h2 className='text-3xl md:text-5xl font-title text-gold leading-tight'>
+                  </motion.div>
+                  <motion.h2 
+                    variants={fadeInUp}
+                    className='text-3xl md:text-5xl font-title text-gold leading-tight'
+                  >
                     L&apos;Art du Barbier
                     <br />
                     Parisien
-                  </h2>
+                  </motion.h2>
                 </div>
 
-                <div className='space-y-6 text-cream/80 leading-relaxed'>
+                <motion.div variants={fadeInUp} className='space-y-6 text-cream/80 leading-relaxed'>
                   <p>
                     Niché au cœur du Marais, L&apos;Instant Barbier est un sanctuaire dédié à
                     l&apos;homme moderne. Dans un cadre sobre et raffiné, nos maîtres barbiers
@@ -506,35 +676,53 @@ export default function Home() {
                     tendances contemporaines. Des coupes précises aux soins de barbe, chaque
                     prestation est pensée pour révéler votre style unique.
                   </p>
-                </div>
+                </motion.div>
 
-                {/* Features */}
-                <div className='grid grid-cols-2 gap-6 pt-4'>
-                  <div className='flex items-center gap-3'>
-                    <span className='text-gold text-2xl'>✓</span>
-                    <span className='text-cream/90 text-sm'>Produits Premium</span>
-                  </div>
-                  <div className='flex items-center gap-3'>
-                    <span className='text-gold text-2xl'>✓</span>
-                    <span className='text-cream/90 text-sm'>Maîtres Barbiers</span>
-                  </div>
-                  <div className='flex items-center gap-3'>
-                    <span className='text-gold text-2xl'>✓</span>
-                    <span className='text-cream/90 text-sm'>Cadre Élégant</span>
-                  </div>
-                  <div className='flex items-center gap-3'>
-                    <span className='text-gold text-2xl'>✓</span>
-                    <span className='text-cream/90 text-sm'>Service Personnalisé</span>
-                  </div>
-                </div>
+                {/* Features - Staggered */}
+                <motion.div 
+                  variants={staggerContainer}
+                  className='grid grid-cols-2 gap-6 pt-4'
+                >
+                  {[
+                    'Produits Premium',
+                    'Maîtres Barbiers',
+                    'Cadre Élégant',
+                    'Service Personnalisé'
+                  ].map((feature, i) => (
+                    <motion.div 
+                      key={i}
+                      variants={fadeInUp}
+                      whileHover={{ x: 5 }}
+                      className='flex items-center gap-3'
+                    >
+                      <motion.span 
+                        initial={{ scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        transition={{ delay: i * 0.1 }}
+                        viewport={{ once: true }}
+                        className='text-gold text-2xl'
+                      >
+                        ✓
+                      </motion.span>
+                      <span className='text-cream/90 text-sm'>{feature}</span>
+                    </motion.div>
+                  ))}
+                </motion.div>
 
-                <Link
-                  href='/salon'
-                  className='inline-flex items-center gap-2 text-gold text-sm uppercase tracking-widest hover:text-cream transition-colors group'>
-                  En savoir plus
-                  <span className='group-hover:translate-x-1 transition-transform'>→</span>
-                </Link>
-              </div>
+                <motion.div variants={fadeInUp}>
+                  <Link
+                    href='/salon'
+                    className='inline-flex items-center gap-2 text-gold text-sm uppercase tracking-widest hover:text-cream transition-colors group'>
+                    En savoir plus
+                    <motion.span 
+                      className='inline-block'
+                      whileHover={{ x: 5 }}
+                    >
+                      →
+                    </motion.span>
+                  </Link>
+                </motion.div>
+              </motion.div>
             </div>
           </Container>
         </Section>
@@ -546,32 +734,65 @@ export default function Home() {
           <Container>
             <SectionTitle subtitle='Nos Services' title='Prestations' />
 
-            <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-8'>
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={staggerContainer}
+              className='grid sm:grid-cols-2 lg:grid-cols-4 gap-8'
+            >
               {services.map((service, index) => (
-                <article
+                <motion.article
                   key={index}
-                  className='group text-center p-8 border border-gold/20 hover:border-gold/50 hover:bg-gold/5 transition-all duration-300'>
+                  variants={fadeInUp}
+                  initial="rest"
+                  whileHover="hover"
+                  className='group text-center p-8 border border-gold/20 hover:border-gold/50 hover:bg-gold/5 transition-all duration-300'
+                >
                   {/* Icon */}
                   <div className='flex justify-center mb-6'>
-                    <div className='text-gold group-hover:scale-110 transition-transform duration-300'>
+                    <motion.div 
+                      className='text-gold'
+                      variants={{
+                        rest: { scale: 1, rotate: 0 },
+                        hover: { scale: 1.2, rotate: 5 }
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
                       {service.icon}
-                    </div>
+                    </motion.div>
                   </div>
 
                   {/* Title */}
-                  <h3 className='text-xl font-title text-gold mb-4 uppercase tracking-wide'>
+                  <motion.h3 
+                    className='text-xl font-title text-gold mb-4 uppercase tracking-wide'
+                    variants={{
+                      rest: { y: 0 },
+                      hover: { y: -3 }
+                    }}
+                  >
                     {service.title}
-                  </h3>
+                  </motion.h3>
 
                   {/* Description */}
                   <p className='text-cream/70 text-sm leading-relaxed'>{service.description}</p>
-                </article>
+                  
+                  {/* Decorative line on hover */}
+                  <motion.div 
+                    className='mt-6 h-px bg-gold/50 mx-auto'
+                    variants={{
+                      rest: { width: 0 },
+                      hover: { width: "50%" }
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.article>
               ))}
-            </div>
+            </motion.div>
 
-            <div className='text-center mt-12'>
+            <RevealOnScroll delay={0.3} className='text-center mt-12'>
               <Button href='/prestations'>Voir les tarifs</Button>
-            </div>
+            </RevealOnScroll>
           </Container>
         </Section>
 
@@ -582,34 +803,64 @@ export default function Home() {
           <Container>
             <SectionTitle subtitle='Les Experts' title='Notre Équipe' />
 
-            <div className='grid md:grid-cols-3 gap-8'>
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={staggerContainer}
+              className='grid md:grid-cols-3 gap-8'
+            >
               {team.map((member, index) => (
-                <article key={index} className='group relative overflow-hidden'>
+                <motion.article 
+                  key={index} 
+                  variants={fadeInUp}
+                  whileHover={{ y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className='group relative overflow-hidden'
+                >
                   {/* Image */}
                   <div className='relative aspect-3/4 overflow-hidden bg-navy'>
-                    <div
-                      className='absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105'
+                    <motion.div
+                      className='absolute inset-0 bg-cover bg-center'
                       style={{ backgroundImage: `url(${member.image})` }}
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
                     />
                     <div className='absolute inset-0 bg-linear-to-t from-navy via-navy/20 to-transparent' />
                   </div>
 
-                  {/* Info Overlay */}
-                  <div className='absolute bottom-0 left-0 right-0 p-6 text-center'>
-                    <div className='bg-navy/80 backdrop-blur-sm border border-gold/30 p-4'>
+                  {/* Info Overlay - Animated */}
+                  <motion.div 
+                    className='absolute bottom-0 left-0 right-0 p-6 text-center'
+                    initial={{ y: 20, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    viewport={{ once: true }}
+                  >
+                    <motion.div 
+                      className='bg-navy/80 backdrop-blur-sm border border-gold/30 p-4'
+                      whileHover={{ borderColor: "rgba(175, 151, 120, 0.6)" }}
+                    >
                       <h3 className='text-xl font-title text-gold mb-1'>{member.name}</h3>
                       <p className='text-cream/90 text-sm mb-2'>{member.role}</p>
                       <p className='text-gold/70 text-xs uppercase tracking-wider'>
                         {member.experience}
                       </p>
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
 
-                  {/* Decorative Corner */}
-                  <div className='absolute top-4 right-4 w-8 h-8 border-t border-r border-gold/40' />
-                </article>
+                  {/* Decorative Corner - Animated */}
+                  <motion.div 
+                    className='absolute top-4 right-4 w-8 h-8 border-t border-r border-gold/40'
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.2, rotate: 45 }}
+                  />
+                </motion.article>
               ))}
-            </div>
+            </motion.div>
           </Container>
         </Section>
 
@@ -621,53 +872,131 @@ export default function Home() {
             <SectionTitle subtitle='Notre Travail' title='Galerie' />
 
             {/* Gallery Grid */}
-            <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={staggerContainer}
+              className='grid grid-cols-2 md:grid-cols-3 gap-4'
+            >
               {/* Large Image */}
-              <div className='col-span-2 row-span-2 relative aspect-square md:aspect-auto overflow-hidden group'>
-                <div
-                  className='absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105'
+              <motion.div 
+                variants={scaleIn}
+                whileHover={{ scale: 0.98 }}
+                className='col-span-2 row-span-2 relative aspect-square md:aspect-auto overflow-hidden group cursor-pointer'
+              >
+                <motion.div
+                  className='absolute inset-0 bg-cover bg-center'
                   style={{ backgroundImage: `url(${galleryImages[0].src})` }}
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
                 />
                 <div className='absolute inset-0 bg-navy/20 group-hover:bg-navy/10 transition-colors' />
-              </div>
+                {/* View overlay */}
+                <motion.div 
+                  className='absolute inset-0 flex items-center justify-center bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity'
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                >
+                  <motion.span 
+                    className='text-gold text-4xl'
+                    initial={{ scale: 0 }}
+                    whileHover={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    +
+                  </motion.span>
+                </motion.div>
+              </motion.div>
 
               {/* Smaller Images */}
               {galleryImages.slice(1).map((image, index) => (
-                <div key={index} className='relative aspect-square overflow-hidden group'>
-                  <div
-                    className='absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105'
+                <motion.div 
+                  key={index} 
+                  variants={scaleIn}
+                  whileHover={{ scale: 0.95 }}
+                  className='relative aspect-square overflow-hidden group cursor-pointer'
+                >
+                  <motion.div
+                    className='absolute inset-0 bg-cover bg-center'
                     style={{ backgroundImage: `url(${image.src})` }}
+                    whileHover={{ scale: 1.15 }}
+                    transition={{ duration: 0.5 }}
                   />
                   <div className='absolute inset-0 bg-navy/20 group-hover:bg-navy/10 transition-colors' />
-                </div>
+                  {/* View overlay */}
+                  <div className='absolute inset-0 flex items-center justify-center bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity'>
+                    <span className='text-gold text-2xl'>+</span>
+                  </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            <div className='text-center mt-10'>
+            <RevealOnScroll delay={0.3} className='text-center mt-10'>
               <Link
                 href='/galerie'
                 className='inline-flex items-center gap-2 text-gold text-sm uppercase tracking-widest hover:text-cream transition-colors group'>
                 Voir plus
-                <span className='group-hover:translate-x-1 transition-transform'>→</span>
+                <motion.span 
+                  className='inline-block'
+                  whileHover={{ x: 5 }}
+                >
+                  →
+                </motion.span>
               </Link>
-            </div>
+            </RevealOnScroll>
           </Container>
         </Section>
 
         {/* ═══════════════════════════════════════════════════════════════════
-          INTERIOR IMAGE BREAK
+          INTERIOR IMAGE BREAK - with Parallax
       ═══════════════════════════════════════════════════════════════════ */}
-        <section className='relative h-[50vh] md:h-[60vh]'>
-          <div className="absolute inset-0 bg-[url('/images/salon-interior-1.jpg')] bg-cover bg-center bg-fixed" />
+        <section className='relative h-[50vh] md:h-[60vh] overflow-hidden'>
+          <motion.div 
+            className="absolute inset-0 bg-[url('/images/salon-interior-1.jpg')] bg-cover bg-center"
+            initial={{ scale: 1.2 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 1.5 }}
+            viewport={{ once: true }}
+            style={{ backgroundAttachment: 'fixed' }}
+          />
           <div className='absolute inset-0 bg-navy/60' />
-          <div className='absolute inset-0 flex items-center justify-center'>
+          <motion.div 
+            className='absolute inset-0 flex items-center justify-center'
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
             <div className='text-center'>
-              <p className='text-gold text-xs uppercase tracking-[0.4em] mb-4'>Le Marais, Paris</p>
-              <h2 className='text-4xl md:text-6xl font-title text-gold'>
+              <motion.p 
+                initial={{ y: 30, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className='text-gold text-xs uppercase tracking-[0.4em] mb-4'
+              >
+                Le Marais, Paris
+              </motion.p>
+              <motion.h2 
+                initial={{ y: 50, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true }}
+                className='text-4xl md:text-6xl font-title text-gold'
+              >
                 Un Cadre d&apos;Exception
-              </h2>
+              </motion.h2>
+              {/* Decorative line */}
+              <motion.div 
+                className='mt-8 mx-auto h-px bg-gold/50'
+                initial={{ width: 0 }}
+                whileInView={{ width: 100 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                viewport={{ once: true }}
+              />
             </div>
-          </div>
+          </motion.div>
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
@@ -677,36 +1006,63 @@ export default function Home() {
           <Container>
             <SectionTitle subtitle='Témoignages' title='Avis Clients' />
 
-            <div className='grid md:grid-cols-3 gap-8'>
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={staggerContainer}
+              className='grid md:grid-cols-3 gap-8'
+            >
               {reviews.map((review, index) => (
-                <article key={index} className='bg-dark/50 border border-gold/20 p-8 relative'>
-                  {/* Quote Icon */}
-                  <div className='absolute -top-4 left-8'>
+                <motion.article 
+                  key={index} 
+                  variants={fadeInUp}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                  className='bg-dark/50 border border-gold/20 p-8 relative hover:border-gold/40 cursor-default'
+                >
+                  {/* Quote Icon - Animated */}
+                  <motion.div 
+                    className='absolute -top-4 left-8'
+                    initial={{ scale: 0, rotate: -45 }}
+                    whileInView={{ scale: 1, rotate: 0 }}
+                    transition={{ type: "spring", stiffness: 200, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
                     <span className='text-gold text-5xl font-title'>&ldquo;</span>
-                  </div>
+                  </motion.div>
 
                   {/* Content */}
                   <div className='pt-4'>
-                    <p className='text-cream/80 text-sm leading-relaxed mb-6 italic'>
+                    <motion.p 
+                      className='text-cream/80 text-sm leading-relaxed mb-6 italic'
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                      viewport={{ once: true }}
+                    >
                       {review.text}
-                    </p>
+                    </motion.p>
 
                     {/* Author */}
                     <div className='flex items-center justify-between'>
                       <div className='flex items-center gap-3'>
-                        <div className='w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center'>
+                        <motion.div 
+                          className='w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center'
+                          whileHover={{ scale: 1.1, backgroundColor: "rgba(175, 151, 120, 0.4)" }}
+                        >
                           <span className='text-gold text-sm font-title'>
                             {review.author.charAt(0)}
                           </span>
-                        </div>
+                        </motion.div>
                         <span className='text-cream text-sm'>{review.author}</span>
                       </div>
-                      <StarRating rating={review.rating} />
+                      <StarRating rating={review.rating} animate={true} />
                     </div>
                   </div>
-                </article>
+                </motion.article>
               ))}
-            </div>
+            </motion.div>
           </Container>
         </Section>
 
@@ -717,45 +1073,79 @@ export default function Home() {
           <Container>
             <div className='grid lg:grid-cols-2 gap-12 lg:gap-20 items-center'>
               {/* Hours Table */}
-              <div className='order-2 lg:order-1'>
-                <div className='flex items-center gap-3 mb-6'>
-                  <span className='w-10 h-px bg-gold' />
+              <motion.div 
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                variants={staggerContainer}
+                className='order-2 lg:order-1'
+              >
+                <motion.div variants={fadeInUp} className='flex items-center gap-3 mb-6'>
+                  <motion.span 
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    className='w-10 h-px bg-gold origin-left' 
+                  />
                   <span className='text-gold text-xs uppercase tracking-[0.3em]'>Horaires</span>
-                </div>
+                </motion.div>
 
-                <h2 className='text-3xl md:text-4xl font-title text-gold mb-10'>
+                <motion.h2 
+                  variants={fadeInUp}
+                  className='text-3xl md:text-4xl font-title text-gold mb-10'
+                >
                   Horaires d&apos;Ouverture
-                </h2>
+                </motion.h2>
 
-                <div className='space-y-4'>
+                <motion.div variants={staggerContainer} className='space-y-4'>
                   {hours.map((item, index) => (
-                    <div
+                    <motion.div
                       key={index}
-                      className={`flex justify-between items-center py-3 border-b border-gold/10 ${
+                      variants={fadeInUp}
+                      whileHover={{ x: 10, backgroundColor: "rgba(175, 151, 120, 0.05)" }}
+                      transition={{ duration: 0.2 }}
+                      className={`flex justify-between items-center py-3 px-2 border-b border-gold/10 ${
                         item.hours === 'Fermé' ? 'opacity-50' : ''
                       }`}>
                       <span className='text-cream/90'>{item.day}</span>
-                      <span className={`${item.hours === 'Fermé' ? 'text-cream/50' : 'text-gold'}`}>
+                      <motion.span 
+                        className={`${item.hours === 'Fermé' ? 'text-cream/50' : 'text-gold'}`}
+                        whileHover={{ scale: 1.05 }}
+                      >
                         {item.hours}
-                      </span>
-                    </div>
+                      </motion.span>
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
 
-                <div className='mt-10'>
+                <motion.div 
+                  variants={fadeInUp}
+                  className='mt-10'
+                >
                   <Button href={PLANITY_URL}>Réserver un créneau</Button>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
               {/* Image */}
-              <div className='relative order-1 lg:order-2'>
-                <div className='relative aspect-4/3 overflow-hidden'>
+              <RevealOnScroll className='relative order-1 lg:order-2'>
+                <motion.div 
+                  className='relative aspect-4/3 overflow-hidden'
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.4 }}
+                >
                   <div className="absolute inset-0 bg-[url('/images/salon-interior-2.jpg')] bg-cover bg-center" />
                   <div className='absolute inset-0 bg-navy/20' />
-                </div>
-                {/* Decorative Frame */}
-                <div className='absolute -top-4 -left-4 w-full h-full border border-gold/30 -z-10' />
-              </div>
+                </motion.div>
+                {/* Decorative Frame - Animated */}
+                <motion.div 
+                  initial={{ opacity: 0, x: -20, y: -20 }}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  viewport={{ once: true }}
+                  className='absolute -top-4 -left-4 w-full h-full border border-gold/30 -z-10' 
+                />
+              </RevealOnScroll>
             </div>
           </Container>
         </Section>
@@ -769,87 +1159,120 @@ export default function Home() {
 
             <div className='grid lg:grid-cols-2 gap-12 lg:gap-20'>
               {/* Map / Image Side */}
-              <div className='relative'>
-                <div className='relative aspect-4/3 overflow-hidden'>
+              <RevealOnScroll className='relative'>
+                <motion.div 
+                  className='relative aspect-4/3 overflow-hidden'
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.4 }}
+                >
                   <div className="absolute inset-0 bg-[url('/images/marais-paris.jpg')] bg-cover bg-center" />
                   <div className='absolute inset-0 bg-navy/40' />
-                </div>
+                </motion.div>
 
-                {/* Info Overlay */}
-                <div className='absolute bottom-0 left-0 right-0 p-6'>
-                  <div className='bg-navy/90 backdrop-blur-sm border border-gold/30 p-6 space-y-4'>
-                    <div>
-                      <p className='text-gold text-xs uppercase tracking-widest mb-2'>Adresse</p>
-                      <p className='text-cream'>43 rue de Turenne, 75003 Paris</p>
-                    </div>
-                    <div>
-                      <p className='text-gold text-xs uppercase tracking-widest mb-2'>Téléphone</p>
-                      <p className='text-cream'>+33 1 42 72 00 00</p>
-                    </div>
-                    <div>
-                      <p className='text-gold text-xs uppercase tracking-widest mb-2'>Email</p>
-                      <p className='text-cream'>contact@linstant-barbier.fr</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                {/* Info Overlay - Animated */}
+                <motion.div 
+                  className='absolute bottom-0 left-0 right-0 p-6'
+                  initial={{ y: 50, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  viewport={{ once: true }}
+                >
+                  <motion.div 
+                    className='bg-navy/90 backdrop-blur-sm border border-gold/30 p-6 space-y-4'
+                    whileHover={{ borderColor: "rgba(175, 151, 120, 0.5)" }}
+                  >
+                    {[
+                      { label: 'Adresse', value: '43 rue de Turenne, 75003 Paris' },
+                      { label: 'Téléphone', value: '+33 1 42 72 00 00' },
+                      { label: 'Email', value: 'contact@linstant-barbier.fr' }
+                    ].map((item, i) => (
+                      <motion.div 
+                        key={i}
+                        initial={{ x: -20, opacity: 0 }}
+                        whileInView={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.4 + i * 0.1 }}
+                        viewport={{ once: true }}
+                      >
+                        <p className='text-gold text-xs uppercase tracking-widest mb-2'>{item.label}</p>
+                        <p className='text-cream'>{item.value}</p>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </motion.div>
+              </RevealOnScroll>
 
               {/* Form Side */}
-              <div>
-                <p className='text-cream/70 mb-8 leading-relaxed'>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                variants={staggerContainer}
+              >
+                <motion.p variants={fadeInUp} className='text-cream/70 mb-8 leading-relaxed'>
                   Remplissez vos coordonnées et nous vous recontacterons pour planifier votre
                   prochain rendez-vous.
-                </p>
+                </motion.p>
 
-                <form onSubmit={handleSubmit} className='space-y-6'>
-                  <div className='grid sm:grid-cols-2 gap-6'>
-                    <div>
-                      <input
+                <motion.form 
+                  variants={staggerContainer}
+                  onSubmit={handleSubmit} 
+                  className='space-y-6'
+                >
+                  <motion.div variants={fadeInUp} className='grid sm:grid-cols-2 gap-6'>
+                    <motion.div whileFocus={{ scale: 1.02 }}>
+                      <motion.input
+                        whileFocus={{ borderColor: "rgba(175, 151, 120, 1)" }}
                         type='text'
                         placeholder='Votre nom'
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         className='w-full bg-transparent border border-gold/30 text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors'
                       />
-                    </div>
-                    <div>
-                      <input
+                    </motion.div>
+                    <motion.div whileFocus={{ scale: 1.02 }}>
+                      <motion.input
+                        whileFocus={{ borderColor: "rgba(175, 151, 120, 1)" }}
                         type='tel'
                         placeholder='Téléphone'
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className='w-full bg-transparent border border-gold/30 text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors'
                       />
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
 
-                  <div>
-                    <input
+                  <motion.div variants={fadeInUp}>
+                    <motion.input
+                      whileFocus={{ borderColor: "rgba(175, 151, 120, 1)" }}
                       type='email'
                       placeholder='Email'
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className='w-full bg-transparent border border-gold/30 text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors'
                     />
-                  </div>
+                  </motion.div>
 
-                  <div>
-                    <textarea
+                  <motion.div variants={fadeInUp}>
+                    <motion.textarea
+                      whileFocus={{ borderColor: "rgba(175, 151, 120, 1)" }}
                       placeholder='Message'
                       rows={4}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       className='w-full bg-transparent border border-gold/30 text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors resize-none'
                     />
-                  </div>
+                  </motion.div>
 
-                  <button
+                  <motion.button
+                    variants={fadeInUp}
+                    whileHover={{ scale: 1.02, backgroundColor: "rgba(175, 151, 120, 0.9)" }}
+                    whileTap={{ scale: 0.98 }}
                     type='submit'
                     className='w-full bg-gold text-navy py-4 uppercase tracking-widest text-sm font-medium hover:bg-gold/90 transition-colors'>
                     Envoyer le message
-                  </button>
-                </form>
-              </div>
+                  </motion.button>
+                </motion.form>
+              </motion.div>
             </div>
           </Container>
         </Section>
@@ -857,12 +1280,31 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           BOTTOM CTA & FOOTER INFO
       ═══════════════════════════════════════════════════════════════════ */}
-        <section className='bg-dark py-16 border-t border-gold/10'>
+        <motion.section 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className='bg-dark py-16 border-t border-gold/10'
+        >
           <Container>
-            <div className='flex flex-col lg:flex-row items-center justify-between gap-8'>
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+              className='flex flex-col lg:flex-row items-center justify-between gap-8'
+            >
               {/* Address */}
-              <div className='flex items-center gap-4'>
-                <div className='w-10 h-10 border border-gold/30 flex items-center justify-center'>
+              <motion.div 
+                variants={fadeInUp}
+                whileHover={{ x: 5 }}
+                className='flex items-center gap-4'
+              >
+                <motion.div 
+                  className='w-10 h-10 border border-gold/30 flex items-center justify-center'
+                  whileHover={{ borderColor: "rgba(175, 151, 120, 0.6)", scale: 1.1 }}
+                >
                   <svg
                     className='w-5 h-5 text-gold'
                     fill='none'
@@ -881,15 +1323,22 @@ export default function Home() {
                       d='M15 11a3 3 0 11-6 0 3 3 0 016 0z'
                     />
                   </svg>
-                </div>
+                </motion.div>
                 <div>
                   <p className='text-cream text-sm'>43 rue de Turenne, 75003 Paris</p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Phone */}
-              <div className='flex items-center gap-4'>
-                <div className='w-10 h-10 border border-gold/30 flex items-center justify-center'>
+              <motion.div 
+                variants={fadeInUp}
+                whileHover={{ x: 5 }}
+                className='flex items-center gap-4'
+              >
+                <motion.div 
+                  className='w-10 h-10 border border-gold/30 flex items-center justify-center'
+                  whileHover={{ borderColor: "rgba(175, 151, 120, 0.6)", scale: 1.1 }}
+                >
                   <svg
                     className='w-5 h-5 text-gold'
                     fill='none'
@@ -902,14 +1351,18 @@ export default function Home() {
                       d='M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'
                     />
                   </svg>
-                </div>
+                </motion.div>
                 <div>
                   <p className='text-cream text-sm'>+33 1 42 72 00 00</p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Logo */}
-              <div className='flex items-center gap-3'>
+              <motion.div 
+                variants={scaleIn}
+                whileHover={{ scale: 1.05 }}
+                className='flex items-center gap-3'
+              >
                 <Image
                   src='/logo/logo-golden.svg'
                   alt="L'Instant Barbier"
@@ -918,28 +1371,36 @@ export default function Home() {
                   className='h-10 w-10 object-contain'
                 />
                 <span className='font-title text-gold text-xl'>L&apos;Instant Barbier</span>
-              </div>
+              </motion.div>
 
               {/* Social Links */}
-              <div className='flex items-center gap-4'>
-                <a
-                  href='#'
-                  className='w-10 h-10 border border-gold/30 flex items-center justify-center hover:bg-gold/10 transition-colors'>
-                  <svg className='w-5 h-5 text-cream/80' fill='currentColor' viewBox='0 0 24 24'>
-                    <path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z' />
-                  </svg>
-                </a>
-                <a
-                  href='#'
-                  className='w-10 h-10 border border-gold/30 flex items-center justify-center hover:bg-gold/10 transition-colors'>
-                  <svg className='w-5 h-5 text-cream/80' fill='currentColor' viewBox='0 0 24 24'>
-                    <path d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z' />
-                  </svg>
-                </a>
-              </div>
-            </div>
+              <motion.div 
+                variants={fadeInUp}
+                className='flex items-center gap-4'
+              >
+                {['instagram', 'twitter'].map((social, i) => (
+                  <motion.a
+                    key={social}
+                    href='#'
+                    whileHover={{ scale: 1.1, backgroundColor: "rgba(175, 151, 120, 0.1)" }}
+                    whileTap={{ scale: 0.95 }}
+                    className='w-10 h-10 border border-gold/30 flex items-center justify-center hover:bg-gold/10 transition-colors'
+                  >
+                    {social === 'instagram' ? (
+                      <svg className='w-5 h-5 text-cream/80' fill='currentColor' viewBox='0 0 24 24'>
+                        <path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z' />
+                      </svg>
+                    ) : (
+                      <svg className='w-5 h-5 text-cream/80' fill='currentColor' viewBox='0 0 24 24'>
+                        <path d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z' />
+                      </svg>
+                    )}
+                  </motion.a>
+                ))}
+              </motion.div>
+            </motion.div>
           </Container>
-        </section>
+        </motion.section>
       </main>
       <Footer />
     </>
