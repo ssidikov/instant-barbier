@@ -22,9 +22,7 @@ interface UseScrollAnimationOptions {
  * @param options Configuration de l'animation
  * @returns Ref à attacher à l'élément à animer
  */
-export function useScrollAnimation<T extends HTMLElement>(
-  options: UseScrollAnimationOptions = {},
-) {
+export function useScrollAnimation<T extends HTMLElement>(options: UseScrollAnimationOptions = {}) {
   const {
     animation = 'fade-up',
     delay = 0,

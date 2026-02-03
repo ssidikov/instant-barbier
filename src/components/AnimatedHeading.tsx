@@ -69,7 +69,7 @@ export default function AnimatedHeading({
     <div className={`relative ${centered ? 'text-center' : ''}`}>
       <motion.div
         ref={ref}
-        initial="hidden"
+        initial='hidden'
         animate={isInView ? 'visible' : 'hidden'}
         variants={headingVariants}>
         <Tag className={`${typographyClasses[level]} ${className}`}>{children}</Tag>
@@ -78,7 +78,7 @@ export default function AnimatedHeading({
       {/* Decorative underline */}
       <motion.div
         className={`h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent mt-6 ${centered ? 'mx-auto w-32' : 'w-24'}`}
-        initial="hidden"
+        initial='hidden'
         animate={isInView ? 'visible' : 'hidden'}
         variants={underlineVariants}
         style={{ originX: centered ? 0.5 : 0 }}

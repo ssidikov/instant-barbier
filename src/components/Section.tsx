@@ -62,7 +62,7 @@ export default function Section({
       ref={ref}
       id={id}
       className={`py-24 ${className}`}
-      initial="hidden"
+      initial='hidden'
       animate={isInView ? 'visible' : 'hidden'}
       variants={variants[animationType]}>
       {children}

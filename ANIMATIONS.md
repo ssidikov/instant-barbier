@@ -11,9 +11,9 @@ import { AnimatedHeading } from '@/components'
 <AnimatedHeading level="h2">Titre animé</AnimatedHeading>
 
 // Options avancées
-<AnimatedHeading 
-  level="h1" 
-  centered 
+<AnimatedHeading
+  level="h1"
+  centered
   delay={0.2}
   className="custom-class"
 >
@@ -22,6 +22,7 @@ import { AnimatedHeading } from '@/components'
 ```
 
 **Props :**
+
 - `level` : 'h1' | 'h2' | 'h3' (défaut: 'h2')
 - `centered` : boolean - Centre le titre
 - `delay` : number - Délai d'animation en secondes
@@ -35,7 +36,7 @@ import { AnimatedHeading } from '@/components'
 import { AnimatedCard } from '@/components'
 
 // Grille de cartes avec stagger
-<div className="grid grid-cols-3 gap-6">
+;<div className='grid grid-cols-3 gap-6'>
   {items.map((item, index) => (
     <AnimatedCard key={item.id} index={index}>
       {/* Contenu de la carte */}
@@ -45,11 +46,13 @@ import { AnimatedCard } from '@/components'
 ```
 
 **Props :**
+
 - `index` : number - Pour effet stagger (délai progressif)
 - `delay` : number - Délai de base
 - `className` : Classes CSS additionnelles
 
 **Effets :**
+
 - ✨ Apparition progressive au scroll
 - 🎯 Hover avec scale et lift
 - 💫 Glow doré au survol
@@ -73,6 +76,7 @@ import { Section } from '@/components'
 ```
 
 **Props :**
+
 - `animate` : boolean - Active l'animation
 - `animationType` : 'fade-up' | 'fade-in' | 'scale'
 - `delay` : number - Délai d'animation
@@ -86,12 +90,11 @@ import { Section } from '@/components'
 ```tsx
 import { Button } from '@/components'
 
-<Button href={PLANITY_URL}>
-  Prendre rendez-vous
-</Button>
+;<Button href={PLANITY_URL}>Prendre rendez-vous</Button>
 ```
 
 **Effets intégrés :**
+
 - 🌟 Glow pulsant au hover
 - ✨ Shimmer animé
 - 📐 Coins décorés
@@ -115,9 +118,7 @@ import { Button } from '@/components'
 ### Utilisation
 
 ```tsx
-<div className="animate-gentle-bounce">
-  Élément qui rebondit doucement
-</div>
+<div className='animate-gentle-bounce'>Élément qui rebondit doucement</div>
 ```
 
 ---
@@ -168,16 +169,19 @@ const containerRef = useScrollStagger<HTMLDivElement>({
 ## Bonnes pratiques
 
 ### Performance
+
 - ✅ Utiliser `once: true` pour les animations (déjà activé)
 - ✅ Les animations GSAP clearProps après execution
 - ✅ Framer Motion optimisé pour scroll
 
 ### Accessibilité
+
 - ✅ `prefers-reduced-motion` respecté automatiquement
 - ✅ Animations non bloquantes
 - ✅ Focus states préservés
 
 ### Délais recommandés
+
 - Sections : 0.2s entre chaque
 - Cartes en grille : 0.1s stagger
 - Éléments séquentiels : 0.15s stagger
@@ -187,24 +191,18 @@ const containerRef = useScrollStagger<HTMLDivElement>({
 ## Exemple complet
 
 ```tsx
-import { 
-  AnimatedHeading, 
-  AnimatedCard, 
-  Section, 
-  Container, 
-  Button 
-} from '@/components'
+import { AnimatedHeading, AnimatedCard, Section, Container, Button } from '@/components'
 
 export default function MyPage() {
   return (
-    <main className="min-h-screen pt-20">
-      <Section animate animationType="fade-up">
+    <main className='min-h-screen pt-20'>
+      <Section animate animationType='fade-up'>
         <Container>
-          <AnimatedHeading level="h1" centered>
+          <AnimatedHeading level='h1' centered>
             Bienvenue
           </AnimatedHeading>
-          
-          <div className="grid grid-cols-3 gap-6 mt-12">
+
+          <div className='grid grid-cols-3 gap-6 mt-12'>
             {services.map((service, i) => (
               <AnimatedCard key={service.id} index={i}>
                 <h3>{service.title}</h3>
@@ -213,10 +211,8 @@ export default function MyPage() {
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <Button href="/contact">
-              Contactez-nous
-            </Button>
+          <div className='text-center mt-12'>
+            <Button href='/contact'>Contactez-nous</Button>
           </div>
         </Container>
       </Section>

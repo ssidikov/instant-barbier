@@ -54,7 +54,7 @@ export default function AnimatedCard({
     <motion.div
       ref={ref}
       className={`group relative ${className}`}
-      initial="hidden"
+      initial='hidden'
       animate={isInView ? 'visible' : 'hidden'}
       variants={cardVariants}
       whileHover={hoverVariants}>
