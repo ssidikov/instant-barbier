@@ -38,7 +38,6 @@ export default function Header() {
       logoRef.current,
       {
         scale: 0,
-        rotation: -180,
         opacity: 0,
         duration: 0.8,
       },
@@ -110,7 +109,7 @@ export default function Header() {
         className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`}
       />
 
-      <div className='max-w-4/5 mx-auto px-6 h-24 flex items-center justify-between relative'>
+      <div className='max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative'>
         {/* Logo / Brand Name */}
         <Link href='/' className='flex items-center relative z-10'>
           <div ref={logoRef} className='relative group'>
@@ -121,8 +120,8 @@ export default function Header() {
               src='/logo/logo-golden.svg'
               alt="L'Instant Barbier"
               width={112}
-              height={112}
-              className='h-28 w-80 object-contain relative z-10 transition-all duration-700 drop-shadow-[0_2px_8px_rgba(156,131,88,0.12)]'
+              height={288}
+              className='h-28 w-72 object-contain relative z-10 transition-all duration-700 drop-shadow-[0_2px_8px_rgba(156,131,88,0.12)]'
               priority
             />
           </div>

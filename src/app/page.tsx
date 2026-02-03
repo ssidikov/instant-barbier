@@ -478,7 +478,9 @@ export default function Home() {
             <div ref={parallaxImgRef} className='absolute inset-0 scale-110'>
               <div className="absolute inset-0 bg-[url('/images/hero-barbershop.jpg')] bg-cover bg-center" />
               <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy/30' />
-              <div className='absolute inset-0 bg-gradient-to-b from-navy/50 via-transparent to-navy/80' />
+              <div className='absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/30 to-navy/85' />
+              {/* Top gradient for header area */}
+              <div className='absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-navy/80 via-navy/50 to-transparent' />
             </div>
           </div>
 
@@ -493,8 +495,8 @@ export default function Home() {
           <div className='absolute inset-0 bg-[linear-gradient(rgba(156,131,88,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(156,131,88,0.03)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]' />
 
           {/* Content */}
-          <Container className='lg:pr-148 relative z-10 pt-24 md:pt-32 lg:pt-0'>
-            <div className='max-w-3xl mr-auto space-y-10 md:space-y-8 lg:space-y-10'>
+          <Container className='pr-148 relative z-10 h-full flex items-center'>
+            <div className='max-w-3xl mr-auto space-y-8 md:space-y-10 py-32 md:py-20'>
               {/* Subtitle with animated line */}
               <div ref={heroSubtitleRef} className='flex items-center gap-4'>
                 <span className='w-16 h-[1px] bg-gradient-to-r from-transparent to-gold' />
