@@ -108,21 +108,19 @@ export default function Header() {
       {/* Animated top gold line */}
       <div className='absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-transparent' />
 
-      <div className='max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative'>
-        {/* Decorative elements */}
-        <div className='absolute left-0 top-1/2 -translate-y-1/2 w-20 h-px bg-gradient-to-r from-gold/40 to-transparent' />
-        <div className='absolute right-0 top-1/2 -translate-y-1/2 w-20 h-px bg-gradient-to-l from-gold/40 to-transparent' />
-
+      <div className='max-w-4/5 mx-auto px-6 h-24 flex items-center justify-between relative'>
         {/* Logo / Brand Name */}
         <Link href='/' className='flex items-center relative z-10'>
           <div ref={logoRef} className='relative group'>
-            <div className='absolute inset-0 bg-gold/20 blur-xl group-hover:bg-gold/30 transition-all duration-500 rounded-full' />
+            {/* Multiple glow layers for depth */}
+            <div className='absolute inset-0 bg-gold/20 blur-2xl group-hover:bg-gold/40 transition-all duration-700 rounded-full scale-150' />
+            <div className='absolute inset-0 bg-gold/10 blur-xl group-hover:bg-gold/25 transition-all duration-500 rounded-full animate-pulse' />
             <Image
               src='/logo/logo-golden.svg'
               alt="L'Instant Barbier"
-              width={90}
-              height={90}
-              className='h-20 w-20 object-contain relative z-10 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3'
+              width={112}
+              height={112}
+              className='h-28 w-80 object-contain relative z-10 transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 drop-shadow-[0_0_20px_rgba(156,131,88,0.3)]'
               priority
             />
           </div>

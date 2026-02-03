@@ -6,21 +6,27 @@ type ButtonProps = {
 export default function Button({ children, href }: ButtonProps) {
   return (
     <a href={href} className='group relative inline-block overflow-hidden'>
+      {/* Glow effect layer */}
+      <span className='absolute -inset-1 bg-gold/30 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse' />
+
       {/* Background layers */}
-      <span className='absolute inset-0 bg-navy border-2 border-gold transition-all duration-500 group-hover:scale-105' />
-      <span className='absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500' />
+      <span className='absolute inset-0 bg-navy border-2 border-gold transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(156,131,88,0.4)]' />
+      <span className='absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out' />
 
       {/* Shimmer effect */}
-      <span className='absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000' />
+      <span className='absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 delay-100' />
+
+      {/* Animated border glow */}
+      <span className='absolute inset-0 border-2 border-gold/50 opacity-0 group-hover:opacity-100 scale-110 group-hover:scale-100 transition-all duration-700' />
 
       {/* Text */}
-      <span className='relative block px-8 py-4 text-gold group-hover:text-navy uppercase tracking-[0.25em] text-xs font-semibold transition-colors duration-300'>
+      <span className='relative block px-8 py-4 text-gold group-hover:text-navy uppercase tracking-[0.25em] text-xs font-semibold transition-all duration-300 group-hover:tracking-[0.3em]'>
         {children}
       </span>
 
-      {/* Corner accents */}
-      <span className='absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
-      <span className='absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+      {/* Corner accents with animation */}
+      <span className='absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 -translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500' />
+      <span className='absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500' />
     </a>
   )
 }
