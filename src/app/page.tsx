@@ -28,24 +28,6 @@ const fadeInUp = {
   },
 }
 
-const fadeInLeft = {
-  hidden: { opacity: 0, x: -80 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.8, ease: 'easeOut' as const },
-  },
-}
-
-const fadeInRight = {
-  hidden: { opacity: 0, x: 80 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.8, ease: 'easeOut' as const },
-  },
-}
-
 const scaleIn = {
   hidden: { opacity: 0, scale: 0.8 },
   visible: {
@@ -63,23 +45,6 @@ const staggerContainer = {
       staggerChildren: 0.15,
       delayChildren: 0.2,
     },
-  },
-}
-
-const cardHover = {
-  rest: { scale: 1, y: 0 },
-  hover: {
-    scale: 1.02,
-    y: -8,
-    transition: { duration: 0.3, ease: 'easeOut' as const },
-  },
-}
-
-const imageReveal = {
-  hidden: { clipPath: 'inset(0 100% 0 0)' },
-  visible: {
-    clipPath: 'inset(0 0% 0 0)',
-    transition: { duration: 1.2, ease: 'easeInOut' as const },
   },
 }
 
@@ -104,32 +69,6 @@ function RevealOnScroll({
       transition={{ duration: 0.8, delay, ease: 'easeOut' }}
       className={className}>
       {children}
-    </motion.div>
-  )
-}
-
-// Parallax Image component
-function ParallaxImage({
-  src,
-  alt,
-  className = '',
-}: {
-  src: string
-  alt: string
-  className?: string
-}) {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-  const y = useTransform(scrollYProgress, [0, 1], ['-10%', '10%'])
-
-  return (
-    <motion.div ref={ref} className={`overflow-hidden ${className}`}>
-      <motion.div style={{ y }} className='w-full h-full'>
-        <Image src={src} alt={alt} fill className='object-cover' />
-      </motion.div>
     </motion.div>
   )
 }
@@ -1334,7 +1273,7 @@ export default function Home() {
 
               {/* Social Links */}
               <motion.div variants={fadeInUp} className='flex items-center gap-4'>
-                {['instagram', 'twitter'].map((social, i) => (
+                {['instagram', 'twitter'].map((social) => (
                   <motion.a
                     key={social}
                     href='#'
