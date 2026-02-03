@@ -96,17 +96,19 @@ export default function Header() {
           : 'transparent',
         backdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
         WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
-        borderBottom: scrolled
-          ? '1px solid rgba(175, 151, 120, 0.2)'
-          : '1px solid transparent',
+        borderBottom: scrolled ? '1px solid rgba(175, 151, 120, 0.2)' : '1px solid transparent',
         boxShadow: scrolled
           ? '0 8px 32px 0 rgba(7, 24, 30, 0.3), inset 0 1px 0 0 rgba(175, 151, 120, 0.1)'
           : 'none',
       }}>
       {/* Liquid glass shimmer effect */}
-      <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-gold/5 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-40' : 'opacity-0'}`} />
+      <div
+        className={`absolute inset-0 bg-gradient-to-r from-transparent via-gold/5 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-40' : 'opacity-0'}`}
+      />
       {/* Animated top gold line */}
-      <div className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`} />
+      <div
+        className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`}
+      />
 
       <div className='max-w-4/5 mx-auto px-6 h-24 flex items-center justify-between relative'>
         {/* Logo / Brand Name */}
