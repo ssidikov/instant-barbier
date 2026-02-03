@@ -92,35 +92,35 @@ export default function Header() {
       }`}
       style={{
         background: scrolled
-          ? 'linear-gradient(135deg, rgba(11, 22, 34, 0.95) 0%, rgba(11, 22, 34, 0.85) 100%)'
-          : 'linear-gradient(135deg, rgba(11, 22, 34, 0.7) 0%, rgba(11, 22, 34, 0.5) 100%)',
-        backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'blur(12px) saturate(150%)',
-        WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'blur(12px) saturate(150%)',
+          ? 'linear-gradient(135deg, rgba(11, 22, 34, 0.7) 0%, rgba(20, 34, 51, 0.65) 100%)'
+          : 'transparent',
+        backdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
         borderBottom: scrolled
-          ? '1px solid rgba(156, 131, 88, 0.3)'
-          : '1px solid rgba(156, 131, 88, 0.15)',
+          ? '1px solid rgba(175, 151, 120, 0.2)'
+          : '1px solid transparent',
         boxShadow: scrolled
-          ? '0 8px 32px 0 rgba(11, 22, 34, 0.5), inset 0 1px 0 0 rgba(156, 131, 88, 0.1)'
-          : '0 4px 16px 0 rgba(11, 22, 34, 0.2), inset 0 1px 0 0 rgba(156, 131, 88, 0.05)',
+          ? '0 8px 32px 0 rgba(7, 24, 30, 0.3), inset 0 1px 0 0 rgba(175, 151, 120, 0.1)'
+          : 'none',
       }}>
       {/* Liquid glass shimmer effect */}
-      <div className='absolute inset-0 bg-gradient-to-r from-transparent via-gold/5 to-transparent opacity-30' />
+      <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-gold/5 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-40' : 'opacity-0'}`} />
       {/* Animated top gold line */}
-      <div className='absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-transparent' />
+      <div className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`} />
 
       <div className='max-w-4/5 mx-auto px-6 h-24 flex items-center justify-between relative'>
         {/* Logo / Brand Name */}
         <Link href='/' className='flex items-center relative z-10'>
           <div ref={logoRef} className='relative group'>
             {/* Multiple glow layers for depth */}
-            <div className='absolute inset-0 bg-gold/20 blur-2xl group-hover:bg-gold/40 transition-all duration-700 rounded-full scale-150' />
-            <div className='absolute inset-0 bg-gold/10 blur-xl group-hover:bg-gold/25 transition-all duration-500 rounded-full animate-pulse' />
+            <div className='absolute inset-0 bg-gold/20 blur-2xl group-hover:bg-gold/30 transition-all duration-700 rounded-full scale-150' />
+            <div className='absolute inset-0 bg-gold/10 blur-xl group-hover:bg-gold/18 transition-all duration-500 rounded-full animate-pulse' />
             <Image
               src='/logo/logo-golden.svg'
               alt="L'Instant Barbier"
               width={112}
               height={112}
-              className='h-28 w-80 object-contain relative z-10 transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 drop-shadow-[0_0_20px_rgba(156,131,88,0.3)]'
+              className='h-28 w-80 object-contain relative z-10 transition-all duration-700 drop-shadow-[0_2px_8px_rgba(156,131,88,0.12)]'
               priority
             />
           </div>
