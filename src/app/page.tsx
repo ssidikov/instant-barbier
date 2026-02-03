@@ -481,7 +481,7 @@ export default function Home() {
               <div className='flex gap-12 pt-8'>
                 <div className='group cursor-default'>
                   <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
-                    12+
+                    23+
                   </div>
                   <div className='text-xs text-cream/60 uppercase tracking-wider'>
                     Années d&apos;expérience
