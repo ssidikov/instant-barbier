@@ -18,8 +18,30 @@
 }
 
 @layer base {
+  /* Lenis smooth scroll styles */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto; /* Lenis handles smooth scrolling */
   }
 
   body {
@@ -28,11 +50,16 @@
     font-family: var(--font-muli);
   }
 
-  h1,
+  h1 {
+    font-family: 'Haarlem Deco DEMO', var(--font-haarlem), serif;
+    color: var(--color-gold);
+  }
+
   h2,
   h3,
-  h4 {
-    font-family: var(--font-playfair);
+  h4,
+  h5 {
+    font-family: 'Source Sans Pro', var(--font-sweet), sans-serif;
     color: var(--color-gold);
   }
 
@@ -292,4 +319,21 @@
 /* Premium smooth transitions */
 * {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MARQUEE ANIMATION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes marquee-rtl {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-rtl {
+  animation: marquee-rtl 300s linear infinite;
 }
