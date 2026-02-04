@@ -437,10 +437,12 @@ export default function Home() {
           <div className='relative z-10 h-full flex'>
             {/* Logo on left side - rotated 90 degrees with vertical marquee, 20% width */}
             <div className='hidden md:flex w-[20vw] shrink-0 h-full overflow-hidden relative items-center justify-center'>
-              <div className='animate-marquee-vertical flex flex-col items-center gap-24 h-max'>
-                {/* Multiple logos for seamless vertical loop */}
-                {[...Array(8)].map((_, i) => (
-                  <div key={i} className='shrink-0'>
+              <div className='animate-marquee-vertical flex flex-col items-center h-max'>
+                {/* First set of logos */}
+                {[...Array(4)].map((_, i) => (
+                  <div
+                    key={`set1-${i}`}
+                    className='shrink-0 h-[50vh] flex items-center justify-center'>
                     <Image
                       src='/logo/logo-golden.svg'
                       alt="L'Instant Barbier"
@@ -448,6 +450,20 @@ export default function Home() {
                       height={200}
                       className='w-[45vh] h-auto object-contain drop-shadow-[0_4px_16px_rgba(156,131,88,0.4)] opacity-60 -rotate-90'
                       priority={i === 0}
+                    />
+                  </div>
+                ))}
+                {/* Second set - identical to first for seamless loop */}
+                {[...Array(4)].map((_, i) => (
+                  <div
+                    key={`set2-${i}`}
+                    className='shrink-0 h-[50vh] flex items-center justify-center'>
+                    <Image
+                      src='/logo/logo-golden.svg'
+                      alt="L'Instant Barbier"
+                      width={600}
+                      height={200}
+                      className='w-[45vh] h-auto object-contain drop-shadow-[0_4px_16px_rgba(156,131,88,0.4)] opacity-60 -rotate-90'
                     />
                   </div>
                 ))}
