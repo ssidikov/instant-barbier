@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import Button from './Button'
 import { useState, useEffect, useRef } from 'react'
 import { PLANITY_URL } from '@/lib/constants'
@@ -14,7 +13,6 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
-  const logoRef = useRef<HTMLDivElement>(null)
   const navRef = useRef<HTMLElement>(null)
   const ctaRef = useRef<HTMLDivElement>(null)
 
@@ -34,15 +32,7 @@ export default function Header() {
       y: -100,
       opacity: 0,
       duration: 1,
-    }).from(
-      logoRef.current,
-      {
-        scale: 0,
-        opacity: 0,
-        duration: 0.8,
-      },
-      '-=0.6',
-    )
+    })
 
     // Animate nav items properly
     if (navRef.current) {
@@ -109,25 +99,8 @@ export default function Header() {
         className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`}
       />
 
-      <div className='max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative'>
-        {/* Logo / Brand Name */}
-        <Link href='/' className='flex items-center relative z-10'>
-          <div ref={logoRef} className='relative group'>
-            {/* Multiple glow layers for depth */}
-            <div className='absolute inset-0 bg-gold/20 blur-2xl group-hover:bg-gold/30 transition-all duration-700 rounded-full scale-150' />
-            <div className='absolute inset-0 bg-gold/10 blur-xl group-hover:bg-gold/18 transition-all duration-500 rounded-full animate-pulse' />
-            <Image
-              src='/logo/logo-golden.svg'
-              alt="L'Instant Barbier"
-              width={112}
-              height={288}
-              className='h-28 w-72 object-contain relative z-10 transition-all duration-700 drop-shadow-[0_2px_8px_rgba(156,131,88,0.12)]'
-              priority
-            />
-          </div>
-        </Link>
-
-        {/* Desktop Navigation */}
+      <div className='max-w-7xl mx-auto px-6 h-24 flex items-center justify-center relative'>
+        {/* Desktop Navigation - Centered */}
         <nav ref={navRef} className='hidden lg:flex items-center space-x-10'>
           {navItems.map((item) => (
             <Link
@@ -145,8 +118,10 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* CTA */}
-        <div ref={ctaRef} className='hidden lg:block relative z-10'>
+        {/* CTA - Absolute right */}
+        <div
+          ref={ctaRef}
+          className='hidden lg:block absolute right-6 top-1/2 -translate-y-1/2 z-10'>
           <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
         </div>
 

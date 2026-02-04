@@ -434,96 +434,116 @@ export default function Home() {
           <div className='absolute inset-0 bg-[linear-gradient(rgba(156,131,88,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(156,131,88,0.03)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]' />
 
           {/* Content */}
-          <Container className='pr-148 relative z-10 h-full flex items-center'>
-            <div className='max-w-3xl mr-auto space-y-8 md:space-y-10 py-32 md:py-20'>
-              {/* Subtitle with animated line */}
-              <div ref={heroSubtitleRef} className='flex items-center gap-4'>
-                <span className='w-16 h-[1px] bg-gradient-to-r from-transparent to-gold' />
-                <p className='text-gold uppercase tracking-[0.3em] text-sm font-light'>
-                  Barbier & Coiffeur Homme
-                </p>
-                <div className='flex gap-1'>
-                  <span className='w-1 h-1 bg-gold rounded-full animate-pulse' />
-                  <span
-                    className='w-1 h-1 bg-gold rounded-full animate-pulse'
-                    style={{ animationDelay: '0.2s' }}
-                  />
-                  <span
-                    className='w-1 h-1 bg-gold rounded-full animate-pulse'
-                    style={{ animationDelay: '0.4s' }}
-                  />
-                </div>
-              </div>
-
-              {/* Main Title with perspective */}
-              <h1
-                ref={heroTitleRef}
-                className='text-5xl md:text-6xl lg:text-8xl xl:text-9xl font-title text-gold leading-[0.95] [perspective:1000px]'>
-                <span className='block [transform-style:preserve-3d]'>L&apos;Instant</span>
-                <span className='block [transform-style:preserve-3d]'>Barbier</span>
-              </h1>
-
-              {/* Description with premium styling */}
-              <p
-                ref={heroDescriptionRef}
-                className='text-xl md:text-2xl text-cream/90 max-w-xl font-light leading-relaxed relative pl-6 border-l-2 border-gold/50'>
-                L&apos;excellence du grooming masculin au cœur de Paris. Un savoir-faire
-                traditionnel dans un cadre d&apos;exception.
-              </p>
-
-              {/* CTA Button with glow effect */}
-              <div ref={heroCtaRef} className='pt-6 relative'>
-                <div className='absolute inset-0 bg-gold/20 blur-2xl rounded-full' />
-                <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
-              </div>
-
-              {/* Social Proof / Stats */}
-              <div className='flex gap-12 pt-8'>
-                <div className='group cursor-default'>
-                  <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
-                    23+
+          <div className='relative z-10 h-full flex'>
+            {/* Logo on left side - rotated 90 degrees with vertical marquee, 20% width */}
+            <div className='hidden md:flex w-[20vw] shrink-0 h-full overflow-hidden relative items-center justify-center'>
+              <div className='animate-marquee-vertical flex flex-col items-center gap-24 h-max'>
+                {/* Multiple logos for seamless vertical loop */}
+                {[...Array(8)].map((_, i) => (
+                  <div key={i} className='shrink-0'>
+                    <Image
+                      src='/logo/logo-golden.svg'
+                      alt="L'Instant Barbier"
+                      width={600}
+                      height={200}
+                      className='w-[45vh] h-auto object-contain drop-shadow-[0_4px_16px_rgba(156,131,88,0.4)] opacity-60 -rotate-90'
+                      priority={i === 0}
+                    />
                   </div>
-                  <div className='text-xs text-cream/60 uppercase tracking-wider'>
-                    Années d&apos;expérience
-                  </div>
-                </div>
-                <div className='group cursor-default'>
-                  <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
-                    2000+
-                  </div>
-                  <div className='text-xs text-cream/60 uppercase tracking-wider'>
-                    Clients satisfaits
-                  </div>
-                </div>
-                <div className='group cursor-default'>
-                  <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
-                    5★
-                  </div>
-                  <div className='text-xs text-cream/60 uppercase tracking-wider'>Note moyenne</div>
-                </div>
+                ))}
               </div>
             </div>
-          </Container>
 
-          {/* Scroll Indicator - Premium */}
-          <div className='absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 float-element'>
-            <span className='text-cream/40 text-[10px] uppercase tracking-[0.3em] font-light'>
-              Découvrir
-            </span>
-            <div className='relative w-6 h-10 border border-gold/30 rounded-full flex items-start justify-center p-2'>
-              <div className='w-1 h-2 bg-gold rounded-full animate-bounce' />
-            </div>
+            {/* Hero content - with padding to clear header */}
+            <Container className='flex-1 flex items-center pt-32 md:pt-24'>
+              <div className='max-w-3xl space-y-8 md:space-y-10'>
+                {/* Subtitle with animated line */}
+                <div ref={heroSubtitleRef} className='flex items-center gap-4'>
+                  <span className='w-16 h-[1px] bg-gradient-to-r from-transparent to-gold' />
+                  <p className='text-gold uppercase tracking-[0.3em] text-sm font-light'>
+                    Barbier & Coiffeur Homme
+                  </p>
+                  <div className='flex gap-1'>
+                    <span className='w-1 h-1 bg-gold rounded-full animate-pulse' />
+                    <span
+                      className='w-1 h-1 bg-gold rounded-full animate-pulse'
+                      style={{ animationDelay: '0.2s' }}
+                    />
+                    <span
+                      className='w-1 h-1 bg-gold rounded-full animate-pulse'
+                      style={{ animationDelay: '0.4s' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Main Title */}
+                <h1
+                  ref={heroTitleRef}
+                  className='text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-title text-gold leading-[0.95] [perspective:1000px]'>
+                  <span className='block [transform-style:preserve-3d]'>Barbier & coiffeur</span>
+                  <span className='block [transform-style:preserve-3d]'>homme à Paris</span>
+                </h1>
+
+                {/* Description with premium styling */}
+                <div
+                  ref={heroDescriptionRef}
+                  className='text-lg md:text-xl text-cream/90 max-w-xl font-light leading-relaxed relative pl-6 border-l-2 border-gold/50 space-y-4'>
+                  <p>
+                    <strong className='text-gold font-medium'>Au cœur du Marais</strong>,
+                    L&apos;Instant Barbier est un{' '}
+                    <strong className='text-gold font-medium'>
+                      salon de coiffure homme à Paris
+                    </strong>{' '}
+                    dédié à l&apos;élégance, au détail et au savoir-faire artisanal.
+                  </p>
+                  <p>
+                    Ici, chaque coupe, chaque barbe et chaque soin est pensé pour sublimer votre
+                    style dans un cadre raffiné et chaleureux.
+                  </p>
+                </div>
+
+                {/* CTA Button with glow effect */}
+                <div ref={heroCtaRef} className='pt-6 relative'>
+                  <div className='absolute inset-0 bg-gold/20 blur-2xl rounded-full' />
+                  <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
+                </div>
+
+                {/* Social Proof / Stats */}
+                <div className='flex gap-12 pt-8'>
+                  <div className='group cursor-default'>
+                    <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
+                      23+
+                    </div>
+                    <div className='text-xs text-cream/60 uppercase tracking-wider'>
+                      Années d&apos;expérience
+                    </div>
+                  </div>
+                  <div className='group cursor-default'>
+                    <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
+                      2000+
+                    </div>
+                    <div className='text-xs text-cream/60 uppercase tracking-wider'>
+                      Clients satisfaits
+                    </div>
+                  </div>
+                  <div className='group cursor-default'>
+                    <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
+                      5★
+                    </div>
+                    <div className='text-xs text-cream/60 uppercase tracking-wider'>
+                      Note moyenne
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Container>
           </div>
 
-          {/* Decorative Corner Elements - Animated */}
-          <div
-            className='corner-element absolute top-32 right-16 w-24 h-24 border-t-2 border-r-2 border-gold/30'
-            style={{ transformOrigin: 'center' }}>
+          {/* Decorative Corner Elements - Static */}
+          <div className='absolute top-32 right-16 w-24 h-24 border-t-2 border-r-2 border-gold/30'>
             <div className='absolute -top-1 -right-1 w-2 h-2 bg-gold rounded-full shadow-lg shadow-gold/50' />
           </div>
-          <div
-            className='corner-element absolute bottom-32 left-16 w-24 h-24 border-b-2 border-l-2 border-gold/30'
-            style={{ transformOrigin: 'center' }}>
+          <div className='absolute bottom-32 left-16 w-24 h-24 border-b-2 border-l-2 border-gold/30'>
             <div className='absolute -bottom-1 -left-1 w-2 h-2 bg-gold rounded-full shadow-lg shadow-gold/50' />
           </div>
 

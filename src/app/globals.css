@@ -337,3 +337,17 @@
 .animate-marquee-rtl {
   animation: marquee-rtl 300s linear infinite;
 }
+
+/* Vertical marquee - bottom to top */
+@keyframes marquee-vertical {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-marquee-vertical {
+  animation: marquee-vertical 40s linear infinite;
+}
