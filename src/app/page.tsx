@@ -472,82 +472,101 @@ export default function Home() {
 
             {/* Hero content - with padding to clear header */}
             <Container className='flex-1 flex items-center pt-32 md:pt-24'>
-              <div className='max-w-3xl space-y-8 md:space-y-10'>
-                {/* Subtitle with animated line */}
-                <div ref={heroSubtitleRef} className='flex items-center gap-4'>
-                  <span className='w-16 h-[1px] bg-gradient-to-r from-transparent to-gold' />
-                  <p className='text-gold uppercase tracking-[0.3em] text-sm font-light'>
-                    Barbier & Coiffeur Homme
-                  </p>
-                  <div className='flex gap-1'>
-                    <span className='w-1 h-1 bg-gold rounded-full animate-pulse' />
-                    <span
-                      className='w-1 h-1 bg-gold rounded-full animate-pulse'
-                      style={{ animationDelay: '0.2s' }}
-                    />
-                    <span
-                      className='w-1 h-1 bg-gold rounded-full animate-pulse'
-                      style={{ animationDelay: '0.4s' }}
-                    />
+              <div className='w-full flex flex-col'>
+                {/* Mobile horizontal logo marquee - only visible on mobile */}
+                <div className='md:hidden w-screen relative -ml-6 overflow-hidden mb-8'>
+                  <div className='animate-marquee-rtl flex items-center gap-8 w-max'>
+                    {/* Duplicate logos for seamless horizontal loop */}
+                    {[...Array(8)].map((_, i) => (
+                      <Image
+                        key={i}
+                        src='/logo/logo-golden.svg'
+                        alt="L'Instant Barbier"
+                        width={120}
+                        height={120}
+                        className='h-16 w-auto object-contain opacity-60'
+                      />
+                    ))}
                   </div>
                 </div>
 
-                {/* Main Title */}
-                <h1
-                  ref={heroTitleRef}
-                  className='text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-title text-gold leading-[0.95] [perspective:1000px]'>
-                  <span className='block [transform-style:preserve-3d]'>Barbier & coiffeur</span>
-                  <span className='block [transform-style:preserve-3d]'>homme à Paris</span>
-                </h1>
-
-                {/* Description with premium styling */}
-                <div
-                  ref={heroDescriptionRef}
-                  className='text-lg md:text-xl text-cream/90 max-w-xl font-light leading-relaxed relative pl-6 border-l-2 border-gold/50 space-y-4'>
-                  <p>
-                    <strong className='text-gold font-medium'>Au cœur du Marais</strong>,
-                    L&apos;Instant Barbier est un{' '}
-                    <strong className='text-gold font-medium'>
-                      salon de coiffure homme à Paris
-                    </strong>{' '}
-                    dédié à l&apos;élégance, au détail et au savoir-faire artisanal.
-                  </p>
-                  <p>
-                    Ici, chaque coupe, chaque barbe et chaque soin est pensé pour sublimer votre
-                    style dans un cadre raffiné et chaleureux.
-                  </p>
-                </div>
-
-                {/* CTA Button with glow effect */}
-                <div ref={heroCtaRef} className='pt-6 relative'>
-                  <div className='absolute inset-0 bg-gold/20 blur-2xl rounded-full' />
-                  <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
-                </div>
-
-                {/* Social Proof / Stats */}
-                <div className='flex gap-12 pt-8'>
-                  <div className='group cursor-default'>
-                    <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
-                      23+
-                    </div>
-                    <div className='text-xs text-cream/60 uppercase tracking-wider'>
-                      Années d&apos;expérience
+                <div className='max-w-3xl space-y-8 md:space-y-10'>
+                  {/* Subtitle with animated line */}
+                  <div ref={heroSubtitleRef} className='flex items-center gap-4'>
+                    <span className='w-16 h-[1px] bg-gradient-to-r from-transparent to-gold' />
+                    <p className='text-gold uppercase tracking-[0.3em] text-sm font-light'>
+                      Barbier & Coiffeur Homme
+                    </p>
+                    <div className='flex gap-1'>
+                      <span className='w-1 h-1 bg-gold rounded-full animate-pulse' />
+                      <span
+                        className='w-1 h-1 bg-gold rounded-full animate-pulse'
+                        style={{ animationDelay: '0.2s' }}
+                      />
+                      <span
+                        className='w-1 h-1 bg-gold rounded-full animate-pulse'
+                        style={{ animationDelay: '0.4s' }}
+                      />
                     </div>
                   </div>
-                  <div className='group cursor-default'>
-                    <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
-                      2000+
-                    </div>
-                    <div className='text-xs text-cream/60 uppercase tracking-wider'>
-                      Clients satisfaits
-                    </div>
+
+                  {/* Main Title */}
+                  <h1
+                    ref={heroTitleRef}
+                    className='text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-title text-gold leading-[0.95] [perspective:1000px]'>
+                    <span className='block [transform-style:preserve-3d]'>Barbier & coiffeur</span>
+                    <span className='block [transform-style:preserve-3d]'>homme à Paris</span>
+                  </h1>
+
+                  {/* Description with premium styling */}
+                  <div
+                    ref={heroDescriptionRef}
+                    className='text-lg md:text-xl text-cream/90 max-w-xl font-light leading-relaxed relative pl-6 border-l-2 border-gold/50 space-y-4'>
+                    <p>
+                      <strong className='text-gold font-medium'>Au cœur du Marais</strong>,
+                      L&apos;Instant Barbier est un{' '}
+                      <strong className='text-gold font-medium'>
+                        salon de coiffure homme à Paris
+                      </strong>{' '}
+                      dédié à l&apos;élégance, au détail et au savoir-faire artisanal.
+                    </p>
+                    <p>
+                      Ici, chaque coupe, chaque barbe et chaque soin est pensé pour sublimer votre
+                      style dans un cadre raffiné et chaleureux.
+                    </p>
                   </div>
-                  <div className='group cursor-default'>
-                    <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
-                      5★
+
+                  {/* CTA Button with glow effect */}
+                  <div ref={heroCtaRef} className='pt-6 relative'>
+                    <div className='absolute inset-0 bg-gold/20 blur-2xl rounded-full' />
+                    <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
+                  </div>
+
+                  {/* Social Proof / Stats */}
+                  <div className='flex gap-12 pt-8'>
+                    <div className='group cursor-default'>
+                      <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
+                        23+
+                      </div>
+                      <div className='text-xs text-cream/60 uppercase tracking-wider'>
+                        Années d&apos;expérience
+                      </div>
                     </div>
-                    <div className='text-xs text-cream/60 uppercase tracking-wider'>
-                      Note moyenne
+                    <div className='group cursor-default'>
+                      <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
+                        2000+
+                      </div>
+                      <div className='text-xs text-cream/60 uppercase tracking-wider'>
+                        Clients satisfaits
+                      </div>
+                    </div>
+                    <div className='group cursor-default'>
+                      <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
+                        5★
+                      </div>
+                      <div className='text-xs text-cream/60 uppercase tracking-wider'>
+                        Note moyenne
+                      </div>
                     </div>
                   </div>
                 </div>
