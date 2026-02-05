@@ -41,26 +41,25 @@
   }
 
   html {
-    scroll-behavior: auto; /* Lenis handles smooth scrolling */
+    scroll-behavior: auto; /* Lenis handles smooth scrolling on desktop */
+    overflow-y: scroll; /* Always show scrollbar space to prevent layout shift */
   }
 
   body {
     background-color: var(--color-navy);
     color: var(--color-cream);
     font-family: var(--font-muli);
+    overflow-x: hidden; /* Prevent horizontal scroll */
   }
 
-  h1 {
-    font-family: 'Haarlem Deco DEMO', var(--font-haarlem), serif;
-    color: var(--color-gold);
-  }
-
+  h1,
   h2,
   h3,
   h4,
   h5 {
-    font-family: 'Source Sans Pro', var(--font-sweet), sans-serif;
+    font-family: 'Sweet Sans Pro', var(--font-sweet), sans-serif;
     color: var(--color-gold);
+    text-transform: uppercase;
   }
 
   p {
@@ -161,7 +160,7 @@
   }
 
   .font-title {
-    font-family: var(--font-playfair);
+    font-family: 'Sweet Sans Pro', var(--font-sweet), sans-serif;
   }
 
   .font-body {
@@ -383,26 +382,27 @@
     filter: none !important;
   } */
 
-  /* Optimize touch scrolling */
-  * {
+  /* Optimize touch scrolling - apply only to body, not all elements */
+  body {
     -webkit-tap-highlight-color: transparent;
     touch-action: pan-y;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
   }
 
-  /* Use CSS containment for performance */
-  section {
+  /* REMOVED: CSS containment was causing content to be invisible during scroll */
+  /* section {
     contain: layout style paint;
-  }
+  } */
 
   /* Remove will-change on mobile (let browser optimize) */
   * {
     will-change: auto !important;
   }
 
-  /* Re-enabled parallax for mobile per user request */
-  /* [style*='background-attachment: fixed'] {
+  /* Force background-attachment scroll on mobile (iOS doesn't support fixed) */
+  [style*='background-attachment: fixed'] {
     background-attachment: scroll !important;
-  } */
+  }
 }
 
 /* Respect user's motion preferences */

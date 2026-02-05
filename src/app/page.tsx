@@ -11,30 +11,9 @@ import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { motion, useInView, useScroll, useTransform } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 
 gsap.registerPlugin(ScrollTrigger)
-
-// ═══════════════════════════════════════════════════════════════════════════
-// MOBILE DETECTION HOOK
-// ═══════════════════════════════════════════════════════════════════════════
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  return isMobile
-}
 
 // ═══════════════════════════════════════════════════════════════════════════
 // ANIMATION VARIANTS - Framer Motion
@@ -324,21 +303,41 @@ export default function Home() {
     const isMobile = window.innerWidth < 768
 
     // ============================================
-    // PARALLAX EFFECTS - Enabled on both desktop AND mobile
+    // PARALLAX EFFECTS
     // ============================================
 
-    // Parallax effect for background image
     if (parallaxImgRef.current) {
-      gsap.to(parallaxImgRef.current, {
-        y: isMobile ? '10%' : '20%', // Reduced movement on mobile
-        ease: 'none',
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: isMobile ? 0.5 : 1, // Smoother on mobile
-        },
-      })
+      if (isMobile) {
+        // CSS-only parallax for mobile (no ScrollTrigger = no scroll blocking)
+        // Apply transform directly, browser handles scroll optimization
+        const handleScroll = () => {
+          if (!parallaxImgRef.current) return
+          const scrollY = window.scrollY
+          const heroHeight = heroRef.current?.offsetHeight || 0
+          // Simple parallax calculation
+          const offset = Math.min(scrollY * 0.1, heroHeight * 0.1)
+          parallaxImgRef.current.style.transform = `translateY(${offset}px)`
+        }
+
+        // Passive listener for best scroll performance
+        window.addEventListener('scroll', handleScroll, { passive: true })
+
+        return () => {
+          window.removeEventListener('scroll', handleScroll)
+        }
+      } else {
+        // Desktop: Use GSAP ScrollTrigger for smooth effect
+        gsap.to(parallaxImgRef.current, {
+          y: '20%',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        })
+      }
     }
 
     // ============================================
@@ -439,8 +438,8 @@ export default function Home() {
           HERO SECTION - PREMIUM
       ═══════════════════════════════════════════════════════════════════ */}
         <section ref={heroRef} className='relative h-screen flex items-center overflow-hidden'>
-          {/* Animated Background Patterns */}
-          <div className='absolute inset-0 opacity-10'>
+          {/* Animated Background Patterns - DISABLED ON MOBILE for performance */}
+          <div className='absolute inset-0 opacity-10 hidden md:block'>
             <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-gold rounded-full blur-[120px] animate-pulse' />
             <div
               className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold rounded-full blur-[120px] animate-pulse'
@@ -698,22 +697,26 @@ export default function Home() {
                   <motion.h2
                     variants={fadeInUp}
                     className='text-3xl md:text-5xl font-title text-gold leading-tight'>
-                    L&apos;Art du Barbier
-                    <br />
-                    Parisien
+                    Un barbier à Paris où l’exigence rencontre l’élégance
                   </motion.h2>
                 </div>
 
                 <motion.div variants={fadeInUp} className='space-y-6 text-cream/80 leading-relaxed'>
                   <p>
-                    Niché au cœur du Marais, L&apos;Instant Barbier est un sanctuaire dédié à
-                    l&apos;homme moderne. Dans un cadre sobre et raffiné, nos maîtres barbiers
-                    perpétuent un savoir-faire d&apos;exception.
+                    Spécialisé dans la coiffure homme et l’entretien de la barbe, L’Instant Barbier
+                    vous accueille dans un univers premium, inspiré des codes du grooming haut de
+                    gamme.
                   </p>
                   <p>
-                    Notre approche allie techniques traditionnelles du rasage à l&apos;ancienne et
-                    tendances contemporaines. Des coupes précises aux soins de barbe, chaque
-                    prestation est pensée pour révéler votre style unique.
+                    Notre équipe de coiffeurs-barbiers expérimentés, dirigée par Riccardo, met son
+                    savoir-faire au service de chaque client afin de proposer une expérience sur
+                    mesure, alliant précision, écoute, conseils personnalisés et produits de
+                    qualité.
+                  </p>
+                  <p>
+                    Que vous recherchiez un barbier dans le Marais, un coiffeur homme à Paris, ou
+                    une expérience authentique et soignée, notre salon est pensé pour les hommes
+                    exigeants, attachés au détail et à l’élégance.
                   </p>
                 </motion.div>
 
