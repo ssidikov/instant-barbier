@@ -94,9 +94,10 @@ const services = [
         />
       </svg>
     ),
-    title: 'Coupes',
+    title: 'Cheveux – Coupe homme sur mesure',
     description:
-      'Coupes précises et adaptées à votre style et personnalité. Un travail sur-mesure pour révéler votre caractère.',
+      'Transformez votre style avec une coupe homme personnalisée, adaptée à votre morphologie et à vos envies. Du dégradé taper fade aux coupes classiques ou modernes, nous travaillons chaque détail pour un résultat net, équilibré et durable.',
+    link: '/prestations',
   },
   {
     icon: (
@@ -114,9 +115,10 @@ const services = [
         <path d='M15 8h4M15 12h3' strokeLinecap='round' />
       </svg>
     ),
-    title: 'Barbe & Rasage',
+    title: 'Barbe – Rituel barbier à Paris',
     description:
-      'Rasage traditionnel au blaireau et serviettes chaudes. Taille et sculpture de barbe par nos experts.',
+      "Offrez à votre barbe l'attention qu'elle mérite grâce à un rituel barbe complet : taille précise, serviettes chaudes et soins aux huiles essentielles, notamment à l'ylang-ylang. Un service idéal pour un rendu élégant, structuré et naturel.",
+    link: '/prestations',
   },
   {
     icon: (
@@ -131,29 +133,10 @@ const services = [
         <circle cx='12' cy='12' r='1' fill='currentColor' />
       </svg>
     ),
-    title: 'Moustache',
+    title: 'Soins – Soin visage homme & bien-être',
     description:
-      'Taille et entretien de moustache pour un look soigné et raffiné. Conseils personnalisés inclus.',
-  },
-  {
-    icon: (
-      <svg
-        className='w-10 h-10'
-        viewBox='0 0 24 24'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='1.5'>
-        <path
-          d='M12 3c-1.5 0-3 1-3 3v4c0 1 .5 2 1.5 3l-3 8h9l-3-8c1-.5 1.5-2 1.5-3V6c0-2-1.5-3-3-3z'
-          strokeLinecap='round'
-          strokeLinejoin='round'
-        />
-        <path d='M9 21h6' strokeLinecap='round' />
-      </svg>
-    ),
-    title: 'Coiffage',
-    description:
-      'Brushing et coiffage professionnel pour garder votre coiffure impeccable au quotidien.',
+      'Nos soins visage homme à Paris sont conçus pour revitaliser la peau et les cheveux. Nous utilisons des produits haut de gamme pour hydrater, nourrir et offrir un véritable moment de détente dans un cadre apaisant.',
+    link: '/prestations',
   },
 ]
 
@@ -451,19 +434,29 @@ export default function Home() {
           <div className='absolute inset-0'>
             <div ref={parallaxImgRef} className='absolute inset-0 scale-110'>
               <div className="absolute inset-0 bg-[url('/images/hero-barbershop.jpg')] bg-cover bg-center" />
-              <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy/30' />
-              <div className='absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/30 to-navy/85' />
-              {/* Top gradient for header area */}
-              <div className='absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-navy/80 via-navy/50 to-transparent' />
+              {/* Stronger gradient for content readability - very dark background */}
+              <div
+                className='absolute inset-0'
+                style={{
+                  background:
+                    'linear-gradient(to right, rgba(7, 24, 30, 0.98) 0%, rgba(7, 24, 30, 0.93) 30%, rgba(7, 24, 30, 0.65) 60%, transparent 100%)',
+                }}
+              />
+              {/* Top gradient for header area - softer, more gradual */}
+              <div
+                className='absolute top-0 inset-x-0 h-40'
+                style={{
+                  background:
+                    'linear-gradient(to bottom, rgba(7, 24, 30, 0.65) 0%, rgba(7, 24, 30, 0.25) 50%, transparent 100%)',
+                }}
+              />
             </div>
           </div>
 
-          {/* Animated Decorative Gold Line */}
+          {/* Decorative Gold Line - static, elegant */}
           <div
             ref={heroLineRef}
-            className='absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-transparent via-gold to-transparent origin-top'>
-            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-gold rounded-full shadow-lg shadow-gold/50 animate-pulse' />
-          </div>
+            className='absolute left-0 top-0 h-full w-[1.5px] bg-gradient-to-b from-transparent via-gold/60 to-transparent origin-top opacity-40'></div>
 
           {/* Grid Overlay */}
           <div className='absolute inset-0 bg-[linear-gradient(rgba(156,131,88,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(156,131,88,0.03)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]' />
@@ -471,7 +464,7 @@ export default function Home() {
           {/* Content */}
           <div className='relative z-10 h-full flex'>
             {/* Logo on left side - rotated 90 degrees with vertical marquee, 20% width */}
-            <div className='hidden md:flex w-[20vw] shrink-0 h-full overflow-hidden relative items-center justify-center'>
+            <div className='hidden md:flex w-[15vw] shrink-0 h-full overflow-hidden relative items-center justify-center'>
               <div className='animate-marquee-vertical flex flex-col items-center h-max'>
                 {/* First set of logos */}
                 {[...Array(4)].map((_, i) => (
@@ -529,34 +522,28 @@ export default function Home() {
                   {/* Subtitle with animated line */}
                   <div ref={heroSubtitleRef} className='flex items-center gap-4'>
                     <span className='w-16 h-[1px] bg-gradient-to-r from-transparent to-gold' />
-                    <p className='text-gold uppercase tracking-[0.3em] text-sm font-light'>
+                    <p className='text-gold uppercase tracking-[0.3em] text-sm font-light [text-shadow:0_1px_8px_rgba(7,24,30,0.8)]'>
                       Barbier & Coiffeur Homme
                     </p>
-                    <div className='flex gap-1'>
-                      <span className='w-1 h-1 bg-gold rounded-full animate-pulse' />
-                      <span
-                        className='w-1 h-1 bg-gold rounded-full animate-pulse'
-                        style={{ animationDelay: '0.2s' }}
-                      />
-                      <span
-                        className='w-1 h-1 bg-gold rounded-full animate-pulse'
-                        style={{ animationDelay: '0.4s' }}
-                      />
-                    </div>
+                    <span className='w-16 h-[1px] bg-gradient-to-r from-gold to-transparent' />
                   </div>
 
-                  {/* Main Title */}
-                  <h1
-                    ref={heroTitleRef}
-                    className='text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-title text-gold leading-[0.95] [perspective:1000px]'>
-                    <span className='block [transform-style:preserve-3d]'>Barbier & coiffeur</span>
-                    <span className='block [transform-style:preserve-3d]'>homme à Paris</span>
+                  {/* Main Title - Luxury Hierarchy */}
+                  <h1 ref={heroTitleRef} className='[perspective:1000px] space-y-2'>
+                    {/* Primary: BARBIER & COIFFEUR - dominant */}
+                    <span className='block text-5xl md:text-6xl lg:text-8xl font-title text-gold leading-[1.1] tracking-[0.02em] [transform-style:preserve-3d] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
+                      BARBIER & COIFFEUR
+                    </span>
+                    {/* Secondary: homme à Paris - refined, lighter */}
+                    <span className='block text-2xl md:text-3xl lg:text-5xl font-title text-gold/85 leading-[1.1] tracking-[0.15em] font-light [transform-style:preserve-3d] [text-shadow:0_2px_8px_rgba(7,24,30,0.7),0_4px_16px_rgba(7,24,30,0.4)]'>
+                      homme à Paris
+                    </span>
                   </h1>
 
                   {/* Description with premium styling */}
                   <div
                     ref={heroDescriptionRef}
-                    className='text-lg md:text-xl text-cream/90 max-w-xl font-light leading-relaxed relative pl-6 border-l-2 border-gold/50 space-y-4'>
+                    className='text-lg md:text-xl text-cream/90 max-w-xl font-light leading-relaxed relative pl-6 border-l-2 border-gold/50 [text-shadow:0_1px_8px_rgba(7,24,30,0.8)]'>
                     <p>
                       <strong className='text-gold font-medium'>Au cœur du Marais</strong>,
                       L&apos;Instant Barbier est un{' '}
@@ -564,10 +551,6 @@ export default function Home() {
                         salon de coiffure homme à Paris
                       </strong>{' '}
                       dédié à l&apos;élégance, au détail et au savoir-faire artisanal.
-                    </p>
-                    <p>
-                      Ici, chaque coupe, chaque barbe et chaque soin est pensé pour sublimer votre
-                      style dans un cadre raffiné et chaleureux.
                     </p>
                   </div>
 
@@ -577,29 +560,29 @@ export default function Home() {
                     <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
                   </div>
 
-                  {/* Social Proof / Stats */}
+                  {/* Social Proof / Stats - Enhanced visibility */}
                   <div className='flex gap-12 pt-8'>
                     <div className='group cursor-default'>
-                      <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
+                      <div className='text-2xl lg:text-3xl font-title text-gold mb-1 font-light opacity-90 transition-all duration-600 group-hover:opacity-100 group-hover:[text-shadow:0_0_20px_rgba(175,151,120,0.3)] [text-shadow:0_1px_8px_rgba(7,24,30,0.7)]'>
                         23+
                       </div>
-                      <div className='text-xs text-cream/60 uppercase tracking-wider'>
+                      <div className='text-[0.625rem] text-cream/50 tracking-[0.15em] font-light [text-shadow:0_1px_4px_rgba(7,24,30,0.8)]'>
                         Années d&apos;expérience
                       </div>
                     </div>
                     <div className='group cursor-default'>
-                      <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
+                      <div className='text-2xl lg:text-3xl font-title text-gold mb-1 font-light opacity-90 transition-all duration-600 group-hover:opacity-100 group-hover:[text-shadow:0_0_20px_rgba(175,151,120,0.3)] [text-shadow:0_1px_8px_rgba(7,24,30,0.7)]'>
                         2000+
                       </div>
-                      <div className='text-xs text-cream/60 uppercase tracking-wider'>
+                      <div className='text-[0.625rem] text-cream/50 tracking-[0.15em] font-light [text-shadow:0_1px_4px_rgba(7,24,30,0.8)]'>
                         Clients satisfaits
                       </div>
                     </div>
                     <div className='group cursor-default'>
-                      <div className='text-3xl font-title text-gold mb-1 group-hover:scale-110 transition-transform'>
+                      <div className='text-2xl lg:text-3xl font-title text-gold mb-1 font-light opacity-90 transition-all duration-600 group-hover:opacity-100 group-hover:[text-shadow:0_0_20px_rgba(175,151,120,0.3)] [text-shadow:0_1px_8px_rgba(7,24,30,0.7)]'>
                         5★
                       </div>
-                      <div className='text-xs text-cream/60 uppercase tracking-wider'>
+                      <div className='text-[0.625rem] text-cream/50 tracking-[0.15em] font-light [text-shadow:0_1px_4px_rgba(7,24,30,0.8)]'>
                         Note moyenne
                       </div>
                     </div>
@@ -609,24 +592,20 @@ export default function Home() {
             </Container>
           </div>
 
-          {/* Decorative Corner Elements - Static */}
-          <div className='absolute top-32 right-16 w-24 h-24 border-t-2 border-r-2 border-gold/30'>
-            <div className='absolute -top-1 -right-1 w-2 h-2 bg-gold rounded-full shadow-lg shadow-gold/50' />
-          </div>
-          <div className='absolute bottom-32 left-16 w-24 h-24 border-b-2 border-l-2 border-gold/30'>
-            <div className='absolute -bottom-1 -left-1 w-2 h-2 bg-gold rounded-full shadow-lg shadow-gold/50' />
-          </div>
+          {/* Decorative Corner Elements - Subtle, static presence */}
+          <div className='absolute top-32 right-16 w-24 h-24 border-t border-r border-gold/15'></div>
+          <div className='absolute bottom-32 left-16 w-24 h-24 border-b border-l border-gold/15'></div>
 
-          {/* Particles Effect */}
+          {/* Particles Effect - Minimal */}
           <div className='absolute inset-0 overflow-hidden pointer-events-none'>
-            {particles.map((particle, i) => (
+            {particles.slice(0, 8).map((particle, i) => (
               <div
                 key={i}
-                className='absolute w-1 h-1 bg-gold/20 rounded-full'
+                className='absolute w-1 h-1 bg-gold/10 rounded-full'
                 style={{
                   left: `${particle.left}%`,
                   top: `${particle.top}%`,
-                  animation: `float ${particle.duration}s ease-in-out infinite`,
+                  animation: `float ${particle.duration * 1.5}s ease-in-out infinite`,
                   animationDelay: `${particle.delay}s`,
                 }}
               />
@@ -773,7 +752,7 @@ export default function Home() {
               whileInView='visible'
               viewport={{ once: true, margin: '-50px' }}
               variants={staggerContainer}
-              className='grid sm:grid-cols-2 lg:grid-cols-4 gap-8'>
+              className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
               {services.map((service, index) => (
                 <motion.article
                   key={index}
@@ -796,7 +775,7 @@ export default function Home() {
 
                   {/* Title */}
                   <motion.h3
-                    className='text-xl font-title text-gold mb-4 uppercase tracking-wide'
+                    className='text-lg font-title text-gold mb-4 uppercase tracking-wide leading-tight'
                     variants={{
                       rest: { y: 0 },
                       hover: { y: -3 },
@@ -805,7 +784,24 @@ export default function Home() {
                   </motion.h3>
 
                   {/* Description */}
-                  <p className='text-cream/70 text-sm leading-relaxed'>{service.description}</p>
+                  <p className='text-cream/70 text-sm leading-relaxed mb-6'>
+                    {service.description}
+                  </p>
+
+                  {/* En savoir plus link */}
+                  <Link
+                    href={service.link}
+                    className='inline-flex items-center gap-2 text-gold text-xs uppercase tracking-widest hover:text-cream transition-colors group'>
+                    En savoir plus
+                    <motion.span
+                      className='inline-block'
+                      variants={{
+                        rest: { x: 0 },
+                        hover: { x: 5 },
+                      }}>
+                      →
+                    </motion.span>
+                  </Link>
 
                   {/* Decorative line on hover */}
                   <motion.div
@@ -823,6 +819,66 @@ export default function Home() {
             <RevealOnScroll delay={0.3} className='text-center mt-12'>
               <Button href='/prestations'>Voir les tarifs</Button>
             </RevealOnScroll>
+          </Container>
+        </Section>
+
+        {/* ═══════════════════════════════════════════════════════════════════
+          ATMOSPHÈRE & IDENTITÉ SECTION
+      ═══════════════════════════════════════════════════════════════════ */}
+        <Section className='bg-dark border-t border-gold/10'>
+          <Container>
+            <motion.div
+              initial='hidden'
+              whileInView='visible'
+              viewport={{ once: true, margin: '-100px' }}
+              variants={staggerContainer}
+              className='max-w-4xl mx-auto text-center'>
+              <motion.div
+                variants={fadeInUp}
+                className='flex items-center justify-center gap-4 mb-6'>
+                <motion.span
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className='w-16 h-px bg-gold/40 origin-right'
+                />
+                <span className='text-gold text-xs uppercase tracking-[0.3em]'>Atmosphère</span>
+                <motion.span
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className='w-16 h-px bg-gold/40 origin-left'
+                />
+              </motion.div>
+
+              <motion.h2
+                variants={fadeInUp}
+                className='text-3xl md:text-5xl font-title text-gold mb-8 leading-tight'>
+                Un salon de barbier dans le Marais au style unique
+              </motion.h2>
+
+              <motion.div variants={fadeInUp} className='space-y-6 text-cream/80 leading-relaxed'>
+                <p className='text-lg'>
+                  L&apos;Instant Barbier, c&apos;est aussi une ambiance : lumière chaleureuse,
+                  matières nobles, lignes épurées et atmosphère feutrée.
+                </p>
+                <p>
+                  Chaque détail du salon reflète notre exigence et notre vision du{' '}
+                  <strong className='text-gold font-medium'>barbier moderne à Paris</strong>.
+                </p>
+              </motion.div>
+
+              {/* Decorative Elements */}
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: 120 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                viewport={{ once: true }}
+                className='mt-10 mx-auto h-px bg-gradient-to-r from-transparent via-gold to-transparent'
+              />
+            </motion.div>
           </Container>
         </Section>
 
@@ -1097,14 +1153,28 @@ export default function Home() {
                     viewport={{ once: true }}
                     className='w-10 h-px bg-gold origin-left'
                   />
-                  <span className='text-gold text-xs uppercase tracking-[0.3em]'>Horaires</span>
+                  <span className='text-gold text-xs uppercase tracking-[0.3em]'>
+                    Informations pratiques
+                  </span>
                 </motion.div>
 
                 <motion.h2
                   variants={fadeInUp}
-                  className='text-3xl md:text-4xl font-title text-gold mb-10'>
-                  Horaires d&apos;Ouverture
+                  className='text-3xl md:text-4xl font-title text-gold mb-4 leading-tight'>
+                  Votre barbier à Paris 3ᵉ – Le Marais
                 </motion.h2>
+
+                <motion.p variants={fadeInUp} className='text-cream/70 mb-8 text-sm'>
+                  📍 43 rue de Turenne, 75003 Paris
+                  <br />
+                  🕒 Sur rendez-vous
+                  <br />
+                  📅 Réservation en ligne disponible 24h/24
+                </motion.p>
+
+                <motion.h3 variants={fadeInUp} className='text-xl font-title text-gold mb-6 mt-10'>
+                  Horaires d&apos;Ouverture
+                </motion.h3>
 
                 <motion.div variants={staggerContainer} className='space-y-4'>
                   {hours.map((item, index) => (
@@ -1273,6 +1343,39 @@ export default function Home() {
                 </motion.form>
               </motion.div>
             </div>
+          </Container>
+        </Section>
+
+        {/* ═══════════════════════════════════════════════════════════════════
+          FINAL CTA SECTION
+      ═══════════════════════════════════════════════════════════════════ */}
+        <Section className='bg-navy border-t border-gold/10'>
+          <Container>
+            <motion.div
+              initial='hidden'
+              whileInView='visible'
+              viewport={{ once: true, margin: '-100px' }}
+              variants={staggerContainer}
+              className='max-w-4xl mx-auto text-center'>
+              <motion.h2
+                variants={fadeInUp}
+                className='text-3xl md:text-5xl font-title text-gold mb-6 leading-tight'>
+                Réservez votre expérience chez L&apos;Instant Barbier
+              </motion.h2>
+
+              <motion.p variants={fadeInUp} className='text-cream/80 text-lg leading-relaxed mb-10'>
+                Prenez rendez-vous en quelques clics et découvrez une approche exigeante et élégante
+                de la{' '}
+                <strong className='text-gold font-medium'>
+                  coiffure homme et du barbier à Paris
+                </strong>
+                .
+              </motion.p>
+
+              <motion.div variants={fadeInUp}>
+                <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
+              </motion.div>
+            </motion.div>
           </Container>
         </Section>
 

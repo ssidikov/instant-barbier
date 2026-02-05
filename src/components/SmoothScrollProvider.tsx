@@ -1,42 +1,8 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import Lenis from 'lenis'
-
+// Native smooth scrolling provider - no external libraries needed
 export default function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
-  const lenisRef = useRef<Lenis | null>(null)
-
-  useEffect(() => {
-    // Detect mobile devices - disable smooth scroll for better performance
-    const isMobile = window.innerWidth < 768
-
-    // Skip Lenis initialization on mobile devices
-    if (isMobile) {
-      return
-    }
-
-    // Initialize Lenis smooth scroll (desktop only)
-    lenisRef.current = new Lenis({
-      duration: 1.2, // Smooth scroll duration
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth easing
-      orientation: 'vertical',
-      smoothWheel: true,
-      touchMultiplier: 2,
-    })
-
-    // Animation frame loop for smooth scrolling
-    function raf(time: number) {
-      lenisRef.current?.raf(time)
-      requestAnimationFrame(raf)
-    }
-
-    requestAnimationFrame(raf)
-
-    // Cleanup on unmount
-    return () => {
-      lenisRef.current?.destroy()
-    }
-  }, [])
-
+  // Native CSS smooth scrolling is enabled via globals.css
+  // No JavaScript library needed for performance
   return <>{children}</>
 }
