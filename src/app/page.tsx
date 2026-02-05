@@ -16,6 +16,27 @@ import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 gsap.registerPlugin(ScrollTrigger)
 
 // ═══════════════════════════════════════════════════════════════════════════
+// MOBILE DETECTION HOOK
+// ═══════════════════════════════════════════════════════════════════════════
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  return isMobile
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // ANIMATION VARIANTS - Framer Motion
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -60,13 +81,14 @@ function RevealOnScroll({
 }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 60 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-      transition={{ duration: 0.8, delay, ease: 'easeOut' }}
+      initial={{ opacity: 0, y: isMobile ? 20 : 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: isMobile ? 20 : 60 }}
+      transition={{ duration: isMobile ? 0.3 : 0.8, delay, ease: 'easeOut' }}
       className={className}>
       {children}
     </motion.div>
@@ -299,7 +321,35 @@ export default function Home() {
   )
 
   useEffect(() => {
-    // Hero entrance animation
+    const isMobile = window.innerWidth < 768
+
+    // ============================================
+    // PARALLAX EFFECTS - Enabled on both desktop AND mobile
+    // ============================================
+
+    // Parallax effect for background image
+    if (parallaxImgRef.current) {
+      gsap.to(parallaxImgRef.current, {
+        y: isMobile ? '10%' : '20%', // Reduced movement on mobile
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: isMobile ? 0.5 : 1, // Smoother on mobile
+        },
+      })
+    }
+
+    // ============================================
+    // ENTRANCE ANIMATIONS - Desktop only for performance
+    // ============================================
+
+    if (isMobile) {
+      return // Skip entrance animations on mobile
+    }
+
+    // Hero entrance animation (desktop only)
     const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
 
     // Animate decorative line
@@ -357,21 +407,7 @@ export default function Home() {
         '-=0.3',
       )
 
-    // Parallax effect for background image
-    if (parallaxImgRef.current) {
-      gsap.to(parallaxImgRef.current, {
-        y: '20%',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1,
-        },
-      })
-    }
-
-    // Floating animation for decorative elements
+    // Floating animation for decorative elements (desktop only)
     gsap.to('.float-element', {
       y: 20,
       duration: 2.5,
@@ -380,7 +416,7 @@ export default function Home() {
       yoyo: true,
     })
 
-    // Rotate animation for corner elements
+    // Rotate animation for corner elements (desktop only)
     gsap.to('.corner-element', {
       rotation: 90,
       duration: 20,
@@ -476,8 +512,8 @@ export default function Home() {
                 {/* Mobile horizontal logo marquee - only visible on mobile */}
                 <div className='md:hidden w-screen relative -ml-6 overflow-hidden mb-8'>
                   <div className='animate-marquee-rtl flex items-center gap-8 w-max'>
-                    {/* Duplicate logos for seamless horizontal loop */}
-                    {[...Array(8)].map((_, i) => (
+                    {/* Reduced to 4 logos for better mobile performance */}
+                    {[...Array(4)].map((_, i) => (
                       <Image
                         key={i}
                         src='/logo/logo-golden.svg'
@@ -537,8 +573,8 @@ export default function Home() {
                   </div>
 
                   {/* CTA Button with glow effect */}
-                  <div ref={heroCtaRef} className='pt-6 relative'>
-                    <div className='absolute inset-0 bg-gold/20 blur-2xl rounded-full' />
+                  <div ref={heroCtaRef} className='pt-6 relative inline-flex'>
+                    <div className='cta-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 bg-gold/20 blur-2xl rounded-full' />
                     <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
                   </div>
 

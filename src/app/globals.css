@@ -351,3 +351,82 @@
 .animate-marquee-vertical {
   animation: marquee-vertical 40s linear infinite;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE PERFORMANCE OPTIMIZATIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Disable resource-intensive animations on mobile devices */
+@media (max-width: 767px) {
+  /* Disable infinite animations on mobile */
+  .animate-float,
+  .animate-pulse,
+  .animate-gentle-bounce,
+  .animate-pulse-glow,
+  .float-element,
+  .corner-element {
+    animation: none !important;
+  }
+
+  /* Simplify marquee animation on mobile */
+  .animate-marquee-rtl {
+    animation-duration: 20s; /* Faster for fewer items */
+  }
+
+  .animate-marquee-vertical {
+    animation: none; /* Disable vertical marquee on mobile */
+  }
+
+  /* Reduce blur effects that are expensive on mobile, except CTA glow */
+  /* [class*='blur-']:not(.cta-glow) {
+    backdrop-filter: none !important;
+    filter: none !important;
+  } */
+
+  /* Optimize touch scrolling */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: pan-y;
+  }
+
+  /* Use CSS containment for performance */
+  section {
+    contain: layout style paint;
+  }
+
+  /* Remove will-change on mobile (let browser optimize) */
+  * {
+    will-change: auto !important;
+  }
+
+  /* Re-enabled parallax for mobile per user request */
+  /* [style*='background-attachment: fixed'] {
+    background-attachment: scroll !important;
+  } */
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable all marquee animations */
+  .animate-marquee-rtl,
+  .animate-marquee-vertical {
+    animation: none !important;
+  }
+}
+
+/* Hardware acceleration hints for animations that remain active */
+.animate-marquee-rtl,
+.animate-marquee-vertical {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
