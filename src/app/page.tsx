@@ -561,12 +561,13 @@ const reviews = [
 ]
 
 const hours = [
-  { day: 'Lundi', hours: 'Fermé' },
-  { day: 'Mardi', hours: '10:00 – 20:00' },
-  { day: 'Mercredi', hours: '10:00 – 20:00' },
-  { day: 'Jeudi-Ven', hours: '10:00 – 21:00' },
-  { day: 'Samedi', hours: '09:00 – 19:00' },
-  { day: 'Dimanche', hours: 'Fermé' },
+  { day: 'Lundi', hours: '09:00 – 21:00' },
+  { day: 'Mardi', hours: '09:00 – 21:00' },
+  { day: 'Mercredi', hours: '09:00 – 21:00' },
+  { day: 'Jeudi', hours: '09:00 – 21:00' },
+  { day: 'Vendredi', hours: '09:00 – 21:00' },
+  { day: 'Samedi', hours: '09:00 – 20:00' },
+  { day: 'Dimanche', hours: '10:00 – 20:00' },
 ]
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -598,14 +599,14 @@ function SectionTitle({
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className='w-12 h-px bg-gold/40 origin-right'
+            className='w-16 h-px bg-gradient-to-r from-transparent to-gold origin-right'
           />
           <span className='text-gold text-xs uppercase tracking-[0.3em]'>{subtitle}</span>
           <motion.span
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className='w-12 h-px bg-gold/40 origin-left'
+            className='w-16 h-px bg-gradient-to-r from-gold to-transparent origin-left'
           />
         </motion.div>
       )}
@@ -1781,93 +1782,167 @@ export default function Home() {
         </Section>
 
         {/* ═══════════════════════════════════════════════════════════════════
-          HORAIRES SECTION
+          HORAIRES SECTION — Informations pratiques
       ═══════════════════════════════════════════════════════════════════ */}
         <Section id='horaires' className='bg-dark'>
           <Container>
-            <div className='grid lg:grid-cols-2 gap-12 lg:gap-20 items-center'>
-              {/* Hours Table */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 1.2, ease: 'easeOut' }}
+              viewport={{ once: true, margin: '-60px' }}>
+
+              {/* ── Label ── */}
               <motion.div
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true, margin: '-50px' }}
-                variants={staggerContainer}
-                className='order-2 lg:order-1'>
-                <motion.div variants={fadeInUp} className='flex items-center gap-3 mb-6'>
-                  <motion.span
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    className='w-10 h-px bg-gold origin-left'
-                  />
-                  <span className='text-gold text-xs uppercase tracking-[0.3em]'>
-                    Informations pratiques
-                  </span>
-                </motion.div>
-
-                <motion.h2
-                  variants={fadeInUp}
-                  className='text-3xl md:text-4xl font-title text-gold mb-4 leading-tight'>
-                  Votre barbier à Paris 3ᵉ – Le Marais
-                </motion.h2>
-
-                <motion.p variants={fadeInUp} className='text-cream/70 mb-8 text-sm'>
-                  📍 43 rue de Turenne, 75003 Paris
-                  <br />
-                  🕒 Sur rendez-vous
-                  <br />
-                  📅 Réservation en ligne disponible 24h/24
-                </motion.p>
-
-                <motion.h3 variants={fadeInUp} className='text-xl font-title text-gold mb-6 mt-10'>
-                  Horaires d&apos;Ouverture
-                </motion.h3>
-
-                <motion.div variants={staggerContainer} className='space-y-4'>
-                  {hours.map((item, index) => (
-                    <motion.div
-                      key={index}
-                      variants={fadeInUp}
-                      whileHover={{ x: 10, backgroundColor: 'rgba(175, 151, 120, 0.05)' }}
-                      transition={{ duration: 0.2 }}
-                      className={`flex justify-between items-center py-3 px-2 border-b border-gold/10 ${
-                        item.hours === 'Fermé' ? 'opacity-50' : ''
-                      }`}>
-                      <span className='text-cream/90'>{item.day}</span>
-                      <motion.span
-                        className={`${item.hours === 'Fermé' ? 'text-cream/50' : 'text-gold'}`}
-                        whileHover={{ scale: 1.05 }}>
-                        {item.hours}
-                      </motion.span>
-                    </motion.div>
-                  ))}
-                </motion.div>
-
-                <motion.div variants={fadeInUp} className='mt-10'>
-                  <Button href={PLANITY_URL}>Réserver un créneau</Button>
-                </motion.div>
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+                viewport={{ once: true }}
+                className='flex items-center gap-4 mb-8'>
+                <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold' />
+                <span className='text-gold text-xs uppercase tracking-[0.3em] font-body'>
+                  Informations pratiques
+                </span>
+                <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent' />
               </motion.div>
 
-              {/* Image */}
-              <RevealOnScroll className='relative order-1 lg:order-2'>
+              {/* ── Titre principal ── */}
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.2, ease: 'easeOut' }}
+                viewport={{ once: true }}
+                className='text-3xl md:text-4xl lg:text-5xl font-title text-gold mb-16 leading-tight'>
+                Votre barbier à Paris 3ᵉ — Le Marais
+              </motion.h2>
+
+              {/* ── Layout 2 colonnes ── */}
+              <div className='grid lg:grid-cols-2 gap-16 lg:gap-24'>
+
+                {/* COLONNE GAUCHE — Infos + Horaires + CTA */}
+                <div>
+
+                  {/* ── Infos clés ── */}
+                  <div className='space-y-5 mb-14'>
+                    {[
+                      {
+                        icon: (
+                          <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5' className='text-gold/60'>
+                            <path d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z' />
+                            <circle cx='12' cy='9' r='2.5' />
+                          </svg>
+                        ),
+                        text: '43 rue de Turenne, 75003 Paris',
+                      },
+                      {
+                        icon: (
+                          <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5' className='text-gold/60'>
+                            <circle cx='12' cy='12' r='10' />
+                            <polyline points='12 6 12 12 16 14' />
+                          </svg>
+                        ),
+                        text: 'Sur rendez-vous uniquement',
+                      },
+                      {
+                        icon: (
+                          <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5' className='text-gold/60'>
+                            <rect x='3' y='4' width='18' height='18' rx='2' ry='2' />
+                            <line x1='16' y1='2' x2='16' y2='6' />
+                            <line x1='8' y1='2' x2='8' y2='6' />
+                            <line x1='3' y1='10' x2='21' y2='10' />
+                          </svg>
+                        ),
+                        text: 'Réservation en ligne 24h/24',
+                      },
+                    ].map((item, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 12 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.35 + i * 0.1, ease: 'easeOut' }}
+                        viewport={{ once: true }}
+                        className='flex items-center gap-4'>
+                        <div className='w-8 h-8 border border-gold/15 flex items-center justify-center shrink-0'>
+                          {item.icon}
+                        </div>
+                        <span className='text-cream/75 text-[15px] font-body'>{item.text}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* ── Horaires d'ouverture ── */}
+                  <motion.h3
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.5, ease: 'easeOut' }}
+                    viewport={{ once: true }}
+                    className='text-lg font-title text-gold/90 mb-6 tracking-wide'>
+                    Horaires d&apos;ouverture
+                  </motion.h3>
+
+                  <div className='space-y-0'>
+                    {hours.map((item, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 8 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.5,
+                          delay: 0.6 + index * 0.07,
+                          ease: 'easeOut',
+                        }}
+                        viewport={{ once: true }}
+                        className={`flex justify-between items-center py-3.5 border-b border-gold/8 ${
+                          item.hours === 'Fermé' ? 'opacity-40' : ''
+                        }`}>
+                        <span className='text-cream/80 text-[15px] font-body'>{item.day}</span>
+                        <span
+                          className={`text-[15px] font-body tracking-wide ${
+                            item.hours === 'Fermé' ? 'text-cream/40 italic' : 'text-gold/80'
+                          }`}>
+                          {item.hours}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* ── CTA ── */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 1.1, ease: 'easeOut' }}
+                    viewport={{ once: true }}
+                    className='mt-12'>
+                    <Button href={PLANITY_URL}>Réserver un créneau</Button>
+                  </motion.div>
+                </div>
+
+                {/* COLONNE DROITE — Image du salon */}
                 <motion.div
-                  className='relative aspect-4/3 overflow-hidden group'
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}>
-                  <div className="absolute inset-0 bg-[url('/images/salon-interior-2.jpg')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" />
-                  <div className='absolute inset-0 bg-navy/20' />
-                </motion.div>
-                {/* Decorative Frame - Animated */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20, y: -20 }}
-                  whileInView={{ opacity: 1, x: 0, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 0.4, ease: 'easeOut' }}
                   viewport={{ once: true }}
-                  className='absolute -top-4 -left-4 w-full h-full border border-gold/30 -z-10'
-                />
-              </RevealOnScroll>
-            </div>
+                  className='relative'>
+                  <div className='relative aspect-4/3 lg:aspect-auto lg:h-full min-h-[400px] overflow-hidden'>
+                    <motion.div
+                      className="absolute inset-0 bg-[url('/images/salon-interior-2.jpg')] bg-cover bg-center"
+                      initial={{ y: 20 }}
+                      whileInView={{ y: 0 }}
+                      transition={{ duration: 1.5, ease: 'easeOut' }}
+                      viewport={{ once: true }}
+                    />
+                    {/* Subtle overlay */}
+                    <div className='absolute inset-0 bg-dark/15' />
+                  </div>
+
+                  {/* Decorative frame — minimal */}
+                  <div className='absolute top-0 left-0 w-8 h-8 border-t border-l border-gold/25 pointer-events-none' />
+                  <div className='absolute bottom-0 right-0 w-8 h-8 border-b border-r border-gold/25 pointer-events-none' />
+                </motion.div>
+              </div>
+
+            </motion.div>
           </Container>
         </Section>
 

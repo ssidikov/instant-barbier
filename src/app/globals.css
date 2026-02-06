@@ -354,8 +354,7 @@
 
   /* Simplify marquee animation on mobile */
   .animate-marquee-rtl {
-    animation-duration: 20s;
-    /* Faster for fewer items */
+    animation-duration: 120s;
   }
 
   .animate-marquee-vertical {
