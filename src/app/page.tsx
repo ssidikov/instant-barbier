@@ -325,7 +325,14 @@ function GalleryLightbox({
         onClick={onClose}
         className='absolute top-6 right-6 z-50 w-12 h-12 border border-gold/40 flex items-center justify-center hover:bg-gold/10 transition-colors cursor-pointer'
         aria-label='Fermer'>
-        <svg width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='currentColor' strokeWidth='1.5' className='text-gold'>
+        <svg
+          width='20'
+          height='20'
+          viewBox='0 0 20 20'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='1.5'
+          className='text-gold'>
           <line x1='4' y1='4' x2='16' y2='16' />
           <line x1='16' y1='4' x2='4' y2='16' />
         </svg>
@@ -355,10 +362,20 @@ function GalleryLightbox({
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.25 }}
-        onClick={(e) => { e.stopPropagation(); goPrev() }}
+        onClick={(e) => {
+          e.stopPropagation()
+          goPrev()
+        }}
         className='absolute left-4 md:left-8 z-50 w-12 h-12 border border-gold/30 flex items-center justify-center hover:bg-gold/10 hover:border-gold/60 transition-all cursor-pointer'
         aria-label='Photo précédente'>
-        <svg width='18' height='18' viewBox='0 0 18 18' fill='none' stroke='currentColor' strokeWidth='1.5' className='text-gold'>
+        <svg
+          width='18'
+          height='18'
+          viewBox='0 0 18 18'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='1.5'
+          className='text-gold'>
           <polyline points='12,3 6,9 12,15' />
         </svg>
       </motion.button>
@@ -367,10 +384,20 @@ function GalleryLightbox({
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.25 }}
-        onClick={(e) => { e.stopPropagation(); goNext() }}
+        onClick={(e) => {
+          e.stopPropagation()
+          goNext()
+        }}
         className='absolute right-4 md:right-8 z-50 w-12 h-12 border border-gold/30 flex items-center justify-center hover:bg-gold/10 hover:border-gold/60 transition-all cursor-pointer'
         aria-label='Photo suivante'>
-        <svg width='18' height='18' viewBox='0 0 18 18' fill='none' stroke='currentColor' strokeWidth='1.5' className='text-gold'>
+        <svg
+          width='18'
+          height='18'
+          viewBox='0 0 18 18'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='1.5'
+          className='text-gold'>
           <polyline points='6,3 12,9 6,15' />
         </svg>
       </motion.button>
@@ -416,7 +443,10 @@ function GalleryLightbox({
         {images.map((img, i) => (
           <button
             key={i}
-            onClick={(e) => { e.stopPropagation(); goTo(i, i > index ? 1 : -1) }}
+            onClick={(e) => {
+              e.stopPropagation()
+              goTo(i, i > index ? 1 : -1)
+            }}
             className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
               i === index ? 'bg-gold w-6' : 'bg-gold/30 hover:bg-gold/60'
             }`}
@@ -1464,8 +1494,8 @@ export default function Home() {
                     viewport={{ once: true, margin: '-60px' }}
                     className='text-cream/75 text-[15px] leading-[1.9] font-body'>
                     Depuis plusieurs générations, l&apos;art de la{' '}
-                    <strong className='text-gold/90 font-medium'>coiffure masculine</strong>{' '}
-                    se transmet au sein de la famille de Riccardo comme un véritable héritage.
+                    <strong className='text-gold/90 font-medium'>coiffure masculine</strong> se
+                    transmet au sein de la famille de Riccardo comme un véritable héritage.
                   </motion.p>
 
                   <motion.p
