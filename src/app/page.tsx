@@ -1729,51 +1729,52 @@ export default function Home() {
               variants={staggerContainer}
               className='grid md:grid-cols-3 gap-8'>
               {reviews.map((review, index) => (
-                <TiltCard key={index}>
-                  <motion.article
-                    variants={fadeInUp}
-                    className='bg-dark/50 border border-gold/20 p-8 relative hover:border-gold/40 cursor-default transition-all duration-500 h-full overflow-hidden group/review'>
-                    {/* Quote Icon - Animated */}
-                    <motion.div
-                      className='absolute -top-4 left-8'
-                      initial={{ scale: 0, rotate: -45 }}
-                      whileInView={{ scale: 1, rotate: 0 }}
-                      transition={{ type: 'spring', stiffness: 200, delay: index * 0.1 }}
+                <motion.article
+                  key={index}
+                  variants={fadeInUp}
+                  className='bg-dark/50 border border-gold/20 p-8 relative hover:border-gold/40 cursor-default transition-all duration-500 h-full overflow-visible group/review flex flex-col'>
+                  {/* Quote Icon - Animated, half out */}
+                  <motion.div
+                    className='absolute -top-10 left-6'
+                    initial={{ scale: 0, rotate: -45 }}
+                    whileInView={{ scale: 1, rotate: 0 }}
+                    transition={{ type: 'spring', stiffness: 200, delay: index * 0.1 }}
+                    viewport={{ once: true }}>
+                    <span className='text-gold text-[5.5rem] leading-normal font-title'>
+                      &ldquo;
+                    </span>
+                  </motion.div>
+
+                  {/* Content */}
+                  <div className='pt-4 flex flex-col flex-1'>
+                    <motion.p
+                      className='text-cream/80 text-sm leading-relaxed mb-6 italic flex-1'
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      transition={{ delay: 0.3 }}
                       viewport={{ once: true }}>
-                      <span className='text-gold text-5xl font-title'>&ldquo;</span>
-                    </motion.div>
+                      {review.text}
+                    </motion.p>
 
-                    {/* Content */}
-                    <div className='pt-4'>
-                      <motion.p
-                        className='text-cream/80 text-sm leading-relaxed mb-6 italic'
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                        viewport={{ once: true }}>
-                        {review.text}
-                      </motion.p>
-
-                      {/* Author */}
-                      <div className='flex items-center justify-between'>
-                        <div className='flex items-center gap-3'>
-                          <motion.div
-                            className='w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center'
-                            whileHover={{
-                              scale: 1.1,
-                              backgroundColor: 'rgba(175, 151, 120, 0.4)',
-                            }}>
-                            <span className='text-gold text-sm font-title'>
-                              {review.author.charAt(0)}
-                            </span>
-                          </motion.div>
-                          <span className='text-cream text-sm'>{review.author}</span>
-                        </div>
-                        <StarRating rating={review.rating} animate={true} />
+                    {/* Author */}
+                    <div className='flex items-center justify-between'>
+                      <div className='flex items-center gap-3'>
+                        <motion.div
+                          className='w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center'
+                          whileHover={{
+                            scale: 1.1,
+                            backgroundColor: 'rgba(175, 151, 120, 0.4)',
+                          }}>
+                          <span className='text-gold text-sm font-title'>
+                            {review.author.charAt(0)}
+                          </span>
+                        </motion.div>
+                        <span className='text-cream text-sm'>{review.author}</span>
                       </div>
+                      <StarRating rating={review.rating} animate={true} />
                     </div>
-                  </motion.article>
-                </TiltCard>
+                  </div>
+                </motion.article>
               ))}
             </motion.div>
           </Container>
