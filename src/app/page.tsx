@@ -13,6 +13,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   motion,
+  AnimatePresence,
   useInView,
   useScroll,
   useTransform,
@@ -254,6 +255,179 @@ function RevealOnScroll({
   )
 }
 
+// Gallery Lightbox Carousel
+function GalleryLightbox({
+  images,
+  currentIndex,
+  onClose,
+}: {
+  images: { src: string; alt: string }[]
+  currentIndex: number
+  onClose: () => void
+}) {
+  const [index, setIndex] = useState(currentIndex)
+  const [direction, setDirection] = useState(0)
+  const dragX = useMotionValue(0)
+
+  const goTo = useCallback(
+    (newIndex: number, dir: number) => {
+      setDirection(dir)
+      setIndex(((newIndex % images.length) + images.length) % images.length)
+    },
+    [images.length],
+  )
+
+  const goNext = useCallback(() => goTo(index + 1, 1), [goTo, index])
+  const goPrev = useCallback(() => goTo(index - 1, -1), [goTo, index])
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowRight') goNext()
+      if (e.key === 'ArrowLeft') goPrev()
+    }
+    window.addEventListener('keydown', handleKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', handleKey)
+      document.body.style.overflow = ''
+    }
+  }, [onClose, goNext, goPrev])
+
+  const handleDragEnd = (_: unknown, info: { offset: { x: number } }) => {
+    if (info.offset.x < -80) goNext()
+    else if (info.offset.x > 80) goPrev()
+  }
+
+  const slideVariants = {
+    enter: (d: number) => ({ x: d > 0 ? '100%' : '-100%', opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (d: number) => ({ x: d > 0 ? '-100%' : '100%', opacity: 0 }),
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
+      className='fixed inset-0 z-[9999] flex items-center justify-center'
+      onClick={onClose}>
+      {/* Backdrop */}
+      <div className='absolute inset-0 bg-dark/95 backdrop-blur-md' />
+
+      {/* Close button */}
+      <motion.button
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        onClick={onClose}
+        className='absolute top-6 right-6 z-50 w-12 h-12 border border-gold/40 flex items-center justify-center hover:bg-gold/10 transition-colors cursor-pointer'
+        aria-label='Fermer'>
+        <svg width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='currentColor' strokeWidth='1.5' className='text-gold'>
+          <line x1='4' y1='4' x2='16' y2='16' />
+          <line x1='16' y1='4' x2='4' y2='16' />
+        </svg>
+      </motion.button>
+
+      {/* Counter */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className='absolute top-7 left-6 z-50 text-gold/60 text-xs uppercase tracking-[0.3em] font-body'>
+        {index + 1} / {images.length}
+      </motion.div>
+
+      {/* Image caption */}
+      <motion.p
+        key={`caption-${index}`}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15, duration: 0.4 }}
+        className='absolute bottom-8 left-1/2 -translate-x-1/2 z-50 text-cream/50 text-xs uppercase tracking-[0.25em] font-body'>
+        {images[index].alt}
+      </motion.p>
+
+      {/* Navigation arrows */}
+      <motion.button
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.25 }}
+        onClick={(e) => { e.stopPropagation(); goPrev() }}
+        className='absolute left-4 md:left-8 z-50 w-12 h-12 border border-gold/30 flex items-center justify-center hover:bg-gold/10 hover:border-gold/60 transition-all cursor-pointer'
+        aria-label='Photo précédente'>
+        <svg width='18' height='18' viewBox='0 0 18 18' fill='none' stroke='currentColor' strokeWidth='1.5' className='text-gold'>
+          <polyline points='12,3 6,9 12,15' />
+        </svg>
+      </motion.button>
+
+      <motion.button
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.25 }}
+        onClick={(e) => { e.stopPropagation(); goNext() }}
+        className='absolute right-4 md:right-8 z-50 w-12 h-12 border border-gold/30 flex items-center justify-center hover:bg-gold/10 hover:border-gold/60 transition-all cursor-pointer'
+        aria-label='Photo suivante'>
+        <svg width='18' height='18' viewBox='0 0 18 18' fill='none' stroke='currentColor' strokeWidth='1.5' className='text-gold'>
+          <polyline points='6,3 12,9 6,15' />
+        </svg>
+      </motion.button>
+
+      {/* Image container with swipe */}
+      <div
+        className='relative w-full h-full flex items-center justify-center px-16 md:px-24 py-20'
+        onClick={(e) => e.stopPropagation()}>
+        <motion.div
+          key={index}
+          custom={direction}
+          variants={slideVariants}
+          initial='enter'
+          animate='center'
+          exit='exit'
+          transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+          drag='x'
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.15}
+          style={{ x: dragX }}
+          onDragEnd={handleDragEnd}
+          className='relative w-full h-full max-w-5xl max-h-[80vh] mx-auto cursor-grab active:cursor-grabbing'>
+          {/* Gold frame accent */}
+          <div className='absolute -inset-[1px] border border-gold/20 pointer-events-none z-10' />
+          <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/50 pointer-events-none z-10' />
+          <div className='absolute top-0 right-0 w-6 h-6 border-t border-r border-gold/50 pointer-events-none z-10' />
+          <div className='absolute bottom-0 left-0 w-6 h-6 border-b border-l border-gold/50 pointer-events-none z-10' />
+          <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/50 pointer-events-none z-10' />
+
+          <div
+            className='w-full h-full bg-cover bg-center'
+            style={{ backgroundImage: `url(${images[index].src})` }}
+          />
+        </motion.div>
+      </div>
+
+      {/* Thumbnail strip */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35, duration: 0.5 }}
+        className='absolute bottom-16 left-1/2 -translate-x-1/2 z-50 flex gap-2'>
+        {images.map((img, i) => (
+          <button
+            key={i}
+            onClick={(e) => { e.stopPropagation(); goTo(i, i > index ? 1 : -1) }}
+            className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
+              i === index ? 'bg-gold w-6' : 'bg-gold/30 hover:bg-gold/60'
+            }`}
+            aria-label={`Photo ${i + 1}`}
+          />
+        ))}
+      </motion.div>
+    </motion.div>
+  )
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 // DATA - Données du site
 // ═══════════════════════════════════════════════════════════════════════════
@@ -442,6 +616,7 @@ export default function Home() {
     email: '',
     message: '',
   })
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   // Animation refs
   const heroRef = useRef<HTMLElement>(null)
@@ -829,7 +1004,7 @@ export default function Home() {
                     viewport={{ once: true }}
                     className='relative aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'>
                     <div
-                      className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
+                      className='absolute inset-0 bg-cover bg-center transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-105'
                       style={{ backgroundImage: "url('/images/about-barbershop.jpg')" }}
                     />
                     <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent' />
@@ -1197,66 +1372,173 @@ export default function Home() {
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
-          ÉQUIPE SECTION
+          ÉQUIPE SECTION — Signature humaine
       ═══════════════════════════════════════════════════════════════════ */}
         <Section id='equipe' className='bg-dark'>
           <Container>
             <SectionTitle subtitle='Les Experts' title='Notre Équipe' />
 
-            <motion.div
-              initial='hidden'
-              whileInView='visible'
-              viewport={{ once: true, margin: '-50px' }}
-              variants={staggerContainer}
-              className='grid md:grid-cols-3 gap-8'>
-              {team.map((member, index) => (
-                <motion.article
-                  key={index}
-                  variants={fadeInUp}
-                  whileHover={{ y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className='group relative overflow-hidden'>
-                  {/* Image */}
-                  <div className='relative aspect-3/4 overflow-hidden bg-navy'>
-                    <motion.div
-                      className='absolute inset-0 bg-cover bg-center'
-                      style={{ backgroundImage: `url(${member.image})` }}
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.6 }}
-                    />
-                    <div className='absolute inset-0 bg-linear-to-t from-navy via-navy/20 to-transparent' />
-                  </div>
+            <div className='grid lg:grid-cols-2 gap-12 lg:gap-20 items-start'>
+              {/* ── LEFT: Expert Card ── */}
+              <motion.div
+                initial='hidden'
+                whileInView='visible'
+                viewport={{ once: true, margin: '-50px' }}
+                variants={staggerContainer}>
+                {team.map((member, index) => (
+                  <motion.article
+                    key={index}
+                    variants={fadeInUp}
+                    whileHover={{ y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className='group relative overflow-hidden'>
+                    {/* Image */}
+                    <div className='relative aspect-3/4 overflow-hidden bg-navy'>
+                      <motion.div
+                        className='absolute inset-0 bg-cover bg-center'
+                        style={{ backgroundImage: `url(${member.image})` }}
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.6 }}
+                      />
+                      <div className='absolute inset-0 bg-linear-to-t from-navy via-navy/20 to-transparent' />
+                    </div>
 
-                  {/* Info Overlay - Animated */}
-                  <motion.div
-                    className='absolute bottom-0 left-0 right-0 p-6 text-center'
-                    initial={{ y: 20, opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                    viewport={{ once: true }}>
+                    {/* Info Overlay - Animated */}
                     <motion.div
-                      className='bg-navy/80 backdrop-blur-sm border border-gold/30 p-4'
-                      whileHover={{ borderColor: 'rgba(175, 151, 120, 0.6)' }}>
-                      <h3 className='text-xl font-title text-gold mb-1'>{member.name}</h3>
-                      <p className='text-cream/90 text-sm mb-2'>{member.role}</p>
-                      <p className='text-gold/70 text-xs uppercase tracking-wider'>
-                        {member.experience}
-                      </p>
+                      className='absolute bottom-0 left-0 right-0 p-6 text-center'
+                      initial={{ y: 20, opacity: 0 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                      viewport={{ once: true }}>
+                      <motion.div
+                        className='bg-navy/80 backdrop-blur-sm border border-gold/30 p-4'
+                        whileHover={{ borderColor: 'rgba(175, 151, 120, 0.6)' }}>
+                        <h3 className='text-xl font-title text-gold mb-1'>{member.name}</h3>
+                        <p className='text-cream/90 text-sm mb-2'>{member.role}</p>
+                        <p className='text-gold/70 text-xs uppercase tracking-wider'>
+                          {member.experience}
+                        </p>
+                      </motion.div>
                     </motion.div>
+
+                    {/* Decorative Corner - Animated */}
+                    <motion.div
+                      className='absolute top-4 right-4 w-8 h-8 border-t border-r border-gold/40'
+                      initial={{ opacity: 0, scale: 0 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.5 }}
+                      viewport={{ once: true }}
+                      whileHover={{ scale: 1.2, rotate: 45 }}
+                    />
+                  </motion.article>
+                ))}
+              </motion.div>
+
+              {/* ── RIGHT: Editorial Heritage Text ── */}
+              <div className='flex flex-col justify-center lg:py-8'>
+                {/* Label */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  className='flex items-center gap-4 mb-8'>
+                  <motion.div
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                    viewport={{ once: true }}
+                    className='w-10 h-px bg-gold/30 origin-left'
+                  />
+                  <span className='text-gold/50 text-[11px] uppercase tracking-[0.4em] font-body'>
+                    Héritage & Savoir-faire
+                  </span>
+                </motion.div>
+
+                {/* Main text blocks with staggered reveal */}
+                <div className='space-y-6'>
+                  <motion.p
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.9, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    className='text-cream/75 text-[15px] leading-[1.9] font-body'>
+                    Depuis plusieurs générations, l&apos;art de la{' '}
+                    <strong className='text-gold/90 font-medium'>coiffure masculine</strong>{' '}
+                    se transmet au sein de la famille de Riccardo comme un véritable héritage.
+                  </motion.p>
+
+                  <motion.p
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.9, delay: 0.65, ease: [0.25, 0.1, 0.25, 1] }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    className='text-cream/60 text-[15px] leading-[1.9] font-body'>
+                    De père en fils, ce savoir-faire s&apos;est enrichi au fil du temps, porté par
+                    une exigence constante de précision, d&apos;élégance et de maîtrise du geste.
+                  </motion.p>
+
+                  {/* Separator */}
+                  <motion.div
+                    initial={{ scaleX: 0, opacity: 0 }}
+                    whileInView={{ scaleX: 1, opacity: 1 }}
+                    transition={{ duration: 1.2, delay: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                    viewport={{ once: true }}
+                    className='w-12 h-px bg-gold/20 origin-left'
+                  />
+
+                  <motion.p
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.9, delay: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    className='text-cream/75 text-[15px] leading-[1.9] font-body'>
+                    Spécialisé dans la{' '}
+                    <strong className='text-gold/90 font-medium'>
+                      coiffure homme et le métier de barbier à Paris
+                    </strong>
+                    , L&apos;Instant Barbier perpétue des techniques intemporelles&nbsp;:
+                  </motion.p>
+
+                  {/* Techniques list — revealed one by one */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.9, delay: 1.05, ease: [0.25, 0.1, 0.25, 1] }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    className='pl-5 border-l border-gold/15 space-y-2'>
+                    {[
+                      'Dégradés maîtrisés',
+                      'Coupes classiques aux ciseaux',
+                      'Entretien des cheveux mi-longs et longs',
+                      'Travail minutieux de la barbe',
+                    ].map((technique, i) => (
+                      <motion.p
+                        key={i}
+                        initial={{ opacity: 0, x: -8 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: 1.15 + i * 0.1, ease: 'easeOut' }}
+                        viewport={{ once: true }}
+                        className='text-cream/55 text-sm leading-relaxed font-body flex items-center gap-3'>
+                        <span className='w-1 h-1 bg-gold/40 rounded-full shrink-0' />
+                        {technique}
+                      </motion.p>
+                    ))}
                   </motion.div>
 
-                  {/* Decorative Corner - Animated */}
-                  <motion.div
-                    className='absolute top-4 right-4 w-8 h-8 border-t border-r border-gold/40'
-                    initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.5 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.2, rotate: 45 }}
-                  />
-                </motion.article>
-              ))}
-            </motion.div>
+                  {/* Closing line */}
+                  <motion.p
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    className='text-cream/45 text-sm leading-[1.9] font-body italic'>
+                    Cet héritage artisanal est aujourd&apos;hui au cœur de chaque prestation
+                    proposée au salon.
+                  </motion.p>
+                </div>
+              </div>
+            </div>
           </Container>
         </Section>
 
@@ -1279,9 +1561,10 @@ export default function Home() {
                 <motion.div
                   variants={scaleIn}
                   whileHover={{ scale: 0.98 }}
+                  onClick={() => setLightboxIndex(0)}
                   className='col-span-2 row-span-2 relative aspect-square md:aspect-auto overflow-hidden group cursor-pointer h-full'>
                   <motion.div
-                    className='absolute inset-0 bg-cover bg-center'
+                    className='absolute inset-0 bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700'
                     style={{ backgroundImage: `url(${galleryImages[0].src})` }}
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
@@ -1309,9 +1592,10 @@ export default function Home() {
                   <motion.div
                     variants={scaleIn}
                     whileHover={{ scale: 0.95 }}
+                    onClick={() => setLightboxIndex(index + 1)}
                     className='relative aspect-square overflow-hidden group cursor-pointer h-full'>
                     <motion.div
-                      className='absolute inset-0 bg-cover bg-center'
+                      className='absolute inset-0 bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700'
                       style={{ backgroundImage: `url(${image.src})` }}
                       whileHover={{ scale: 1.15 }}
                       transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
@@ -1341,6 +1625,17 @@ export default function Home() {
             </RevealOnScroll>
           </Container>
         </Section>
+
+        {/* Gallery Lightbox */}
+        <AnimatePresence>
+          {lightboxIndex !== null && (
+            <GalleryLightbox
+              images={galleryImages}
+              currentIndex={lightboxIndex}
+              onClose={() => setLightboxIndex(null)}
+            />
+          )}
+        </AnimatePresence>
 
         {/* ═══════════════════════════════════════════════════════════════════
           INTERIOR IMAGE BREAK - with Parallax
@@ -1526,10 +1821,10 @@ export default function Home() {
               {/* Image */}
               <RevealOnScroll className='relative order-1 lg:order-2'>
                 <motion.div
-                  className='relative aspect-4/3 overflow-hidden'
+                  className='relative aspect-4/3 overflow-hidden group'
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.4 }}>
-                  <div className="absolute inset-0 bg-[url('/images/salon-interior-2.jpg')] bg-cover bg-center" />
+                  <div className="absolute inset-0 bg-[url('/images/salon-interior-2.jpg')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" />
                   <div className='absolute inset-0 bg-navy/20' />
                 </motion.div>
                 {/* Decorative Frame - Animated */}
@@ -1556,10 +1851,10 @@ export default function Home() {
               {/* Map / Image Side */}
               <RevealOnScroll className='relative'>
                 <motion.div
-                  className='relative aspect-4/3 overflow-hidden'
+                  className='relative aspect-4/3 overflow-hidden group'
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.4 }}>
-                  <div className="absolute inset-0 bg-[url('/images/marais-paris.jpg')] bg-cover bg-center" />
+                  <div className="absolute inset-0 bg-[url('/images/marais-paris.jpg')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" />
                   <div className='absolute inset-0 bg-navy/40' />
                 </motion.div>
 
