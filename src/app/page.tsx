@@ -888,23 +888,6 @@ export default function Home() {
             {/* Hero content - with padding to clear header */}
             <Container className='flex-1 flex items-center pt-32 md:pt-24'>
               <div className='w-full flex flex-col'>
-                {/* Mobile horizontal logo marquee - only visible on mobile */}
-                <div className='md:hidden w-screen relative -ml-6 overflow-hidden mb-8'>
-                  <div className='animate-marquee-rtl flex items-center gap-8 w-max'>
-                    {/* Reduced to 4 logos for better mobile performance */}
-                    {[...Array(4)].map((_, i) => (
-                      <Image
-                        key={i}
-                        src='/logo/logo-golden.svg'
-                        alt="L'Instant Barbier"
-                        width={120}
-                        height={120}
-                        className='h-16 w-auto object-contain opacity-60'
-                      />
-                    ))}
-                  </div>
-                </div>
-
                 <div className='max-w-3xl space-y-8 md:space-y-10'>
                   {/* Subtitle with animated line */}
                   <div ref={heroSubtitleRef} className='flex items-center gap-4'>
@@ -945,6 +928,22 @@ export default function Home() {
                   <div ref={heroCtaRef} className='pt-6 relative inline-flex'>
                     <div className='cta-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 bg-gold/20 blur-2xl rounded-full' />
                     <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
+                  </div>
+
+                  {/* Logo marquee - mobile only */}
+                  <div className='md:hidden w-screen relative -ml-6 overflow-hidden mt-10'>
+                    <div className='animate-marquee-rtl flex items-center gap-10 w-max'>
+                      {[...Array(6)].map((_, i) => (
+                        <Image
+                          key={i}
+                          src='/logo/logo-golden.svg'
+                          alt="L'Instant Barbier"
+                          width={120}
+                          height={120}
+                          className='h-14 w-auto object-contain opacity-50'
+                        />
+                      ))}
+                    </div>
                   </div>
 
                   {/* Social Proof / Stats - Animated Counters */}
