@@ -113,7 +113,7 @@ export default function Header() {
               alt="L'Instant Barbier"
               width={120}
               height={56}
-              className='h-10 lg:h-14 w-auto'
+              className='h-10 w-auto'
               priority
             />
           </Link>
@@ -173,10 +173,7 @@ export default function Header() {
           isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         }`}>
         {/* Backdrop */}
-        <div
-          className='absolute inset-0 bg-navy/95 backdrop-blur-2xl'
-          onClick={closeMenu}
-        />
+        <div className='absolute inset-0 bg-navy/95 backdrop-blur-2xl' onClick={closeMenu} />
 
         {/* Subtle gold gradient overlay */}
         <div className='absolute inset-0 bg-gradient-to-b from-gold/5 via-transparent to-gold/3 pointer-events-none' />

@@ -598,21 +598,30 @@ function SectionTitle({
           <motion.span
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
             className='w-16 h-px bg-gradient-to-r from-transparent to-gold origin-right'
           />
           <span className='text-gold text-xs uppercase tracking-[0.3em]'>{subtitle}</span>
           <motion.span
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
             className='w-16 h-px bg-gradient-to-r from-gold to-transparent origin-left'
           />
         </motion.div>
       )}
-      <motion.h2 variants={fadeInUp} className='text-3xl md:text-5xl font-title text-gold'>
+      <motion.h2
+        variants={fadeInUp}
+        className='text-3xl md:text-5xl font-title text-gold leading-tight'>
         {title}
       </motion.h2>
+      {/* Bottom accent line */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
+        transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+        className='mx-auto mt-6 w-16 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent'
+      />
     </motion.div>
   )
 }
@@ -910,6 +919,22 @@ export default function Home() {
                     </span>
                   </h1>
 
+                  {/* Logo marquee - mobile only */}
+                  <div className='md:hidden w-screen relative -ml-6 overflow-hidden'>
+                    <div className='animate-marquee-rtl flex items-center gap-10 w-max'>
+                      {[...Array(6)].map((_, i) => (
+                        <Image
+                          key={i}
+                          src='/logo/logo-golden.svg'
+                          alt="L'Instant Barbier"
+                          width={120}
+                          height={120}
+                          className='h-14 w-auto object-contain opacity-50'
+                        />
+                      ))}
+                    </div>
+                  </div>
+
                   {/* Description with premium styling */}
                   <div
                     ref={heroDescriptionRef}
@@ -928,22 +953,6 @@ export default function Home() {
                   <div ref={heroCtaRef} className='pt-6 relative inline-flex'>
                     <div className='cta-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 bg-gold/20 blur-2xl rounded-full' />
                     <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
-                  </div>
-
-                  {/* Logo marquee - mobile only */}
-                  <div className='md:hidden w-screen relative -ml-6 overflow-hidden mt-10'>
-                    <div className='animate-marquee-rtl flex items-center gap-10 w-max'>
-                      {[...Array(6)].map((_, i) => (
-                        <Image
-                          key={i}
-                          src='/logo/logo-golden.svg'
-                          alt="L'Instant Barbier"
-                          width={120}
-                          height={120}
-                          className='h-14 w-auto object-contain opacity-50'
-                        />
-                      ))}
-                    </div>
                   </div>
 
                   {/* Social Proof / Stats - Animated Counters */}
@@ -1777,6 +1786,27 @@ export default function Home() {
                 </motion.article>
               ))}
             </motion.div>
+
+            <RevealOnScroll delay={0.3} className='text-center mt-12'>
+              <a
+                href='https://maps.app.goo.gl/n37HSH1uoHfUEB5R8'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='inline-flex items-center gap-3 text-gold text-sm uppercase tracking-[0.2em] hover:text-cream transition-colors duration-500 group'>
+                <svg
+                  width='18'
+                  height='18'
+                  viewBox='0 0 24 24'
+                  fill='currentColor'
+                  className='text-gold group-hover:text-cream transition-colors duration-500'>
+                  <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.41 16.09V13.5H8l4-7.09v4.59H14.5l-3.91 7.09z' />
+                </svg>
+                Voir tous les avis sur Google
+                <motion.span className='inline-block' whileHover={{ x: 5 }}>
+                  →
+                </motion.span>
+              </a>
+            </RevealOnScroll>
           </Container>
         </Section>
 
