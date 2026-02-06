@@ -11,7 +11,14 @@ import Image from 'next/image'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { motion, useInView, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion'
+import {
+  motion,
+  useInView,
+  useScroll,
+  useTransform,
+  useSpring,
+  useMotionValue,
+} from 'framer-motion'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -97,7 +104,8 @@ function AnimatedCounter({
 
   return (
     <span ref={ref}>
-      {isInView ? count : 0}{suffix}
+      {isInView ? count : 0}
+      {suffix}
     </span>
   )
 }
@@ -148,13 +156,7 @@ function MagneticWrap({
 }
 
 // 3D tilt card wrapper
-function TiltCard({
-  children,
-  className = '',
-}: {
-  children: React.ReactNode
-  className?: string
-}) {
+function TiltCard({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const rotateX = useMotionValue(0)
   const rotateY = useMotionValue(0)
@@ -826,18 +828,18 @@ export default function Home() {
                     transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
                     viewport={{ once: true }}
                     className='relative aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'>
-                  <div
-                    className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
-                    style={{ backgroundImage: "url('/images/about-barbershop.jpg')" }}
-                  />
-                  <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent' />
-                  
-                  {/* Premium corner accents */}
-                  <div className='absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
-                  <div className='absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
-                  <div className='absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
-                  <div className='absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
-                </motion.div>
+                    <div
+                      className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
+                      style={{ backgroundImage: "url('/images/about-barbershop.jpg')" }}
+                    />
+                    <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent' />
+
+                    {/* Premium corner accents */}
+                    <div className='absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                    <div className='absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                    <div className='absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                    <div className='absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                  </motion.div>
                 </ImageReveal>
                 {/* Images secondaires */}
                 <div className='grid grid-cols-2 gap-4 mt-4'>
@@ -848,16 +850,16 @@ export default function Home() {
                       transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
                       viewport={{ once: true }}
                       className='relative aspect-square overflow-hidden group border-2 border-gold/30 shadow-xl'>
-                    <div
-                      className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
-                      style={{ backgroundImage: "url('/images/gallery/gallery-1.jpg')" }}
-                    />
-                    <div className='absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent' />
-                    
-                    {/* Premium corner accents */}
-                    <div className='absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
-                    <div className='absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
-                  </motion.div>
+                      <div
+                        className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
+                        style={{ backgroundImage: "url('/images/gallery/gallery-1.jpg')" }}
+                      />
+                      <div className='absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent' />
+
+                      {/* Premium corner accents */}
+                      <div className='absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                      <div className='absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                    </motion.div>
                   </ImageReveal>
 
                   <ImageReveal delay={0.5} className='aspect-square'>
@@ -867,16 +869,16 @@ export default function Home() {
                       transition={{ duration: 0.6, delay: 0.6, ease: 'easeOut' }}
                       viewport={{ once: true }}
                       className='relative aspect-square overflow-hidden group border-2 border-gold/30 shadow-xl'>
-                    <div
-                      className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
-                      style={{ backgroundImage: "url('/images/gallery/gallery-2.jpg')" }}
-                    />
-                    <div className='absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent' />
-                    
-                    {/* Premium corner accents */}
-                    <div className='absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
-                    <div className='absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
-                  </motion.div>
+                      <div
+                        className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
+                        style={{ backgroundImage: "url('/images/gallery/gallery-2.jpg')" }}
+                      />
+                      <div className='absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent' />
+
+                      {/* Premium corner accents */}
+                      <div className='absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                      <div className='absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                    </motion.div>
                   </ImageReveal>
                 </div>
               </motion.div>
@@ -916,8 +918,8 @@ export default function Home() {
                   viewport={{ once: true }}
                   className='text-cream/90 text-base lg:text-lg leading-relaxed'>
                   Spécialisé dans la{' '}
-                  <span className='text-gold font-medium'>coiffure masculine</span> et l&apos;art
-                  de la barbe, L&apos;Instant Barbier vous accueille dans un univers premium où
+                  <span className='text-gold font-medium'>coiffure masculine</span> et l&apos;art de
+                  la barbe, L&apos;Instant Barbier vous accueille dans un univers premium où
                   tradition et modernité se rencontrent. Chaque coupe est pensée comme une
                   expérience sur mesure.
                 </motion.p>
@@ -943,8 +945,8 @@ export default function Home() {
                         Maîtres barbiers expérimentés
                       </h3>
                       <p className='text-cream/80 text-sm leading-relaxed'>
-                        Notre équipe, dirigée par Riccardo, met son savoir-faire au service d&apos;une
-                        clientèle exigeante.
+                        Notre équipe, dirigée par Riccardo, met son savoir-faire au service
+                        d&apos;une clientèle exigeante.
                       </p>
                     </div>
                   </motion.div>
@@ -1112,7 +1114,6 @@ export default function Home() {
 
           <Container className='relative z-10'>
             <div className='max-w-2xl lg:max-w-3xl mx-auto text-center'>
-
               {/* ── Label « Atmosphère » — first breath ── */}
               <motion.span
                 initial={{ opacity: 0 }}
@@ -1179,8 +1180,8 @@ export default function Home() {
                 transition={{ duration: 1.3, delay: 1.2, ease: 'easeOut' }}
                 viewport={{ once: true, margin: '-120px' }}
                 className='text-cream/40 text-sm md:text-[15px] leading-[1.9] max-w-md mx-auto font-body italic'>
-                Chaque détail du salon reflète notre exigence et notre vision
-                du barbier moderne à Paris.
+                Chaque détail du salon reflète notre exigence et notre vision du barbier moderne à
+                Paris.
               </motion.p>
 
               {/* ── Bottom separator — closing breath ── */}
@@ -1191,7 +1192,6 @@ export default function Home() {
                 viewport={{ once: true, margin: '-120px' }}
                 className='w-20 h-px bg-linear-to-r from-transparent via-gold/20 to-transparent mx-auto mt-16 lg:mt-20 origin-center'
               />
-
             </div>
           </Container>
         </section>
@@ -1408,43 +1408,46 @@ export default function Home() {
                   <motion.article
                     variants={fadeInUp}
                     className='bg-dark/50 border border-gold/20 p-8 relative hover:border-gold/40 cursor-default transition-all duration-500 h-full overflow-hidden group/review'>
-                  {/* Quote Icon - Animated */}
-                  <motion.div
-                    className='absolute -top-4 left-8'
-                    initial={{ scale: 0, rotate: -45 }}
-                    whileInView={{ scale: 1, rotate: 0 }}
-                    transition={{ type: 'spring', stiffness: 200, delay: index * 0.1 }}
-                    viewport={{ once: true }}>
-                    <span className='text-gold text-5xl font-title'>&ldquo;</span>
-                  </motion.div>
-
-                  {/* Content */}
-                  <div className='pt-4'>
-                    <motion.p
-                      className='text-cream/80 text-sm leading-relaxed mb-6 italic'
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      transition={{ delay: 0.3 }}
+                    {/* Quote Icon - Animated */}
+                    <motion.div
+                      className='absolute -top-4 left-8'
+                      initial={{ scale: 0, rotate: -45 }}
+                      whileInView={{ scale: 1, rotate: 0 }}
+                      transition={{ type: 'spring', stiffness: 200, delay: index * 0.1 }}
                       viewport={{ once: true }}>
-                      {review.text}
-                    </motion.p>
+                      <span className='text-gold text-5xl font-title'>&ldquo;</span>
+                    </motion.div>
 
-                    {/* Author */}
-                    <div className='flex items-center justify-between'>
-                      <div className='flex items-center gap-3'>
-                        <motion.div
-                          className='w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center'
-                          whileHover={{ scale: 1.1, backgroundColor: 'rgba(175, 151, 120, 0.4)' }}>
-                          <span className='text-gold text-sm font-title'>
-                            {review.author.charAt(0)}
-                          </span>
-                        </motion.div>
-                        <span className='text-cream text-sm'>{review.author}</span>
+                    {/* Content */}
+                    <div className='pt-4'>
+                      <motion.p
+                        className='text-cream/80 text-sm leading-relaxed mb-6 italic'
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                        viewport={{ once: true }}>
+                        {review.text}
+                      </motion.p>
+
+                      {/* Author */}
+                      <div className='flex items-center justify-between'>
+                        <div className='flex items-center gap-3'>
+                          <motion.div
+                            className='w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center'
+                            whileHover={{
+                              scale: 1.1,
+                              backgroundColor: 'rgba(175, 151, 120, 0.4)',
+                            }}>
+                            <span className='text-gold text-sm font-title'>
+                              {review.author.charAt(0)}
+                            </span>
+                          </motion.div>
+                          <span className='text-cream text-sm'>{review.author}</span>
+                        </div>
+                        <StarRating rating={review.rating} animate={true} />
                       </div>
-                      <StarRating rating={review.rating} animate={true} />
                     </div>
-                  </div>
-                </motion.article>
+                  </motion.article>
                 </TiltCard>
               ))}
             </motion.div>

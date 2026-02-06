@@ -18,17 +18,20 @@
 }
 
 @layer base {
+
   /* Native smooth scrolling - better performance than JS libraries */
   html {
     scroll-behavior: smooth;
-    overflow-y: scroll; /* Always show scrollbar space to prevent layout shift */
+    overflow-y: scroll;
+    /* Always show scrollbar space to prevent layout shift */
   }
 
   body {
     background-color: var(--color-navy);
     color: var(--color-cream);
     font-family: var(--font-muli);
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
   }
 
   h1,
@@ -307,6 +310,7 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -321,6 +325,7 @@
   0% {
     transform: translateY(0);
   }
+
   100% {
     transform: translateY(-50%);
   }
@@ -336,6 +341,7 @@
 
 /* Disable resource-intensive animations on mobile devices */
 @media (max-width: 767px) {
+
   /* Disable infinite animations on mobile */
   .animate-float,
   .animate-pulse,
@@ -348,11 +354,13 @@
 
   /* Simplify marquee animation on mobile */
   .animate-marquee-rtl {
-    animation-duration: 20s; /* Faster for fewer items */
+    animation-duration: 20s;
+    /* Faster for fewer items */
   }
 
   .animate-marquee-vertical {
-    animation: none; /* Disable vertical marquee on mobile */
+    animation: none;
+    /* Disable vertical marquee on mobile */
   }
 
   /* Reduce blur effects that are expensive on mobile, except CTA glow */
@@ -365,7 +373,8 @@
   body {
     -webkit-tap-highlight-color: transparent;
     touch-action: pan-y;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling on iOS */
   }
 
   /* REMOVED: CSS containment was causing content to be invisible during scroll */
@@ -386,6 +395,7 @@
 
 /* Respect user's motion preferences */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -425,6 +435,7 @@
   0% {
     transform: translateX(-100%) skewX(-15deg);
   }
+
   100% {
     transform: translateX(200%) skewX(-15deg);
   }
@@ -434,12 +445,10 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(175, 151, 120, 0.08),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(175, 151, 120, 0.08),
+      transparent);
   animation: goldSweep 0.8s ease-out;
   pointer-events: none;
 }
@@ -449,6 +458,7 @@
   0%, 100% {
     box-shadow: 0 0 0 rgba(175, 151, 120, 0);
   }
+
   50% {
     box-shadow: 0 0 30px rgba(175, 151, 120, 0.15);
   }
