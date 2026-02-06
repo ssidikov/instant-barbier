@@ -657,6 +657,7 @@ export default function Home() {
     message: '',
   })
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [visibleStats, setVisibleStats] = useState(0)
 
   // Animation refs
   const heroRef = useRef<HTMLElement>(null)
@@ -676,6 +677,16 @@ export default function Home() {
       delay: Math.random() * 5,
     })),
   )
+
+  // Notification-style staggered stats reveal
+  useEffect(() => {
+    const timers = [
+      setTimeout(() => setVisibleStats(1), 1500),
+      setTimeout(() => setVisibleStats(2), 3000),
+      setTimeout(() => setVisibleStats(3), 4500),
+    ]
+    return () => timers.forEach(clearTimeout)
+  }, [])
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768
@@ -902,15 +913,17 @@ export default function Home() {
                   <div ref={heroSubtitleRef} className='flex items-center gap-4'>
                     <span className='w-16 h-[1px] bg-gradient-to-r from-transparent to-gold' />
                     <p className='text-gold uppercase tracking-[0.3em] text-sm font-light [text-shadow:0_1px_8px_rgba(7,24,30,0.8)]'>
-                      Barbier & Coiffeur Homme
+                      L’ART DU BARBIER SUR MESURE
                     </p>
                     <span className='w-16 h-[1px] bg-gradient-to-r from-gold to-transparent' />
                   </div>
 
                   {/* Main Title - Luxury Hierarchy */}
-                  <h1 ref={heroTitleRef} className='[perspective:1000px] space-y-2'>
+                  <h1
+                    ref={heroTitleRef}
+                    className='[perspective:1000px] max-w-[380px] xl:max-w-full space-y-2'>
                     {/* Primary: BARBIER & COIFFEUR - dominant */}
-                    <span className='block text-5xl md:text-6xl lg:text-8xl font-title text-gold leading-[1.1] tracking-[0.02em] [transform-style:preserve-3d] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
+                    <span className='block text-4xl md:text-5xl lg:text-8xl font-title text-gold leading-[1.1] tracking-[0.02em] [transform-style:preserve-3d] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
                       BARBIER & COIFFEUR
                     </span>
                     {/* Secondary: homme à Paris - refined, lighter */}
@@ -955,36 +968,90 @@ export default function Home() {
                     <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
                   </div>
 
-                  {/* Social Proof / Stats - Animated Counters */}
-                  <div className='flex gap-12 pt-8'>
-                    <MagneticWrap className='group cursor-default'>
-                      <div className='text-2xl lg:text-3xl font-title text-gold mb-1 font-light opacity-90 transition-all duration-600 group-hover:opacity-100 group-hover:[text-shadow:0_0_20px_rgba(175,151,120,0.3)] [text-shadow:0_1px_8px_rgba(7,24,30,0.7)]'>
-                        <AnimatedCounter target={23} suffix='+' duration={2} />
-                      </div>
-                      <div className='text-[0.625rem] text-cream/50 tracking-[0.15em] font-light [text-shadow:0_1px_4px_rgba(7,24,30,0.8)]'>
-                        Années d&apos;expérience
-                      </div>
-                    </MagneticWrap>
-                    <MagneticWrap className='group cursor-default'>
-                      <div className='text-2xl lg:text-3xl font-title text-gold mb-1 font-light opacity-90 transition-all duration-600 group-hover:opacity-100 group-hover:[text-shadow:0_0_20px_rgba(175,151,120,0.3)] [text-shadow:0_1px_8px_rgba(7,24,30,0.7)]'>
-                        <AnimatedCounter target={2000} suffix='+' duration={2.5} />
-                      </div>
-                      <div className='text-[0.625rem] text-cream/50 tracking-[0.15em] font-light [text-shadow:0_1px_4px_rgba(7,24,30,0.8)]'>
-                        Clients satisfaits
-                      </div>
-                    </MagneticWrap>
-                    <MagneticWrap className='group cursor-default'>
-                      <div className='text-2xl lg:text-3xl font-title text-gold mb-1 font-light opacity-90 transition-all duration-600 group-hover:opacity-100 group-hover:[text-shadow:0_0_20px_rgba(175,151,120,0.3)] [text-shadow:0_1px_8px_rgba(7,24,30,0.7)]'>
-                        <AnimatedCounter target={5} suffix='★' duration={1.5} />
-                      </div>
-                      <div className='text-[0.625rem] text-cream/50 tracking-[0.15em] font-light [text-shadow:0_1px_4px_rgba(7,24,30,0.8)]'>
-                        Note moyenne
-                      </div>
-                    </MagneticWrap>
+                  {/* Stats - Mobile (horizontal row) */}
+                  <div className='flex lg:hidden flex-wrap gap-4 pt-10'>
+                    {[
+                      {
+                        target: 23,
+                        suffix: '+',
+                        duration: 2,
+                        label: 'Années d\u2019expérience',
+                        delay: 1.2,
+                      },
+                      {
+                        target: 2000,
+                        suffix: '+',
+                        duration: 2.5,
+                        label: 'Clients satisfaits',
+                        delay: 2.0,
+                      },
+                      { target: 5, suffix: '★', duration: 1.5, label: 'Note moyenne', delay: 2.8 },
+                    ].map((stat, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          delay: stat.delay,
+                          duration: 1.0,
+                          ease: [0.16, 1, 0.3, 1],
+                        }}
+                        className='flex items-center gap-3 bg-navy/60 backdrop-blur-xl border border-gold/15 rounded-xl px-5 py-3 shadow-[0_4px_16px_rgba(0,0,0,0.25)]'>
+                        <div className='text-2xl font-title text-gold font-light leading-none [text-shadow:0_1px_8px_rgba(7,24,30,0.7)]'>
+                          <AnimatedCounter
+                            target={stat.target}
+                            suffix={stat.suffix}
+                            duration={stat.duration}
+                          />
+                        </div>
+                        <div className='text-[0.625rem] text-cream/50 tracking-[0.12em] font-light [text-shadow:0_1px_4px_rgba(7,24,30,0.8)]'>
+                          {stat.label}
+                        </div>
+                      </motion.div>
+                    ))}
                   </div>
                 </div>
               </div>
             </Container>
+          </div>
+
+          {/* Social Proof / Stats - Toast notifications bottom-right (desktop) */}
+          <div className='hidden lg:block absolute top-[50vh] lg:top-[40vh] xl:top-[42vh] 2xl:top-[40vh] right-8 xl:right-12 2xl:right-16 z-20'>
+            <div className='flex flex-col gap-4 items-end justify-end'>
+              <AnimatePresence>
+                {[
+                  { target: 23, suffix: '+', duration: 2, label: 'Années d\u2019expérience' },
+                  { target: 2000, suffix: '+', duration: 2.5, label: 'Clients satisfaits' },
+                  { target: 5, suffix: '★', duration: 1.5, label: 'Note moyenne' },
+                ]
+                  .slice(0, visibleStats)
+                  .map((stat) => (
+                    <motion.div
+                      key={stat.label}
+                      layout
+                      initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{
+                        opacity: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+                        y: { duration: 1.0, ease: [0.16, 1, 0.3, 1] },
+                        scale: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+                        layout: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+                      }}
+                      className='flex items-center gap-5 bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] rounded-2xl px-7 py-5 shadow-[0_12px_40px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.06),inset_0_-1px_0_rgba(0,0,0,0.1)] ring-1 ring-white/[0.03]'>
+                      <div className='text-4xl xl:text-5xl font-title text-gold font-light leading-none [text-shadow:0_2px_12px_rgba(7,24,30,0.7)]'>
+                        <AnimatedCounter
+                          target={stat.target}
+                          suffix={stat.suffix}
+                          duration={stat.duration}
+                        />
+                      </div>
+                      <div className='text-xs text-cream/60 tracking-[0.12em] font-light leading-tight [text-shadow:0_1px_4px_rgba(7,24,30,0.8)]'>
+                        {stat.label}
+                      </div>
+                    </motion.div>
+                  ))}
+              </AnimatePresence>
+            </div>
           </div>
 
           {/* Decorative Corner Elements - Subtle, static presence */}
