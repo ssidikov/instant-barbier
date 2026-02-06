@@ -1791,7 +1791,6 @@ export default function Home() {
               whileInView={{ opacity: 1 }}
               transition={{ duration: 1.2, ease: 'easeOut' }}
               viewport={{ once: true, margin: '-60px' }}>
-
               {/* ── Label ── */}
               <motion.div
                 initial={{ opacity: 0 }}
@@ -1818,16 +1817,21 @@ export default function Home() {
 
               {/* ── Layout 2 colonnes ── */}
               <div className='grid lg:grid-cols-2 gap-16 lg:gap-24'>
-
                 {/* COLONNE GAUCHE — Infos + Horaires + CTA */}
                 <div>
-
                   {/* ── Infos clés ── */}
                   <div className='space-y-5 mb-14'>
                     {[
                       {
                         icon: (
-                          <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5' className='text-gold/60'>
+                          <svg
+                            width='16'
+                            height='16'
+                            viewBox='0 0 24 24'
+                            fill='none'
+                            stroke='currentColor'
+                            strokeWidth='1.5'
+                            className='text-gold/60'>
                             <path d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z' />
                             <circle cx='12' cy='9' r='2.5' />
                           </svg>
@@ -1836,7 +1840,14 @@ export default function Home() {
                       },
                       {
                         icon: (
-                          <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5' className='text-gold/60'>
+                          <svg
+                            width='16'
+                            height='16'
+                            viewBox='0 0 24 24'
+                            fill='none'
+                            stroke='currentColor'
+                            strokeWidth='1.5'
+                            className='text-gold/60'>
                             <circle cx='12' cy='12' r='10' />
                             <polyline points='12 6 12 12 16 14' />
                           </svg>
@@ -1845,7 +1856,14 @@ export default function Home() {
                       },
                       {
                         icon: (
-                          <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5' className='text-gold/60'>
+                          <svg
+                            width='16'
+                            height='16'
+                            viewBox='0 0 24 24'
+                            fill='none'
+                            stroke='currentColor'
+                            strokeWidth='1.5'
+                            className='text-gold/60'>
                             <rect x='3' y='4' width='18' height='18' rx='2' ry='2' />
                             <line x1='16' y1='2' x2='16' y2='6' />
                             <line x1='8' y1='2' x2='8' y2='6' />
@@ -1941,7 +1959,6 @@ export default function Home() {
                   <div className='absolute bottom-0 right-0 w-8 h-8 border-b border-r border-gold/25 pointer-events-none' />
                 </motion.div>
               </div>
-
             </motion.div>
           </Container>
         </Section>
