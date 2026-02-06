@@ -1,6 +1,5 @@
-import './globals.css'
+import '@/app/globals.css'
 import { Playfair_Display, Mulish } from 'next/font/google' // Note: Muli is now Mulish in Google Fonts
-import SmoothScrollProvider from '@/components/SmoothScrollProvider'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -10,7 +9,7 @@ const playfair = Playfair_Display({
 
 const muli = Mulish({
   subsets: ['latin'],
-  variable: '--font-muli',
+  variable: '--font-mulia',
   display: 'swap',
 })
 
@@ -22,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link href='https://fonts.cdnfonts.com/css/source-sans-pro-2' rel='stylesheet' />
       </head>
       <body className='bg-navy text-cream font-body antialiased flex flex-col min-h-screen'>
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        {children}
       </body>
     </html>
   )

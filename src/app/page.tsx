@@ -8,10 +8,10 @@ import Footer from '@/components/Footer'
 import { PLANITY_URL } from '@/lib/constants'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -46,6 +46,184 @@ const staggerContainer = {
       delayChildren: 0.2,
     },
   },
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PREMIUM COMPONENTS
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Scroll progress bar — premium gold indicator
+function ScrollProgressBar() {
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
+
+  return (
+    <motion.div
+      className='fixed top-0 left-0 right-0 h-[2px] bg-gold/80 origin-left z-[100]'
+      style={{ scaleX }}
+    />
+  )
+}
+
+// Animated counter — numbers count up when in view
+function AnimatedCounter({
+  target,
+  suffix = '',
+  duration = 2,
+}: {
+  target: number
+  suffix?: string
+  duration?: number
+}) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-50px' })
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    if (!isInView) return
+    let start = 0
+    const increment = target / (duration * 60)
+    const timer = setInterval(() => {
+      start += increment
+      if (start >= target) {
+        setCount(target)
+        clearInterval(timer)
+      } else {
+        setCount(Math.floor(start))
+      }
+    }, 1000 / 60)
+    return () => clearInterval(timer)
+  }, [isInView, target, duration])
+
+  return (
+    <span ref={ref}>
+      {isInView ? count : 0}{suffix}
+    </span>
+  )
+}
+
+// Magnetic hover wrapper — subtle pull toward cursor
+function MagneticWrap({
+  children,
+  className = '',
+  strength = 0.3,
+}: {
+  children: React.ReactNode
+  className?: string
+  strength?: number
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const springX = useSpring(x, { stiffness: 150, damping: 15 })
+  const springY = useSpring(y, { stiffness: 150, damping: 15 })
+
+  const handleMouse = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const rect = ref.current?.getBoundingClientRect()
+      if (!rect) return
+      const centerX = rect.left + rect.width / 2
+      const centerY = rect.top + rect.height / 2
+      x.set((e.clientX - centerX) * strength)
+      y.set((e.clientY - centerY) * strength)
+    },
+    [x, y, strength],
+  )
+
+  const handleLeave = useCallback(() => {
+    x.set(0)
+    y.set(0)
+  }, [x, y])
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={handleLeave}
+      style={{ x: springX, y: springY }}
+      className={className}>
+      {children}
+    </motion.div>
+  )
+}
+
+// 3D tilt card wrapper
+function TiltCard({
+  children,
+  className = '',
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const rotateX = useMotionValue(0)
+  const rotateY = useMotionValue(0)
+  const springRotateX = useSpring(rotateX, { stiffness: 200, damping: 20 })
+  const springRotateY = useSpring(rotateY, { stiffness: 200, damping: 20 })
+
+  const handleMouse = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const rect = ref.current?.getBoundingClientRect()
+      if (!rect) return
+      const x = (e.clientX - rect.left) / rect.width - 0.5
+      const y = (e.clientY - rect.top) / rect.height - 0.5
+      rotateX.set(y * -8)
+      rotateY.set(x * 8)
+    },
+    [rotateX, rotateY],
+  )
+
+  const handleLeave = useCallback(() => {
+    rotateX.set(0)
+    rotateY.set(0)
+  }, [rotateX, rotateY])
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={handleLeave}
+      style={{
+        rotateX: springRotateX,
+        rotateY: springRotateY,
+        transformPerspective: 800,
+      }}
+      className={className}>
+      {children}
+    </motion.div>
+  )
+}
+
+// Image reveal with golden curtain
+function ImageReveal({
+  children,
+  delay = 0,
+  className = '',
+}: {
+  children: React.ReactNode
+  delay?: number
+  className?: string
+}) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+
+  return (
+    <div ref={ref} className={`relative overflow-hidden ${className}`}>
+      {children}
+      <motion.div
+        initial={{ scaleX: 1 }}
+        animate={isInView ? { scaleX: 0 } : { scaleX: 1 }}
+        transition={{ duration: 1.2, delay, ease: [0.77, 0, 0.18, 1] }}
+        className='absolute inset-0 bg-navy origin-right z-10'
+      />
+      <motion.div
+        initial={{ scaleX: 1 }}
+        animate={isInView ? { scaleX: 0 } : { scaleX: 1 }}
+        transition={{ duration: 1.2, delay: delay + 0.15, ease: [0.77, 0, 0.18, 1] }}
+        className='absolute inset-0 bg-gold/20 origin-right z-10'
+      />
+    </div>
+  )
 }
 
 // Reveal on scroll component
@@ -416,6 +594,7 @@ export default function Home() {
   return (
     <>
       <Header />
+      <ScrollProgressBar />
       <main className='grow'>
         {/* ═══════════════════════════════════════════════════════════════════
           HERO SECTION - PREMIUM
@@ -560,32 +739,32 @@ export default function Home() {
                     <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
                   </div>
 
-                  {/* Social Proof / Stats - Enhanced visibility */}
+                  {/* Social Proof / Stats - Animated Counters */}
                   <div className='flex gap-12 pt-8'>
-                    <div className='group cursor-default'>
+                    <MagneticWrap className='group cursor-default'>
                       <div className='text-2xl lg:text-3xl font-title text-gold mb-1 font-light opacity-90 transition-all duration-600 group-hover:opacity-100 group-hover:[text-shadow:0_0_20px_rgba(175,151,120,0.3)] [text-shadow:0_1px_8px_rgba(7,24,30,0.7)]'>
-                        23+
+                        <AnimatedCounter target={23} suffix='+' duration={2} />
                       </div>
                       <div className='text-[0.625rem] text-cream/50 tracking-[0.15em] font-light [text-shadow:0_1px_4px_rgba(7,24,30,0.8)]'>
                         Années d&apos;expérience
                       </div>
-                    </div>
-                    <div className='group cursor-default'>
+                    </MagneticWrap>
+                    <MagneticWrap className='group cursor-default'>
                       <div className='text-2xl lg:text-3xl font-title text-gold mb-1 font-light opacity-90 transition-all duration-600 group-hover:opacity-100 group-hover:[text-shadow:0_0_20px_rgba(175,151,120,0.3)] [text-shadow:0_1px_8px_rgba(7,24,30,0.7)]'>
-                        2000+
+                        <AnimatedCounter target={2000} suffix='+' duration={2.5} />
                       </div>
                       <div className='text-[0.625rem] text-cream/50 tracking-[0.15em] font-light [text-shadow:0_1px_4px_rgba(7,24,30,0.8)]'>
                         Clients satisfaits
                       </div>
-                    </div>
-                    <div className='group cursor-default'>
+                    </MagneticWrap>
+                    <MagneticWrap className='group cursor-default'>
                       <div className='text-2xl lg:text-3xl font-title text-gold mb-1 font-light opacity-90 transition-all duration-600 group-hover:opacity-100 group-hover:[text-shadow:0_0_20px_rgba(175,151,120,0.3)] [text-shadow:0_1px_8px_rgba(7,24,30,0.7)]'>
-                        5★
+                        <AnimatedCounter target={5} suffix='★' duration={1.5} />
                       </div>
                       <div className='text-[0.625rem] text-cream/50 tracking-[0.15em] font-light [text-shadow:0_1px_4px_rgba(7,24,30,0.8)]'>
                         Note moyenne
                       </div>
-                    </div>
+                    </MagneticWrap>
                   </div>
                 </div>
               </div>
@@ -614,130 +793,199 @@ export default function Home() {
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
-          À PROPOS SECTION
+          À PROPOS SECTION - PREMIUM REFINED DESIGN
+          Luxury minimalist barbershop Paris
       ═══════════════════════════════════════════════════════════════════ */}
-        <Section id='a-propos' className='bg-navy'>
-          <Container>
-            <div className='grid lg:grid-cols-2 gap-12 lg:gap-20 items-center'>
-              {/* Image Side */}
-              <RevealOnScroll className='relative'>
-                <motion.div
-                  className='relative aspect-4/5 overflow-hidden'
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}>
-                  <div className="absolute inset-0 bg-[url('/images/about-barbershop.jpg')] bg-cover bg-center" />
-                  <div className='absolute inset-0 bg-navy/20' />
-                  {/* Shine effect on hover */}
-                  <motion.div
-                    className='absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full'
-                    whileHover={{ translateX: '100%' }}
-                    transition={{ duration: 0.6 }}
-                  />
-                </motion.div>
-                {/* Decorative Frame - Animated */}
-                <motion.div
-                  initial={{ opacity: 0, x: 20, y: 20 }}
-                  whileInView={{ opacity: 1, x: 0, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                  viewport={{ once: true }}
-                  className='absolute -bottom-4 -right-4 w-full h-full border border-gold/30 -z-10'
-                />
-                {/* Experience Badge - Animated */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.5, type: 'spring' }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.1, rotate: -5 }}
-                  className='absolute -bottom-6 -left-6 bg-gold text-navy p-6 text-center cursor-default'>
-                  <span className='block text-4xl font-title font-bold'>23+</span>
-                  <span className='text-xs uppercase tracking-wider'>Ans d&apos;expérience</span>
-                </motion.div>
-              </RevealOnScroll>
+        <Section id='a-propos' className='bg-navy relative overflow-hidden py-24 lg:py-32'>
+          {/* Subtle background pattern */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.02 }}
+            transition={{ duration: 3, ease: 'easeOut' }}
+            viewport={{ once: true }}
+            className='absolute inset-0 pointer-events-none'>
+            <div className='absolute top-1/4 right-1/4 w-96 h-96 border border-gold/10 rotate-12' />
+            <div className='absolute bottom-1/4 left-1/4 w-64 h-64 border border-gold/10 -rotate-6' />
+          </motion.div>
 
-              {/* Content Side */}
+          {/* Main content wrapper */}
+          <div className='max-w-7xl mx-auto px-6 lg:px-12'>
+            <div className='grid lg:grid-cols-2 gap-12 lg:gap-16 items-center'>
+              {/* Images - Layout asymétrique */}
               <motion.div
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true, margin: '-100px' }}
-                variants={staggerContainer}
-                className='space-y-8'>
-                <div>
-                  <motion.div variants={fadeInUp} className='flex items-center gap-3 mb-4'>
-                    <motion.span
-                      initial={{ scaleX: 0 }}
-                      whileInView={{ scaleX: 1 }}
-                      transition={{ duration: 0.6 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+                viewport={{ once: true, margin: '-80px' }}
+                className='relative'>
+                {/* Image dominante 60% */}
+                <ImageReveal delay={0.1} className='aspect-[4/5]'>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+                    viewport={{ once: true }}
+                    className='relative aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'>
+                  <div
+                    className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
+                    style={{ backgroundImage: "url('/images/about-barbershop.jpg')" }}
+                  />
+                  <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent' />
+                  
+                  {/* Premium corner accents */}
+                  <div className='absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                  <div className='absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                  <div className='absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                  <div className='absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                </motion.div>
+                </ImageReveal>
+                {/* Images secondaires */}
+                <div className='grid grid-cols-2 gap-4 mt-4'>
+                  <ImageReveal delay={0.3} className='aspect-square'>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
                       viewport={{ once: true }}
-                      className='w-10 h-px bg-gold origin-left'
+                      className='relative aspect-square overflow-hidden group border-2 border-gold/30 shadow-xl'>
+                    <div
+                      className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
+                      style={{ backgroundImage: "url('/images/gallery/gallery-1.jpg')" }}
                     />
-                    <span className='text-gold text-xs uppercase tracking-[0.3em]'>À propos</span>
+                    <div className='absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent' />
+                    
+                    {/* Premium corner accents */}
+                    <div className='absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                    <div className='absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
                   </motion.div>
-                  <motion.h2
-                    variants={fadeInUp}
-                    className='text-3xl md:text-5xl font-title text-gold leading-tight'>
-                    Un barbier à Paris où l’exigence rencontre l’élégance
-                  </motion.h2>
+                  </ImageReveal>
+
+                  <ImageReveal delay={0.5} className='aspect-square'>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      transition={{ duration: 0.6, delay: 0.6, ease: 'easeOut' }}
+                      viewport={{ once: true }}
+                      className='relative aspect-square overflow-hidden group border-2 border-gold/30 shadow-xl'>
+                    <div
+                      className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
+                      style={{ backgroundImage: "url('/images/gallery/gallery-2.jpg')" }}
+                    />
+                    <div className='absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent' />
+                    
+                    {/* Premium corner accents */}
+                    <div className='absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                    <div className='absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
+                  </motion.div>
+                  </ImageReveal>
+                </div>
+              </motion.div>
+
+              {/* Content */}
+              <div className='space-y-10 lg:space-y-12'>
+                {/* Label */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+                  viewport={{ once: true }}
+                  className='flex items-center gap-4'>
+                  <div className='w-12 h-px bg-gold' />
+                  <span className='text-gold text-[10px] uppercase tracking-[0.4em] font-medium'>
+                    À propos
+                  </span>
+                </motion.div>
+
+                {/* Titre optimisé */}
+                <motion.h2
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+                  viewport={{ once: true }}
+                  className='text-3xl md:text-4xl lg:text-5xl font-title text-gold leading-[1.4] tracking-wide'>
+                  Un barbier à Paris, où l&apos;
+                  <span className='text-gold/90 font-semibold'>exigence</span> rencontre l&apos;
+                  <span className='text-gold/90 font-semibold'>élégance</span>
+                </motion.h2>
+
+                {/* Paragraphe principal */}
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
+                  viewport={{ once: true }}
+                  className='text-cream/90 text-base lg:text-lg leading-relaxed'>
+                  Spécialisé dans la{' '}
+                  <span className='text-gold font-medium'>coiffure masculine</span> et l&apos;art
+                  de la barbe, L&apos;Instant Barbier vous accueille dans un univers premium où
+                  tradition et modernité se rencontrent. Chaque coupe est pensée comme une
+                  expérience sur mesure.
+                </motion.p>
+
+                {/* Highlights avec icônes */}
+                <div className='space-y-6'>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.5, ease: 'easeOut' }}
+                    viewport={{ once: true }}
+                    className='flex items-start gap-4 group'>
+                    <div className='flex-shrink-0 w-8 h-8 flex items-center justify-center'>
+                      <svg
+                        className='w-5 h-5 text-gold transition-transform duration-300 group-hover:scale-110'
+                        fill='currentColor'
+                        viewBox='0 0 20 20'>
+                        <path d='M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 15.5L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z' />
+                      </svg>
+                    </div>
+                    <div className='flex-1'>
+                      <h3 className='text-gold text-sm font-semibold uppercase tracking-wider mb-1'>
+                        Maîtres barbiers expérimentés
+                      </h3>
+                      <p className='text-cream/80 text-sm leading-relaxed'>
+                        Notre équipe, dirigée par Riccardo, met son savoir-faire au service d&apos;une
+                        clientèle exigeante.
+                      </p>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.6, ease: 'easeOut' }}
+                    viewport={{ once: true }}
+                    className='flex items-start gap-4 group'>
+                    <div className='flex-shrink-0 w-8 h-8 flex items-center justify-center'>
+                      <svg
+                        className='w-5 h-5 text-gold transition-transform duration-300 group-hover:rotate-45'
+                        fill='currentColor'
+                        viewBox='0 0 20 20'>
+                        <rect x='4' y='4' width='12' height='12' transform='rotate(45 10 10)' />
+                      </svg>
+                    </div>
+                    <div className='flex-1'>
+                      <h3 className='text-gold text-sm font-semibold uppercase tracking-wider mb-1'>
+                        Excellence parisienne
+                      </h3>
+                      <p className='text-cream/80 text-sm leading-relaxed'>
+                        Un salon pensé pour les hommes attachés au détail et à l&apos;élégance
+                        authentique.
+                      </p>
+                    </div>
+                  </motion.div>
                 </div>
 
-                <motion.div variants={fadeInUp} className='space-y-6 text-cream/80 leading-relaxed'>
-                  <p>
-                    Spécialisé dans la coiffure homme et l’entretien de la barbe, L’Instant Barbier
-                    vous accueille dans un univers premium, inspiré des codes du grooming haut de
-                    gamme.
-                  </p>
-                  <p>
-                    Notre équipe de coiffeurs-barbiers expérimentés, dirigée par Riccardo, met son
-                    savoir-faire au service de chaque client afin de proposer une expérience sur
-                    mesure, alliant précision, écoute, conseils personnalisés et produits de
-                    qualité.
-                  </p>
-                  <p>
-                    Que vous recherchiez un barbier dans le Marais, un coiffeur homme à Paris, ou
-                    une expérience authentique et soignée, notre salon est pensé pour les hommes
-                    exigeants, attachés au détail et à l’élégance.
-                  </p>
+                {/* CTA premium */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.7, ease: 'easeOut' }}
+                  viewport={{ once: true }}>
+                  <Button href='/salon'>Découvrir notre univers</Button>
                 </motion.div>
-
-                {/* Features - Staggered */}
-                <motion.div variants={staggerContainer} className='grid grid-cols-2 gap-6 pt-4'>
-                  {[
-                    'Produits Premium',
-                    'Maîtres Barbiers',
-                    'Cadre Élégant',
-                    'Service Personnalisé',
-                  ].map((feature, i) => (
-                    <motion.div
-                      key={i}
-                      variants={fadeInUp}
-                      whileHover={{ x: 5 }}
-                      className='flex items-center gap-3'>
-                      <motion.span
-                        initial={{ scale: 0 }}
-                        whileInView={{ scale: 1 }}
-                        transition={{ delay: i * 0.1 }}
-                        viewport={{ once: true }}
-                        className='text-gold text-2xl'>
-                        ✓
-                      </motion.span>
-                      <span className='text-cream/90 text-sm'>{feature}</span>
-                    </motion.div>
-                  ))}
-                </motion.div>
-
-                <motion.div variants={fadeInUp}>
-                  <Link
-                    href='/salon'
-                    className='inline-flex items-center gap-2 text-gold text-sm uppercase tracking-widest hover:text-cream transition-colors group'>
-                    En savoir plus
-                    <motion.span className='inline-block' whileHover={{ x: 5 }}>
-                      →
-                    </motion.span>
-                  </Link>
-                </motion.div>
-              </motion.div>
+              </div>
             </div>
-          </Container>
+          </div>
         </Section>
 
         {/* ═══════════════════════════════════════════════════════════════════
@@ -754,65 +1002,90 @@ export default function Home() {
               variants={staggerContainer}
               className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
               {services.map((service, index) => (
-                <motion.article
-                  key={index}
-                  variants={fadeInUp}
-                  initial='rest'
-                  whileHover='hover'
-                  className='group text-center p-8 border border-gold/20 hover:border-gold/50 hover:bg-gold/5 transition-all duration-300'>
-                  {/* Icon */}
-                  <div className='flex justify-center mb-6'>
+                <TiltCard key={index}>
+                  <motion.article
+                    variants={fadeInUp}
+                    initial='rest'
+                    whileHover='hover'
+                    className='group text-center p-8 border border-gold/20 hover:border-gold/50 transition-all duration-500 relative overflow-hidden h-full'>
+                    {/* Hover glow background */}
                     <motion.div
-                      className='text-gold'
+                      className='absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(175,151,120,0.08),transparent_70%)] pointer-events-none'
                       variants={{
-                        rest: { scale: 1, rotate: 0 },
-                        hover: { scale: 1.2, rotate: 5 },
+                        rest: { opacity: 0, scale: 0.8 },
+                        hover: { opacity: 1, scale: 1.2 },
                       }}
-                      transition={{ duration: 0.3 }}>
-                      {service.icon}
-                    </motion.div>
-                  </div>
+                      transition={{ duration: 0.5 }}
+                    />
 
-                  {/* Title */}
-                  <motion.h3
-                    className='text-lg font-title text-gold mb-4 uppercase tracking-wide leading-tight'
-                    variants={{
-                      rest: { y: 0 },
-                      hover: { y: -3 },
-                    }}>
-                    {service.title}
-                  </motion.h3>
-
-                  {/* Description */}
-                  <p className='text-cream/70 text-sm leading-relaxed mb-6'>
-                    {service.description}
-                  </p>
-
-                  {/* En savoir plus link */}
-                  <Link
-                    href={service.link}
-                    className='inline-flex items-center gap-2 text-gold text-xs uppercase tracking-widest hover:text-cream transition-colors group'>
-                    En savoir plus
-                    <motion.span
-                      className='inline-block'
+                    {/* Animated border glow */}
+                    <motion.div
+                      className='absolute inset-0 pointer-events-none'
                       variants={{
-                        rest: { x: 0 },
-                        hover: { x: 5 },
-                      }}>
-                      →
-                    </motion.span>
-                  </Link>
+                        rest: { opacity: 0 },
+                        hover: { opacity: 1 },
+                      }}
+                      transition={{ duration: 0.4 }}>
+                      <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/60' />
+                      <div className='absolute top-0 right-0 w-6 h-6 border-t border-r border-gold/60' />
+                      <div className='absolute bottom-0 left-0 w-6 h-6 border-b border-l border-gold/60' />
+                      <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/60' />
+                    </motion.div>
 
-                  {/* Decorative line on hover */}
-                  <motion.div
-                    className='mt-6 h-px bg-gold/50 mx-auto'
-                    variants={{
-                      rest: { width: 0 },
-                      hover: { width: '50%' },
-                    }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.article>
+                    {/* Icon */}
+                    <div className='flex justify-center mb-6 relative z-10'>
+                      <motion.div
+                        className='text-gold'
+                        variants={{
+                          rest: { scale: 1, rotate: 0 },
+                          hover: { scale: 1.15, rotate: 5 },
+                        }}
+                        transition={{ type: 'spring', stiffness: 300, damping: 15 }}>
+                        {service.icon}
+                      </motion.div>
+                    </div>
+
+                    {/* Title */}
+                    <motion.h3
+                      className='text-lg font-title text-gold mb-4 uppercase tracking-wide leading-tight relative z-10'
+                      variants={{
+                        rest: { y: 0 },
+                        hover: { y: -3 },
+                      }}>
+                      {service.title}
+                    </motion.h3>
+
+                    {/* Description */}
+                    <p className='text-cream/70 text-sm leading-relaxed mb-6 relative z-10'>
+                      {service.description}
+                    </p>
+
+                    {/* En savoir plus link */}
+                    <Link
+                      href={service.link}
+                      className='inline-flex items-center gap-2 text-gold text-xs uppercase tracking-widest hover:text-cream transition-colors group relative z-10'>
+                      En savoir plus
+                      <motion.span
+                        className='inline-block'
+                        variants={{
+                          rest: { x: 0 },
+                          hover: { x: 5 },
+                        }}>
+                        →
+                      </motion.span>
+                    </Link>
+
+                    {/* Decorative line on hover */}
+                    <motion.div
+                      className='mt-6 h-px bg-gold/50 mx-auto relative z-10'
+                      variants={{
+                        rest: { width: 0 },
+                        hover: { width: '50%' },
+                      }}
+                      transition={{ duration: 0.4 }}
+                    />
+                  </motion.article>
+                </TiltCard>
               ))}
             </motion.div>
 
@@ -824,63 +1097,104 @@ export default function Home() {
 
         {/* ═══════════════════════════════════════════════════════════════════
           ATMOSPHÈRE & IDENTITÉ SECTION
+          Parenthèse élégante — pause visuelle immersive
       ═══════════════════════════════════════════════════════════════════ */}
-        <Section className='bg-dark border-t border-gold/10'>
-          <Container>
-            <motion.div
-              initial='hidden'
-              whileInView='visible'
-              viewport={{ once: true, margin: '-100px' }}
-              variants={staggerContainer}
-              className='max-w-4xl mx-auto text-center'>
-              <motion.div
-                variants={fadeInUp}
-                className='flex items-center justify-center gap-4 mb-6'>
-                <motion.span
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  transition={{ duration: 0.8 }}
-                  viewport={{ once: true }}
-                  className='w-16 h-px bg-gold/40 origin-right'
-                />
-                <span className='text-gold text-xs uppercase tracking-[0.3em]'>Atmosphère</span>
-                <motion.span
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  transition={{ duration: 0.8 }}
-                  viewport={{ once: true }}
-                  className='w-16 h-px bg-gold/40 origin-left'
-                />
-              </motion.div>
+        <section className='relative py-32 md:py-40 lg:py-52 bg-dark overflow-hidden'>
+          {/* Background image — fixed, slow, cinematic */}
+          <div
+            className='absolute inset-0 bg-cover bg-center bg-fixed'
+            style={{ backgroundImage: "url('/images/Atmosph%C3%A8re.jpg')" }}
+          />
+          {/* Dark overlay — preserves text legibility and luxury mood */}
+          <div className='absolute inset-0 bg-dark/85' />
+          {/* Subtle radial depth — almost imperceptible warmth */}
+          <div className='absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_40%,rgba(20,34,51,0.35),transparent)] pointer-events-none' />
 
-              <motion.h2
-                variants={fadeInUp}
-                className='text-3xl md:text-5xl font-title text-gold mb-8 leading-tight'>
-                Un salon de barbier dans le Marais au style unique
+          <Container className='relative z-10'>
+            <div className='max-w-2xl lg:max-w-3xl mx-auto text-center'>
+
+              {/* ── Label « Atmosphère » — first breath ── */}
+              <motion.span
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 0.6 }}
+                transition={{ duration: 1.4, ease: 'easeOut' }}
+                viewport={{ once: true, margin: '-120px' }}
+                className='block text-gold text-[11px] uppercase tracking-[0.4em] font-body mb-16 lg:mb-20'>
+                Atmosphère
+              </motion.span>
+
+              {/* ── Top separator — slow draw ── */}
+              <motion.div
+                initial={{ scaleX: 0, opacity: 0 }}
+                whileInView={{ scaleX: 1, opacity: 1 }}
+                transition={{ duration: 1.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+                viewport={{ once: true, margin: '-120px' }}
+                className='w-14 h-px bg-gold/25 mx-auto mb-14 lg:mb-18 origin-center'
+              />
+
+              {/* ── Titre éditorial — ligne par ligne ── */}
+              <motion.h2 className='font-title text-gold mb-14 lg:mb-18'>
+                <motion.span
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                  viewport={{ once: true, margin: '-120px' }}
+                  className='block text-2xl md:text-3xl lg:text-[2.75rem] leading-[1.35] tracking-wide'>
+                  Un salon de barbier dans le Marais
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                  viewport={{ once: true, margin: '-120px' }}
+                  className='block text-2xl md:text-3xl lg:text-[2.75rem] leading-[1.35] tracking-wide mt-1'>
+                  au style unique
+                </motion.span>
               </motion.h2>
 
-              <motion.div variants={fadeInUp} className='space-y-6 text-cream/80 leading-relaxed'>
-                <p className='text-lg'>
-                  L&apos;Instant Barbier, c&apos;est aussi une ambiance : lumière chaleureuse,
-                  matières nobles, lignes épurées et atmosphère feutrée.
-                </p>
-                <p>
-                  Chaque détail du salon reflète notre exigence et notre vision du{' '}
-                  <strong className='text-gold font-medium'>barbier moderne à Paris</strong>.
-                </p>
-              </motion.div>
-
-              {/* Decorative Elements */}
+              {/* ── Middle separator ── */}
               <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: 120 }}
-                transition={{ duration: 1, delay: 0.5 }}
-                viewport={{ once: true }}
-                className='mt-10 mx-auto h-px bg-gradient-to-r from-transparent via-gold to-transparent'
+                initial={{ scaleX: 0, opacity: 0 }}
+                whileInView={{ scaleX: 1, opacity: 1 }}
+                transition={{ duration: 1.4, delay: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                viewport={{ once: true, margin: '-120px' }}
+                className='w-10 h-px bg-gold/15 mx-auto mb-12 lg:mb-16 origin-center'
               />
-            </motion.div>
+
+              {/* ── Texte principal — ambiance ── */}
+              <motion.p
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.1, delay: 1, ease: 'easeOut' }}
+                viewport={{ once: true, margin: '-120px' }}
+                className='text-cream/65 text-base md:text-lg leading-[1.9] max-w-xl mx-auto mb-10 lg:mb-12 font-body'>
+                L&apos;Instant Barbier, c&apos;est aussi une ambiance : lumière chaleureuse,
+                matières nobles, lignes épurées et atmosphère feutrée.
+              </motion.p>
+
+              {/* ── Texte secondaire — vision / exigence — plus discret ── */}
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.3, delay: 1.2, ease: 'easeOut' }}
+                viewport={{ once: true, margin: '-120px' }}
+                className='text-cream/40 text-sm md:text-[15px] leading-[1.9] max-w-md mx-auto font-body italic'>
+                Chaque détail du salon reflète notre exigence et notre vision
+                du barbier moderne à Paris.
+              </motion.p>
+
+              {/* ── Bottom separator — closing breath ── */}
+              <motion.div
+                initial={{ scaleX: 0, opacity: 0 }}
+                whileInView={{ scaleX: 1, opacity: 1 }}
+                transition={{ duration: 1.8, delay: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
+                viewport={{ once: true, margin: '-120px' }}
+                className='w-20 h-px bg-linear-to-r from-transparent via-gold/20 to-transparent mx-auto mt-16 lg:mt-20 origin-center'
+              />
+
+            </div>
           </Container>
-        </Section>
+        </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
           ÉQUIPE SECTION
@@ -961,51 +1275,57 @@ export default function Home() {
               variants={staggerContainer}
               className='grid grid-cols-2 md:grid-cols-3 gap-4'>
               {/* Large Image */}
-              <motion.div
-                variants={scaleIn}
-                whileHover={{ scale: 0.98 }}
-                className='col-span-2 row-span-2 relative aspect-square md:aspect-auto overflow-hidden group cursor-pointer'>
+              <ImageReveal delay={0} className='col-span-2 row-span-2 aspect-square md:aspect-auto'>
                 <motion.div
-                  className='absolute inset-0 bg-cover bg-center'
-                  style={{ backgroundImage: `url(${galleryImages[0].src})` }}
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                />
-                <div className='absolute inset-0 bg-navy/20 group-hover:bg-navy/10 transition-colors' />
-                {/* View overlay */}
-                <motion.div
-                  className='absolute inset-0 flex items-center justify-center bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity'
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}>
-                  <motion.span
-                    className='text-gold text-4xl'
-                    initial={{ scale: 0 }}
-                    whileHover={{ scale: 1 }}
-                    transition={{ type: 'spring', stiffness: 300 }}>
-                    +
-                  </motion.span>
+                  variants={scaleIn}
+                  whileHover={{ scale: 0.98 }}
+                  className='col-span-2 row-span-2 relative aspect-square md:aspect-auto overflow-hidden group cursor-pointer h-full'>
+                  <motion.div
+                    className='absolute inset-0 bg-cover bg-center'
+                    style={{ backgroundImage: `url(${galleryImages[0].src})` }}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                  />
+                  <div className='absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors duration-500' />
+                  {/* Premium hover overlay */}
+                  <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500'>
+                    <div className='absolute inset-0 bg-navy/50 backdrop-blur-[2px]' />
+                    <div className='relative flex flex-col items-center gap-3'>
+                      <motion.div
+                        initial={{ scale: 0, rotate: -90 }}
+                        whileHover={{ scale: 1, rotate: 0 }}
+                        className='w-12 h-12 border border-gold/60 flex items-center justify-center'>
+                        <span className='text-gold text-2xl'>+</span>
+                      </motion.div>
+                      <span className='text-gold/80 text-xs uppercase tracking-[0.3em]'>Voir</span>
+                    </div>
+                  </div>
                 </motion.div>
-              </motion.div>
+              </ImageReveal>
 
               {/* Smaller Images */}
               {galleryImages.slice(1).map((image, index) => (
-                <motion.div
-                  key={index}
-                  variants={scaleIn}
-                  whileHover={{ scale: 0.95 }}
-                  className='relative aspect-square overflow-hidden group cursor-pointer'>
+                <ImageReveal key={index} delay={0.15 * (index + 1)} className='aspect-square'>
                   <motion.div
-                    className='absolute inset-0 bg-cover bg-center'
-                    style={{ backgroundImage: `url(${image.src})` }}
-                    whileHover={{ scale: 1.15 }}
-                    transition={{ duration: 0.5 }}
-                  />
-                  <div className='absolute inset-0 bg-navy/20 group-hover:bg-navy/10 transition-colors' />
-                  {/* View overlay */}
-                  <div className='absolute inset-0 flex items-center justify-center bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity'>
-                    <span className='text-gold text-2xl'>+</span>
-                  </div>
-                </motion.div>
+                    variants={scaleIn}
+                    whileHover={{ scale: 0.95 }}
+                    className='relative aspect-square overflow-hidden group cursor-pointer h-full'>
+                    <motion.div
+                      className='absolute inset-0 bg-cover bg-center'
+                      style={{ backgroundImage: `url(${image.src})` }}
+                      whileHover={{ scale: 1.15 }}
+                      transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+                    />
+                    <div className='absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors duration-500' />
+                    {/* Premium hover overlay */}
+                    <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500'>
+                      <div className='absolute inset-0 bg-navy/50 backdrop-blur-[2px]' />
+                      <div className='relative w-9 h-9 border border-gold/60 flex items-center justify-center'>
+                        <span className='text-gold text-lg'>+</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                </ImageReveal>
               ))}
             </motion.div>
 
@@ -1084,12 +1404,10 @@ export default function Home() {
               variants={staggerContainer}
               className='grid md:grid-cols-3 gap-8'>
               {reviews.map((review, index) => (
-                <motion.article
-                  key={index}
-                  variants={fadeInUp}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                  className='bg-dark/50 border border-gold/20 p-8 relative hover:border-gold/40 cursor-default'>
+                <TiltCard key={index}>
+                  <motion.article
+                    variants={fadeInUp}
+                    className='bg-dark/50 border border-gold/20 p-8 relative hover:border-gold/40 cursor-default transition-all duration-500 h-full overflow-hidden group/review'>
                   {/* Quote Icon - Animated */}
                   <motion.div
                     className='absolute -top-4 left-8'
@@ -1127,6 +1445,7 @@ export default function Home() {
                     </div>
                   </div>
                 </motion.article>
+                </TiltCard>
               ))}
             </motion.div>
           </Container>
