@@ -656,6 +656,13 @@ export default function Home() {
     email: '',
     message: '',
   })
+  const [formErrors, setFormErrors] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    message: '',
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [visibleStats, setVisibleStats] = useState(0)
 
@@ -813,10 +820,106 @@ export default function Home() {
     })
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Input sanitization helper
+  const sanitizeInput = (input: string): string => {
+    return input
+      .replace(/<script[^>]*>.*?<\/script>/gi, '')
+      .replace(/<[^>]+>/g, '')
+      .replace(/javascript:/gi, '')
+      .replace(/on\w+=/gi, '')
+      .trim()
+  }
+
+  // Form validation
+  const validateForm = (): boolean => {
+    const errors = {
+      name: '',
+      phone: '',
+      email: '',
+      message: '',
+    }
+    let isValid = true
+
+    // Name validation: letters, spaces, hyphens only, 2-50 characters
+    const nameRegex = /^[a-zA-ZÀ-ſ\s'-]{2,50}$/
+    if (!formData.name.trim()) {
+      errors.name = 'Le nom est requis'
+      isValid = false
+    } else if (!nameRegex.test(formData.name)) {
+      errors.name = 'Nom invalide (2-50 caractères, lettres uniquement)'
+      isValid = false
+    }
+
+    // Phone validation: French phone format
+    const phoneRegex = /^(?:(?:\+|00)33[\s.-]?(?:\(0\)[\s.-]?)?|0)[1-9](?:[\s.-]?\d{2}){4}$/
+    if (!formData.phone.trim()) {
+      errors.phone = 'Le téléphone est requis'
+      isValid = false
+    } else if (!phoneRegex.test(formData.phone.replace(/\s/g, ''))) {
+      errors.phone = 'Numéro de téléphone invalide'
+      isValid = false
+    }
+
+    // Email validation: RFC 5322 compliant
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    if (!formData.email.trim()) {
+      errors.email = "L'email est requis"
+      isValid = false
+    } else if (!emailRegex.test(formData.email)) {
+      errors.email = 'Adresse email invalide'
+      isValid = false
+    }
+
+    // Message validation: 10-1000 characters
+    if (!formData.message.trim()) {
+      errors.message = 'Le message est requis'
+      isValid = false
+    } else if (formData.message.trim().length < 10) {
+      errors.message = 'Le message doit contenir au moins 10 caractères'
+      isValid = false
+    } else if (formData.message.trim().length > 1000) {
+      errors.message = 'Le message ne peut pas dépasser 1000 caractères'
+      isValid = false
+    }
+
+    setFormErrors(errors)
+    return isValid
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log('Form submitted:', formData)
+
+    // Validate form
+    if (!validateForm()) {
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      // Sanitize all inputs before submission
+      const sanitizedData = {
+        name: sanitizeInput(formData.name),
+        phone: sanitizeInput(formData.phone),
+        email: sanitizeInput(formData.email),
+        message: sanitizeInput(formData.message),
+      }
+
+      // Handle form submission
+      console.log('Form submitted:', sanitizedData)
+
+      // Reset form on success
+      setFormData({ name: '', phone: '', email: '', message: '' })
+      setFormErrors({ name: '', phone: '', email: '', message: '' })
+
+      // Show success message (you can implement a toast notification here)
+      alert('Message envoyé avec succès !')
+    } catch (error) {
+      console.error("Erreur lors de l'envoi:", error)
+      alert('Une erreur est survenue. Veuillez réessayer.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -1148,9 +1251,8 @@ export default function Home() {
                   transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
                   viewport={{ once: true }}
                   className='text-3xl md:text-4xl lg:text-5xl font-title text-gold leading-[1.4] tracking-wide'>
-                  Un barbier à Paris, où l&apos;
-                  <span className='text-gold/90 font-semibold'>exigence</span> rencontre l&apos;
-                  <span className='text-gold/90 font-semibold'>élégance</span>
+                  Plus de <span className='text-gold/90 font-semibold'>23 ans</span> au service du{' '}
+                  <span className='text-gold/90 font-semibold'>style masculin</span>
                 </motion.h2>
 
                 {/* Paragraphe principal */}
@@ -1160,21 +1262,26 @@ export default function Home() {
                   transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
                   viewport={{ once: true }}
                   className='text-cream/90 text-base lg:text-lg leading-relaxed'>
-                  Spécialisé dans la{' '}
-                  <span className='text-gold font-medium'>coiffure masculine</span> et l&apos;art de
-                  la barbe, L&apos;Instant Barbier vous accueille dans un univers premium où
-                  tradition et modernité se rencontrent. Chaque coupe est pensée comme une
-                  expérience sur mesure.
+                  Fondé par <span className='text-gold font-medium'>Riccardo</span>, maître barbier
+                  reconnu, nous maîtrisons les{' '}
+                  <span className='text-gold font-medium'>techniques classiques</span> comme les
+                  tendances contemporaines. Du taper fade au rasage traditionnel à la serviette
+                  chaude, chaque geste est précis.
                 </motion.p>
 
                 {/* Premium animated cards */}
                 <div className='grid gap-6'>
                   <TiltCard>
                     <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.6, delay: 0.5 }}
-                      viewport={{ once: true }}
+                      initial={{ opacity: 0, y: 80, scale: 0.95 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{
+                        duration: 0.7,
+                        delay: 0.5,
+                        ease: [0.16, 1, 0.3, 1],
+                        scale: { duration: 0.5, ease: 'easeOut' },
+                      }}
+                      viewport={{ once: true, margin: '-50px' }}
                       className='relative bg-navy-secondary/40 backdrop-blur-sm border border-gold/20 p-6 rounded-sm overflow-hidden group hover:border-gold/50 transition-all duration-500'>
                       {/* Background glow effect */}
                       <div className='absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
@@ -1190,11 +1297,11 @@ export default function Home() {
                         </div>
                         <div className='flex-1'>
                           <h3 className='text-gold text-base font-semibold uppercase tracking-wider mb-2 group-hover:text-gold/90 transition-colors'>
-                            Maîtres barbiers expérimentés
+                            Savoir-faire artisanal
                           </h3>
                           <p className='text-cream/80 text-base leading-relaxed'>
-                            Notre équipe, dirigée par Riccardo, met son savoir-faire au service
-                            d&apos;une clientèle exigeante.
+                            Formés aux meilleures écoles, nous perpétuons les gestes authentiques du
+                            métier avec passion et rigueur.
                           </p>
                         </div>
                       </div>
@@ -1206,10 +1313,15 @@ export default function Home() {
 
                   <TiltCard>
                     <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.6, delay: 0.6 }}
-                      viewport={{ once: true }}
+                      initial={{ opacity: 0, y: 80, scale: 0.95 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{
+                        duration: 0.7,
+                        delay: 0.8,
+                        ease: [0.16, 1, 0.3, 1],
+                        scale: { duration: 0.5, ease: 'easeOut' },
+                      }}
+                      viewport={{ once: true, margin: '-50px' }}
                       className='relative bg-navy-secondary/40 backdrop-blur-sm border border-gold/20 p-6 rounded-sm overflow-hidden group hover:border-gold/50 transition-all duration-500'>
                       {/* Background glow effect */}
                       <div className='absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
@@ -1225,11 +1337,11 @@ export default function Home() {
                         </div>
                         <div className='flex-1'>
                           <h3 className='text-gold text-base font-semibold uppercase tracking-wider mb-2 group-hover:text-gold/90 transition-colors'>
-                            Excellence parisienne
+                            Produits premium
                           </h3>
                           <p className='text-cream/80 text-base leading-relaxed'>
-                            Un salon pensé pour les hommes attachés au détail et à l&apos;élégance
-                            authentique.
+                            Huiles essentielles, baumes naturels et cosmétiques haut de gamme pour
+                            un résultat impeccable.
                           </p>
                         </div>
                       </div>
@@ -1972,77 +2084,8 @@ export default function Home() {
 
               {/* ── Layout 2 colonnes ── */}
               <div className='grid lg:grid-cols-2 gap-16 lg:gap-24'>
-                {/* COLONNE GAUCHE — Infos + Horaires + CTA */}
+                {/* COLONNE GAUCHE — Horaires + CTA */}
                 <div>
-                  {/* ── Infos clés ── */}
-                  <div className='space-y-5 mb-14'>
-                    {[
-                      {
-                        icon: (
-                          <svg
-                            width='16'
-                            height='16'
-                            viewBox='0 0 24 24'
-                            fill='none'
-                            stroke='currentColor'
-                            strokeWidth='1.5'
-                            className='text-gold/60'>
-                            <path d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z' />
-                            <circle cx='12' cy='9' r='2.5' />
-                          </svg>
-                        ),
-                        text: '43 rue de Turenne, 75003 Paris',
-                      },
-                      {
-                        icon: (
-                          <svg
-                            width='16'
-                            height='16'
-                            viewBox='0 0 24 24'
-                            fill='none'
-                            stroke='currentColor'
-                            strokeWidth='1.5'
-                            className='text-gold/60'>
-                            <circle cx='12' cy='12' r='10' />
-                            <polyline points='12 6 12 12 16 14' />
-                          </svg>
-                        ),
-                        text: 'Sur rendez-vous uniquement',
-                      },
-                      {
-                        icon: (
-                          <svg
-                            width='16'
-                            height='16'
-                            viewBox='0 0 24 24'
-                            fill='none'
-                            stroke='currentColor'
-                            strokeWidth='1.5'
-                            className='text-gold/60'>
-                            <rect x='3' y='4' width='18' height='18' rx='2' ry='2' />
-                            <line x1='16' y1='2' x2='16' y2='6' />
-                            <line x1='8' y1='2' x2='8' y2='6' />
-                            <line x1='3' y1='10' x2='21' y2='10' />
-                          </svg>
-                        ),
-                        text: 'Réservation en ligne 24h/24',
-                      },
-                    ].map((item, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: 12 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.35 + i * 0.1, ease: 'easeOut' }}
-                        viewport={{ once: true }}
-                        className='flex items-center gap-4'>
-                        <div className='w-8 h-8 border border-gold/15 flex items-center justify-center shrink-0'>
-                          {item.icon}
-                        </div>
-                        <span className='text-cream/75 text-[15px] font-body'>{item.text}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-
                   {/* ── Horaires d'ouverture ── */}
                   <motion.h3
                     initial={{ opacity: 0, y: 12 }}
@@ -2132,7 +2175,7 @@ export default function Home() {
                   className='relative aspect-4/3 overflow-hidden group'
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.4 }}>
-                  <div className="absolute inset-0 bg-[url('/images/marais-paris.jpg')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" />
+                  <div className="absolute inset-0 bg-[url('/images/marais-paris.jpg')] bg-cover bg-center transition-all duration-700" />
                   <div className='absolute inset-0 bg-navy/40' />
                 </motion.div>
 
@@ -2174,8 +2217,13 @@ export default function Home() {
                 viewport={{ once: true, margin: '-50px' }}
                 variants={staggerContainer}>
                 <motion.p variants={fadeInUp} className='text-cream/70 mb-8 leading-relaxed'>
-                  Remplissez vos coordonnées et nous vous recontacterons pour planifier votre
-                  prochain rendez-vous.
+                  Pour prendre rendez-vous, consultez notre{' '}
+                  <Link
+                    href='/prestations'
+                    className='text-gold hover:text-gold/80 underline underline-offset-4 transition-colors'>
+                    page prestations
+                  </Link>
+                  . Pour toute autre demande ou information, contactez-nous via ce formulaire.
                 </motion.p>
 
                 <motion.form
@@ -2183,26 +2231,43 @@ export default function Home() {
                   onSubmit={handleSubmit}
                   className='space-y-6'>
                   <motion.div variants={fadeInUp} className='grid sm:grid-cols-2 gap-6'>
-                    <motion.div whileFocus={{ scale: 1.02 }}>
+                    <div>
                       <motion.input
                         whileFocus={{ borderColor: 'rgba(175, 151, 120, 1)' }}
                         type='text'
                         placeholder='Votre nom'
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className='w-full bg-transparent border border-gold/30 text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors'
+                        onChange={(e) => {
+                          setFormData({ ...formData, name: e.target.value })
+                          if (formErrors.name) setFormErrors({ ...formErrors, name: '' })
+                        }}
+                        className={`w-full bg-transparent border ${
+                          formErrors.name ? 'border-red-500' : 'border-gold/30'
+                        } text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors`}
+                        maxLength={50}
                       />
-                    </motion.div>
-                    <motion.div whileFocus={{ scale: 1.02 }}>
+                      {formErrors.name && (
+                        <p className='text-red-400 text-xs mt-2 ml-1'>{formErrors.name}</p>
+                      )}
+                    </div>
+                    <div>
                       <motion.input
                         whileFocus={{ borderColor: 'rgba(175, 151, 120, 1)' }}
                         type='tel'
                         placeholder='Téléphone'
                         value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className='w-full bg-transparent border border-gold/30 text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors'
+                        onChange={(e) => {
+                          setFormData({ ...formData, phone: e.target.value })
+                          if (formErrors.phone) setFormErrors({ ...formErrors, phone: '' })
+                        }}
+                        className={`w-full bg-transparent border ${
+                          formErrors.phone ? 'border-red-500' : 'border-gold/30'
+                        } text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors`}
                       />
-                    </motion.div>
+                      {formErrors.phone && (
+                        <p className='text-red-400 text-xs mt-2 ml-1'>{formErrors.phone}</p>
+                      )}
+                    </div>
                   </motion.div>
 
                   <motion.div variants={fadeInUp}>
@@ -2211,9 +2276,17 @@ export default function Home() {
                       type='email'
                       placeholder='Email'
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className='w-full bg-transparent border border-gold/30 text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors'
+                      onChange={(e) => {
+                        setFormData({ ...formData, email: e.target.value })
+                        if (formErrors.email) setFormErrors({ ...formErrors, email: '' })
+                      }}
+                      className={`w-full bg-transparent border ${
+                        formErrors.email ? 'border-red-500' : 'border-gold/30'
+                      } text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors`}
                     />
+                    {formErrors.email && (
+                      <p className='text-red-400 text-xs mt-2 ml-1'>{formErrors.email}</p>
+                    )}
                   </motion.div>
 
                   <motion.div variants={fadeInUp}>
@@ -2222,9 +2295,18 @@ export default function Home() {
                       placeholder='Message'
                       rows={4}
                       value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className='w-full bg-transparent border border-gold/30 text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors resize-none'
+                      onChange={(e) => {
+                        setFormData({ ...formData, message: e.target.value })
+                        if (formErrors.message) setFormErrors({ ...formErrors, message: '' })
+                      }}
+                      className={`w-full bg-transparent border ${
+                        formErrors.message ? 'border-red-500' : 'border-gold/30'
+                      } text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors resize-none`}
+                      maxLength={1000}
                     />
+                    {formErrors.message && (
+                      <p className='text-red-400 text-xs mt-2 ml-1'>{formErrors.message}</p>
+                    )}
                   </motion.div>
 
                   <motion.button
@@ -2232,8 +2314,9 @@ export default function Home() {
                     whileHover={{ scale: 1.02, backgroundColor: 'rgba(175, 151, 120, 0.9)' }}
                     whileTap={{ scale: 0.98 }}
                     type='submit'
-                    className='w-full bg-gold text-navy py-4 uppercase tracking-widest text-sm font-medium hover:bg-gold/90 transition-colors'>
-                    Envoyer le message
+                    disabled={isSubmitting}
+                    className='w-full bg-gold text-navy py-4 uppercase tracking-widest text-sm font-medium hover:bg-gold/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed'>
+                    {isSubmitting ? 'Envoi en cours...' : 'Envoyer le message'}
                   </motion.button>
                 </motion.form>
               </motion.div>
@@ -2242,37 +2325,145 @@ export default function Home() {
         </Section>
 
         {/* ═══════════════════════════════════════════════════════════════════
-          FINAL CTA SECTION
+          FINAL CTA SECTION - PREMIUM PARALLAX
       ═══════════════════════════════════════════════════════════════════ */}
-        <Section className='bg-navy border-t border-gold/10'>
-          <Container>
+        <section className='relative min-h-[80vh] flex items-center overflow-hidden border-t border-gold/10'>
+          {/* Background Image with Scale Animation */}
+          <motion.div
+            className='absolute inset-0'
+            initial={{ scale: 1.1 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 1.5, ease: 'easeOut' }}
+            viewport={{ once: true }}>
+            <div className="absolute inset-0 bg-[url('/images/barber-tools-luxury.jpg')] bg-cover bg-center" />
+            {/* Layered gradient overlays for depth */}
+            <div className='absolute inset-0 bg-gradient-to-b from-navy/65 via-dark/55 to-navy/65' />
+            <div className='absolute inset-0 bg-gradient-to-r from-navy/40 via-transparent to-navy/40' />
+            {/* Subtle noise pattern overlay */}
+            <div className='absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:4px_4px]' />
+          </motion.div>
+
+          {/* Animated corner accents */}
+          <motion.div
+            className='absolute top-0 left-0 w-32 h-32'
+            initial={{ opacity: 0, x: -20, y: -20 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            viewport={{ once: true }}>
+            <div className='absolute top-0 left-0 w-full h-px bg-gradient-to-r from-gold/60 to-transparent' />
+            <div className='absolute top-0 left-0 w-px h-full bg-gradient-to-b from-gold/60 to-transparent' />
+            <div className='absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-gold' />
+          </motion.div>
+
+          <motion.div
+            className='absolute bottom-0 right-0 w-32 h-32'
+            initial={{ opacity: 0, x: 20, y: 20 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            viewport={{ once: true }}>
+            <div className='absolute bottom-0 right-0 w-full h-px bg-gradient-to-l from-gold/60 to-transparent' />
+            <div className='absolute bottom-0 right-0 w-px h-full bg-gradient-to-t from-gold/60 to-transparent' />
+            <div className='absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-gold' />
+          </motion.div>
+
+          {/* Content */}
+          <Container className='relative z-10 py-20'>
             <motion.div
               initial='hidden'
               whileInView='visible'
               viewport={{ once: true, margin: '-100px' }}
               variants={staggerContainer}
-              className='max-w-4xl mx-auto text-center'>
-              <motion.h2
-                variants={fadeInUp}
-                className='text-3xl md:text-5xl font-title text-gold mb-6 leading-tight'>
-                Réservez votre expérience chez L&apos;Instant Barbier
-              </motion.h2>
+              className='max-w-4xl mx-auto'>
+              {/* Glassmorphism content card */}
+              <motion.div
+                variants={scaleIn}
+                className='relative bg-navy/40 backdrop-blur-xl border border-gold/20 rounded-sm p-8 md:p-12 shadow-2xl overflow-hidden'>
+                {/* Inner glow effect */}
+                <div className='absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/5 pointer-events-none' />
 
-              <motion.p variants={fadeInUp} className='text-cream/80 text-lg leading-relaxed mb-10'>
-                Prenez rendez-vous en quelques clics et découvrez une approche exigeante et élégante
-                de la{' '}
-                <strong className='text-gold font-medium'>
-                  coiffure homme et du barbier à Paris
-                </strong>
-                .
-              </motion.p>
+                {/* Decorative line above title */}
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  transition={{ duration: 1.2, delay: 0.4 }}
+                  viewport={{ once: true }}
+                  className='w-24 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-8'
+                />
 
-              <motion.div variants={fadeInUp}>
-                <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
+                {/* Title */}
+                <motion.h2
+                  variants={fadeInUp}
+                  className='text-3xl md:text-4xl lg:text-5xl font-title text-gold mb-6 leading-tight text-center'>
+                  Réservez votre expérience chez L&apos;Instant Barbier
+                </motion.h2>
+
+                {/* Description */}
+                <motion.p
+                  variants={fadeInUp}
+                  className='text-cream/90 text-base md:text-lg leading-relaxed mb-10 text-center max-w-2xl mx-auto'>
+                  Prenez rendez-vous en quelques clics et découvrez une approche exigeante et
+                  élégante de la{' '}
+                  <span className='text-gold font-medium'>
+                    coiffure homme et du barbier à Paris
+                  </span>
+                  .
+                </motion.p>
+
+                {/* CTA Button - Enhanced */}
+                <motion.div variants={fadeInUp} className='flex justify-center mb-10'>
+                  <div className='relative'>
+                    <Button href={PLANITY_URL}>Prendre rendez-vous maintenant</Button>
+                  </div>
+                </motion.div>
+
+                {/* Trust badges / Social proof */}
+                <motion.div
+                  variants={fadeInUp}
+                  className='grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-gold/10'>
+                  {[
+                    { value: '23+', label: "Années d'expérience" },
+                    { value: '2000+', label: 'Clients satisfaits' },
+                    { value: '5★', label: 'Note moyenne' },
+                  ].map((stat, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.6 + i * 0.1 }}
+                      viewport={{ once: true }}
+                      className='text-center'>
+                      <div className='text-2xl md:text-3xl font-title text-gold mb-2'>
+                        {stat.value}
+                      </div>
+                      <div className='text-cream/60 text-xs uppercase tracking-wider'>
+                        {stat.label}
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+
+                {/* Bottom decorative line */}
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  transition={{ duration: 1.2, delay: 0.8 }}
+                  viewport={{ once: true }}
+                  className='w-24 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent mx-auto mt-8'
+                />
               </motion.div>
+
+              {/* Additional info below card */}
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 1 }}
+                viewport={{ once: true }}
+                className='text-center text-cream/50 text-xs uppercase tracking-[0.3em] mt-8'>
+                Quartier Le Marais • Paris 3ᵉ • Réservation instantanée
+              </motion.p>
             </motion.div>
           </Container>
-        </Section>
+        </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
           BOTTOM CTA & FOOTER INFO
