@@ -1178,7 +1178,7 @@ export default function Home() {
                       className='relative bg-navy-secondary/40 backdrop-blur-sm border border-gold/20 p-6 rounded-sm overflow-hidden group hover:border-gold/50 transition-all duration-500'>
                       {/* Background glow effect */}
                       <div className='absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
-                      
+
                       <div className='relative flex items-start gap-4'>
                         <div className='flex-shrink-0 w-12 h-12 flex items-center justify-center bg-gold/10 rounded-sm border border-gold/30 group-hover:bg-gold/20 group-hover:border-gold/50 transition-all duration-500'>
                           <svg
@@ -1213,7 +1213,7 @@ export default function Home() {
                       className='relative bg-navy-secondary/40 backdrop-blur-sm border border-gold/20 p-6 rounded-sm overflow-hidden group hover:border-gold/50 transition-all duration-500'>
                       {/* Background glow effect */}
                       <div className='absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
-                      
+
                       <div className='relative flex items-start gap-4'>
                         <div className='flex-shrink-0 w-12 h-12 flex items-center justify-center bg-gold/10 rounded-sm border border-gold/30 group-hover:bg-gold/20 group-hover:border-gold/50 transition-all duration-500'>
                           <svg
