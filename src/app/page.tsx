@@ -1091,17 +1091,32 @@ export default function Home() {
             <div className='absolute bottom-1/4 left-1/4 w-64 h-64 border border-gold/10 -rotate-6' />
           </motion.div>
 
+          {/* Section Label - Centered at Top */}
+          <Container>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              viewport={{ once: true }}
+              className='flex items-center justify-center gap-4 mb-16'>
+              <div className='w-16 h-px bg-gradient-to-r from-transparent to-gold' />
+              <span className='text-gold text-[10px] uppercase tracking-[0.4em] font-medium'>
+                À propos
+              </span>
+              <div className='w-16 h-px bg-gradient-to-r from-gold to-transparent' />
+            </motion.div>
+          </Container>
+
           {/* Main content wrapper */}
           <div className='max-w-7xl mx-auto px-6 lg:px-12'>
             <div className='grid lg:grid-cols-2 gap-12 lg:gap-16 items-center'>
-              {/* Images - Layout asymétrique */}
+              {/* Image principale */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
                 viewport={{ once: true, margin: '-80px' }}
                 className='relative'>
-                {/* Image dominante 60% */}
                 <ImageReveal delay={0.1} className='aspect-[4/5]'>
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -1122,63 +1137,10 @@ export default function Home() {
                     <div className='absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
                   </motion.div>
                 </ImageReveal>
-                {/* Images secondaires */}
-                <div className='grid grid-cols-2 gap-4 mt-4'>
-                  <ImageReveal delay={0.3} className='aspect-square'>
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
-                      viewport={{ once: true }}
-                      className='relative aspect-square overflow-hidden group border-2 border-gold/30 shadow-xl'>
-                      <div
-                        className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
-                        style={{ backgroundImage: "url('/images/gallery/gallery-1.jpg')" }}
-                      />
-                      <div className='absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent' />
-
-                      {/* Premium corner accents */}
-                      <div className='absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
-                      <div className='absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
-                    </motion.div>
-                  </ImageReveal>
-
-                  <ImageReveal delay={0.5} className='aspect-square'>
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      transition={{ duration: 0.6, delay: 0.6, ease: 'easeOut' }}
-                      viewport={{ once: true }}
-                      className='relative aspect-square overflow-hidden group border-2 border-gold/30 shadow-xl'>
-                      <div
-                        className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
-                        style={{ backgroundImage: "url('/images/gallery/gallery-2.jpg')" }}
-                      />
-                      <div className='absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent' />
-
-                      {/* Premium corner accents */}
-                      <div className='absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
-                      <div className='absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 transition-all duration-500' />
-                    </motion.div>
-                  </ImageReveal>
-                </div>
               </motion.div>
 
               {/* Content */}
               <div className='space-y-10 lg:space-y-12'>
-                {/* Label */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-                  viewport={{ once: true }}
-                  className='flex items-center gap-4'>
-                  <div className='w-12 h-px bg-gold' />
-                  <span className='text-gold text-[10px] uppercase tracking-[0.4em] font-medium'>
-                    À propos
-                  </span>
-                </motion.div>
-
                 {/* Titre optimisé */}
                 <motion.h2
                   initial={{ opacity: 0, y: 20 }}
@@ -1205,69 +1167,158 @@ export default function Home() {
                   expérience sur mesure.
                 </motion.p>
 
-                {/* Highlights avec icônes */}
-                <div className='space-y-6'>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.5, ease: 'easeOut' }}
-                    viewport={{ once: true }}
-                    className='flex items-start gap-4 group'>
-                    <div className='flex-shrink-0 w-8 h-8 flex items-center justify-center'>
-                      <svg
-                        className='w-5 h-5 text-gold transition-transform duration-300 group-hover:scale-110'
-                        fill='currentColor'
-                        viewBox='0 0 20 20'>
-                        <path d='M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 15.5L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z' />
-                      </svg>
-                    </div>
-                    <div className='flex-1'>
-                      <h3 className='text-gold text-sm font-semibold uppercase tracking-wider mb-1'>
-                        Maîtres barbiers expérimentés
-                      </h3>
-                      <p className='text-cream/80 text-sm leading-relaxed'>
-                        Notre équipe, dirigée par Riccardo, met son savoir-faire au service
-                        d&apos;une clientèle exigeante.
-                      </p>
-                    </div>
-                  </motion.div>
+                {/* Premium animated cards */}
+                <div className='grid gap-6'>
+                  <TiltCard>
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.6, delay: 0.5 }}
+                      viewport={{ once: true }}
+                      className='relative bg-navy-secondary/40 backdrop-blur-sm border border-gold/20 p-6 rounded-sm overflow-hidden group hover:border-gold/50 transition-all duration-500'>
+                      {/* Background glow effect */}
+                      <div className='absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                      
+                      <div className='relative flex items-start gap-4'>
+                        <div className='flex-shrink-0 w-12 h-12 flex items-center justify-center bg-gold/10 rounded-sm border border-gold/30 group-hover:bg-gold/20 group-hover:border-gold/50 transition-all duration-500'>
+                          <svg
+                            className='w-6 h-6 text-gold transition-transform duration-300 group-hover:scale-110'
+                            fill='currentColor'
+                            viewBox='0 0 20 20'>
+                            <path d='M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 15.5L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z' />
+                          </svg>
+                        </div>
+                        <div className='flex-1'>
+                          <h3 className='text-gold text-base font-semibold uppercase tracking-wider mb-2 group-hover:text-gold/90 transition-colors'>
+                            Maîtres barbiers expérimentés
+                          </h3>
+                          <p className='text-cream/80 text-base leading-relaxed'>
+                            Notre équipe, dirigée par Riccardo, met son savoir-faire au service
+                            d&apos;une clientèle exigeante.
+                          </p>
+                        </div>
+                      </div>
+                      {/* Corner accents */}
+                      <div className='absolute top-0 right-0 w-16 h-px bg-gradient-to-l from-gold/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                      <div className='absolute bottom-0 left-0 w-16 h-px bg-gradient-to-r from-gold/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                    </motion.div>
+                  </TiltCard>
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.6, ease: 'easeOut' }}
-                    viewport={{ once: true }}
-                    className='flex items-start gap-4 group'>
-                    <div className='flex-shrink-0 w-8 h-8 flex items-center justify-center'>
-                      <svg
-                        className='w-5 h-5 text-gold transition-transform duration-300 group-hover:rotate-45'
-                        fill='currentColor'
-                        viewBox='0 0 20 20'>
-                        <rect x='4' y='4' width='12' height='12' transform='rotate(45 10 10)' />
-                      </svg>
-                    </div>
-                    <div className='flex-1'>
-                      <h3 className='text-gold text-sm font-semibold uppercase tracking-wider mb-1'>
-                        Excellence parisienne
-                      </h3>
-                      <p className='text-cream/80 text-sm leading-relaxed'>
-                        Un salon pensé pour les hommes attachés au détail et à l&apos;élégance
-                        authentique.
-                      </p>
-                    </div>
-                  </motion.div>
+                  <TiltCard>
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.6, delay: 0.6 }}
+                      viewport={{ once: true }}
+                      className='relative bg-navy-secondary/40 backdrop-blur-sm border border-gold/20 p-6 rounded-sm overflow-hidden group hover:border-gold/50 transition-all duration-500'>
+                      {/* Background glow effect */}
+                      <div className='absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                      
+                      <div className='relative flex items-start gap-4'>
+                        <div className='flex-shrink-0 w-12 h-12 flex items-center justify-center bg-gold/10 rounded-sm border border-gold/30 group-hover:bg-gold/20 group-hover:border-gold/50 transition-all duration-500'>
+                          <svg
+                            className='w-6 h-6 text-gold transition-transform duration-300 group-hover:rotate-45'
+                            fill='currentColor'
+                            viewBox='0 0 20 20'>
+                            <rect x='4' y='4' width='12' height='12' transform='rotate(45 10 10)' />
+                          </svg>
+                        </div>
+                        <div className='flex-1'>
+                          <h3 className='text-gold text-base font-semibold uppercase tracking-wider mb-2 group-hover:text-gold/90 transition-colors'>
+                            Excellence parisienne
+                          </h3>
+                          <p className='text-cream/80 text-base leading-relaxed'>
+                            Un salon pensé pour les hommes attachés au détail et à l&apos;élégance
+                            authentique.
+                          </p>
+                        </div>
+                      </div>
+                      {/* Corner accents */}
+                      <div className='absolute top-0 right-0 w-16 h-px bg-gradient-to-l from-gold/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                      <div className='absolute bottom-0 left-0 w-16 h-px bg-gradient-to-r from-gold/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                    </motion.div>
+                  </TiltCard>
                 </div>
-
-                {/* CTA premium */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.7, ease: 'easeOut' }}
-                  viewport={{ once: true }}>
-                  <Button href='/salon'>Découvrir notre univers</Button>
-                </motion.div>
               </div>
             </div>
+
+            {/* 4 Cards at bottom - Full width */}
+            <motion.div
+              initial='hidden'
+              whileInView='visible'
+              viewport={{ once: true, margin: '-80px' }}
+              variants={staggerContainer}
+              className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-16'>
+              <ImageReveal delay={0.1}>
+                <motion.div
+                  variants={fadeInUp}
+                  className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl hover:border-gold/60 transition-all duration-500'>
+                  <div
+                    className='absolute inset-0 bg-cover bg-center transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-110'
+                    style={{ backgroundImage: "url('/images/gallery/gallery-1.jpg')" }}
+                  />
+                  <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
+                  {/* Corner accents */}
+                  <div className='absolute top-0 left-0 w-4 h-4 border-t border-l border-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                  <div className='absolute bottom-0 right-0 w-4 h-4 border-b border-r border-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                </motion.div>
+              </ImageReveal>
+
+              <ImageReveal delay={0.2}>
+                <motion.div
+                  variants={fadeInUp}
+                  className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl hover:border-gold/60 transition-all duration-500'>
+                  <div
+                    className='absolute inset-0 bg-cover bg-center transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-110'
+                    style={{ backgroundImage: "url('/images/gallery/gallery-2.jpg')" }}
+                  />
+                  <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
+                  {/* Corner accents */}
+                  <div className='absolute top-0 left-0 w-4 h-4 border-t border-l border-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                  <div className='absolute bottom-0 right-0 w-4 h-4 border-b border-r border-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                </motion.div>
+              </ImageReveal>
+
+              <ImageReveal delay={0.3}>
+                <motion.div
+                  variants={fadeInUp}
+                  className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl hover:border-gold/60 transition-all duration-500'>
+                  <div
+                    className='absolute inset-0 bg-cover bg-center transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-110'
+                    style={{ backgroundImage: "url('/images/gallery/gallery-3.jpg')" }}
+                  />
+                  <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
+                  {/* Corner accents */}
+                  <div className='absolute top-0 left-0 w-4 h-4 border-t border-l border-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                  <div className='absolute bottom-0 right-0 w-4 h-4 border-b border-r border-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                </motion.div>
+              </ImageReveal>
+
+              <ImageReveal delay={0.4}>
+                <motion.div
+                  variants={fadeInUp}
+                  className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl hover:border-gold/60 transition-all duration-500'>
+                  <div
+                    className='absolute inset-0 bg-cover bg-center transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-110'
+                    style={{ backgroundImage: "url('/images/gallery/gallery-4.jpg')" }}
+                  />
+                  <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
+                  {/* Corner accents */}
+                  <div className='absolute top-0 left-0 w-4 h-4 border-t border-l border-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                  <div className='absolute bottom-0 right-0 w-4 h-4 border-b border-r border-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+                </motion.div>
+              </ImageReveal>
+            </motion.div>
+
+            {/* CTA premium - after 4 cards */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8, ease: 'easeOut' }}
+              viewport={{ once: true }}
+              className='flex justify-center mt-12'>
+              <Button href='/salon'>Découvrir notre univers</Button>
+            </motion.div>
           </div>
         </Section>
 
@@ -1396,14 +1447,18 @@ export default function Home() {
           <Container className='relative z-10'>
             <div className='max-w-2xl lg:max-w-3xl mx-auto text-center'>
               {/* ── Label « Atmosphère » — first breath ── */}
-              <motion.span
+              <motion.div
                 initial={{ opacity: 0 }}
-                whileInView={{ opacity: 0.6 }}
+                whileInView={{ opacity: 1 }}
                 transition={{ duration: 1.4, ease: 'easeOut' }}
                 viewport={{ once: true, margin: '-120px' }}
-                className='block text-gold text-[11px] uppercase tracking-[0.4em] font-body mb-16 lg:mb-20'>
-                Atmosphère
-              </motion.span>
+                className='flex items-center justify-center gap-4 mb-16 lg:mb-20'>
+                <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold' />
+                <span className='text-gold text-[11px] uppercase tracking-[0.4em] font-body'>
+                  Atmosphère
+                </span>
+                <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent' />
+              </motion.div>
 
               {/* ── Top separator — slow draw ── */}
               <motion.div
@@ -1763,14 +1818,18 @@ export default function Home() {
             transition={{ duration: 1, delay: 0.3 }}
             viewport={{ once: true }}>
             <div className='text-center'>
-              <motion.p
+              <motion.div
                 initial={{ y: 30, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className='text-gold text-xs uppercase tracking-[0.4em] mb-4'>
-                Le Marais, Paris
-              </motion.p>
+                className='flex items-center justify-center gap-4 mb-4'>
+                <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold' />
+                <span className='text-gold text-xs uppercase tracking-[0.4em]'>
+                  Le Marais, Paris
+                </span>
+                <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent' />
+              </motion.div>
               <motion.h2
                 initial={{ y: 50, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
@@ -1893,7 +1952,7 @@ export default function Home() {
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
                 viewport={{ once: true }}
-                className='flex items-center gap-4 mb-8'>
+                className='flex items-center justify-center gap-4 mb-8'>
                 <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold' />
                 <span className='text-gold text-xs uppercase tracking-[0.3em] font-body'>
                   Informations pratiques
