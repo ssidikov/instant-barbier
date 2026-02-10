@@ -1,20 +1,11 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
-import {
-  motion,
-  AnimatePresence,
-  useInView,
-  useScroll,
-  useTransform,
-  useSpring,
-  useMotionValue,
-} from 'framer-motion'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import { PLANITY_URL } from '@/lib/constants'
-import { fadeInUp, fadeInLeft, fadeInRight, scaleReveal, staggerContainer } from '@/lib/animations'
+import Reveal from '@/components/Reveal'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // GALLERY DATA
@@ -33,7 +24,7 @@ interface GalleryImage {
 const galleryImages: GalleryImage[] = [
   {
     src: '/images/gallery/gallery-1.jpg',
-    alt: 'Coupe homme moderne réalisée chez L&apos;Instant Barbier',
+    alt: "Coupe homme moderne réalisée chez L'Instant Barbier",
     category: 'Coupes',
     span: 'tall',
   },
@@ -63,7 +54,7 @@ const galleryImages: GalleryImage[] = [
   },
   {
     src: '/images/gallery/gallery-6.jpg',
-    alt: 'Espace élégant et raffiné du salon L&apos;Instant Barbier',
+    alt: "Espace élégant et raffiné du salon L'Instant Barbier",
     category: 'Ambiance',
     span: 'normal',
   },
@@ -83,19 +74,21 @@ function Lightbox({
   onClose: () => void
 }) {
   const [index, setIndex] = useState(currentIndex)
-  const [direction, setDirection] = useState(0)
-  const dragX = useMotionValue(0)
+  const [isAnimating, setIsAnimating] = useState(false)
 
   const goTo = useCallback(
-    (newIndex: number, dir: number) => {
-      setDirection(dir)
-      setIndex(((newIndex % images.length) + images.length) % images.length)
+    (newIndex: number) => {
+      setIsAnimating(true)
+      setTimeout(() => {
+        setIndex(((newIndex % images.length) + images.length) % images.length)
+        setIsAnimating(false)
+      }, 300) // Match transition duration
     },
     [images.length],
   )
 
-  const goNext = useCallback(() => goTo(index + 1, 1), [goTo, index])
-  const goPrev = useCallback(() => goTo(index - 1, -1), [goTo, index])
+  const goNext = useCallback(() => goTo(index + 1), [goTo, index])
+  const goPrev = useCallback(() => goTo(index - 1), [goTo, index])
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -111,31 +104,10 @@ function Lightbox({
     }
   }, [onClose, goNext, goPrev])
 
-  const handleDragEnd = (_: unknown, info: { offset: { x: number } }) => {
-    if (info.offset.x < -80) goNext()
-    else if (info.offset.x > 80) goPrev()
-  }
-
-  const slideVariants = {
-    enter: (dir: number) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
-    center: { x: 0, opacity: 1 },
-    exit: (dir: number) => ({ x: dir > 0 ? '-100%' : '100%', opacity: 0 }),
-  }
-
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className='fixed inset-0 z-200 flex items-center justify-center'>
+    <div className='fixed inset-0 z-[200] flex items-center justify-center animate-in fade-in duration-300'>
       {/* Backdrop */}
-      <motion.div
-        initial={{ backdropFilter: 'blur(0px)' }}
-        animate={{ backdropFilter: 'blur(20px)' }}
-        exit={{ backdropFilter: 'blur(0px)' }}
-        className='absolute inset-0 bg-navy/90'
-        onClick={onClose}
-      />
+      <div className='absolute inset-0 bg-navy/95 backdrop-blur-md' onClick={onClose} />
 
       {/* Close button */}
       <button
@@ -161,7 +133,7 @@ function Lightbox({
       {/* Navigation arrows */}
       <button
         onClick={goPrev}
-        className='absolute left-4 md:left-8 z-50 w-12 h-12 flex items-center justify-center border border-gold/20 text-gold/70 hover:text-gold hover:border-gold/50 transition-all duration-300'>
+        className='absolute left-4 md:left-8 z-50 w-12 h-12 flex items-center justify-center border border-gold/20 text-gold/70 hover:text-gold hover:border-gold/50 transition-all duration-300 hover:scale-110'>
         <svg
           className='w-5 h-5'
           viewBox='0 0 24 24'
@@ -173,7 +145,7 @@ function Lightbox({
       </button>
       <button
         onClick={goNext}
-        className='absolute right-4 md:right-8 z-50 w-12 h-12 flex items-center justify-center border border-gold/20 text-gold/70 hover:text-gold hover:border-gold/50 transition-all duration-300'>
+        className='absolute right-4 md:right-8 z-50 w-12 h-12 flex items-center justify-center border border-gold/20 text-gold/70 hover:text-gold hover:border-gold/50 transition-all duration-300 hover:scale-110'>
         <svg
           className='w-5 h-5'
           viewBox='0 0 24 24'
@@ -184,46 +156,27 @@ function Lightbox({
         </svg>
       </button>
 
-      {/* Image */}
-      <div className='relative z-40 w-[90vw] h-[80vh] flex items-center justify-center'>
-        <AnimatePresence custom={direction} mode='popLayout'>
-          <motion.div
-            key={index}
-            custom={direction}
-            variants={slideVariants}
-            initial='enter'
-            animate='center'
-            exit='exit'
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            drag='x'
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.7}
-            onDragEnd={handleDragEnd}
-            style={{ x: dragX }}
-            className='absolute inset-0 flex items-center justify-center cursor-grab active:cursor-grabbing'>
-            <div className='relative w-full h-full max-w-5xl'>
-              <Image
-                src={images[index].src}
-                alt={images[index].alt}
-                fill
-                className='object-contain'
-                sizes='90vw'
-              />
-            </div>
-          </motion.div>
-        </AnimatePresence>
+      {/* Image Container */}
+      <div
+        className={`relative z-40 w-[90vw] h-[80vh] flex items-center justify-center transition-opacity duration-300 ${isAnimating ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+        <div className='relative w-full h-full max-w-5xl'>
+          <Image
+            src={images[index].src}
+            alt={images[index].alt}
+            fill
+            className='object-contain'
+            sizes='90vw'
+            priority
+          />
+        </div>
       </div>
 
       {/* Caption */}
-      <motion.div
-        key={`caption-${index}`}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className='absolute bottom-8 left-0 right-0 text-center z-50'>
+      <div
+        className={`absolute bottom-8 left-0 right-0 text-center z-50 transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
         <p className='text-cream/60 text-sm font-light'>{images[index].alt}</p>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   )
 }
 
@@ -231,18 +184,7 @@ function Lightbox({
 // GALLERY CARD COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════
 
-function GalleryCard({
-  image,
-  index,
-  onClick,
-}: {
-  image: GalleryImage
-  index: number
-  onClick: () => void
-}) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
-
+function GalleryCard({ image, onClick }: { image: GalleryImage; onClick: () => void }) {
   const spanClasses = {
     normal: '',
     tall: 'md:row-span-2',
@@ -256,15 +198,7 @@ function GalleryCard({
   }
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40, scale: 0.95 }}
-      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.95 }}
-      transition={{
-        duration: 0.8,
-        delay: index * 0.1,
-        ease: [0.22, 1, 0.36, 1],
-      }}
+    <div
       onClick={onClick}
       className={`relative overflow-hidden cursor-pointer group ${spanClasses[image.span]} ${heightClasses[image.span]}`}>
       {/* Image */}
@@ -277,7 +211,7 @@ function GalleryCard({
       />
 
       {/* Overlay */}
-      <div className='absolute inset-0 bg-linear-to-t from-navy/80 via-navy/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-700' />
+      <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-700' />
 
       {/* Corner accents on hover */}
       <div className='absolute top-4 left-4 w-8 h-8 border-t border-l border-gold/0 group-hover:border-gold/60 transition-all duration-700 group-hover:w-12 group-hover:h-12' />
@@ -306,7 +240,7 @@ function GalleryCard({
           <path d='M11 8v6M8 11h6' />
         </svg>
       </div>
-    </motion.div>
+    </div>
   )
 }
 
@@ -317,16 +251,6 @@ function GalleryCard({
 export default function GaleriePage() {
   const [activeCategory, setActiveCategory] = useState<Category>('Tout')
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
-
-  const heroRef = useRef(null)
-  const { scrollYProgress } = useScroll()
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0])
-  const titleY = useTransform(scrollYProgress, [0, 0.3], ['0%', '25%'])
-  const progressScaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  })
 
   const filteredImages =
     activeCategory === 'Tout'
@@ -339,21 +263,13 @@ export default function GaleriePage() {
 
   return (
     <div className='bg-navy min-h-screen text-cream overflow-x-hidden selection:bg-gold selection:text-navy'>
-      {/* Scroll progress bar */}
-      <motion.div
-        className='fixed top-0 left-0 right-0 h-0.5 bg-gold/80 origin-left z-100'
-        style={{ scaleX: progressScaleX }}
-      />
-
       <main>
         {/* ═══════════════════════════════════════════════════════════════════
             HERO - Cinematic opening
             ═══════════════════════════════════════════════════════════════════ */}
-        <section
-          ref={heroRef}
-          className='relative h-[70vh] md:h-[85vh] flex items-end overflow-hidden'>
+        <section className='relative h-[70vh] md:h-[85vh] flex items-end overflow-hidden'>
           {/* Background mosaic effect */}
-          <motion.div style={{ opacity: heroOpacity }} className='absolute inset-0 z-0'>
+          <div className='absolute inset-0 z-0 opacity-40'>
             <div className='absolute inset-0 grid grid-cols-3 gap-1 opacity-30'>
               {galleryImages.map((img, i) => (
                 <div key={i} className='relative overflow-hidden'>
@@ -368,67 +284,46 @@ export default function GaleriePage() {
               ))}
             </div>
             <div className='absolute inset-0 bg-navy/75' />
-            <div className='absolute inset-0 bg-linear-to-t from-navy via-navy/50 to-navy/30' />
-          </motion.div>
+            <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-navy/30' />
+          </div>
 
           {/* Decorative lines */}
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 0.15, height: '30vh' }}
-            transition={{ delay: 0.8, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-            className='absolute top-20 right-[15%] w-px bg-linear-to-b from-transparent via-gold to-transparent'
-          />
-          <motion.div
-            initial={{ opacity: 0, width: 0 }}
-            animate={{ opacity: 0.12, width: '20vw' }}
-            transition={{ delay: 1, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-            className='absolute top-[40%] left-[5%] h-px bg-linear-to-r from-transparent via-gold to-transparent'
-          />
+          <div className='absolute top-20 right-[15%] w-px h-[30vh] bg-gradient-to-b from-transparent via-gold to-transparent opacity-20' />
+          <div className='absolute top-[40%] left-[5%] w-[20vw] h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-15' />
 
           {/* Hero content */}
           <div className='relative z-10 w-full px-6 md:px-12 lg:px-20 pb-16 md:pb-24'>
-            <motion.div style={{ y: titleY }} className='max-w-7xl mx-auto'>
-              <motion.div initial='hidden' animate='visible' variants={staggerContainer}>
-                <motion.span
-                  variants={fadeInUp}
-                  className='inline-block text-gold/60 text-[10px] uppercase tracking-[0.5em] mb-6'>
+            <div className='max-w-7xl mx-auto'>
+              <Reveal variant='fade-up'>
+                <span className='inline-block text-gold/60 text-[10px] uppercase tracking-[0.5em] mb-6'>
                   Barbier &amp; Coiffeur — Paris
-                </motion.span>
-
-                <motion.h1
-                  variants={fadeInUp}
-                  className='text-5xl md:text-7xl lg:text-[8rem] font-title text-gold leading-[0.9] tracking-tight mb-6'>
+                </span>
+                <h1 className='text-5xl md:text-7xl lg:text-[8rem] font-title text-gold leading-[0.9] tracking-tight mb-6'>
                   La
                   <br />
                   <span className='text-cream'>Galerie</span>
-                </motion.h1>
+                </h1>
+              </Reveal>
 
-                <motion.div variants={fadeInUp} className='max-w-xl'>
-                  <p className='text-cream/60 text-lg md:text-xl font-light leading-relaxed'>
-                    Découvrez l&apos;univers de L&apos;Instant Barbier à travers une sélection
-                    d&apos;images mettant en lumière l&apos;ambiance, le savoir-faire et
-                    l&apos;exigence du salon.
-                  </p>
-                </motion.div>
+              <Reveal variant='fade-up' delay={0.2} className='max-w-xl'>
+                <p className='text-cream/60 text-lg md:text-xl font-light leading-relaxed'>
+                  Découvrez l'univers de L'Instant Barbier à travers une sélection d'images mettant
+                  en lumière l'ambiance, le savoir-faire et l'exigence du salon.
+                </p>
+              </Reveal>
 
-                <motion.div variants={fadeInUp} className='mt-8 w-24 h-px bg-gold/30' />
-              </motion.div>
-            </motion.div>
+              <Reveal variant='fade-up' delay={0.3} className='mt-8 w-24 h-px bg-gold/30' />
+            </div>
           </div>
 
           {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2, duration: 1 }}
+          <Reveal
+            variant='fade-up'
+            delay={1.5}
             className='absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20'>
             <span className='text-[9px] text-gold/40 uppercase tracking-[0.4em]'>Défiler</span>
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              className='w-px h-10 bg-linear-to-b from-gold/50 to-transparent'
-            />
-          </motion.div>
+            <div className='w-px h-10 bg-gradient-to-b from-gold/50 to-transparent animate-pulse' />
+          </Reveal>
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
@@ -441,43 +336,37 @@ export default function GaleriePage() {
           <div className='relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20'>
             <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8'>
               {/* Left - Large statement */}
-              <motion.div
-                variants={fadeInLeft}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='lg:col-span-6'>
-                <span className='text-gold text-7xl md:text-8xl font-serif leading-none opacity-15 block mb-4'>
-                  &ldquo;
-                </span>
-                <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-cream leading-[1.1] -mt-14'>
-                  Chaque image reflète
-                  <span className='block text-gold mt-2'>notre exigence</span>
-                </h2>
-              </motion.div>
+              <div className='lg:col-span-6'>
+                <Reveal variant='fade-side'>
+                  <span className='text-gold text-7xl md:text-8xl font-serif leading-none opacity-15 block mb-4'>
+                    &ldquo;
+                  </span>
+                  <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-cream leading-[1.1] -mt-14'>
+                    Chaque image reflète
+                    <span className='block text-gold mt-2'>notre exigence</span>
+                  </h2>
+                </Reveal>
+              </div>
 
               {/* Right - Description text */}
-              <motion.div
-                variants={fadeInRight}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='lg:col-span-6 lg:pt-16'>
-                <p className='text-lg md:text-xl text-cream/60 font-light leading-relaxed mb-6'>
-                  Situé au c&oelig;ur du{' '}
-                  <strong className='text-gold font-normal'>Marais à Paris</strong>, L&apos;Instant
-                  Barbier propose un cadre élégant et raffiné, pensé pour offrir une expérience
-                  unique à chaque visite.
-                </p>
-                <p className='text-base text-cream/45 font-light leading-relaxed'>
-                  Des coupes réalisées avec précision, des barbes sculptées avec soin et un espace
-                  conçu pour le confort et le bien-être de notre clientèle.
-                </p>
-                <div className='mt-8 flex items-center gap-4'>
-                  <div className='w-12 h-px bg-gold/40' />
-                  <span className='text-gold/50 text-xs uppercase tracking-widest'>Paris 3ᵉ</span>
-                </div>
-              </motion.div>
+              <div className='lg:col-span-6 lg:pt-16'>
+                <Reveal variant='fade-side' delay={0.2}>
+                  <p className='text-lg md:text-xl text-cream/60 font-light leading-relaxed mb-6'>
+                    Situé au cœur du{' '}
+                    <strong className='text-gold font-normal'>Marais à Paris</strong>, L'Instant
+                    Barbier propose un cadre élégant et raffiné, pensé pour offrir une expérience
+                    unique à chaque visite.
+                  </p>
+                  <p className='text-base text-cream/45 font-light leading-relaxed'>
+                    Des coupes réalisées avec précision, des barbes sculptées avec soin et un espace
+                    conçu pour le confort et le bien-être de notre clientèle.
+                  </p>
+                  <div className='mt-8 flex items-center gap-4'>
+                    <div className='w-12 h-px bg-gold/40' />
+                    <span className='text-gold/50 text-xs uppercase tracking-widest'>Paris 3ᵉ</span>
+                  </div>
+                </Reveal>
+              </div>
             </div>
           </div>
         </section>
@@ -487,30 +376,20 @@ export default function GaleriePage() {
             ═══════════════════════════════════════════════════════════════════ */}
         <section className='py-16 md:py-24 relative'>
           {/* Floating background orb */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className='absolute top-1/3 left-0 w-[50vw] h-[50vw] rounded-full bg-gold/3 blur-3xl -translate-x-1/3 pointer-events-none'
-          />
+          <div className='absolute top-1/3 left-0 w-[50vw] h-[50vw] rounded-full bg-gold/3 blur-3xl -translate-x-1/3 pointer-events-none' />
 
           <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
             {/* Section header + Filter */}
-            <motion.div
-              variants={staggerContainer}
-              initial='hidden'
-              whileInView='visible'
-              viewport={{ once: true }}
-              className='mb-16'>
-              <motion.div
-                variants={fadeInUp}
+            <div className='mb-16'>
+              <Reveal
+                variant='fade-up'
                 className='flex flex-col md:flex-row md:items-end md:justify-between gap-8'>
                 <div>
                   <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                     Nos Réalisations
                   </span>
                   <h3 className='text-4xl md:text-5xl lg:text-6xl font-title text-cream'>
-                    Explorer <span className='text-gold'>l&apos;univers</span>
+                    Explorer <span className='text-gold'>l'univers</span>
                   </h3>
                 </div>
 
@@ -520,39 +399,26 @@ export default function GaleriePage() {
                     <button
                       key={cat}
                       onClick={() => setActiveCategory(cat)}
-                      className={`relative px-5 py-2.5 text-xs uppercase tracking-[0.2em] transition-all duration-500 ${
-                        activeCategory === cat ? 'text-navy' : 'text-cream/50 hover:text-cream'
+                      className={`relative px-5 py-2.5 text-xs uppercase tracking-[0.2em] transition-all duration-300 ${
+                        activeCategory === cat
+                          ? 'text-navy bg-gold'
+                          : 'text-cream/50 hover:text-cream hover:bg-white/5'
                       }`}>
-                      {/* Active background */}
-                      {activeCategory === cat && (
-                        <motion.div
-                          layoutId='activeCategory'
-                          className='absolute inset-0 bg-gold'
-                          transition={{ type: 'spring', stiffness: 400, damping: 35 }}
-                        />
-                      )}
                       <span className='relative z-10'>{cat}</span>
                     </button>
                   ))}
                 </div>
-              </motion.div>
-            </motion.div>
+              </Reveal>
+            </div>
 
             {/* Masonry grid */}
-            <motion.div
-              layout
-              className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 auto-rows-[350px]'>
-              <AnimatePresence mode='popLayout'>
-                {filteredImages.map((image, i) => (
-                  <GalleryCard
-                    key={image.src}
-                    image={image}
-                    index={i}
-                    onClick={() => openLightbox(i)}
-                  />
-                ))}
-              </AnimatePresence>
-            </motion.div>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 auto-rows-[350px] transition-all duration-500'>
+              {filteredImages.map((image, i) => (
+                <Reveal key={`${activeCategory}-${i}`} variant='scale-up' delay={i * 0.1}>
+                  <GalleryCard image={image} onClick={() => openLightbox(i)} />
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -568,49 +434,36 @@ export default function GaleriePage() {
               fill
               className='object-cover opacity-10'
             />
-            <div className='absolute inset-0 bg-linear-to-r from-navy via-navy/95 to-navy/90' />
+            <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy/90' />
           </div>
 
           {/* Decorative elements */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 0.08 }}
-            viewport={{ once: true }}
-            className='absolute top-1/2 right-[10%] -translate-y-1/2 text-[20rem] font-title text-gold select-none pointer-events-none leading-none'>
+          <div className='absolute top-1/2 right-[10%] -translate-y-1/2 text-[20rem] font-title text-gold select-none pointer-events-none leading-none opacity-[0.08]'>
             &amp;
-          </motion.div>
+          </div>
 
           <div className='max-w-5xl mx-auto px-6 md:px-12 relative z-10 text-center'>
-            <motion.div
-              variants={staggerContainer}
-              initial='hidden'
-              whileInView='visible'
-              viewport={{ once: true }}>
-              <motion.div variants={fadeInUp} className='mb-8'>
-                <div className='w-16 h-px bg-gold/40 mx-auto mb-8' />
-                <span className='text-gold/60 text-xs uppercase tracking-[0.4em]'>
-                  Tradition &amp; Modernité
-                </span>
-              </motion.div>
+            <Reveal variant='fade-up' className='mb-8'>
+              <div className='w-16 h-px bg-gold/40 mx-auto mb-8' />
+              <span className='text-gold/60 text-xs uppercase tracking-[0.4em]'>
+                Tradition &amp; Modernité
+              </span>
+            </Reveal>
 
-              <motion.blockquote
-                variants={fadeInUp}
-                className='text-2xl md:text-4xl lg:text-5xl font-title text-cream leading-[1.2] mb-10'>
+            <Reveal variant='blur-in' className='mb-10'>
+              <blockquote className='text-2xl md:text-4xl lg:text-5xl font-title text-cream leading-[1.2]'>
                 Où tradition et modernité se rencontrent pour{' '}
                 <span className='text-gold'>sublimer le style masculin</span>
-              </motion.blockquote>
+              </blockquote>
+            </Reveal>
 
-              <motion.p
-                variants={fadeInUp}
-                className='text-cream/50 text-lg font-light max-w-2xl mx-auto leading-relaxed'>
-                L&apos;attention portée aux détails, la qualité des prestations et l&apos;atmosphère
+            <Reveal variant='fade-up' delay={0.2}>
+              <p className='text-cream/50 text-lg font-light max-w-2xl mx-auto leading-relaxed mb-12'>
+                L'attention portée aux détails, la qualité des prestations et l'atmosphère
                 chaleureuse caractérisent chaque moment passé dans notre salon.
-              </motion.p>
-
-              <motion.div variants={fadeInUp} className='mt-12'>
-                <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
-              </motion.div>
-            </motion.div>
+              </p>
+              <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
+            </Reveal>
           </div>
         </section>
 
@@ -619,26 +472,17 @@ export default function GaleriePage() {
             ═══════════════════════════════════════════════════════════════════ */}
         <section className='py-24 md:py-32 bg-dark relative overflow-hidden'>
           {/* Subtle gradient accent */}
-          <div className='absolute top-0 left-0 w-1/3 h-full bg-linear-to-r from-gold/5 to-transparent' />
+          <div className='absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-gold/5 to-transparent' />
 
           <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-16 items-center'>
               {/* Image strip */}
-              <motion.div
-                variants={scaleReveal}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='relative'>
+              <Reveal variant='scale-up' className='relative'>
                 <div className='grid grid-cols-2 gap-3'>
                   {galleryImages.slice(0, 4).map((img, i) => (
-                    <motion.div
+                    <div
                       key={i}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.1 + i * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                      className={`relative overflow-hidden ${i === 0 ? 'h-48 md:h-56' : i === 3 ? 'h-48 md:h-56' : 'h-40 md:h-48'}`}>
+                      className={`relative overflow-hidden group ${i === 0 ? 'h-48 md:h-56' : i === 3 ? 'h-48 md:h-56' : 'h-40 md:h-48'}`}>
                       <Image
                         src={img.src}
                         alt={img.alt}
@@ -646,42 +490,38 @@ export default function GaleriePage() {
                         className='object-cover hover:scale-105 transition-transform duration-700'
                       />
                       <div className='absolute inset-0 bg-navy/30 hover:bg-navy/10 transition-colors duration-500' />
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
                 {/* Gold corner accent */}
                 <div className='absolute -top-3 -left-3 w-12 h-12 border-t border-l border-gold/30' />
                 <div className='absolute -bottom-3 -right-3 w-12 h-12 border-b border-r border-gold/30' />
-              </motion.div>
+              </Reveal>
 
               {/* CTA content */}
-              <motion.div
-                variants={staggerContainer}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}>
-                <motion.span
-                  variants={fadeInUp}
-                  className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-6 block'>
-                  Votre barbier dans le Marais
-                </motion.span>
-                <motion.h3
-                  variants={fadeInUp}
-                  className='text-3xl md:text-5xl font-title text-cream mb-8 leading-tight'>
-                  Vivez l&apos;expérience
-                  <br />
-                  <span className='text-gold'>en personne</span>
-                </motion.h3>
-                <motion.p
-                  variants={fadeInUp}
-                  className='text-cream/60 text-lg font-light mb-10 max-w-md leading-relaxed'>
-                  Les photos ne racontent qu&apos;une partie de l&apos;histoire. Réservez votre
-                  créneau et découvrez notre savoir-faire.
-                </motion.p>
-                <motion.div variants={fadeInUp} className='flex flex-wrap gap-4'>
+              <div>
+                <Reveal variant='fade-up'>
+                  <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-6 block'>
+                    Votre barbier dans le Marais
+                  </span>
+                </Reveal>
+                <Reveal variant='fade-up' delay={0.1}>
+                  <h3 className='text-3xl md:text-5xl font-title text-cream mb-8 leading-tight'>
+                    Vivez l'expérience
+                    <br />
+                    <span className='text-gold'>en personne</span>
+                  </h3>
+                </Reveal>
+                <Reveal variant='fade-up' delay={0.2}>
+                  <p className='text-cream/60 text-lg font-light mb-10 max-w-md leading-relaxed'>
+                    Les photos ne racontent qu'une partie de l'histoire. Réservez votre créneau et
+                    découvrez notre savoir-faire.
+                  </p>
+                </Reveal>
+                <Reveal variant='fade-up' delay={0.3} className='flex flex-wrap gap-4'>
                   <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
-                </motion.div>
-              </motion.div>
+                </Reveal>
+              </div>
             </div>
           </div>
         </section>
@@ -690,15 +530,13 @@ export default function GaleriePage() {
       <Footer />
 
       {/* Lightbox */}
-      <AnimatePresence>
-        {lightboxIndex !== null && (
-          <Lightbox
-            images={filteredImages}
-            currentIndex={lightboxIndex}
-            onClose={() => setLightboxIndex(null)}
-          />
-        )}
-      </AnimatePresence>
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={filteredImages}
+          currentIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
+      )}
     </div>
   )
 }

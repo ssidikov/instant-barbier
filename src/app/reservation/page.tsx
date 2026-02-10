@@ -1,11 +1,70 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Footer from '@/components/Footer'
 import { Section, Container } from '@/components'
 import { PLANITY_KEY } from '@/lib/constants'
 
 export default function ReservationPage() {
+  return (
+    <Suspense fallback={<div>Chargement...</div>}>
+      <ReservationContent />
+    </Suspense>
+  )
+}
+
+function ReservationContent() {
+  const searchParams = useSearchParams()
+  const staffName = searchParams.get('staff')
+
+  useEffect(() => {
+    // Si un membre du staff est spécifié dans l'URL
+    if (staffName) {
+      // Observer pour détecter le chargement du widget Planity
+      const observer = new MutationObserver((mutations, obs) => {
+        // Chercher l'élément contenant le nom du staff
+        // Note: Basé sur l'analyse CSS, la classe est .planity_ui_action_worker-name
+        // On cherche aussi de manière plus large au cas où
+        const elements = document.querySelectorAll(
+          '.planity_ui_action_worker-name, [class*="worker-name"], [class*="worker_name"]',
+        )
+
+        for (const el of Array.from(elements)) {
+          if (el.textContent && el.textContent.includes(staffName)) {
+            // Trouver le bouton radio ou l'élément cliquable parent
+            const clickableParent =
+              el.closest('.planity_ui_action_worker') || el.closest('label') || el
+
+            if (clickableParent instanceof HTMLElement) {
+              clickableParent.click()
+              obs.disconnect() // Arrêter d'observer une fois trouvé et cliqué
+              return
+            }
+          }
+        }
+      })
+
+      const container = document.getElementById('planity-widget-container')
+      if (container) {
+        observer.observe(container, {
+          childList: true,
+          subtree: true,
+        })
+      }
+
+      // Timeout de sécurité pour arrêter l'observateur après 10s
+      const timeoutId = setTimeout(() => {
+        observer.disconnect()
+      }, 10000)
+
+      return () => {
+        observer.disconnect()
+        clearTimeout(timeoutId)
+      }
+    }
+  }, [staffName])
+
   useEffect(() => {
     // Initialiser le widget Planity
     const container = document.getElementById('planity-widget-container')

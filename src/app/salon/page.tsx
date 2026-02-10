@@ -1,14 +1,35 @@
 'use client'
 
-import { useRef } from 'react'
 import Image from 'next/image'
-import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
-import { fadeInUp, fadeInLeft, fadeInRight, scaleReveal, staggerContainer } from '@/lib/animations'
+import Reveal from '@/components/Reveal'
 
 // ═══════════════════════════════════════════════════════════════════════════
-// FLOATING TEXT BADGE COMPONENT
+// PREMIUM IMAGE COMPONENT (Replaces Parallax)
+// ═══════════════════════════════════════════════════════════════════════════
+
+function PremiumImage({
+  src,
+  alt,
+  className = '',
+}: {
+  src: string
+  alt: string
+  className?: string
+}) {
+  return (
+    <div className={`relative overflow-hidden ${className}`}>
+      <div className='absolute inset-0 transition-transform duration-[2000ms] hover:scale-105'>
+        <Image src={src} alt={alt} fill className='object-cover' />
+      </div>
+      <div className='absolute inset-0 bg-gradient-to-t from-navy via-transparent to-navy/30 pointer-events-none' />
+    </div>
+  )
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FLOATING BADGE COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════
 
 function FloatingBadge({
@@ -21,53 +42,12 @@ function FloatingBadge({
   delay?: number
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8, y: 20 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
+    <Reveal
+      variant='fade-up'
+      delay={delay}
       className={`absolute bg-navy/95 backdrop-blur-md border border-gold/20 px-5 py-3 z-20 ${className}`}>
       {children}
-    </motion.div>
-  )
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// PARALLAX IMAGE COMPONENT
-// ═══════════════════════════════════════════════════════════════════════════
-
-function ParallaxImage({
-  src,
-  alt,
-  className = '',
-  speed = 0.5,
-}: {
-  src: string
-  alt: string
-  className?: string
-  speed?: number
-}) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-10% 0px' })
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', `${speed * 30}%`])
-
-  return (
-    <div ref={ref} className={`relative overflow-hidden ${className}`}>
-      <motion.div
-        initial={{ opacity: 0, scale: 1.1 }}
-        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.1 }}
-        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-        style={{ y }}
-        className='absolute inset-0'>
-        <Image src={src} alt={alt} fill className='object-cover' />
-      </motion.div>
-      {/* Luxury vignette overlay */}
-      <div className='absolute inset-0 bg-gradient-to-t from-navy via-transparent to-navy/30 pointer-events-none' />
-    </div>
+    </Reveal>
   )
 }
 
@@ -76,108 +56,72 @@ function ParallaxImage({
 // ═══════════════════════════════════════════════════════════════════════════
 
 export default function SalonPage() {
-  const heroRef = useRef(null)
-  const { scrollYProgress } = useScroll()
-  const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.15])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0])
-  const titleY = useTransform(scrollYProgress, [0, 0.3], ['0%', '30%'])
-
-  // Smooth spring for mouse parallax
-  const springConfig = { stiffness: 100, damping: 30 }
-  const mouseX = useSpring(0, springConfig)
-  const mouseY = useSpring(0, springConfig)
-
   return (
     <div className='bg-navy min-h-screen text-cream overflow-x-hidden selection:bg-gold selection:text-navy'>
       <main>
         {/* ═══════════════════════════════════════════════════════════════════
             HERO - Full viewport immersive opening
             ═══════════════════════════════════════════════════════════════════ */}
-        <section
-          ref={heroRef}
-          className='relative h-screen flex items-center justify-center overflow-hidden'>
-          {/* Background with scale effect on scroll */}
-          <motion.div
-            style={{ scale: heroScale, opacity: heroOpacity }}
-            className='absolute inset-0 z-0'>
+        <section className='relative h-screen flex items-center justify-center overflow-hidden'>
+          {/* Background */}
+          <div className='absolute inset-0 z-0'>
             <Image
               src='https://placehold.co/1920x1080/07181E/AF9778?text=Hero+Salon+Atmosphere'
-              alt='Salon L  Instant Barbier'
+              alt='Salon L Instant Barbier'
               fill
               className='object-cover'
               priority
             />
             <div className='absolute inset-0 bg-navy/60' />
-          </motion.div>
+          </div>
 
           {/* Floating decorative elements */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.15 }}
-            transition={{ delay: 1, duration: 2 }}
-            className='absolute top-20 left-[10%] w-px h-[30vh] bg-gradient-to-b from-transparent via-gold to-transparent'
-          />
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.15 }}
-            transition={{ delay: 1.2, duration: 2 }}
-            className='absolute bottom-40 right-[15%] w-64 h-px bg-gradient-to-r from-transparent via-gold to-transparent'
-          />
+          <div className='absolute top-20 left-[10%] w-px h-[30vh] bg-gradient-to-b from-transparent via-gold to-transparent opacity-20' />
+          <div className='absolute bottom-40 right-[15%] w-64 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-20' />
 
           {/* Hero Content - asymmetric positioning */}
           <div className='relative z-10 w-full px-6 md:px-12 lg:px-20'>
-            <motion.div style={{ y: titleY }} className='max-w-7xl mx-auto'>
+            <div className='max-w-7xl mx-auto'>
               <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-end'>
                 {/* Main title - spans most columns */}
-                <motion.div
-                  initial='hidden'
-                  animate='visible'
-                  variants={staggerContainer}
-                  className='lg:col-span-8'>
-                  <motion.span
-                    variants={fadeInUp}
-                    className='inline-block text-gold/70 text-xs uppercase tracking-[0.5em] mb-6'>
-                    Paris 3ᵉ — Le Marais
-                  </motion.span>
-                  <motion.h1
-                    variants={fadeInUp}
-                    className='text-6xl md:text-8xl lg:text-[10rem] font-title text-gold leading-[0.85] tracking-tight'>
-                    Le
-                    <br />
-                    <span className='text-cream'>Salon</span>
-                  </motion.h1>
-                </motion.div>
+                <div className='lg:col-span-8'>
+                  <Reveal variant='fade-up'>
+                    <span className='inline-block text-gold/70 text-xs uppercase tracking-[0.5em] mb-6'>
+                      Paris 3ᵉ — Le Marais
+                    </span>
+                  </Reveal>
+                  <Reveal variant='blur-in' duration={1.2}>
+                    <h1 className='text-6xl md:text-8xl lg:text-[10rem] font-title text-gold leading-[0.85] tracking-tight'>
+                      Le
+                      <br />
+                      <span className='text-cream'>Salon</span>
+                    </h1>
+                  </Reveal>
+                </div>
 
                 {/* Side description - offset position */}
-                <motion.div
-                  variants={fadeInRight}
-                  initial='hidden'
-                  animate='visible'
-                  className='lg:col-span-4 lg:pb-8'>
-                  <p className='text-cream/60 text-lg font-light leading-relaxed max-w-xs'>
-                    Un lieu d'élégance dédié à l'excellence masculine.
-                  </p>
-                  <div className='mt-6 w-16 h-px bg-gold/40' />
-                </motion.div>
+                <div className='lg:col-span-4 lg:pb-8'>
+                  <Reveal variant='fade-side' delay={0.4}>
+                    <p className='text-cream/60 text-lg font-light leading-relaxed max-w-xs'>
+                      Un lieu d'élégance dédié à l'excellence masculine.
+                    </p>
+                    <div className='mt-6 w-16 h-px bg-gold/40' />
+                  </Reveal>
+                </div>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Scroll indicator - bottom left */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2, duration: 1 }}
+          <Reveal
+            variant='fade-up'
+            delay={1.5}
             className='absolute bottom-12 left-12 flex items-center gap-4 z-20'>
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              className='w-px h-16 bg-gradient-to-b from-gold to-transparent'
-            />
+            <div className='w-px h-16 bg-gradient-to-b from-gold to-transparent animate-pulse' />
             <span className='text-[10px] text-gold/50 uppercase tracking-[0.3em] rotate-90 origin-left translate-x-2'>
               Scroll
             </span>
-          </motion.div>
+          </Reveal>
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
@@ -190,38 +134,32 @@ export default function SalonPage() {
           <div className='relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20'>
             <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-6'>
               {/* Large quote / statement - offset left */}
-              <motion.div
-                variants={fadeInLeft}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='lg:col-span-7 lg:pr-12'>
-                <span className='text-gold text-8xl font-serif leading-none opacity-20 block mb-4'>
-                  "
-                </span>
-                <h2 className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[1.1] -mt-16'>
-                  Bien plus qu'un
-                  <span className='block text-gold'>salon de coiffure</span>
-                </h2>
-              </motion.div>
+              <div className='lg:col-span-7 lg:pr-12'>
+                <Reveal variant='fade-up'>
+                  <span className='text-gold text-8xl font-serif leading-none opacity-20 block mb-4'>
+                    "
+                  </span>
+                  <h2 className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[1.1] -mt-16'>
+                    Bien plus qu'un
+                    <span className='block text-gold'>salon de coiffure</span>
+                  </h2>
+                </Reveal>
+              </div>
 
               {/* Description text - offset right */}
-              <motion.div
-                variants={fadeInRight}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='lg:col-span-5 lg:pt-24'>
-                <p className='text-xl md:text-2xl text-cream/70 font-light leading-relaxed'>
-                  Situé au cœur du <strong className='text-gold font-normal'>Marais</strong>,
-                  L'Instant Barbier est un lieu pensé pour l'élégance masculine, où le savoir-faire
-                  artisanal rencontre une atmosphère raffinée.
-                </p>
-                <div className='mt-8 flex items-center gap-4'>
-                  <div className='w-12 h-px bg-gold/40' />
-                  <span className='text-gold/60 text-sm uppercase tracking-widest'>Paris 3ᵉ</span>
-                </div>
-              </motion.div>
+              <div className='lg:col-span-5 lg:pt-24'>
+                <Reveal variant='fade-side' delay={0.2}>
+                  <p className='text-xl md:text-2xl text-cream/70 font-light leading-relaxed'>
+                    Situé au cœur du <strong className='text-gold font-normal'>Marais</strong>,
+                    L'Instant Barbier est un lieu pensé pour l'élégance masculine, où le
+                    savoir-faire artisanal rencontre une atmosphère raffinée.
+                  </p>
+                  <div className='mt-8 flex items-center gap-4'>
+                    <div className='w-12 h-px bg-gold/40' />
+                    <span className='text-gold/60 text-sm uppercase tracking-widest'>Paris 3ᵉ</span>
+                  </div>
+                </Reveal>
+              </div>
             </div>
           </div>
         </section>
@@ -235,35 +173,28 @@ export default function SalonPage() {
               {/* Image composition - overlapping images */}
               <div className='lg:col-span-7 relative h-[60vh] md:h-[80vh]'>
                 {/* Main large image */}
-                <motion.div
-                  variants={scaleReveal}
-                  initial='hidden'
-                  whileInView='visible'
-                  viewport={{ once: true }}
+                <Reveal
+                  variant='scale-up'
+                  duration={1.2}
                   className='absolute top-0 left-0 w-[75%] h-[70%] z-10'>
-                  <ParallaxImage
+                  <PremiumImage
                     src='https://placehold.co/800x1000/0f0f0f/AF9778?text=Salon+Interior+Main'
                     alt='Intérieur du salon'
                     className='w-full h-full'
-                    speed={0.3}
                   />
-                </motion.div>
+                </Reveal>
 
                 {/* Smaller overlapping image */}
-                <motion.div
-                  variants={scaleReveal}
-                  initial='hidden'
-                  whileInView='visible'
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
+                <Reveal
+                  variant='scale-up'
+                  delay={0.3}
                   className='absolute bottom-0 right-0 w-[55%] h-[50%] z-20 border-8 border-navy'>
-                  <ParallaxImage
+                  <PremiumImage
                     src='https://placehold.co/600x800/142233/AF9778?text=Detail+Ambiance'
                     alt='Détail ambiance'
                     className='w-full h-full'
-                    speed={0.5}
                   />
-                </motion.div>
+                </Reveal>
 
                 {/* Floating badge */}
                 <FloatingBadge className='bottom-[30%] right-[15%]' delay={0.6}>
@@ -272,37 +203,32 @@ export default function SalonPage() {
               </div>
 
               {/* Text content - free flowing */}
-              <motion.div
-                variants={staggerContainer}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='lg:col-span-5 lg:pl-8'>
-                <motion.span
-                  variants={fadeInUp}
-                  className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
-                  01 — L'Espace
-                </motion.span>
-                <motion.h3
-                  variants={fadeInUp}
-                  className='text-4xl md:text-5xl font-title text-cream mb-8 leading-tight'>
-                  Élégance
-                  <br />
-                  <span className='text-gold'>&</span> Chaleur
-                </motion.h3>
-                <motion.p
-                  variants={fadeInUp}
-                  className='text-cream/70 text-lg font-light leading-relaxed mb-6'>
-                  Dès votre entrée, plongez dans une ambiance chaleureuse et apaisante. Les matières
-                  nobles et l'éclairage maîtrisé créent un espace propice à la détente.
-                </motion.p>
-                <motion.p
-                  variants={fadeInUp}
-                  className='text-cream/50 text-base font-light leading-relaxed'>
-                  Chaque détail reflète notre exigence : un lieu où l'on prend le temps, où chaque
-                  client est unique.
-                </motion.p>
-              </motion.div>
+              <div className='lg:col-span-5 lg:pl-8'>
+                <Reveal variant='fade-up'>
+                  <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
+                    01 — L'Espace
+                  </span>
+                </Reveal>
+                <Reveal variant='fade-up' delay={0.1}>
+                  <h3 className='text-4xl md:text-5xl font-title text-cream mb-8 leading-tight'>
+                    Élégance
+                    <br />
+                    <span className='text-gold'>&</span> Chaleur
+                  </h3>
+                </Reveal>
+                <Reveal variant='fade-up' delay={0.2}>
+                  <p className='text-cream/70 text-lg font-light leading-relaxed mb-6'>
+                    Dès votre entrée, plongez dans une ambiance chaleureuse et apaisante. Les
+                    matières nobles et l'éclairage maîtrisé créent un espace propice à la détente.
+                  </p>
+                </Reveal>
+                <Reveal variant='fade-up' delay={0.3}>
+                  <p className='text-cream/50 text-base font-light leading-relaxed'>
+                    Chaque détail reflète notre exigence : un lieu où l'on prend le temps, où chaque
+                    client est unique.
+                  </p>
+                </Reveal>
+              </div>
             </div>
           </div>
         </section>
@@ -316,12 +242,7 @@ export default function SalonPage() {
 
           <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
             {/* Section header - spanning full width */}
-            <motion.div
-              variants={fadeInUp}
-              initial='hidden'
-              whileInView='visible'
-              viewport={{ once: true }}
-              className='mb-20 md:mb-32'>
+            <Reveal variant='fade-up' className='mb-20 md:mb-32'>
               <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                 02 — Savoir-Faire
               </span>
@@ -330,72 +251,57 @@ export default function SalonPage() {
                 <br />
                 <span className='text-gold'>Barbier</span>
               </h3>
-            </motion.div>
+            </Reveal>
 
             {/* Content grid - asymmetric */}
             <div className='grid grid-cols-1 lg:grid-cols-12 gap-12'>
               {/* Left column - feature list */}
-              <motion.div
-                variants={staggerContainer}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='lg:col-span-4 space-y-8'>
+              <div className='lg:col-span-4 space-y-8'>
                 {[
                   { label: 'Coupes', desc: 'Précision aux ciseaux' },
                   { label: 'Dégradés', desc: 'Taper fade maîtrisé' },
                   { label: 'Barbe', desc: 'Travail traditionnel' },
                   { label: 'Conseils', desc: 'Personnalisés' },
                 ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    variants={fadeInLeft}
-                    className='group flex items-start gap-4 cursor-default'>
-                    <span className='text-gold/30 text-xs font-mono mt-1'>0{i + 1}</span>
-                    <div>
-                      <span className='text-cream text-xl font-title block group-hover:text-gold transition-colors duration-500'>
-                        {item.label}
-                      </span>
-                      <span className='text-cream/40 text-sm'>{item.desc}</span>
+                  <Reveal key={i} variant='fade-up' delay={i * 0.1}>
+                    <div className='group flex items-start gap-4 cursor-default'>
+                      <span className='text-gold/30 text-xs font-mono mt-1'>0{i + 1}</span>
+                      <div>
+                        <span className='text-cream text-xl font-title block group-hover:text-gold transition-colors duration-500'>
+                          {item.label}
+                        </span>
+                        <span className='text-cream/40 text-sm'>{item.desc}</span>
+                      </div>
                     </div>
-                  </motion.div>
+                  </Reveal>
                 ))}
-              </motion.div>
+              </div>
 
               {/* Center - Large image */}
-              <motion.div
-                variants={scaleReveal}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='lg:col-span-5 h-[50vh] md:h-[70vh] relative'>
-                <ParallaxImage
+              <Reveal variant='scale-up' className='lg:col-span-5 h-[50vh] md:h-[70vh] relative'>
+                <PremiumImage
                   src='https://placehold.co/700x900/07181E/AF9778?text=Barber+at+Work'
                   alt='Barbier en action'
                   className='w-full h-full'
-                  speed={0.4}
                 />
                 {/* Gold corner accents */}
                 <div className='absolute -top-4 -left-4 w-16 h-16 border-t-2 border-l-2 border-gold/30' />
                 <div className='absolute -bottom-4 -right-4 w-16 h-16 border-b-2 border-r-2 border-gold/30' />
-              </motion.div>
+              </Reveal>
 
               {/* Right column - text */}
-              <motion.div
-                variants={fadeInRight}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='lg:col-span-3 flex flex-col justify-end'>
-                <p className='text-cream/60 text-lg font-light leading-relaxed'>
-                  La tradition du barbier parisien est au cœur de notre approche. Chaque geste est
-                  maîtrisé avec rigueur pour un résultat
-                  <span className='text-gold'> net, élégant et durable</span>.
-                </p>
-                <div className='mt-8'>
-                  <Button href='/prestations'>Nos Prestations</Button>
-                </div>
-              </motion.div>
+              <div className='lg:col-span-3 flex flex-col justify-end'>
+                <Reveal variant='fade-side' delay={0.2}>
+                  <p className='text-cream/60 text-lg font-light leading-relaxed'>
+                    La tradition du barbier parisien est au cœur de notre approche. Chaque geste est
+                    maîtrisé avec rigueur pour un résultat
+                    <span className='text-gold'> net, élégant et durable</span>.
+                  </p>
+                  <div className='mt-8'>
+                    <Button href='/prestations'>Nos Prestations</Button>
+                  </div>
+                </Reveal>
+              </div>
             </div>
           </div>
         </section>
@@ -405,43 +311,29 @@ export default function SalonPage() {
             ═══════════════════════════════════════════════════════════════════ */}
         <section className='py-32 md:py-48 relative'>
           {/* Floating background orb */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className='absolute top-1/4 right-0 w-[40vw] h-[40vw] rounded-full bg-gold/5 blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none'
-          />
+          <div className='absolute top-1/4 right-0 w-[40vw] h-[40vw] rounded-full bg-gold/5 blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none' />
 
           <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
             {/* Section header */}
-            <motion.div
-              variants={fadeInUp}
-              initial='hidden'
-              whileInView='visible'
-              viewport={{ once: true }}
-              className='text-center mb-20'>
+            <Reveal variant='fade-up' className='text-center mb-20'>
               <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                 03 — Expérience
               </span>
               <h3 className='text-4xl md:text-6xl font-title text-cream'>
                 Un Moment <span className='text-gold'>Privilégié</span>
               </h3>
-            </motion.div>
+            </Reveal>
 
             {/* Bento grid */}
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6'>
               {/* Large card */}
-              <motion.div
-                variants={scaleReveal}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
+              <Reveal
+                variant='scale-up'
                 className='md:col-span-2 lg:col-span-2 lg:row-span-2 relative h-[400px] lg:h-auto overflow-hidden group'>
-                <ParallaxImage
+                <PremiumImage
                   src='https://placehold.co/900x700/0f0f0f/AF9778?text=Premium+Experience'
                   alt='Expérience premium'
                   className='absolute inset-0'
-                  speed={0.2}
                 />
                 <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent' />
                 <div className='absolute bottom-0 left-0 p-8 md:p-12'>
@@ -451,7 +343,7 @@ export default function SalonPage() {
                     expérience sensorielle complète.
                   </p>
                 </div>
-              </motion.div>
+              </Reveal>
 
               {/* Smaller cards */}
               {[
@@ -466,26 +358,18 @@ export default function SalonPage() {
                   image: 'https://placehold.co/500x600/07181E/AF9778?text=Relaxation',
                 },
               ].map((item, i) => (
-                <motion.div
+                <Reveal
                   key={i}
-                  variants={scaleReveal}
-                  initial='hidden'
-                  whileInView='visible'
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + i * 0.15 }}
+                  variant='scale-up'
+                  delay={0.2 + i * 0.15}
                   className='relative h-[300px] overflow-hidden group'>
-                  <ParallaxImage
-                    src={item.image}
-                    alt={item.title}
-                    className='absolute inset-0'
-                    speed={0.3}
-                  />
+                  <PremiumImage src={item.image} alt={item.title} className='absolute inset-0' />
                   <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent' />
                   <div className='absolute bottom-0 left-0 p-6'>
                     <h4 className='text-xl font-title text-gold mb-2'>{item.title}</h4>
                     <p className='text-cream/60 text-sm font-light'>{item.desc}</p>
                   </div>
-                </motion.div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -509,43 +393,34 @@ export default function SalonPage() {
           <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-16 items-center'>
               {/* Text content */}
-              <motion.div
-                variants={staggerContainer}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}>
-                <motion.span
-                  variants={fadeInUp}
-                  className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-6 block'>
-                  Rendez-vous
-                </motion.span>
-                <motion.h3
-                  variants={fadeInUp}
-                  className='text-4xl md:text-6xl font-title text-cream mb-8 leading-tight'>
-                  Votre barbier
-                  <br />
-                  <span className='text-gold'>dans le Marais</span>
-                </motion.h3>
-                <motion.p
-                  variants={fadeInUp}
-                  className='text-cream/70 text-xl font-light mb-10 max-w-lg'>
-                  Idéalement situé dans le{' '}
-                  <strong className='text-gold font-normal'>3ᵉ arrondissement</strong>, nous vous
-                  accueillons sur rendez-vous.
-                </motion.p>
-                <motion.div variants={fadeInUp} className='flex flex-wrap gap-4'>
+              <div>
+                <Reveal variant='fade-up'>
+                  <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-6 block'>
+                    Rendez-vous
+                  </span>
+                </Reveal>
+                <Reveal variant='fade-up' delay={0.1}>
+                  <h3 className='text-4xl md:text-6xl font-title text-cream mb-8 leading-tight'>
+                    Votre barbier
+                    <br />
+                    <span className='text-gold'>dans le Marais</span>
+                  </h3>
+                </Reveal>
+                <Reveal variant='fade-up' delay={0.2}>
+                  <p className='text-cream/70 text-xl font-light mb-10 max-w-lg'>
+                    Idéalement situé dans le{' '}
+                    <strong className='text-gold font-normal'>3ᵉ arrondissement</strong>, nous vous
+                    accueillons sur rendez-vous.
+                  </p>
+                </Reveal>
+                <Reveal variant='fade-up' delay={0.3} className='flex flex-wrap gap-4'>
                   <Button href='/reservation'>Prendre Rendez-vous</Button>
                   <Button href='/contact'>Nous Contacter</Button>
-                </motion.div>
-              </motion.div>
+                </Reveal>
+              </div>
 
               {/* Location card */}
-              <motion.div
-                variants={scaleReveal}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='relative'>
+              <Reveal variant='scale-up' delay={0.4} className='relative'>
                 <div className='bg-navy-secondary/80 backdrop-blur-sm border border-gold/10 p-8 md:p-12'>
                   <div className='flex items-start gap-6 mb-8'>
                     <div className='w-12 h-12 border border-gold/30 flex items-center justify-center flex-shrink-0'>
@@ -579,7 +454,7 @@ export default function SalonPage() {
                 </div>
                 {/* Decorative corner */}
                 <div className='absolute -top-3 -right-3 w-12 h-12 border-t border-r border-gold/30' />
-              </motion.div>
+              </Reveal>
             </div>
           </div>
         </section>

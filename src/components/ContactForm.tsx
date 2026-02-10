@@ -1,8 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { fadeInUp, staggerContainer } from '@/lib/animations'
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -122,11 +120,10 @@ export default function ContactForm() {
   }
 
   return (
-    <motion.form variants={staggerContainer} onSubmit={handleSubmit} className='space-y-6'>
-      <motion.div variants={fadeInUp} className='grid sm:grid-cols-2 gap-6'>
+    <form onSubmit={handleSubmit} className='space-y-6'>
+      <div className='grid sm:grid-cols-2 gap-6'>
         <div>
-          <motion.input
-            whileFocus={{ borderColor: 'rgba(175, 151, 120, 1)' }}
+          <input
             type='text'
             placeholder='Votre nom'
             value={formData.name}
@@ -136,14 +133,13 @@ export default function ContactForm() {
             }}
             className={`w-full bg-transparent border ${
               formErrors.name ? 'border-red-500' : 'border-gold/30'
-            } text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors`}
+            } text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors duration-300`}
             maxLength={50}
           />
           {formErrors.name && <p className='text-red-400 text-xs mt-2 ml-1'>{formErrors.name}</p>}
         </div>
         <div>
-          <motion.input
-            whileFocus={{ borderColor: 'rgba(175, 151, 120, 1)' }}
+          <input
             type='tel'
             placeholder='Téléphone'
             value={formData.phone}
@@ -153,15 +149,14 @@ export default function ContactForm() {
             }}
             className={`w-full bg-transparent border ${
               formErrors.phone ? 'border-red-500' : 'border-gold/30'
-            } text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors`}
+            } text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors duration-300`}
           />
           {formErrors.phone && <p className='text-red-400 text-xs mt-2 ml-1'>{formErrors.phone}</p>}
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div variants={fadeInUp}>
-        <motion.input
-          whileFocus={{ borderColor: 'rgba(175, 151, 120, 1)' }}
+      <div>
+        <input
           type='email'
           placeholder='Email'
           value={formData.email}
@@ -171,14 +166,13 @@ export default function ContactForm() {
           }}
           className={`w-full bg-transparent border ${
             formErrors.email ? 'border-red-500' : 'border-gold/30'
-          } text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors`}
+          } text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors duration-300`}
         />
         {formErrors.email && <p className='text-red-400 text-xs mt-2 ml-1'>{formErrors.email}</p>}
-      </motion.div>
+      </div>
 
-      <motion.div variants={fadeInUp}>
-        <motion.textarea
-          whileFocus={{ borderColor: 'rgba(175, 151, 120, 1)' }}
+      <div>
+        <textarea
           placeholder='Votre message (min. 10 caractères)'
           rows={4}
           value={formData.message}
@@ -188,20 +182,20 @@ export default function ContactForm() {
           }}
           className={`w-full bg-transparent border ${
             formErrors.message ? 'border-red-500' : 'border-gold/30'
-          } text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors resize-none`}
+          } text-cream px-4 py-3 placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors duration-300 resize-none`}
           maxLength={1000}
         />
         <div className='flex justify-between items-start mt-2 ml-1'>
           <p className='text-red-400 text-xs'>{formErrors.message}</p>
           <span className='text-cream/30 text-xs'>{formData.message.length}/1000</span>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div variants={fadeInUp}>
+      <div>
         <button
           type='submit'
           disabled={isSubmitting}
-          className={`group bg-gold hover:bg-white text-navy font-semibold py-4 px-8 w-full transition-all duration-500 flex items-center justify-center gap-2 ${
+          className={`group bg-gold hover:bg-white text-navy font-semibold py-4 px-8 w-full transition-all duration-300 flex items-center justify-center gap-2 ${
             isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
           }`}>
           {isSubmitting ? (
@@ -213,7 +207,7 @@ export default function ContactForm() {
             </>
           )}
         </button>
-      </motion.div>
-    </motion.form>
+      </div>
+    </form>
   )
 }

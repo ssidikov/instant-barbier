@@ -151,177 +151,10 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   PREMIUM ANIMATIONS
+   VERTICAL MARQUEE ANIMATION
    ═══════════════════════════════════════════════════════════════════════════ */
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) translateX(0);
-    opacity: 0.2;
-  }
-
-  25% {
-    transform: translateY(-20px) translateX(10px);
-    opacity: 0.5;
-  }
-
-  50% {
-    transform: translateY(-40px) translateX(-10px);
-    opacity: 0.3;
-  }
-
-  75% {
-    transform: translateY(-20px) translateX(-10px);
-    opacity: 0.6;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(156, 131, 88, 0.3);
-  }
-
-  50% {
-    box-shadow: 0 0 40px rgba(156, 131, 88, 0.6), 0 0 60px rgba(156, 131, 88, 0.3);
-  }
-}
-
-@keyframes slideInFromLeft {
-  from {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    transform: translateY(40px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0);
-    opacity: 0;
-  }
-
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes gentleBounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.5;
-  }
-}
-
-@keyframes rotateIn {
-  from {
-    transform: rotate(-180deg) scale(0);
-    opacity: 0;
-  }
-
-  to {
-    transform: rotate(0) scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-/* Utility classes for animations */
-.animate-float {
-  animation: float 8s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  animation: shimmer 3s linear infinite;
-}
-
-.animate-glow {
-  animation: glow 2s ease-in-out infinite;
-}
-
-.animate-gentle-bounce {
-  animation: gentleBounce 2s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulseGlow 3s ease-in-out infinite;
-}
-
-/* Premium smooth transitions */
-* {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   MARQUEE ANIMATION
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-@keyframes marquee-rtl {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee-rtl {
-  animation: marquee-rtl 300s linear infinite;
-}
-
-/* Vertical marquee - bottom to top */
-@keyframes marquee-vertical {
+@keyframes marquee-vertical-up {
   0% {
     transform: translateY(0);
   }
@@ -331,138 +164,48 @@
   }
 }
 
-.animate-marquee-vertical {
-  animation: marquee-vertical 40s linear infinite;
+.animate-marquee-vertical-up {
+  animation: marquee-vertical-up 20s linear infinite;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MOBILE PERFORMANCE OPTIMIZATIONS
+   NOTIFICATION SLIDE-IN ANIMATION
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Disable resource-intensive animations on mobile devices */
-@media (max-width: 767px) {
-
-  /* Disable infinite animations on mobile */
-  .animate-float,
-  .animate-pulse,
-  .animate-gentle-bounce,
-  .animate-pulse-glow,
-  .float-element,
-  .corner-element {
-    animation: none !important;
-  }
-
-  /* Simplify marquee animation on mobile */
-  .animate-marquee-rtl {
-    animation-duration: 120s;
-  }
-
-  .animate-marquee-vertical {
-    animation: none;
-    /* Disable vertical marquee on mobile */
-  }
-
-  /* Reduce blur effects that are expensive on mobile, except CTA glow */
-  /* [class*='blur-']:not(.cta-glow) {
-    backdrop-filter: none !important;
-    filter: none !important;
-  } */
-
-  /* Optimize touch scrolling - apply only to body, not all elements */
-  body {
-    -webkit-tap-highlight-color: transparent;
-    touch-action: pan-y;
-    -webkit-overflow-scrolling: touch;
-    /* Smooth scrolling on iOS */
-  }
-
-  /* REMOVED: CSS containment was causing content to be invisible during scroll */
-  /* section {
-    contain: layout style paint;
-  } */
-
-  /* Remove will-change on mobile (let browser optimize) */
-  * {
-    will-change: auto !important;
-  }
-
-  /* Force background-attachment scroll on mobile (iOS doesn't support fixed) */
-  [style*='background-attachment: fixed'] {
-    background-attachment: scroll !important;
-  }
-}
-
-/* Respect user's motion preferences */
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  /* Disable all marquee animations */
-  .animate-marquee-rtl,
-  .animate-marquee-vertical {
-    animation: none !important;
-  }
-}
-
-/* Hardware acceleration hints for animations that remain active */
-.animate-marquee-rtl,
-.animate-marquee-vertical {
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   PREMIUM INTERACTION EFFECTS
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Smooth 3D perspective for tilt cards */
-.tilt-card {
-  transform-style: preserve-3d;
-  perspective: 800px;
-}
-
-/* Gold shimmer sweep for hover states */
-@keyframes goldSweep {
+@keyframes slide-in-up {
   0% {
-    transform: translateX(-100%) skewX(-15deg);
+    opacity: 0;
+    transform: translateY(20px);
   }
 
   100% {
-    transform: translateX(200%) skewX(-15deg);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.hover-gold-sweep:hover::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(175, 151, 120, 0.08),
-      transparent);
-  animation: goldSweep 0.8s ease-out;
-  pointer-events: none;
+.animate-slide-in-up {
+  animation: slide-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
 }
 
-/* Premium subtle glow pulse for focus elements */
-@keyframes subtleGlow {
-  0%, 100% {
-    box-shadow: 0 0 0 rgba(175, 151, 120, 0);
-  }
+/* ═══════════════════════════════════════════════════════════════════════════
+   PREMIUM UTILITIES
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-  50% {
-    box-shadow: 0 0 30px rgba(175, 151, 120, 0.15);
-  }
+/* Smooth, luxurious easing */
+.ease-premium {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.subtle-glow-pulse {
-  animation: subtleGlow 4s ease-in-out infinite;
+/* Base fade-up keyframes for use without JS if needed */
+@keyframes fade-up-premium {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

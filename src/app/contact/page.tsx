@@ -1,13 +1,11 @@
 'use client'
 
-import { useRef } from 'react'
 import Image from 'next/image'
-import { motion, useInView, useScroll, useTransform, useSpring } from 'framer-motion'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import { PLANITY_URL } from '@/lib/constants'
-import { fadeInUp, fadeInLeft, fadeInRight, scaleReveal, staggerContainer } from '@/lib/animations'
 import ContactForm from '@/components/ContactForm'
+import Reveal from '@/components/Reveal'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // CONTACT INFO CARD
@@ -24,15 +22,10 @@ function ContactCard({
   children: React.ReactNode
   delay?: number
 }) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
-
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
+    <Reveal
+      variant='fade-up'
+      delay={delay}
       className='group relative bg-navy-secondary/40 backdrop-blur-sm border border-gold/10 p-8 hover:border-gold/30 transition-all duration-700'>
       {/* Corner accent */}
       <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
@@ -50,7 +43,7 @@ function ContactCard({
 
       {/* Content */}
       <div className='text-cream font-light leading-relaxed'>{children}</div>
-    </motion.div>
+    </Reveal>
   )
 }
 
@@ -69,16 +62,8 @@ function TransportItem({
   lines: { label: string; detail: string }[]
   delay?: number
 }) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-40px' })
-
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, x: -20 }}
-      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
-      className='group'>
+    <Reveal variant='fade-up' delay={delay} className='group'>
       <div className='flex items-start gap-5'>
         {/* Icon container */}
         <div className='w-10 h-10 border border-gold/20 flex items-center justify-center shrink-0 group-hover:border-gold/50 transition-colors duration-500'>
@@ -98,7 +83,7 @@ function TransportItem({
           </div>
         </div>
       </div>
-    </motion.div>
+    </Reveal>
   )
 }
 
@@ -107,30 +92,15 @@ function TransportItem({
 // ═══════════════════════════════════════════════════════════════════════════
 
 export default function ContactPage() {
-  const { scrollYProgress } = useScroll()
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
-  const titleY = useTransform(scrollYProgress, [0, 0.25], ['0%', '20%'])
-  const progressScaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  })
-
   return (
     <div className='bg-navy min-h-screen text-cream overflow-x-hidden selection:bg-gold selection:text-navy'>
-      {/* Scroll progress bar */}
-      <motion.div
-        className='fixed top-0 left-0 right-0 h-0.5 bg-gold/80 origin-left z-100'
-        style={{ scaleX: progressScaleX }}
-      />
-
       <main>
         {/* ═══════════════════════════════════════════════════════════════════
             HERO - Clean, editorial opening
             ═══════════════════════════════════════════════════════════════════ */}
         <section className='relative h-[65vh] md:h-[75vh] flex items-end overflow-hidden'>
           {/* Background */}
-          <motion.div style={{ opacity: heroOpacity }} className='absolute inset-0 z-0'>
+          <div className='absolute inset-0 z-0'>
             <Image
               src='/images/gallery/gallery-3.jpg'
               alt="Salon L'Instant Barbier — Paris Marais"
@@ -139,66 +109,46 @@ export default function ContactPage() {
               priority
             />
             <div className='absolute inset-0 bg-navy/70' />
-            <div className='absolute inset-0 bg-linear-to-t from-navy via-navy/40 to-transparent' />
-          </motion.div>
+            <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent' />
+          </div>
 
           {/* Decorative lines */}
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 0.12, height: '25vh' }}
-            transition={{ delay: 0.8, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-            className='absolute top-24 left-[12%] w-px bg-linear-to-b from-transparent via-gold to-transparent'
-          />
-          <motion.div
-            initial={{ opacity: 0, width: 0 }}
-            animate={{ opacity: 0.1, width: '15vw' }}
-            transition={{ delay: 1.1, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-            className='absolute bottom-[35%] right-[8%] h-px bg-linear-to-r from-transparent via-gold to-transparent'
-          />
+          <div className='absolute top-24 left-[12%] w-px h-[25vh] bg-gradient-to-b from-transparent via-gold to-transparent opacity-10' />
+          <div className='absolute bottom-[35%] right-[8%] w-[15vw] h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-10' />
 
           {/* Hero content */}
           <div className='relative z-10 w-full px-6 md:px-12 lg:px-20 pb-16 md:pb-24'>
-            <motion.div style={{ y: titleY }} className='max-w-7xl mx-auto'>
-              <motion.div initial='hidden' animate='visible' variants={staggerContainer}>
-                <motion.span
-                  variants={fadeInUp}
-                  className='inline-block text-gold/60 text-[10px] uppercase tracking-[0.5em] mb-6'>
+            <div className='max-w-7xl mx-auto'>
+              <Reveal variant='fade-up'>
+                <span className='inline-block text-gold/60 text-[10px] uppercase tracking-[0.5em] mb-6'>
                   Paris 3ᵉ — Le Marais
-                </motion.span>
-
-                <motion.h1
-                  variants={fadeInUp}
-                  className='text-5xl md:text-7xl lg:text-[8rem] font-title text-gold leading-[0.9] tracking-tight mb-6'>
+                </span>
+                <h1 className='text-5xl md:text-7xl lg:text-[8rem] font-title text-gold leading-[0.9] tracking-tight mb-6'>
                   Nous
                   <br />
                   <span className='text-cream'>Trouver</span>
-                </motion.h1>
+                </h1>
+              </Reveal>
 
-                <motion.div variants={fadeInUp} className='max-w-lg'>
-                  <p className='text-cream/60 text-lg md:text-xl font-light leading-relaxed'>
-                    Votre barbier et coiffeur homme au c&oelig;ur du Marais. Accessible, élégant, à
-                    votre écoute.
-                  </p>
-                </motion.div>
+              <Reveal variant='fade-up' delay={0.2} className='max-w-lg'>
+                <p className='text-cream/60 text-lg md:text-xl font-light leading-relaxed'>
+                  Votre barbier et coiffeur homme au cœur du Marais. Accessible, élégant, à votre
+                  écoute.
+                </p>
+              </Reveal>
 
-                <motion.div variants={fadeInUp} className='mt-8 w-24 h-px bg-gold/30' />
-              </motion.div>
-            </motion.div>
+              <Reveal variant='fade-up' delay={0.3} className='mt-8 w-24 h-px bg-gold/30' />
+            </div>
           </div>
 
           {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2, duration: 1 }}
+          <Reveal
+            variant='fade-up'
+            delay={1.5}
             className='absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20'>
             <span className='text-[9px] text-gold/40 uppercase tracking-[0.4em]'>Défiler</span>
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              className='w-px h-10 bg-linear-to-b from-gold/50 to-transparent'
-            />
-          </motion.div>
+            <div className='w-px h-10 bg-gradient-to-b from-gold/50 to-transparent animate-pulse' />
+          </Reveal>
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
@@ -206,32 +156,20 @@ export default function ContactPage() {
             ═══════════════════════════════════════════════════════════════════ */}
         <section className='py-24 md:py-32 relative'>
           {/* Floating bg orb */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className='absolute top-1/4 right-0 w-[40vw] h-[40vw] rounded-full bg-gold/3 blur-3xl translate-x-1/4 pointer-events-none'
-          />
+          <div className='absolute top-1/4 right-0 w-[40vw] h-[40vw] rounded-full bg-gold/3 blur-3xl translate-x-1/4 pointer-events-none' />
 
           <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
             {/* Section header */}
-            <motion.div
-              variants={staggerContainer}
-              initial='hidden'
-              whileInView='visible'
-              viewport={{ once: true }}
-              className='mb-16'>
-              <motion.span
-                variants={fadeInUp}
-                className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
-                Informations
-              </motion.span>
-              <motion.h2
-                variants={fadeInUp}
-                className='text-4xl md:text-5xl lg:text-6xl font-title text-cream'>
-                Nous <span className='text-gold'>contacter</span>
-              </motion.h2>
-            </motion.div>
+            <div className='mb-16'>
+              <Reveal variant='fade-up'>
+                <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
+                  Informations
+                </span>
+                <h2 className='text-4xl md:text-5xl lg:text-6xl font-title text-cream'>
+                  Nous <span className='text-gold'>contacter</span>
+                </h2>
+              </Reveal>
+            </div>
 
             {/* Cards grid */}
             <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
@@ -322,29 +260,27 @@ export default function ContactPage() {
             ═══════════════════════════════════════════════════════════════════ */}
         <section className='py-16 md:py-32 bg-dark relative overflow-hidden'>
           {/* Background accent */}
-          <div className='absolute top-0 left-0 w-1/3 h-full bg-linear-to-r from-gold/5 to-transparent' />
+          <div className='absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-gold/5 to-transparent' />
 
           <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
             <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8'>
               {/* Map side */}
-              <motion.div
-                variants={scaleReveal}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='lg:col-span-7'>
+              <div className='lg:col-span-7'>
                 {/* Section header */}
-                <div className='mb-10'>
+                <Reveal variant='fade-up' className='mb-10'>
                   <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                     Localisation
                   </span>
                   <h3 className='text-3xl md:text-4xl lg:text-5xl font-title text-cream'>
                     Accès au <span className='text-gold'>salon</span>
                   </h3>
-                </div>
+                </Reveal>
 
                 {/* Map embed */}
-                <div className='relative overflow-hidden border border-gold/10 aspect-4/3'>
+                <Reveal
+                  variant='scale-up'
+                  delay={0.2}
+                  className='relative overflow-hidden border border-gold/10 aspect-4/3'>
                   <iframe
                     src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2625.0!2d2.3625!3d48.8610!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDjCsDUxJzM5LjYiTiAywrAyMScyNy4wIkU!5e0!3m2!1sfr!2sfr!4v1'
                     className='absolute inset-0 w-full h-full grayscale contrast-125 opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700'
@@ -357,28 +293,25 @@ export default function ContactPage() {
                   {/* Gold corner accents */}
                   <div className='absolute -top-1 -left-1 w-8 h-8 border-t-2 border-l-2 border-gold/30 pointer-events-none' />
                   <div className='absolute -bottom-1 -right-1 w-8 h-8 border-b-2 border-r-2 border-gold/30 pointer-events-none' />
-                </div>
+                </Reveal>
 
-                <p className='text-cream/40 text-sm mt-4 font-light'>
-                  Situé dans le 3ᵉ arrondissement, facilement accessible depuis tout Paris.
-                </p>
-              </motion.div>
+                <Reveal variant='fade-up' delay={0.3}>
+                  <p className='text-cream/40 text-sm mt-4 font-light'>
+                    Situé dans le 3ᵉ arrondissement, facilement accessible depuis tout Paris.
+                  </p>
+                </Reveal>
+              </div>
 
               {/* Transport side */}
-              <motion.div
-                variants={staggerContainer}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='lg:col-span-5 lg:pl-4'>
-                <motion.div variants={fadeInUp} className='mb-10'>
+              <div className='lg:col-span-5 lg:pl-4'>
+                <Reveal variant='fade-up' className='mb-10'>
                   <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                     Comment venir
                   </span>
                   <h3 className='text-2xl md:text-3xl font-title text-cream'>
                     Transports <span className='text-gold'>&amp;</span> accès
                   </h3>
-                </motion.div>
+                </Reveal>
 
                 <div className='space-y-8'>
                   <TransportItem
@@ -405,7 +338,7 @@ export default function ContactPage() {
                     ]}
                   />
 
-                  <div className='w-full h-px bg-gold/10' />
+                  <Reveal variant='fade-up' delay={0.15} className='w-full h-px bg-gold/10' />
 
                   <TransportItem
                     delay={0.2}
@@ -426,7 +359,7 @@ export default function ContactPage() {
                     lines={[{ label: 'Lignes 29 & 96', detail: 'Arrêt Rue de Turenne' }]}
                   />
 
-                  <div className='w-full h-px bg-gold/10' />
+                  <Reveal variant='fade-up' delay={0.25} className='w-full h-px bg-gold/10' />
 
                   <TransportItem
                     delay={0.3}
@@ -446,7 +379,7 @@ export default function ContactPage() {
                     lines={[{ label: 'Station n°3103', detail: 'Rue des Francs-Bourgeois' }]}
                   />
 
-                  <div className='w-full h-px bg-gold/10' />
+                  <Reveal variant='fade-up' delay={0.35} className='w-full h-px bg-gold/10' />
 
                   <TransportItem
                     delay={0.4}
@@ -467,7 +400,7 @@ export default function ContactPage() {
                     lines={[{ label: 'Bastille Saint-Antoine', detail: '~10 min à pied' }]}
                   />
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
@@ -481,45 +414,39 @@ export default function ContactPage() {
           <div className='relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20'>
             <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8'>
               {/* Left - Statement */}
-              <motion.div
-                variants={fadeInLeft}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='lg:col-span-6'>
-                <span className='text-gold text-7xl md:text-8xl font-serif leading-none opacity-15 block mb-4'>
-                  &ldquo;
-                </span>
-                <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-cream leading-[1.1] -mt-14'>
-                  Votre barbier
-                  <span className='block text-gold mt-2'>dans le Marais</span>
-                </h2>
-              </motion.div>
+              <div className='lg:col-span-6'>
+                <Reveal variant='fade-side'>
+                  <span className='text-gold text-7xl md:text-8xl font-serif leading-none opacity-15 block mb-4'>
+                    &ldquo;
+                  </span>
+                  <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-cream leading-[1.1] -mt-14'>
+                    Votre barbier
+                    <span className='block text-gold mt-2'>dans le Marais</span>
+                  </h2>
+                </Reveal>
+              </div>
 
               {/* Right - Description */}
-              <motion.div
-                variants={fadeInRight}
-                initial='hidden'
-                whileInView='visible'
-                viewport={{ once: true }}
-                className='lg:col-span-6 lg:pt-16'>
-                <p className='text-lg md:text-xl text-cream/60 font-light leading-relaxed mb-6'>
-                  Que vous recherchiez un{' '}
-                  <strong className='text-gold font-normal'>barbier à Paris</strong>, un coiffeur
-                  homme dans le Marais, ou un salon offrant une expérience soignée et élégante,
-                  notre équipe est à votre disposition.
-                </p>
-                <p className='text-base text-cream/45 font-light leading-relaxed'>
-                  Nous vous accompagnons et répondons à vos questions concernant nos prestations de
-                  coiffure, de barbe et de soins.
-                </p>
-                <div className='mt-8 flex items-center gap-4'>
-                  <div className='w-12 h-px bg-gold/40' />
-                  <span className='text-gold/50 text-xs uppercase tracking-widest'>
-                    À votre écoute
-                  </span>
-                </div>
-              </motion.div>
+              <div className='lg:col-span-6 lg:pt-16'>
+                <Reveal variant='fade-side' delay={0.2}>
+                  <p className='text-lg md:text-xl text-cream/60 font-light leading-relaxed mb-6'>
+                    Que vous recherchiez un{' '}
+                    <strong className='text-gold font-normal'>barbier à Paris</strong>, un coiffeur
+                    homme dans le Marais, ou un salon offrant une expérience soignée et élégante,
+                    notre équipe est à votre disposition.
+                  </p>
+                  <p className='text-base text-cream/45 font-light leading-relaxed'>
+                    Nous vous accompagnons et répondons à vos questions concernant nos prestations
+                    de coiffure, de barbe et de soins.
+                  </p>
+                  <div className='mt-8 flex items-center gap-4'>
+                    <div className='w-12 h-px bg-gold/40' />
+                    <span className='text-gold/50 text-xs uppercase tracking-widest'>
+                      À votre écoute
+                    </span>
+                  </div>
+                </Reveal>
+              </div>
             </div>
           </div>
         </section>
@@ -529,23 +456,20 @@ export default function ContactPage() {
             ═══════════════════════════════════════════════════════════════════ */}
         <section className='py-24 md:py-32 bg-dark relative'>
           <div className='max-w-3xl mx-auto px-6 md:px-12 relative z-10'>
-            <motion.div
-              initial='hidden'
-              whileInView='visible'
-              viewport={{ once: true }}
-              variants={staggerContainer}
-              className='mb-16 text-center'>
-              <motion.span
-                variants={fadeInUp}
-                className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
-                Une question ?
-              </motion.span>
-              <motion.h2 variants={fadeInUp} className='text-3xl md:text-5xl font-title text-cream'>
-                Envoyez-nous un <span className='text-gold'>message</span>
-              </motion.h2>
-            </motion.div>
+            <div className='mb-16 text-center'>
+              <Reveal variant='fade-up'>
+                <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
+                  Une question ?
+                </span>
+                <h2 className='text-3xl md:text-5xl font-title text-cream'>
+                  Envoyez-nous un <span className='text-gold'>message</span>
+                </h2>
+              </Reveal>
+            </div>
 
-            <ContactForm />
+            <Reveal variant='fade-up' delay={0.2}>
+              <ContactForm />
+            </Reveal>
           </div>
         </section>
 
@@ -561,61 +485,51 @@ export default function ContactPage() {
               fill
               className='object-cover opacity-10'
             />
-            <div className='absolute inset-0 bg-linear-to-r from-navy via-navy/95 to-navy/90' />
+            <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy/90' />
           </div>
 
           {/* Large decorative ampersand */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 0.06 }}
-            viewport={{ once: true }}
-            className='absolute top-1/2 right-[8%] -translate-y-1/2 text-[20rem] font-title text-gold select-none pointer-events-none leading-none'>
+          <div className='absolute top-1/2 right-[8%] -translate-y-1/2 text-[20rem] font-title text-gold select-none pointer-events-none leading-none opacity-[0.06]'>
             &amp;
-          </motion.div>
+          </div>
 
           <div className='max-w-5xl mx-auto px-6 md:px-12 relative z-10 text-center'>
-            <motion.div
-              variants={staggerContainer}
-              initial='hidden'
-              whileInView='visible'
-              viewport={{ once: true }}>
-              <motion.div variants={fadeInUp} className='mb-8'>
-                <div className='w-16 h-px bg-gold/40 mx-auto mb-8' />
-                <span className='text-gold/60 text-xs uppercase tracking-[0.4em]'>Rendez-vous</span>
-              </motion.div>
+            <Reveal variant='fade-up' className='mb-8'>
+              <div className='w-16 h-px bg-gold/40 mx-auto mb-8' />
+              <span className='text-gold/60 text-xs uppercase tracking-[0.4em]'>Rendez-vous</span>
+            </Reveal>
 
-              <motion.h3
-                variants={fadeInUp}
-                className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[1.15] mb-8'>
+            <Reveal variant='fade-up' delay={0.1}>
+              <h3 className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[1.15] mb-8'>
                 Prêt pour une expérience <span className='text-gold'>sur mesure</span> ?
-              </motion.h3>
+              </h3>
+            </Reveal>
 
-              <motion.p
-                variants={fadeInUp}
-                className='text-cream/50 text-lg font-light max-w-2xl mx-auto leading-relaxed mb-12'>
-                N&apos;hésitez pas à nous contacter ou à réserver votre rendez-vous directement en
-                ligne. Nous vous accueillons avec plaisir.
-              </motion.p>
+            <Reveal variant='fade-up' delay={0.2}>
+              <p className='text-cream/50 text-lg font-light max-w-2xl mx-auto leading-relaxed mb-12'>
+                N'hésitez pas à nous contacter ou à réserver votre rendez-vous directement en ligne.
+                Nous vous accueillons avec plaisir.
+              </p>
+            </Reveal>
 
-              <motion.div variants={fadeInUp} className='flex flex-wrap justify-center gap-5'>
-                <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
-                <a
-                  href='tel:0145354722'
-                  className='group relative inline-flex items-center gap-3 px-8 py-4 border border-gold/30 hover:border-gold/60 transition-all duration-500'>
-                  <svg
-                    className='w-4 h-4 text-gold'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    stroke='currentColor'
-                    strokeWidth='1.5'>
-                    <path d='M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z' />
-                  </svg>
-                  <span className='text-gold text-xs uppercase tracking-[0.2em] font-semibold'>
-                    Appeler le salon
-                  </span>
-                </a>
-              </motion.div>
-            </motion.div>
+            <Reveal variant='fade-up' delay={0.3} className='flex flex-wrap justify-center gap-5'>
+              <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
+              <a
+                href='tel:0145354722'
+                className='group relative inline-flex items-center gap-3 px-8 py-4 border border-gold/30 hover:border-gold/60 transition-all duration-500'>
+                <svg
+                  className='w-4 h-4 text-gold'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  strokeWidth='1.5'>
+                  <path d='M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z' />
+                </svg>
+                <span className='text-gold text-xs uppercase tracking-[0.2em] font-semibold'>
+                  Appeler le salon
+                </span>
+              </a>
+            </Reveal>
           </div>
         </section>
       </main>

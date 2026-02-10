@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { CONTACT, SOCIAL, SITE_NAME } from '@/lib/constants'
 
 export default function Footer() {
@@ -7,26 +6,9 @@ export default function Footer() {
     <footer className='bg-dark pt-16 pb-8 overflow-hidden'>
       <div className='max-w-6xl mx-auto px-6'>
         {/* Large Headline */}
-        <h2 className='text-center text-3xl md:text-5xl lg:text-6xl font-title italic text-gold mb-8'>
+        <h2 className='text-center text-3xl md:text-5xl lg:text-6xl font-title italic text-gold mb-16'>
           Votre Style, Notre Passion
         </h2>
-
-        {/* Logo Marquee - Moved under Headline */}
-        <div className='relative w-screen left-1/2 -translate-x-1/2 overflow-hidden py-8 mb-12'>
-          <div className='animate-marquee-rtl flex items-center gap-16 w-max'>
-            {/* Duplicate logos for seamless loop */}
-            {[...Array(12)].map((_, i) => (
-              <Image
-                key={i}
-                src='/logo/logo-golden.svg'
-                alt="L'Instant Barbier"
-                width={120}
-                height={120}
-                className='h-32 md:h-40 lg:h-80 w-auto object-contain opacity-80'
-              />
-            ))}
-          </div>
-        </div>
 
         {/* Contact & Social Bar - New Top Container */}
         <div className='flex flex-col md:flex-row flex-wrap justify-between items-center gap-6 border-b border-cream/10 pb-12 mb-12'>
