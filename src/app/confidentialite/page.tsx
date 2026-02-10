@@ -70,13 +70,7 @@ function PolicySection({
 // INFO BLOCK
 // ═══════════════════════════════════════════════════════════════════════════
 
-function InfoBlock({
-  label,
-  children,
-}: {
-  label?: string
-  children: React.ReactNode
-}) {
+function InfoBlock({ label, children }: { label?: string; children: React.ReactNode }) {
   return (
     <div className='bg-navy-secondary/30 border border-gold/8 p-5 md:p-6'>
       {label && (
@@ -165,8 +159,8 @@ export default function ConfidentialitePage() {
 
               <motion.div variants={fadeInUp} className='max-w-xl'>
                 <p className='text-cream/50 text-base md:text-lg font-light leading-relaxed'>
-                  Comment nous protégeons vos données personnelles, conformément au
-                  Règlement Général sur la Protection des Données (RGPD).
+                  Comment nous protégeons vos données personnelles, conformément au Règlement
+                  Général sur la Protection des Données (RGPD).
                 </p>
               </motion.div>
 
@@ -197,7 +191,12 @@ export default function ConfidentialitePage() {
                   <a
                     href='tel:0145354722'
                     className='text-gold/70 hover:text-gold transition-colors duration-300 inline-flex items-center gap-2'>
-                    <svg className='w-3.5 h-3.5' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+                    <svg
+                      className='w-3.5 h-3.5'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      strokeWidth='1.5'>
                       <path d='M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z' />
                     </svg>
                     01 45 35 47 22
@@ -205,7 +204,12 @@ export default function ConfidentialitePage() {
                   <a
                     href='mailto:linstantbarbier@gmail.com'
                     className='text-gold/70 hover:text-gold transition-colors duration-300 inline-flex items-center gap-2'>
-                    <svg className='w-3.5 h-3.5' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+                    <svg
+                      className='w-3.5 h-3.5'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      strokeWidth='1.5'>
                       <rect x='2' y='4' width='20' height='16' rx='2' />
                       <path d='M22 7l-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7' />
                     </svg>
@@ -222,8 +226,8 @@ export default function ConfidentialitePage() {
                   www.linstantbarbier.fr
                 </a>{' '}
                 a pour vocation de présenter l&apos;activité du salon L&apos;Instant Barbier et de
-                faciliter la prise de contact et l&apos;accès à la réservation en ligne via un service
-                tiers.
+                faciliter la prise de contact et l&apos;accès à la réservation en ligne via un
+                service tiers.
               </p>
             </PolicySection>
 
@@ -235,11 +239,11 @@ export default function ConfidentialitePage() {
                 caractère personnel peuvent être collectées, uniquement lorsque cela est nécessaire.
               </p>
               <p>
-                Le terme « données personnelles » désigne toute information permettant d&apos;identifier
-                directement ou indirectement une personne physique.
+                Le terme « données personnelles » désigne toute information permettant
+                d&apos;identifier directement ou indirectement une personne physique.
               </p>
 
-              <InfoBlock label='Données susceptibles d&apos;être collectées'>
+              <InfoBlock label="Données susceptibles d'être collectées">
                 <BulletList
                   items={[
                     'Nom et prénom',
@@ -258,7 +262,7 @@ export default function ConfidentialitePage() {
                 , notamment lors :
               </p>
 
-              <BulletList items={['d\'une prise de contact,', 'd\'une demande d\'information.']} />
+              <BulletList items={["d'une prise de contact,", "d'une demande d'information."]} />
 
               <p className='text-cream/50 text-sm italic'>
                 Aucune donnée bancaire n&apos;est collectée ou stockée sur le site.
@@ -278,8 +282,8 @@ export default function ConfidentialitePage() {
               />
 
               <p>
-                Les données collectées sont strictement nécessaires et ne sont jamais utilisées à des
-                fins commerciales non sollicitées.
+                Les données collectées sont strictement nécessaires et ne sont jamais utilisées à
+                des fins commerciales non sollicitées.
               </p>
             </PolicySection>
 
@@ -290,21 +294,22 @@ export default function ConfidentialitePage() {
                 <strong className='text-cream/80 font-normal'>Planity</strong>).
               </p>
               <p>
-                À ce titre, les données personnelles liées à la réservation sont collectées et traitées{' '}
+                À ce titre, les données personnelles liées à la réservation sont collectées et
+                traitées{' '}
                 <strong className='text-cream/80 font-normal'>directement par Planity</strong>,
                 conformément à leur propre politique de confidentialité.
               </p>
               <p>
-                L&apos;Instant Barbier n&apos;est pas responsable du traitement des données effectué par
-                ce service tiers.
+                L&apos;Instant Barbier n&apos;est pas responsable du traitement des données effectué
+                par ce service tiers.
               </p>
             </PolicySection>
 
             {/* ── 5. Formulaire ── */}
             <PolicySection number='05' title='Formulaire de contact'>
               <p>
-                Lorsque vous utilisez le formulaire de contact, les informations saisies sont transmises
-                par voie sécurisée et utilisées uniquement pour répondre à votre demande.
+                Lorsque vous utilisez le formulaire de contact, les informations saisies sont
+                transmises par voie sécurisée et utilisées uniquement pour répondre à votre demande.
               </p>
               <p>
                 Aucune information fournie via le formulaire de contact n&apos;est partagée avec des
@@ -315,25 +320,25 @@ export default function ConfidentialitePage() {
             {/* ── 6. Cookies ── */}
             <PolicySection number='06' title='Cookies'>
               <p>
-                Le site <span className='text-gold/70'>www.linstantbarbier.fr</span> peut être amené à
-                utiliser des cookies à des fins :
+                Le site <span className='text-gold/70'>www.linstantbarbier.fr</span> peut être amené
+                à utiliser des cookies à des fins :
               </p>
 
               <BulletList
                 items={[
                   'de bon fonctionnement du site,',
-                  'de mesure d\'audience,',
-                  'd\'amélioration de l\'expérience utilisateur.',
+                  "de mesure d'audience,",
+                  "d'amélioration de l'expérience utilisateur.",
                 ]}
               />
 
               <p>
-                Un cookie est un petit fichier texte stocké sur votre terminal (ordinateur, tablette,
-                smartphone).
+                Un cookie est un petit fichier texte stocké sur votre terminal (ordinateur,
+                tablette, smartphone).
               </p>
               <p>
-                Vous pouvez à tout moment configurer votre navigateur pour refuser les cookies. Le refus
-                des cookies peut toutefois limiter certaines fonctionnalités du site.
+                Vous pouvez à tout moment configurer votre navigateur pour refuser les cookies. Le
+                refus des cookies peut toutefois limiter certaines fonctionnalités du site.
               </p>
               <p>
                 Pour plus d&apos;informations sur les cookies :{' '}
@@ -356,14 +361,14 @@ export default function ConfidentialitePage() {
             </PolicySection>
 
             {/* ── 7. Contenus embarqués ── */}
-            <PolicySection number='07' title='Contenus embarqués depuis d&apos;autres sites'>
+            <PolicySection number='07' title="Contenus embarqués depuis d'autres sites">
               <p>
                 Certaines pages du site peuvent inclure des contenus intégrés (par exemple : carte
                 Google Maps, liens vers des réseaux sociaux).
               </p>
               <p>
-                Les contenus intégrés depuis d&apos;autres sites se comportent de la même manière que si
-                l&apos;utilisateur visitait directement ces sites.
+                Les contenus intégrés depuis d&apos;autres sites se comportent de la même manière
+                que si l&apos;utilisateur visitait directement ces sites.
               </p>
               <p>
                 Ces sites tiers peuvent collecter des données, utiliser des cookies ou des outils de
@@ -383,8 +388,8 @@ export default function ConfidentialitePage() {
                   <span className='text-cream/40 text-sm shrink-0'>Données de contact</span>
                   <span className='hidden sm:block flex-1 border-b border-dotted border-gold/8' />
                   <span className='text-cream/70 text-sm font-light'>
-                    Maximum <strong className='text-cream/90 font-normal'>3 ans</strong> à compter du
-                    dernier échange
+                    Maximum <strong className='text-cream/90 font-normal'>3 ans</strong> à compter
+                    du dernier échange
                   </span>
                 </div>
                 <div className='flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3'>
@@ -411,10 +416,10 @@ export default function ConfidentialitePage() {
 
               <BulletList
                 items={[
-                  'droit d\'accès à vos données personnelles,',
+                  "droit d'accès à vos données personnelles,",
                   'droit de rectification,',
-                  'droit à l\'effacement,',
-                  'droit d\'opposition,',
+                  "droit à l'effacement,",
+                  "droit d'opposition,",
                   'droit à la limitation du traitement,',
                   'droit à la portabilité des données.',
                 ]}
@@ -448,7 +453,8 @@ export default function ConfidentialitePage() {
             <PolicySection number='10' title='Sécurité des données'>
               <p>
                 L&apos;Instant Barbier met en œuvre des mesures techniques et organisationnelles
-                appropriées afin de garantir la sécurité et la confidentialité des données personnelles.
+                appropriées afin de garantir la sécurité et la confidentialité des données
+                personnelles.
               </p>
               <p>
                 Les données sont hébergées sur des infrastructures sécurisées et ne sont accessibles
@@ -459,7 +465,8 @@ export default function ConfidentialitePage() {
             {/* ── 11. Violation ── */}
             <PolicySection number='11' title='Procédure en cas de violation de données'>
               <p>
-                En cas de violation de données personnelles, L&apos;Instant Barbier s&apos;engage à :
+                En cas de violation de données personnelles, L&apos;Instant Barbier s&apos;engage à
+                :
               </p>
 
               <BulletList
@@ -477,8 +484,8 @@ export default function ConfidentialitePage() {
                 Les données personnelles ne sont ni vendues, ni cédées, ni échangées avec des tiers.
               </p>
               <p>
-                Seuls les prestataires techniques nécessaires au fonctionnement du site peuvent y avoir
-                accès, dans le strict respect du RGPD.
+                Seuls les prestataires techniques nécessaires au fonctionnement du site peuvent y
+                avoir accès, dans le strict respect du RGPD.
               </p>
             </PolicySection>
 
@@ -486,8 +493,8 @@ export default function ConfidentialitePage() {
             <PolicySection number='13' title='Droit applicable'>
               <p>La présente politique de confidentialité est régie par le droit français.</p>
               <p>
-                Tout litige relatif à son interprétation ou à son exécution relève de la compétence des
-                tribunaux français.
+                Tout litige relatif à son interprétation ou à son exécution relève de la compétence
+                des tribunaux français.
               </p>
             </PolicySection>
 

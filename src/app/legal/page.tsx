@@ -70,13 +70,7 @@ function LegalSection({
 // INFO BLOCK - For structured data like company info
 // ═══════════════════════════════════════════════════════════════════════════
 
-function InfoBlock({
-  label,
-  children,
-}: {
-  label?: string
-  children: React.ReactNode
-}) {
+function InfoBlock({ label, children }: { label?: string; children: React.ReactNode }) {
   return (
     <div className='bg-navy-secondary/30 border border-gold/8 p-5 md:p-6'>
       {label && (
@@ -181,7 +175,8 @@ export default function LegalPage() {
                   className='text-gold/80 hover:text-gold transition-colors duration-300 underline underline-offset-2 decoration-gold/20 hover:decoration-gold/50'>
                   www.linstantbarbier.fr
                 </a>{' '}
-                l&apos;identité des différents intervenants dans le cadre de sa réalisation et de son suivi.
+                l&apos;identité des différents intervenants dans le cadre de sa réalisation et de
+                son suivi.
               </p>
 
               <InfoBlock label='Propriétaire du site'>
@@ -235,7 +230,7 @@ export default function LegalPage() {
             </LegalSection>
 
             {/* ── 3. CGU ── */}
-            <LegalSection number='03' title='Conditions générales d&apos;utilisation'>
+            <LegalSection number='03' title="Conditions générales d'utilisation">
               <p>
                 L&apos;utilisation du site{' '}
                 <span className='text-gold/70'>www.linstantbarbier.fr</span> implique
@@ -258,14 +253,14 @@ export default function LegalPage() {
             <LegalSection number='04' title='Description des services fournis'>
               <p>
                 Le site <span className='text-gold/70'>www.linstantbarbier.fr</span> a pour objet de
-                fournir une information concernant l&apos;ensemble des activités du salon L&apos;Instant
-                Barbier.
+                fournir une information concernant l&apos;ensemble des activités du salon
+                L&apos;Instant Barbier.
               </p>
               <p>
                 L&apos;Instant Barbier s&apos;efforce de fournir sur le site des informations aussi
-                précises que possible. Toutefois, il ne pourra être tenu responsable des omissions, des
-                inexactitudes ou des carences dans la mise à jour, qu&apos;elles soient de son fait ou
-                du fait des tiers partenaires.
+                précises que possible. Toutefois, il ne pourra être tenu responsable des omissions,
+                des inexactitudes ou des carences dans la mise à jour, qu&apos;elles soient de son
+                fait ou du fait des tiers partenaires.
               </p>
               <p>
                 Toutes les informations indiquées sur le site sont données à titre indicatif et sont
@@ -283,29 +278,29 @@ export default function LegalPage() {
               </p>
               <p>
                 L&apos;utilisateur du site s&apos;engage à accéder au site en utilisant un matériel
-                récent, ne contenant pas de virus, et avec un navigateur de dernière génération mis à
-                jour.
+                récent, ne contenant pas de virus, et avec un navigateur de dernière génération mis
+                à jour.
               </p>
             </LegalSection>
 
             {/* ── 6. Propriété intellectuelle ── */}
             <LegalSection number='06' title='Propriété intellectuelle et contrefaçons'>
               <p>
-                L&apos;INSTANT BARBIER (LIB) est propriétaire des droits de propriété intellectuelle ou
-                détient les droits d&apos;usage sur l&apos;ensemble des éléments accessibles sur le
-                site, notamment les textes, images, graphismes, logos, icônes, photographies et
+                L&apos;INSTANT BARBIER (LIB) est propriétaire des droits de propriété intellectuelle
+                ou détient les droits d&apos;usage sur l&apos;ensemble des éléments accessibles sur
+                le site, notamment les textes, images, graphismes, logos, icônes, photographies et
                 contenus.
               </p>
               <p>
-                Toute reproduction, représentation, modification, publication ou adaptation de tout ou
-                partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite
-                sans autorisation écrite préalable de L&apos;INSTANT BARBIER (LIB).
+                Toute reproduction, représentation, modification, publication ou adaptation de tout
+                ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est
+                interdite sans autorisation écrite préalable de L&apos;INSTANT BARBIER (LIB).
               </p>
               <p>
-                Toute exploitation non autorisée du site ou de l&apos;un quelconque des éléments qu&apos;il
-                contient sera considérée comme constitutive d&apos;une contrefaçon et poursuivie
-                conformément aux dispositions des articles L.335-2 et suivants du Code de la propriété
-                intellectuelle.
+                Toute exploitation non autorisée du site ou de l&apos;un quelconque des éléments
+                qu&apos;il contient sera considérée comme constitutive d&apos;une contrefaçon et
+                poursuivie conformément aux dispositions des articles L.335-2 et suivants du Code de
+                la propriété intellectuelle.
               </p>
             </LegalSection>
 
@@ -324,9 +319,9 @@ export default function LegalPage() {
                 l&apos;utilisation du site.
               </p>
               <p>
-                Des espaces interactifs (formulaire de contact) sont à la disposition des utilisateurs.
-                L&apos;INSTANT BARBIER (LIB) se réserve le droit de supprimer, sans mise en demeure
-                préalable, tout contenu contrevenant à la législation française.
+                Des espaces interactifs (formulaire de contact) sont à la disposition des
+                utilisateurs. L&apos;INSTANT BARBIER (LIB) se réserve le droit de supprimer, sans
+                mise en demeure préalable, tout contenu contrevenant à la législation française.
               </p>
             </LegalSection>
 
@@ -350,9 +345,9 @@ export default function LegalPage() {
                 transférée, cédée ou vendue à des tiers.
               </p>
               <p>
-                Conformément à la réglementation en vigueur, tout utilisateur dispose d&apos;un droit
-                d&apos;accès, de rectification et d&apos;opposition aux données personnelles le
-                concernant, en adressant sa demande à :
+                Conformément à la réglementation en vigueur, tout utilisateur dispose d&apos;un
+                droit d&apos;accès, de rectification et d&apos;opposition aux données personnelles
+                le concernant, en adressant sa demande à :
               </p>
 
               <div className='inline-flex items-center gap-3 bg-navy-secondary/40 border border-gold/10 px-5 py-3'>
@@ -377,16 +372,16 @@ export default function LegalPage() {
             <LegalSection number='09' title='Liens hypertextes et cookies'>
               <p>
                 Le site peut contenir des liens hypertextes vers d&apos;autres sites. L&apos;INSTANT
-                BARBIER (LIB) n&apos;exerce aucun contrôle sur le contenu de ces sites et décline toute
-                responsabilité quant à leur contenu.
+                BARBIER (LIB) n&apos;exerce aucun contrôle sur le contenu de ces sites et décline
+                toute responsabilité quant à leur contenu.
               </p>
               <p>
                 La navigation sur le site peut entraîner l&apos;installation de cookies destinés à
                 améliorer l&apos;expérience utilisateur et à mesurer l&apos;audience.
               </p>
               <p>
-                L&apos;utilisateur peut configurer son navigateur pour refuser l&apos;installation des
-                cookies.
+                L&apos;utilisateur peut configurer son navigateur pour refuser l&apos;installation
+                des cookies.
               </p>
             </LegalSection>
 
@@ -408,16 +403,16 @@ export default function LegalPage() {
               <div className='space-y-4'>
                 <div>
                   <span className='text-cream/80 font-title text-base'>Utilisateur</span>
-                  <p className='mt-1'>
-                    Internaute se connectant et utilisant le site.
-                  </p>
+                  <p className='mt-1'>Internaute se connectant et utilisant le site.</p>
                 </div>
                 <div className='w-full h-px bg-gold/8' />
                 <div>
-                  <span className='text-cream/80 font-title text-base'>Informations personnelles</span>
+                  <span className='text-cream/80 font-title text-base'>
+                    Informations personnelles
+                  </span>
                   <p className='mt-1'>
-                    Toute information permettant, directement ou indirectement, l&apos;identification
-                    d&apos;une personne physique.
+                    Toute information permettant, directement ou indirectement,
+                    l&apos;identification d&apos;une personne physique.
                   </p>
                 </div>
               </div>
