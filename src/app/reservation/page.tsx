@@ -329,6 +329,112 @@ export default function ReservationPage() {
           color: #f4f1ec !important;
         }
 
+        /* ── Selected service summary / Recap section ── */
+        [class*='recap'],
+        [class*='summary'],
+        [class*='selected'],
+        [class*='step-'],
+        [class*='prestation'],
+        [class*='selection'],
+        [class*='booking_service'],
+        [class*='bookingService'],
+        .planity_ui_appointment_recap,
+        .planity_ui_appointment_summary,
+        div[class*='booking_service-module'],
+        div[class*='booking-service'] {
+          background-color: #07181E !important;
+          background: #07181E !important;
+          color: #f4f1ec !important;
+        }
+
+        /* ── Force all white cards to navy ── */
+        #planity-widget-container [class*='card'],
+        #planity-widget-container [class*='panel'],
+        #planity-widget-container [class*='box'],
+        #planity-widget-container div[style*='rgb(255, 255, 255)'],
+        #planity-widget-container div[style*='#FFFFFF'],
+        #planity-widget-container div[style*='#ffffff'] {
+          background-color: #07181E !important;
+          background: #07181E !important;
+        }
+
+        /* ── SUPPRIMER and similar action buttons ── */
+        #planity-widget-container button[class*='delete'],
+        #planity-widget-container button[class*='remove'],
+        #planity-widget-container button[class*='supprimer'],
+        #planity-widget-container [class*='button'][class*='delete'],
+        #planity-widget-container [class*='button'][class*='remove'] {
+          background-color: transparent !important;
+          background: transparent !important;
+          border: 2px solid #af9778 !important;
+          color: #af9778 !important;
+          padding: 12px 24px !important;
+          border-radius: 2px !important;
+          font-weight: 600 !important;
+          text-transform: uppercase !important;
+          letter-spacing: 0.2em !important;
+          font-size: 11px !important;
+          transition: all 0.5s ease !important;
+        }
+        #planity-widget-container button[class*='delete']:hover,
+        #planity-widget-container button[class*='remove']:hover,
+        #planity-widget-container button[class*='supprimer']:hover,
+        #planity-widget-container [class*='button'][class*='delete']:hover,
+        #planity-widget-container [class*='button'][class*='remove']:hover {
+          background-color: #af9778 !important;
+          background: #af9778 !important;
+          color: #07181e !important;
+          box-shadow: 0 0 30px rgba(175, 151, 120, 0.4) !important;
+          letter-spacing: 0.25em !important;
+          transform: scale(1.02) !important;
+        }
+
+        /* ── AGRANDIR LES PHOTOS and other secondary buttons ── */
+        #planity-widget-container button[class*='photo'],
+        #planity-widget-container button[class*='image'],
+        #planity-widget-container button[class*='agrandir'],
+        #planity-widget-container button[class*='expand'] {
+          background-color: transparent !important;
+          background: transparent !important;
+          border: 2px solid #af9778 !important;
+          color: #af9778 !important;
+          padding: 12px 24px !important;
+          border-radius: 2px !important;
+          font-weight: 600 !important;
+          text-transform: uppercase !important;
+          letter-spacing: 0.2em !important;
+          font-size: 11px !important;
+          transition: all 0.5s ease !important;
+        }
+        #planity-widget-container button[class*='photo']:hover,
+        #planity-widget-container button[class*='image']:hover,
+        #planity-widget-container button[class*='agrandir']:hover,
+        #planity-widget-container button[class*='expand']:hover {
+          background-color: #af9778 !important;
+          background: #af9778 !important;
+          color: #07181e !important;
+          box-shadow: 0 0 30px rgba(175, 151, 120, 0.4) !important;
+          letter-spacing: 0.25em !important;
+          transform: scale(1.02) !important;
+        }
+
+        /* ── All other buttons in widget ── */
+        #planity-widget-container button:not([class*='button-module']):not([class*='toggle']) {
+          background-color: transparent !important;
+          background: transparent !important;
+          border: 2px solid #af9778 !important;
+          color: #af9778 !important;
+          text-transform: uppercase !important;
+          letter-spacing: 0.2em !important;
+          transition: all 0.5s ease !important;
+        }
+        #planity-widget-container button:not([class*='button-module']):not([class*='toggle']):hover {
+          background-color: #af9778 !important;
+          background: #af9778 !important;
+          color: #07181e !important;
+          letter-spacing: 0.25em !important;
+        }
+
         /* ── Global overrides inside widget ── */
         #planity-widget-container div,
         #planity-widget-container section,
@@ -346,9 +452,53 @@ export default function ReservationPage() {
         #planity-widget-container [style*='background-color: rgb(255, 255, 255)'],
         #planity-widget-container [style*='background: rgb(255, 255, 255)'],
         #planity-widget-container [style*='background: #fff'],
-        #planity-widget-container [style*='background-color: #fff'] {
-          background-color: #07181e !important;
-          background: #07181e !important;
+        #planity-widget-container [style*='background-color: #fff'],
+        #planity-widget-container [style*='background-color:#fff'],
+        #planity-widget-container [style*='background:#fff'],
+        #planity-widget-container [style*='background-color: #FFF'],
+        #planity-widget-container [style*='background-color:#FFF'],
+        #planity-widget-container [style*='background-color: #FFFFFF'],
+        #planity-widget-container [style*='background-color:#FFFFFF'] {
+          background-color: #07181E !important;
+          background: #07181E !important;
+        }
+
+        /* ── Aggressive override for all divs ── */
+        #planity-widget-container div[style]:not([class*='image']):not([class*='photo']):not([class*='avatar']):not([class*='picture']):not([class*='img']):not([class*='radio']):not([class*='worker']):not(.planity_ui_item-list-element) {
+          background-color: #07181E !important;
+        }
+        
+        /* ── Keep images and image containers visible ── */
+        #planity-widget-container [class*='image'],
+        #planity-widget-container [class*='photo'],
+        #planity-widget-container [class*='avatar'],
+        #planity-widget-container [class*='picture'],
+        #planity-widget-container [class*='img'],
+        #planity-widget-container [class*='radio'],
+        #planity-widget-container [class*='radioPicture'],
+        #planity-widget-container [class*='radio_picture'],
+        #planity-widget-container [class*='image-module'],
+        #planity-widget-container [class*='avatar-module'],
+        #planity-widget-container [class*='radio_picture-module'],
+        #planity-widget-container img,
+        label[class*='radio_picture'],
+        div[class*='avatar-module'],
+        div[class*='radio_picture-module'] {
+          background-color: transparent !important;
+          background: none !important;
+        }
+        
+        /* ── Image containers must show images ── */
+        #planity-widget-container img {
+          display: block !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+        
+        /* ── Keep service option borders visible ── */
+        #planity-widget-container .planity_ui_item-list-element {
+          background-color: #07181E !important;
+          border: 1px solid rgba(175, 151, 120, 0.25) !important;
         }
 
         #planity-widget-container h1,
