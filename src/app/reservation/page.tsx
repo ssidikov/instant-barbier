@@ -1001,10 +1001,11 @@ export default function ReservationPage() {
         input[id*='input-phone'],
         input[type='email'],
         input[type='tel'] {
-          background-color: rgba(20, 34, 51, 0.8) !important;
-          border: 1px solid rgba(175, 151, 120, 0.3) !important;
+          background-color: transparent !important;
+          border: none !important;
           color: #f4f1ec !important;
-          border-radius: 6px !important;
+          -webkit-text-fill-color: #f4f1ec !important;
+          border-radius: 0 !important;
           padding: 12px 16px !important;
         }
         [class*='booking_auth-module'] input:focus,
@@ -1014,9 +1015,11 @@ export default function ReservationPage() {
         [class*='input-module_container'] input:focus,
         [class*='input_password-module_container'] input:focus,
         .planity-inputs input:focus {
-          border-color: #af9778 !important;
-          box-shadow: 0 0 0 2px rgba(175, 151, 120, 0.2) !important;
+          border: none !important;
+          box-shadow: none !important;
           outline: none !important;
+          color: #f4f1ec !important;
+          -webkit-text-fill-color: #f4f1ec !important;
         }
         [class*='booking_auth-module'] input::placeholder,
         [class*='authentication-module'] input::placeholder,
@@ -1026,6 +1029,7 @@ export default function ReservationPage() {
         [class*='input_password-module_container'] input::placeholder,
         .planity-inputs input::placeholder {
           color: rgba(244, 241, 236, 0.4) !important;
+          -webkit-text-fill-color: rgba(244, 241, 236, 0.4) !important;
         }
 
         /* ── Input containers ── */
@@ -1038,13 +1042,13 @@ export default function ReservationPage() {
         .input_password-module_container-8YR\+4 {
           background-color: rgba(20, 34, 51, 0.8) !important;
           background: rgba(20, 34, 51, 0.8) !important;
-          border: 1px solid rgba(175, 151, 120, 0.3) !important;
+          border: none !important;
           border-radius: 6px !important;
         }
         [class*='input-module_container']:focus-within,
         [class*='input_password-module_container']:focus-within,
         .planity-inputs:focus-within {
-          border-color: #af9778 !important;
+          border: none !important;
           box-shadow: 0 0 0 2px rgba(175, 151, 120, 0.2) !important;
         }
 
@@ -1223,6 +1227,7 @@ export default function ReservationPage() {
         [class*='index-module_dropdown-bottom'] {
           background-color: #07181e !important;
           color: #af9778 !important;
+          border: none !important;
         }
 
         /* ── Country rows / options ── */
