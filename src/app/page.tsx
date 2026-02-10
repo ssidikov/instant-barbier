@@ -3,7 +3,6 @@
 import Container from '@/components/Container'
 import Section from '@/components/Section'
 import Button from '@/components/Button'
-import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -744,79 +743,83 @@ export default function Home() {
     }
 
     // Hero entrance animation (desktop only)
-    const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
 
-    // Animate decorative line
-    tl.from(heroLineRef.current, {
-      scaleY: 0,
-      duration: 1.2,
-      ease: 'power3.inOut',
-    })
+      // Animate decorative line
+      tl.from(heroLineRef.current, {
+        scaleY: 0,
+        duration: 1.2,
+        ease: 'power3.inOut',
+      })
 
-      // Animate subtitle with split effect
-      .from(
-        heroSubtitleRef.current,
-        {
-          x: -100,
-          opacity: 0,
-          duration: 1,
-        },
-        '-=0.6',
-      )
+        // Animate subtitle with split effect
+        .from(
+          heroSubtitleRef.current,
+          {
+            x: -100,
+            opacity: 0,
+            duration: 1,
+          },
+          '-=0.6',
+        )
 
-      // Animate title with stagger
-      .from(
-        heroTitleRef.current?.children || [],
-        {
-          y: 120,
-          opacity: 0,
-          rotationX: -90,
-          stagger: 0.2,
-          duration: 1.2,
-          ease: 'power4.out',
-        },
-        '-=0.4',
-      )
+        // Animate title with stagger
+        .from(
+          heroTitleRef.current?.children || [],
+          {
+            y: 120,
+            opacity: 0,
+            rotationX: -90,
+            stagger: 0.2,
+            duration: 1.2,
+            ease: 'power4.out',
+          },
+          '-=0.4',
+        )
 
-      // Animate description
-      .from(
-        heroDescriptionRef.current,
-        {
-          y: 50,
-          opacity: 0,
-          duration: 1,
-        },
-        '-=0.6',
-      )
+        // Animate description
+        .from(
+          heroDescriptionRef.current,
+          {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+          },
+          '-=0.6',
+        )
 
-      // Animate CTA button
-      .from(
-        heroCtaRef.current,
-        {
-          scale: 0,
-          opacity: 0,
-          duration: 0.8,
-          ease: 'back.out(1.7)',
-        },
-        '-=0.3',
-      )
+        // Animate CTA button
+        .from(
+          heroCtaRef.current,
+          {
+            scale: 0,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'back.out(1.7)',
+          },
+          '-=0.3',
+        )
 
-    // Floating animation for decorative elements (desktop only)
-    gsap.to('.float-element', {
-      y: 20,
-      duration: 2.5,
-      ease: 'sine.inOut',
-      repeat: -1,
-      yoyo: true,
-    })
+      // Floating animation for decorative elements (desktop only)
+      gsap.to('.float-element', {
+        y: 20,
+        duration: 2.5,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+      })
 
-    // Rotate animation for corner elements (desktop only)
-    gsap.to('.corner-element', {
-      rotation: 90,
-      duration: 20,
-      ease: 'none',
-      repeat: -1,
-    })
+      // Rotate animation for corner elements (desktop only)
+      gsap.to('.corner-element', {
+        rotation: 90,
+        duration: 20,
+        ease: 'none',
+        repeat: -1,
+      })
+    }, heroRef)
+
+    return () => ctx.revert()
   }, [])
 
   // Input sanitization helper
@@ -923,7 +926,6 @@ export default function Home() {
 
   return (
     <>
-      <Header />
       <ScrollProgressBar />
       <main className='grow'>
         {/* ═══════════════════════════════════════════════════════════════════

@@ -47,43 +47,45 @@ export default function Header() {
 
   useEffect(() => {
     // Initial animation on load
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
-    tl.from(headerRef.current, {
-      y: -100,
-      opacity: 0,
-      duration: 1.2,
-    })
+      tl.from(headerRef.current, {
+        y: -100,
+        opacity: 0,
+        duration: 1.2,
+      })
 
-    // Animate nav items
-    if (navRef.current) {
-      const navItems = Array.from(navRef.current.children)
+      // Animate nav items
+      if (navRef.current) {
+        const navItems = Array.from(navRef.current.children)
+        tl.from(
+          navItems,
+          {
+            y: -30,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 0.6,
+            clearProps: 'all',
+          },
+          '-=0.5',
+        )
+      }
+
       tl.from(
-        navItems,
+        ctaRef.current,
         {
-          y: -30,
+          scale: 0,
           opacity: 0,
-          stagger: 0.1,
           duration: 0.6,
           clearProps: 'all',
         },
-        '-=0.5',
+        '-=0.4',
       )
-    }
-
-    tl.from(
-      ctaRef.current,
-      {
-        scale: 0,
-        opacity: 0,
-        duration: 0.6,
-        clearProps: 'all',
-      },
-      '-=0.4',
-    )
+    }, headerRef)
 
     return () => {
-      tl.kill()
+      ctx.revert()
     }
   }, [])
 
@@ -104,9 +106,7 @@ export default function Header() {
 
         <div className='max-w-7xl mx-auto px-6 h-20 lg:h-28 flex items-center justify-between relative'>
           {/* Logo - visible on all screens */}
-          <Link
-            href='/'
-            className='z-20 transition-all duration-500 hover:scale-105 hover:drop-shadow-[0_0_20px_rgba(175,151,120,0.4)]'>
+          <Link href='/' onClick={closeMenu} className='z-20'>
             <Image
               src='/logo/logo-header.svg'
               alt="L'Instant Barbier"

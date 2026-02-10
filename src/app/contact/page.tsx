@@ -3,7 +3,6 @@
 import { useRef } from 'react'
 import Image from 'next/image'
 import { motion, useInView, useScroll, useTransform, useSpring } from 'framer-motion'
-import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import { PLANITY_URL } from '@/lib/constants'
@@ -123,8 +122,6 @@ export default function ContactPage() {
         className='fixed top-0 left-0 right-0 h-0.5 bg-gold/80 origin-left z-100'
         style={{ scaleX: progressScaleX }}
       />
-
-      <Header />
 
       <main>
         {/* ═══════════════════════════════════════════════════════════════════

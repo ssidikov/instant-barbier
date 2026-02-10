@@ -3,7 +3,6 @@
 import { useRef } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion'
-import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import { fadeInUp, fadeInLeft, fadeInRight, scaleReveal, staggerContainer } from '@/lib/animations'
@@ -90,8 +89,6 @@ export default function SalonPage() {
 
   return (
     <div className='bg-navy min-h-screen text-cream overflow-x-hidden selection:bg-gold selection:text-navy'>
-      <Header />
-
       <main>
         {/* ═══════════════════════════════════════════════════════════════════
             HERO - Full viewport immersive opening

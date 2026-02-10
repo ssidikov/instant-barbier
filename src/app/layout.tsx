@@ -1,6 +1,7 @@
 import '@/app/globals.css'
 import { Playfair_Display, Mulish } from 'next/font/google'
 import type { Metadata } from 'next'
+import Header from '@/components/Header'
 import CookieConsent from '@/components/CookieConsent'
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/constants'
 
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='fr' className={`${playfair.variable} ${mulish.variable}`}>
       <body className='bg-navy text-cream font-body antialiased flex flex-col min-h-screen'>
+        <Header />
         {children}
         <CookieConsent />
       </body>

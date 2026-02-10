@@ -2,7 +2,6 @@
 
 import { useRef } from 'react'
 import { motion, useInView, useScroll, useSpring } from 'framer-motion'
-import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
 
@@ -93,8 +92,6 @@ export default function LegalPage() {
         className='fixed top-0 left-0 right-0 h-0.5 bg-gold/80 origin-left z-100'
         style={{ scaleX: progressScaleX }}
       />
-
-      <Header />
 
       <main>
         {/* ═══════════════════════════════════════════════════════════════════

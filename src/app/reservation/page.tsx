@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect } from 'react'
-import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { Section, Container } from '@/components'
 import { PLANITY_KEY } from '@/lib/constants'
@@ -1405,7 +1404,6 @@ export default function ReservationPage() {
         }
       `}</style>
 
-      <Header />
       <main className='min-h-screen pt-20 grow bg-navy'>
         <Section className='py-12'>
           <Container>
