@@ -7,6 +7,7 @@ import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import { PLANITY_URL } from '@/lib/constants'
 import { fadeInUp, fadeInLeft, fadeInRight, scaleReveal, staggerContainer } from '@/lib/animations'
+import ContactForm from '@/components/ContactForm'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // CONTACT INFO CARD
@@ -520,6 +521,31 @@ export default function ContactPage() {
                 </div>
               </motion.div>
             </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════════════════════════════
+            CONTACT FORM SECTION
+            ═══════════════════════════════════════════════════════════════════ */}
+        <section className='py-24 md:py-32 bg-dark relative'>
+          <div className='max-w-3xl mx-auto px-6 md:px-12 relative z-10'>
+            <motion.div
+              initial='hidden'
+              whileInView='visible'
+              viewport={{ once: true }}
+              variants={staggerContainer}
+              className='mb-16 text-center'>
+              <motion.span
+                variants={fadeInUp}
+                className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
+                Une question ?
+              </motion.span>
+              <motion.h2 variants={fadeInUp} className='text-3xl md:text-5xl font-title text-cream'>
+                Envoyez-nous un <span className='text-gold'>message</span>
+              </motion.h2>
+            </motion.div>
+
+            <ContactForm />
           </div>
         </section>
 
