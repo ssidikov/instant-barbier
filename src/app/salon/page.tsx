@@ -396,9 +396,7 @@ export default function SalonPage() {
                   <span className='text-gold'> net, élégant et durable</span>.
                 </p>
                 <div className='mt-8'>
-                  <Button href='/prestations'>
-                    Nos Prestations
-                  </Button>
+                  <Button href='/prestations'>Nos Prestations</Button>
                 </div>
               </motion.div>
             </div>
@@ -539,12 +537,8 @@ export default function SalonPage() {
                   accueillons sur rendez-vous.
                 </motion.p>
                 <motion.div variants={fadeInUp} className='flex flex-wrap gap-4'>
-                  <Button href='/reservation'>
-                    Prendre Rendez-vous
-                  </Button>
-                  <Button href='/contact'>
-                    Nous Contacter
-                  </Button>
+                  <Button href='/reservation'>Prendre Rendez-vous</Button>
+                  <Button href='/contact'>Nous Contacter</Button>
                 </motion.div>
               </motion.div>
 
