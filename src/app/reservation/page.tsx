@@ -1188,13 +1188,56 @@ export default function ReservationPage() {
         div[id*='countries-list-btn'],
         div[role='button'][aria-label*='menu'],
         .index-module_country-\+egvp {
-          background-color: rgba(20, 34, 51, 0.8) !important;
-          background: rgba(20, 34, 51, 0.8) !important;
-          border: 1px solid rgba(175, 151, 120, 0.3) !important;
-          border-right: none !important;
-          border-radius: 6px 0 0 6px !important;
+          // background-color: rgba(20, 34, 51, 0.8) !important;
+          background: transparent !important;
           color: #f4f1ec !important;
           cursor: pointer !important;
+        }
+
+        /* ── Countries dropdown list ── */
+        div[id*='countries-list'],
+        div[class*='index-module_dropdown'],
+        div[class*='index-module_dropdown-bottom'],
+        ul[class*='index-module_dropdownList'],
+        .index-module_dropdown-bottom-j0O6G,
+        [class*='index-module_dropdown-bottom'] {
+          background-color: #07181e !important;
+          color: #af9778 !important;
+        }
+
+        /* ── Country rows / options ── */
+        [class*='index-module_row'],
+        [class*='index-module_item'],
+        [role='option'],
+        .index-module_row-isZhf,
+        div[class*='index-module_row'] {
+          background-color: #07181e !important;
+          color: #af9778 !important;
+        }
+        [class*='index-module_row']:hover,
+        [class*='index-module_item']:hover,
+        [role='option']:hover {
+          background-color: #142233 !important;
+          color: #c9ad8c !important;
+        }
+        [class*='index-module_row'][aria-selected='true'],
+        [class*='index-module_item'].selected,
+        [role='option'][aria-selected='true'],
+        div[class*='index-module_row'][aria-selected='true'] {
+          background-color: #af9778 !important;
+          color: #07181e !important;
+        }
+
+        /* ── Dropdown text/label ── */
+        div[id*='countries-list'] span,
+        div[class*='index-module_dropdown'] span,
+        [class*='index-module_dropdown'] p,
+        [class*='index-module_dropdown'] div {
+          color: #af9778 !important;
+        }
+        div[id*='countries-list'] [aria-selected='true'] span,
+        div[class*='index-module_dropdown'] [aria-selected='true'] span {
+          color: #07181e !important;
         }
 
         /* ── Password visibility icon ── */
