@@ -1048,11 +1048,31 @@ export default function ReservationPage() {
           box-shadow: 0 0 0 2px rgba(175, 151, 120, 0.2) !important;
         }
 
-        /* ── Phone input wrapper ── */
+        /* ── Phone input wrapper (no left border to avoid double) ── */
         [class*='phone-module_phone'],
         [class*='index-module_phoneInput'],
-        [class*='index-module_row'] {
+        .phone-module_phone-y\+ob3,
+        .index-module_phoneInput-dCIBY {
           background-color: transparent !important;
+          border: none !important;
+        }
+
+        /* ── Input container inside phone input (no border) ── */
+        .phone-module_phone-y\+ob3 [class*='input-module_container'],
+        [class*='index-module_phoneInput'] [class*='input-module_container'],
+        .index-module_phoneInput-dCIBY .input-module_container-AV5X\+ {
+          background-color: rgba(20, 34, 51, 0.8) !important;
+          border: none !important;
+          border-radius: 0 6px 6px 0 !important;
+          margin-left: -4px !important;
+        }
+
+        /* ── Input row wrapper for proper connection ── */
+        [class*='index-module_row'],
+        .index-module_row-isZhf {
+          gap: 0 !important;
+          margin: 0 !important;
+          padding: 0 !important;
         }
 
         /* ── Form labels ── */
