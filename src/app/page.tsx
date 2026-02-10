@@ -1227,7 +1227,7 @@ export default function Home() {
                     viewport={{ once: true }}
                     className='relative aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'>
                     <div
-                      className='absolute inset-0 bg-cover bg-center transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-105'
+                      className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-105'
                       style={{ backgroundImage: "url('/images/about-barbershop.jpg')" }}
                     />
                     <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent' />
@@ -1365,7 +1365,7 @@ export default function Home() {
                   variants={fadeInUp}
                   className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl hover:border-gold/60 transition-all duration-500'>
                   <div
-                    className='absolute inset-0 bg-cover bg-center transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-110'
+                    className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
                     style={{ backgroundImage: "url('/images/gallery/gallery-1.jpg')" }}
                   />
                   <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
@@ -1380,7 +1380,7 @@ export default function Home() {
                   variants={fadeInUp}
                   className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl hover:border-gold/60 transition-all duration-500'>
                   <div
-                    className='absolute inset-0 bg-cover bg-center transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-110'
+                    className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
                     style={{ backgroundImage: "url('/images/gallery/gallery-2.jpg')" }}
                   />
                   <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
@@ -1395,7 +1395,7 @@ export default function Home() {
                   variants={fadeInUp}
                   className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl hover:border-gold/60 transition-all duration-500'>
                   <div
-                    className='absolute inset-0 bg-cover bg-center transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-110'
+                    className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
                     style={{ backgroundImage: "url('/images/gallery/gallery-3.jpg')" }}
                   />
                   <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
@@ -1410,7 +1410,7 @@ export default function Home() {
                   variants={fadeInUp}
                   className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl hover:border-gold/60 transition-all duration-500'>
                   <div
-                    className='absolute inset-0 bg-cover bg-center transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-110'
+                    className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
                     style={{ backgroundImage: "url('/images/gallery/gallery-4.jpg')" }}
                   />
                   <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
@@ -1836,7 +1836,7 @@ export default function Home() {
                   onClick={() => setLightboxIndex(0)}
                   className='col-span-2 row-span-2 relative aspect-square md:aspect-auto overflow-hidden group cursor-pointer h-full'>
                   <motion.div
-                    className='absolute inset-0 bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700'
+                    className='absolute inset-0 bg-cover bg-center transition-all duration-700'
                     style={{ backgroundImage: `url(${galleryImages[0].src})` }}
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
@@ -1867,7 +1867,7 @@ export default function Home() {
                     onClick={() => setLightboxIndex(index + 1)}
                     className='relative aspect-square overflow-hidden group cursor-pointer h-full'>
                     <motion.div
-                      className='absolute inset-0 bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700'
+                      className='absolute inset-0 bg-cover bg-center transition-all duration-700'
                       style={{ backgroundImage: `url(${image.src})` }}
                       whileHover={{ scale: 1.15 }}
                       transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
