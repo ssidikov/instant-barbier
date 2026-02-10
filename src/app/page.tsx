@@ -18,6 +18,8 @@ import {
   useSpring,
   useMotionValue,
 } from 'framer-motion'
+import MaskedText from '@/components/MaskedText'
+import { GOLDEN_EASE } from '@/lib/animations'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -214,13 +216,13 @@ function ImageReveal({
       <motion.div
         initial={{ scaleX: 1 }}
         animate={isInView ? { scaleX: 0 } : { scaleX: 1 }}
-        transition={{ duration: 1.2, delay, ease: [0.77, 0, 0.18, 1] }}
+        transition={{ duration: 1.4, delay, ease: GOLDEN_EASE }}
         className='absolute inset-0 bg-navy origin-right z-10'
       />
       <motion.div
         initial={{ scaleX: 1 }}
         animate={isInView ? { scaleX: 0 } : { scaleX: 1 }}
-        transition={{ duration: 1.2, delay: delay + 0.15, ease: [0.77, 0, 0.18, 1] }}
+        transition={{ duration: 1.4, delay: delay + 0.1, ease: GOLDEN_EASE }}
         className='absolute inset-0 bg-gold/20 origin-right z-10'
       />
     </div>
@@ -753,6 +755,7 @@ export default function Home() {
         ease: 'power3.inOut',
       })
 
+        /*
         // Animate subtitle with split effect
         .from(
           heroSubtitleRef.current,
@@ -788,6 +791,7 @@ export default function Home() {
           },
           '-=0.6',
         )
+        */
 
         // Animate CTA button
         .from(
@@ -1023,18 +1027,20 @@ export default function Home() {
                   </div>
 
                   {/* Main Title - Luxury Hierarchy */}
-                  <h1
-                    ref={heroTitleRef}
-                    className='[perspective:1000px] max-w-[380px] xl:max-w-full space-y-2'>
+                  <div className='max-w-[380px] xl:max-w-full space-y-2'>
                     {/* Primary: BARBIER & COIFFEUR - dominant */}
-                    <span className='block text-4xl md:text-5xl lg:text-8xl font-title text-gold leading-[1.1] tracking-[0.02em] [transform-style:preserve-3d] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
-                      BARBIER & COIFFEUR
-                    </span>
+                    <MaskedText delay={0.2}>
+                      <span className='block text-4xl md:text-5xl lg:text-8xl font-title text-gold leading-[1.1] tracking-[0.02em] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
+                        BARBIER & COIFFEUR
+                      </span>
+                    </MaskedText>
                     {/* Secondary: homme à Paris - refined, lighter */}
-                    <span className='block text-2xl md:text-3xl lg:text-5xl font-title text-gold/85 leading-[1.1] tracking-[0.15em] font-light [transform-style:preserve-3d] [text-shadow:0_2px_8px_rgba(7,24,30,0.7),0_4px_16px_rgba(7,24,30,0.4)]'>
-                      homme à Paris
-                    </span>
-                  </h1>
+                    <MaskedText delay={0.4}>
+                      <span className='block text-2xl md:text-3xl lg:text-5xl font-title text-gold/85 leading-[1.1] tracking-[0.15em] font-light [text-shadow:0_2px_8px_rgba(7,24,30,0.7),0_4px_16px_rgba(7,24,30,0.4)]'>
+                        homme à Paris
+                      </span>
+                    </MaskedText>
+                  </div>
 
                   {/* Logo marquee - mobile only */}
                   <div className='md:hidden w-screen relative -ml-6 overflow-hidden'>
@@ -1053,8 +1059,9 @@ export default function Home() {
                   </div>
 
                   {/* Description with premium styling */}
-                  <div
-                    ref={heroDescriptionRef}
+                  {/* Description with premium styling */}
+                  <MaskedText
+                    delay={0.6}
                     className='text-lg md:text-xl text-cream/90 max-w-xl font-light leading-relaxed relative pl-6 border-l-2 border-gold/50 [text-shadow:0_1px_8px_rgba(7,24,30,0.8)]'>
                     <p>
                       <strong className='text-gold font-medium'>Au cœur du Marais</strong>,
@@ -1064,7 +1071,7 @@ export default function Home() {
                       </strong>{' '}
                       dédié à l&apos;élégance, au détail et au savoir-faire artisanal.
                     </p>
-                  </div>
+                  </MaskedText>
 
                   {/* CTA Button with glow effect */}
                   <div ref={heroCtaRef} className='pt-6 relative inline-flex'>

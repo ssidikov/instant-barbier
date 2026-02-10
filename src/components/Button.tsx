@@ -1,11 +1,12 @@
 type ButtonProps = {
   children: React.ReactNode
   href?: string
+  className?: string
 }
 
-export default function Button({ children, href }: ButtonProps) {
+export default function Button({ children, href, className = '' }: ButtonProps) {
   return (
-    <a href={href} className='group relative inline-block overflow-hidden'>
+    <a href={href} className={`group relative inline-block overflow-hidden ${className}`}>
       {/* Liquid glass backdrop */}
       <span className='absolute inset-0 bg-gradient-to-br from-navy/40 via-navy/30 to-navy/40 backdrop-blur-md border border-gold/30 rounded-sm' />
 
@@ -13,7 +14,7 @@ export default function Button({ children, href }: ButtonProps) {
       <span className='absolute -inset-1 bg-gold/30 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse' />
 
       {/* Background layers - adjusted for glass effect */}
-      <span className='absolute inset-0 bg-navy/80 border-2 border-gold transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(156,131,88,0.4)] backdrop-blur-sm' />
+      <span className='absolute inset-0 bg-navy/80 border-2 border-gold transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(156,131,88,0.4)] backdrop-blur-sm' />
       <span className='absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out' />
 
       {/* Shimmer effect */}
