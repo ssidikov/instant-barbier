@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { Section, Container } from '@/components'
+import { PLANITY_KEY } from '@/lib/constants'
 
 export default function ReservationPage() {
   useEffect(() => {
@@ -13,7 +14,7 @@ export default function ReservationPage() {
     if (container && typeof window !== 'undefined') {
       // @ts-expect-error - Planity widget API
       window.planity = {
-        key: '-NqgBt5OTqKdrZpwAY1y',
+        key: PLANITY_KEY,
         primaryColor: '#AF9778',
         container: container,
         options: {

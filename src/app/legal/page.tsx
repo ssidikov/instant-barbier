@@ -4,30 +4,7 @@ import { useRef } from 'react'
 import { motion, useInView, useScroll, useSpring } from 'framer-motion'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-
-// ═══════════════════════════════════════════════════════════════════════════
-// ANIMATION VARIANTS
-// ═══════════════════════════════════════════════════════════════════════════
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-  },
-}
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.1,
-    },
-  },
-}
+import { fadeInUp, staggerContainer } from '@/lib/animations'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // LEGAL SECTION COMPONENT

@@ -1,63 +1,12 @@
 'use client'
 
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
-
-// ═══════════════════════════════════════════════════════════════════════════
-// ANIMATION VARIANTS
-// ═══════════════════════════════════════════════════════════════════════════
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] },
-  },
-}
-
-const fadeInLeft = {
-  hidden: { opacity: 0, x: -60 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] },
-  },
-}
-
-const fadeInRight = {
-  hidden: { opacity: 0, x: 60 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] },
-  },
-}
-
-const scaleReveal = {
-  hidden: { opacity: 0, scale: 0.85, filter: 'blur(20px)' },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    filter: 'blur(0px)',
-    transition: { duration: 1.4, ease: [0.22, 1, 0.36, 1] },
-  },
-}
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
-    },
-  },
-}
+import { fadeInUp, fadeInLeft, fadeInRight, scaleReveal, staggerContainer } from '@/lib/animations'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // FLOATING TEXT BADGE COMPONENT
@@ -447,7 +396,7 @@ export default function SalonPage() {
                   <span className='text-gold'> net, élégant et durable</span>.
                 </p>
                 <div className='mt-8'>
-                  <Button variant='gold' href='/prestations'>
+                  <Button href='/prestations'>
                     Nos Prestations
                   </Button>
                 </div>
@@ -590,10 +539,10 @@ export default function SalonPage() {
                   accueillons sur rendez-vous.
                 </motion.p>
                 <motion.div variants={fadeInUp} className='flex flex-wrap gap-4'>
-                  <Button variant='gold' href='/reservation'>
+                  <Button href='/reservation'>
                     Prendre Rendez-vous
                   </Button>
-                  <Button variant='outline' href='/contact'>
+                  <Button href='/contact'>
                     Nous Contacter
                   </Button>
                 </motion.div>
