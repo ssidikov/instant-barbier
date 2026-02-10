@@ -209,7 +209,7 @@ export default function PrestationsPage() {
             style={{ scale: heroScale, opacity: heroOpacity }}
             className='absolute inset-0 z-0'>
             <Image
-              src='https://placehold.co/1920x1080/07181E/AF9778?text=Prestations+Hero'
+              src='/images/prestations.jpg'
               alt='Prestations L Instant Barbier'
               fill
               className='object-cover'
@@ -550,9 +550,7 @@ export default function PrestationsPage() {
                 Découvrez l&apos;art du barbier parisien dans un cadre d&apos;exception.
               </motion.p>
               <motion.div variants={fadeInUp} className='flex flex-wrap justify-center gap-4'>
-                <Button href='https://www.planity.com/linstant-barbier-75003-paris'>
-                  Prendre Rendez-vous
-                </Button>
+                <Button href='/reservation'>Prendre Rendez-vous</Button>
                 <Button href='/contact'>Nous Contacter</Button>
               </motion.div>
             </motion.div>

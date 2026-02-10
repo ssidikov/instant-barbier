@@ -4,7 +4,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Button from './Button'
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { PLANITY_URL } from '@/lib/constants'
 import gsap from 'gsap'
 
 export default function Header() {
@@ -18,7 +17,7 @@ export default function Header() {
     { label: 'Le Salon', href: '/salon' },
     { label: 'Prestations', href: '/prestations' },
     { label: 'Galerie', href: '/galerie' },
-    { label: 'Horaires', href: '/#horaires' },
+    { label: 'Réservation', href: '/reservation' },
     { label: 'Contact', href: '/contact' },
   ]
 
@@ -139,7 +138,7 @@ export default function Header() {
           {/* CTA - Right side with premium glow */}
           <div ref={ctaRef} className='hidden xl:block relative'>
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-36 bg-gold/15 blur-3xl rounded-full animate-pulse-glow' />
-            <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
+            <Button href='/reservation'>Prendre rendez-vous</Button>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -209,7 +208,7 @@ export default function Header() {
               isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}
             style={{ transitionDelay: isMenuOpen ? '550ms' : '0ms' }}>
-            <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
+            <Button href='/reservation'>Prendre rendez-vous</Button>
           </div>
         </nav>
       </div>

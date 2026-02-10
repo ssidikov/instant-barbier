@@ -5,7 +5,6 @@ import Section from '@/components/Section'
 import Button from '@/components/Button'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { PLANITY_URL } from '@/lib/constants'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect, useRef, useCallback } from 'react'
@@ -1068,7 +1067,7 @@ export default function Home() {
                   {/* CTA Button with glow effect */}
                   <div ref={heroCtaRef} className='pt-6 relative inline-flex'>
                     <div className='cta-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 bg-gold/20 blur-2xl rounded-full' />
-                    <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
+                    <Button href='/reservation'>Prendre rendez-vous</Button>
                   </div>
 
                   {/* Stats - Mobile (horizontal row) */}
@@ -2129,7 +2128,7 @@ export default function Home() {
                     transition={{ duration: 0.7, delay: 1.1, ease: 'easeOut' }}
                     viewport={{ once: true }}
                     className='mt-12'>
-                    <Button href={PLANITY_URL}>Réserver un créneau</Button>
+                    <Button href='/reservation'>Réserver un créneau</Button>
                   </motion.div>
                 </div>
 
@@ -2412,7 +2411,7 @@ export default function Home() {
                 {/* CTA Button - Enhanced */}
                 <motion.div variants={fadeInUp} className='flex justify-center mb-10'>
                   <div className='relative'>
-                    <Button href={PLANITY_URL}>Prendre rendez-vous maintenant</Button>
+                    <Button href='/reservation'>Prendre rendez-vous maintenant</Button>
                   </div>
                 </motion.div>
 

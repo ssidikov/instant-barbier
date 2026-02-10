@@ -590,10 +590,7 @@ export default function SalonPage() {
                   accueillons sur rendez-vous.
                 </motion.p>
                 <motion.div variants={fadeInUp} className='flex flex-wrap gap-4'>
-                  <Button
-                    variant='gold'
-                    href='https://www.planity.com/linstant-barbier-75003-paris'
-                    target='_blank'>
+                  <Button variant='gold' href='/reservation'>
                     Prendre Rendez-vous
                   </Button>
                   <Button variant='outline' href='/contact'>
