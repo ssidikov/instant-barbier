@@ -2,13 +2,7 @@
 
 import { useRef } from 'react'
 import Image from 'next/image'
-import {
-  motion,
-  useInView,
-  useScroll,
-  useTransform,
-  useSpring,
-} from 'framer-motion'
+import { motion, useInView, useScroll, useTransform, useSpring } from 'framer-motion'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
@@ -192,7 +186,7 @@ export default function ContactPage() {
           <motion.div style={{ opacity: heroOpacity }} className='absolute inset-0 z-0'>
             <Image
               src='/images/gallery/gallery-3.jpg'
-              alt='Salon L&apos;Instant Barbier — Paris Marais'
+              alt="Salon L'Instant Barbier — Paris Marais"
               fill
               className='object-cover'
               priority
@@ -235,8 +229,8 @@ export default function ContactPage() {
 
                 <motion.div variants={fadeInUp} className='max-w-lg'>
                   <p className='text-cream/60 text-lg md:text-xl font-light leading-relaxed'>
-                    Votre barbier et coiffeur homme au c&oelig;ur du Marais.
-                    Accessible, élégant, à votre écoute.
+                    Votre barbier et coiffeur homme au c&oelig;ur du Marais. Accessible, élégant, à
+                    votre écoute.
                   </p>
                 </motion.div>
 
@@ -298,7 +292,12 @@ export default function ContactPage() {
                 delay={0}
                 label='Téléphone'
                 icon={
-                  <svg className='w-5 h-5' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+                  <svg
+                    className='w-5 h-5'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    stroke='currentColor'
+                    strokeWidth='1.5'>
                     <path d='M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z' />
                   </svg>
                 }>
@@ -314,7 +313,12 @@ export default function ContactPage() {
                 delay={0.1}
                 label='E-mail'
                 icon={
-                  <svg className='w-5 h-5' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+                  <svg
+                    className='w-5 h-5'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    stroke='currentColor'
+                    strokeWidth='1.5'>
                     <rect x='2' y='4' width='20' height='16' rx='2' />
                     <path d='M22 7l-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7' />
                   </svg>
@@ -331,7 +335,12 @@ export default function ContactPage() {
                 delay={0.2}
                 label='Adresse'
                 icon={
-                  <svg className='w-5 h-5' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+                  <svg
+                    className='w-5 h-5'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    stroke='currentColor'
+                    strokeWidth='1.5'>
                     <path d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z' />
                     <circle cx='12' cy='9' r='2.5' />
                   </svg>
@@ -347,7 +356,12 @@ export default function ContactPage() {
                   rel='noopener noreferrer'
                   className='inline-flex items-center gap-2 text-gold/70 text-sm mt-3 hover:text-gold transition-colors duration-300'>
                   Voir sur la carte
-                  <svg className='w-3.5 h-3.5' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+                  <svg
+                    className='w-3.5 h-3.5'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    stroke='currentColor'
+                    strokeWidth='1.5'>
                     <path d='M7 17L17 7M17 7H7M17 7v10' />
                   </svg>
                 </a>
@@ -389,7 +403,7 @@ export default function ContactPage() {
                     className='absolute inset-0 w-full h-full grayscale contrast-125 opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700'
                     loading='lazy'
                     referrerPolicy='no-referrer-when-downgrade'
-                    title='L&apos;Instant Barbier — 43 rue de Turenne, 75003 Paris'
+                    title="L'Instant Barbier — 43 rue de Turenne, 75003 Paris"
                   />
                   {/* Overlay effect on map edges */}
                   <div className='absolute inset-0 pointer-events-none border border-gold/10' />
@@ -423,7 +437,12 @@ export default function ContactPage() {
                   <TransportItem
                     delay={0.1}
                     icon={
-                      <svg className='w-4 h-4' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+                      <svg
+                        className='w-4 h-4'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        strokeWidth='1.5'>
                         <rect x='4' y='3' width='16' height='18' rx='2' />
                         <path d='M9 21v-3h6v3' />
                         <circle cx='9' cy='15' r='1' fill='currentColor' />
@@ -444,7 +463,12 @@ export default function ContactPage() {
                   <TransportItem
                     delay={0.2}
                     icon={
-                      <svg className='w-4 h-4' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+                      <svg
+                        className='w-4 h-4'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        strokeWidth='1.5'>
                         <rect x='3' y='6' width='18' height='12' rx='2' />
                         <circle cx='7' cy='18' r='2' />
                         <circle cx='17' cy='18' r='2' />
@@ -452,9 +476,7 @@ export default function ContactPage() {
                       </svg>
                     }
                     title='Bus'
-                    lines={[
-                      { label: 'Lignes 29 & 96', detail: 'Arrêt Rue de Turenne' },
-                    ]}
+                    lines={[{ label: 'Lignes 29 & 96', detail: 'Arrêt Rue de Turenne' }]}
                   />
 
                   <div className='w-full h-px bg-gold/10' />
@@ -462,16 +484,19 @@ export default function ContactPage() {
                   <TransportItem
                     delay={0.3}
                     icon={
-                      <svg className='w-4 h-4' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+                      <svg
+                        className='w-4 h-4'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        strokeWidth='1.5'>
                         <circle cx='12' cy='12' r='10' />
                         <circle cx='12' cy='12' r='3' />
                         <path d='M12 2v3M12 19v3M2 12h3M19 12h3' />
                       </svg>
                     }
-                    title='Vélib&apos;'
-                    lines={[
-                      { label: 'Station n°3103', detail: 'Rue des Francs-Bourgeois' },
-                    ]}
+                    title="Vélib'"
+                    lines={[{ label: 'Station n°3103', detail: 'Rue des Francs-Bourgeois' }]}
                   />
 
                   <div className='w-full h-px bg-gold/10' />
@@ -479,7 +504,12 @@ export default function ContactPage() {
                   <TransportItem
                     delay={0.4}
                     icon={
-                      <svg className='w-4 h-4' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+                      <svg
+                        className='w-4 h-4'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        strokeWidth='1.5'>
                         <rect x='1' y='6' width='15' height='10' rx='2' />
                         <path d='M16 8h2.5a2.5 2.5 0 012.5 2.5v3.5a2 2 0 01-2 2H16V8z' />
                         <circle cx='6' cy='18' r='2' />
@@ -487,9 +517,7 @@ export default function ContactPage() {
                       </svg>
                     }
                     title='Parking'
-                    lines={[
-                      { label: 'Bastille Saint-Antoine', detail: '~10 min à pied' },
-                    ]}
+                    lines={[{ label: 'Bastille Saint-Antoine', detail: '~10 min à pied' }]}
                   />
                 </div>
               </motion.div>
@@ -529,17 +557,20 @@ export default function ContactPage() {
                 viewport={{ once: true }}
                 className='lg:col-span-6 lg:pt-16'>
                 <p className='text-lg md:text-xl text-cream/60 font-light leading-relaxed mb-6'>
-                  Que vous recherchiez un <strong className='text-gold font-normal'>barbier à Paris</strong>,
-                  un coiffeur homme dans le Marais, ou un salon offrant une expérience soignée et élégante,
+                  Que vous recherchiez un{' '}
+                  <strong className='text-gold font-normal'>barbier à Paris</strong>, un coiffeur
+                  homme dans le Marais, ou un salon offrant une expérience soignée et élégante,
                   notre équipe est à votre disposition.
                 </p>
                 <p className='text-base text-cream/45 font-light leading-relaxed'>
-                  Nous vous accompagnons et répondons à vos questions concernant nos prestations
-                  de coiffure, de barbe et de soins.
+                  Nous vous accompagnons et répondons à vos questions concernant nos prestations de
+                  coiffure, de barbe et de soins.
                 </p>
                 <div className='mt-8 flex items-center gap-4'>
                   <div className='w-12 h-px bg-gold/40' />
-                  <span className='text-gold/50 text-xs uppercase tracking-widest'>À votre écoute</span>
+                  <span className='text-gold/50 text-xs uppercase tracking-widest'>
+                    À votre écoute
+                  </span>
                 </div>
               </motion.div>
             </div>
@@ -578,23 +609,20 @@ export default function ContactPage() {
               viewport={{ once: true }}>
               <motion.div variants={fadeInUp} className='mb-8'>
                 <div className='w-16 h-px bg-gold/40 mx-auto mb-8' />
-                <span className='text-gold/60 text-xs uppercase tracking-[0.4em]'>
-                  Rendez-vous
-                </span>
+                <span className='text-gold/60 text-xs uppercase tracking-[0.4em]'>Rendez-vous</span>
               </motion.div>
 
               <motion.h3
                 variants={fadeInUp}
                 className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[1.15] mb-8'>
-                Prêt pour une expérience{' '}
-                <span className='text-gold'>sur mesure</span> ?
+                Prêt pour une expérience <span className='text-gold'>sur mesure</span> ?
               </motion.h3>
 
               <motion.p
                 variants={fadeInUp}
                 className='text-cream/50 text-lg font-light max-w-2xl mx-auto leading-relaxed mb-12'>
-                N&apos;hésitez pas à nous contacter ou à réserver votre rendez-vous
-                directement en ligne. Nous vous accueillons avec plaisir.
+                N&apos;hésitez pas à nous contacter ou à réserver votre rendez-vous directement en
+                ligne. Nous vous accueillons avec plaisir.
               </motion.p>
 
               <motion.div variants={fadeInUp} className='flex flex-wrap justify-center gap-5'>

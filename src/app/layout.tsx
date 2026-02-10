@@ -1,5 +1,6 @@
 import '@/app/globals.css'
 import { Playfair_Display, Mulish } from 'next/font/google' // Note: Muli is now Mulish in Google Fonts
+import CookieConsent from '@/components/CookieConsent'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className='bg-navy text-cream font-body antialiased flex flex-col min-h-screen'>
         {children}
+        <CookieConsent />
       </body>
     </html>
   )

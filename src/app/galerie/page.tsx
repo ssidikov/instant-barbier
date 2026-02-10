@@ -193,7 +193,12 @@ function Lightbox({
       <button
         onClick={onClose}
         className='absolute top-6 right-6 z-50 w-12 h-12 flex items-center justify-center border border-gold/30 text-gold hover:bg-gold hover:text-navy transition-all duration-300 group'>
-        <svg className='w-5 h-5' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+        <svg
+          className='w-5 h-5'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='1.5'>
           <path d='M18 6L6 18M6 6l12 12' />
         </svg>
       </button>
@@ -209,14 +214,24 @@ function Lightbox({
       <button
         onClick={goPrev}
         className='absolute left-4 md:left-8 z-50 w-12 h-12 flex items-center justify-center border border-gold/20 text-gold/70 hover:text-gold hover:border-gold/50 transition-all duration-300'>
-        <svg className='w-5 h-5' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+        <svg
+          className='w-5 h-5'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='1.5'>
           <path d='M15 19l-7-7 7-7' />
         </svg>
       </button>
       <button
         onClick={goNext}
         className='absolute right-4 md:right-8 z-50 w-12 h-12 flex items-center justify-center border border-gold/20 text-gold/70 hover:text-gold hover:border-gold/50 transition-all duration-300'>
-        <svg className='w-5 h-5' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+        <svg
+          className='w-5 h-5'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='1.5'>
           <path d='M9 5l7 7-7 7' />
         </svg>
       </button>
@@ -296,11 +311,7 @@ function GalleryCard({
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 40, scale: 0.95 }}
-      animate={
-        isInView
-          ? { opacity: 1, y: 0, scale: 1 }
-          : { opacity: 0, y: 40, scale: 0.95 }
-      }
+      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.95 }}
       transition={{
         duration: 0.8,
         delay: index * 0.1,
@@ -336,7 +347,12 @@ function GalleryCard({
 
       {/* Zoom icon */}
       <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 border border-gold/40 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500'>
-        <svg className='w-5 h-5 text-gold' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+        <svg
+          className='w-5 h-5 text-gold'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='1.5'>
           <circle cx='11' cy='11' r='8' />
           <path d='M21 21l-4.35-4.35' />
           <path d='M11 8v6M8 11h6' />
@@ -358,7 +374,11 @@ export default function GaleriePage() {
   const { scrollYProgress } = useScroll()
   const heroOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0])
   const titleY = useTransform(scrollYProgress, [0, 0.3], ['0%', '25%'])
-  const progressScaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
+  const progressScaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  })
 
   const filteredImages =
     activeCategory === 'Tout'
@@ -387,9 +407,7 @@ export default function GaleriePage() {
           ref={heroRef}
           className='relative h-[70vh] md:h-[85vh] flex items-end overflow-hidden'>
           {/* Background mosaic effect */}
-          <motion.div
-            style={{ opacity: heroOpacity }}
-            className='absolute inset-0 z-0'>
+          <motion.div style={{ opacity: heroOpacity }} className='absolute inset-0 z-0'>
             <div className='absolute inset-0 grid grid-cols-3 gap-1 opacity-30'>
               {galleryImages.map((img, i) => (
                 <div key={i} className='relative overflow-hidden'>
@@ -424,10 +442,7 @@ export default function GaleriePage() {
           {/* Hero content */}
           <div className='relative z-10 w-full px-6 md:px-12 lg:px-20 pb-16 md:pb-24'>
             <motion.div style={{ y: titleY }} className='max-w-7xl mx-auto'>
-              <motion.div
-                initial='hidden'
-                animate='visible'
-                variants={staggerContainer}>
+              <motion.div initial='hidden' animate='visible' variants={staggerContainer}>
                 <motion.span
                   variants={fadeInUp}
                   className='inline-block text-gold/60 text-[10px] uppercase tracking-[0.5em] mb-6'>
@@ -444,8 +459,9 @@ export default function GaleriePage() {
 
                 <motion.div variants={fadeInUp} className='max-w-xl'>
                   <p className='text-cream/60 text-lg md:text-xl font-light leading-relaxed'>
-                    Découvrez l&apos;univers de L&apos;Instant Barbier à travers une sélection d&apos;images
-                    mettant en lumière l&apos;ambiance, le savoir-faire et l&apos;exigence du salon.
+                    Découvrez l&apos;univers de L&apos;Instant Barbier à travers une sélection
+                    d&apos;images mettant en lumière l&apos;ambiance, le savoir-faire et
+                    l&apos;exigence du salon.
                   </p>
                 </motion.div>
 
@@ -502,8 +518,9 @@ export default function GaleriePage() {
                 viewport={{ once: true }}
                 className='lg:col-span-6 lg:pt-16'>
                 <p className='text-lg md:text-xl text-cream/60 font-light leading-relaxed mb-6'>
-                  Situé au c&oelig;ur du <strong className='text-gold font-normal'>Marais à Paris</strong>,
-                  L&apos;Instant Barbier propose un cadre élégant et raffiné, pensé pour offrir une expérience
+                  Situé au c&oelig;ur du{' '}
+                  <strong className='text-gold font-normal'>Marais à Paris</strong>, L&apos;Instant
+                  Barbier propose un cadre élégant et raffiné, pensé pour offrir une expérience
                   unique à chaque visite.
                 </p>
                 <p className='text-base text-cream/45 font-light leading-relaxed'>
@@ -539,7 +556,9 @@ export default function GaleriePage() {
               whileInView='visible'
               viewport={{ once: true }}
               className='mb-16'>
-              <motion.div variants={fadeInUp} className='flex flex-col md:flex-row md:items-end md:justify-between gap-8'>
+              <motion.div
+                variants={fadeInUp}
+                className='flex flex-col md:flex-row md:items-end md:justify-between gap-8'>
                 <div>
                   <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                     Nos Réalisations
@@ -556,9 +575,7 @@ export default function GaleriePage() {
                       key={cat}
                       onClick={() => setActiveCategory(cat)}
                       className={`relative px-5 py-2.5 text-xs uppercase tracking-[0.2em] transition-all duration-500 ${
-                        activeCategory === cat
-                          ? 'text-navy'
-                          : 'text-cream/50 hover:text-cream'
+                        activeCategory === cat ? 'text-navy' : 'text-cream/50 hover:text-cream'
                       }`}>
                       {/* Active background */}
                       {activeCategory === cat && (
@@ -712,8 +729,8 @@ export default function GaleriePage() {
                 <motion.p
                   variants={fadeInUp}
                   className='text-cream/60 text-lg font-light mb-10 max-w-md leading-relaxed'>
-                  Les photos ne racontent qu&apos;une partie de l&apos;histoire.
-                  Réservez votre créneau et découvrez notre savoir-faire.
+                  Les photos ne racontent qu&apos;une partie de l&apos;histoire. Réservez votre
+                  créneau et découvrez notre savoir-faire.
                 </motion.p>
                 <motion.div variants={fadeInUp} className='flex flex-wrap gap-4'>
                   <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
