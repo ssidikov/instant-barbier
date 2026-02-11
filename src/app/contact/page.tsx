@@ -138,7 +138,9 @@ export default function ContactPage() {
                 </p>
               </Reveal>
 
-              <Reveal variant='fade-up' delay={0.3} className='mt-8 w-24 h-px bg-gold/30' />
+              <Reveal variant='fade-up' delay={0.3}>
+                <div className='mt-8 w-24 h-px bg-gold/30' />
+              </Reveal>
             </div>
           </div>
 
@@ -339,7 +341,9 @@ export default function ContactPage() {
                     ]}
                   />
 
-                  <Reveal variant='fade-up' delay={0.15} className='w-full h-px bg-gold/10' />
+                  <Reveal variant='fade-up' delay={0.15}>
+                    <div className='w-full h-px bg-gold/10' />
+                  </Reveal>
 
                   <TransportItem
                     delay={0.2}
@@ -360,7 +364,9 @@ export default function ContactPage() {
                     lines={[{ label: 'Lignes 29 & 96', detail: 'Arrêt Rue de Turenne' }]}
                   />
 
-                  <Reveal variant='fade-up' delay={0.25} className='w-full h-px bg-gold/10' />
+                  <Reveal variant='fade-up' delay={0.25}>
+                    <div className='w-full h-px bg-gold/10' />
+                  </Reveal>
 
                   <TransportItem
                     delay={0.3}
@@ -380,7 +386,9 @@ export default function ContactPage() {
                     lines={[{ label: 'Station n°3103', detail: 'Rue des Francs-Bourgeois' }]}
                   />
 
-                  <Reveal variant='fade-up' delay={0.35} className='w-full h-px bg-gold/10' />
+                  <Reveal variant='fade-up' delay={0.35}>
+                    <div className='w-full h-px bg-gold/10' />
+                  </Reveal>
 
                   <TransportItem
                     delay={0.4}
@@ -508,8 +516,8 @@ export default function ContactPage() {
 
             <Reveal variant='fade-up' delay={0.2}>
               <p className='text-cream/50 text-lg font-light max-w-2xl mx-auto leading-relaxed mb-12'>
-                N'hésitez pas à nous contacter ou à réserver votre rendez-vous directement en ligne.
-                Nous vous accueillons avec plaisir.
+                N&apos;hésitez pas à nous contacter ou à réserver votre rendez-vous directement en
+                ligne. Nous vous accueillons avec plaisir.
               </p>
             </Reveal>
 
