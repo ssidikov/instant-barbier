@@ -534,11 +534,15 @@ export default function Home() {
             <div className='grid lg:grid-cols-2 gap-12 lg:gap-16 items-center'>
               <div className='relative'>
                 <Reveal variant='scale-up' duration={1.2} className='aspect-[4/5]'>
-                  <div className='relative aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'>
-                    <div
-                      className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-105'
-                      style={{ backgroundImage: "url('/images/about-barbershop.jpg')" }}
-                    />
+                  <div className='relative aspect-[9/16] md:aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'>
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'>
+                      <source src="/video/l'instant-barbier-paris.mp4" type='video/mp4' />
+                    </video>
                     <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent' />
                     {/* Corner accent */}
                     <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
@@ -638,22 +642,25 @@ export default function Home() {
             </div>
 
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-16'>
-              {['gallery-1.jpg', 'gallery-2.jpg', 'gallery-3.jpg', 'gallery-4.jpg'].map(
-                (img, i) => (
-                  <Reveal key={i} variant='scale-up' delay={0.1 * i} threshold={0.1}>
-                    <div className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl hover:border-gold/60 transition-all duration-500'>
-                      <div
-                        className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
-                        style={{ backgroundImage: `url('/images/gallery/${img}')` }}
-                      />
-                      <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
-                      {/* Corner accent */}
-                      <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                      <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                    </div>
-                  </Reveal>
-                ),
-              )}
+              {[
+                'barbershop-equipments.jpg',
+                'barbershop-premium-products.jpg',
+                'barbershop-face-cream.jpg',
+                'barbershop-hair-products.jpeg',
+              ].map((img, i) => (
+                <Reveal key={i} variant='scale-up' delay={0.1 * i} threshold={0.1}>
+                  <div className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl hover:border-gold/60 transition-all duration-500'>
+                    <div
+                      className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
+                      style={{ backgroundImage: `url('/images/${img}')` }}
+                    />
+                    <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
+                    {/* Corner accent */}
+                    <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
+                    <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
+                  </div>
+                </Reveal>
+              ))}
             </div>
 
             <div className='flex justify-center mt-12'>
