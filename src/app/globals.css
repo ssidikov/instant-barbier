@@ -410,6 +410,11 @@
     letter-spacing: 0.002em;
   }
 
+  .type-subtitle {
+    font-size: 1.0625rem;
+    line-height: 1.5;
+  }
+
   .type-body-lg {
     font-size: 1rem;
   }
@@ -418,3 +423,50 @@
     font-size: 0.9375rem;
   }
 }
+
+/* --- Tablet responsive overrides (769px–1024px) --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .type-display {
+    font-size: 3.5rem;
+    line-height: 0.92;
+    letter-spacing: -0.025em;
+  }
+
+  .type-h1 {
+    font-size: 2.75rem;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
+  .type-h2 {
+    font-size: 2.125rem;
+    line-height: 0.9;
+  }
+
+  .type-h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* --- Small mobile overrides (≤480px) --- */
+@media (max-width: 480px) {
+  .type-display {
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: -0.015em;
+  }
+
+  .type-h1 {
+    font-size: 1.75rem;
+    line-height: 1.05;
+  }
+
+  .type-h2 {
+    font-size: 1.5rem;
+  }
+
+  .type-subtitle {
+    font-size: 1rem;
+  }
+}
+

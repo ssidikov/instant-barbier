@@ -50,12 +50,12 @@ function PrestationCard({
 }) {
   return (
     <div
-      className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center ${reverse ? 'lg:flex-row-reverse' : ''}`}>
+      className={`grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 lg:gap-16 items-center ${reverse ? 'lg:flex-row-reverse' : ''}`}>
       {/* Image side */}
       <Reveal
         variant='scale-up'
         duration={1.2}
-        className={`lg:col-span-6 ${reverse ? 'lg:order-2' : 'lg:order-1'} h-[50vh] md:h-[65vh] relative`}>
+        className={`lg:col-span-6 ${reverse ? 'lg:order-2' : 'lg:order-1'} h-[40vh] md:h-[65vh] relative`}>
         <PremiumImage src={image} alt={title} className='w-full h-full' />
         {/* Corner accents */}
         <div
@@ -136,7 +136,7 @@ export default function PrestationsPage() {
           <div className='absolute bottom-32 left-[15%] w-48 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-10' />
 
           {/* Hero Content */}
-          <div className='relative z-10 w-full px-6 md:px-12 lg:px-20'>
+          <div className='relative z-10 w-full px-5 md:px-12 lg:px-20'>
             <div className='max-w-7xl mx-auto'>
               <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-end'>
                 {/* Title */}
@@ -147,7 +147,7 @@ export default function PrestationsPage() {
                     </span>
                   </Reveal>
                   <Reveal variant='blur-in' duration={1.2}>
-                    <h1 className='text-5xl md:text-7xl lg:text-[9rem] font-title text-gold leading-[0.85] tracking-tight'>
+                    <h1 className='text-4xl md:text-7xl lg:text-[9rem] font-title text-gold leading-[0.85] tracking-tight'>
                       Pres
                       <br />
                       <span className='text-cream'>tations</span>
@@ -180,10 +180,10 @@ export default function PrestationsPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             INTRODUCTION
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-32 md:py-48 relative'>
+        <section className='py-20 md:py-32 lg:py-48 relative'>
           <div className='absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-gold/3 to-transparent' />
 
-          <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
+          <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20 relative z-10'>
             <div className='grid grid-cols-1 lg:grid-cols-12 gap-12'>
               <div className='lg:col-span-6'>
                 <Reveal variant='scale-up' duration={1}>
@@ -219,8 +219,8 @@ export default function PrestationsPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             PRESTATION 1 - COIFFURE HOMME
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-24 md:py-32'>
-          <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20'>
+        <section className='py-16 md:py-24 lg:py-32'>
+          <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20'>
             <PrestationCard
               number='01'
               title='Coiffure Homme'
@@ -239,10 +239,10 @@ export default function PrestationsPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             PRESTATION 2 - BARBE
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-24 md:py-32 bg-dark relative overflow-hidden'>
+        <section className='py-16 md:py-24 lg:py-32 bg-dark relative overflow-hidden'>
           <div className='absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-gold/5 to-transparent' />
 
-          <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
+          <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20 relative z-10'>
             <PrestationCard
               number='02'
               title='Barbe'
@@ -262,8 +262,8 @@ export default function PrestationsPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             PRESTATION 3 - SOINS
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-24 md:py-32'>
-          <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20'>
+        <section className='py-16 md:py-24 lg:py-32'>
+          <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20'>
             <PrestationCard
               number='03'
               title='Soins & Bien-être'
@@ -282,10 +282,10 @@ export default function PrestationsPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             EXPERIENCE SECTION - Bento Grid
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-32 md:py-48 bg-navy-secondary/30 relative overflow-hidden'>
+        <section className='py-20 md:py-32 lg:py-48 bg-navy-secondary/30 relative overflow-hidden'>
           <div className='absolute bottom-0 left-0 w-[50vw] h-[50vw] rounded-full bg-gold/3 blur-3xl translate-y-1/2 -translate-x-1/4 pointer-events-none' />
 
-          <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
+          <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20 relative z-10'>
             {/* Section Header */}
             <div className='text-center mb-20'>
               <Reveal variant='fade-up'>
@@ -386,7 +386,7 @@ export default function PrestationsPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             CTA SECTION
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-32 md:py-48 relative overflow-hidden'>
+        <section className='py-20 md:py-32 lg:py-48 relative overflow-hidden'>
           <div className='absolute inset-0'>
             <Image
               src={BACKGROUNDS.prestationCta.src}
@@ -397,7 +397,7 @@ export default function PrestationsPage() {
             <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy/80' />
           </div>
 
-          <div className='max-w-5xl mx-auto px-6 md:px-12 lg:px-20 relative z-10 text-center'>
+          <div className='max-w-5xl mx-auto px-5 md:px-12 lg:px-20 relative z-10 text-center'>
             <Reveal variant='fade-up'>
               <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-6 block'>
                 Prêt ?
@@ -422,8 +422,8 @@ export default function PrestationsPage() {
           </div>
 
           {/* Decorative corner elements */}
-          <div className='absolute top-12 left-12 w-24 h-24 border-t border-l border-gold/10' />
-          <div className='absolute bottom-12 right-12 w-24 h-24 border-b border-r border-gold/10' />
+          <div className='absolute top-12 left-12 w-24 h-24 border-t border-l border-gold/10 hidden md:block' />
+          <div className='absolute bottom-12 right-12 w-24 h-24 border-b border-r border-gold/10 hidden md:block' />
         </section>
       </main>
 

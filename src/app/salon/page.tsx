@@ -81,7 +81,7 @@ export default function SalonPage() {
           <div className='absolute bottom-40 right-[15%] w-64 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-20' />
 
           {/* Hero Content - asymmetric positioning */}
-          <div className='relative z-10 w-full px-6 md:px-12 lg:px-20'>
+          <div className='relative z-10 w-full px-5 md:px-12 lg:px-20'>
             <div className='max-w-7xl mx-auto'>
               <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-end'>
                 {/* Main title - spans most columns */}
@@ -92,7 +92,7 @@ export default function SalonPage() {
                     </span>
                   </Reveal>
                   <Reveal variant='blur-in' duration={1.2}>
-                    <h1 className='text-6xl md:text-8xl lg:text-[10rem] font-title text-gold leading-[0.85] tracking-tight'>
+                    <h1 className='text-5xl md:text-8xl lg:text-[10rem] font-title text-gold leading-[0.85] tracking-tight'>
                       Le
                       <br />
                       <span className='text-cream'>Salon</span>
@@ -128,11 +128,11 @@ export default function SalonPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             INTRODUCTION - Offset asymmetric layout
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-32 md:py-48 relative'>
+        <section className='py-20 md:py-32 lg:py-48 relative'>
           {/* Decorative background elements */}
           <div className='absolute top-0 right-0 w-1/2 h-full bg-navy-secondary/20 -skew-x-12 origin-top-right' />
 
-          <div className='relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20'>
+          <div className='relative z-10 max-w-7xl mx-auto px-5 md:px-12 lg:px-20'>
             <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-6'>
               {/* Large quote / statement - offset left */}
               <div className='lg:col-span-7 lg:pr-12'>
@@ -169,10 +169,10 @@ export default function SalonPage() {
             ATMOSPHERE SECTION - Overlapping images and floating content
             ═══════════════════════════════════════════════════════════════════ */}
         <section className='relative py-20 md:py-0 md:min-h-screen'>
-          <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20'>
+          <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20'>
             <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[80vh]'>
               {/* Image composition - overlapping images */}
-              <div className='lg:col-span-7 relative h-[60vh] md:h-[80vh]'>
+              <div className='lg:col-span-7 relative h-[50vh] md:h-[80vh]'>
                 {/* Main large image */}
                 <Reveal
                   variant='scale-up'
@@ -237,17 +237,17 @@ export default function SalonPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             EXPERTISE SECTION - Horizontal scroll-like feel with vertical layout
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-32 md:py-48 bg-dark relative overflow-hidden'>
+        <section className='py-20 md:py-32 lg:py-48 bg-dark relative overflow-hidden'>
           {/* Background accent */}
           <div className='absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-gold/5 to-transparent' />
 
-          <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
+          <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20 relative z-10'>
             {/* Section header - spanning full width */}
             <Reveal variant='fade-up' className='mb-20 md:mb-32'>
               <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                 02 — Savoir-Faire
               </span>
-              <h3 className='text-5xl md:text-7xl lg:text-8xl font-title text-cream leading-[0.9]'>
+              <h3 className='text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-title text-cream leading-[0.9]'>
                 L'Art du
                 <br />
                 <span className='text-gold'>Barbier</span>
@@ -255,7 +255,7 @@ export default function SalonPage() {
             </Reveal>
 
             {/* Content grid - asymmetric */}
-            <div className='grid grid-cols-1 lg:grid-cols-12 gap-12'>
+            <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12'>
               {/* Left column - feature list */}
               <div className='lg:col-span-4 space-y-8'>
                 {[
@@ -310,11 +310,11 @@ export default function SalonPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             EXPERIENCE SECTION - Bento-style grid
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-32 md:py-48 relative'>
+        <section className='py-20 md:py-32 lg:py-48 relative'>
           {/* Floating background orb */}
           <div className='absolute top-1/4 right-0 w-[40vw] h-[40vw] rounded-full bg-gold/5 blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none' />
 
-          <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
+          <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20 relative z-10'>
             {/* Section header */}
             <Reveal variant='fade-up' className='text-center mb-20'>
               <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
@@ -379,7 +379,7 @@ export default function SalonPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             LOCATION CTA - Full-width cinematic
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='relative py-32 md:py-48 overflow-hidden'>
+        <section className='relative py-20 md:py-32 lg:py-48 overflow-hidden'>
           {/* Background */}
           <div className='absolute inset-0'>
             <Image
@@ -391,8 +391,8 @@ export default function SalonPage() {
             <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy/80' />
           </div>
 
-          <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-16 items-center'>
+          <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20 relative z-10'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center'>
               {/* Text content */}
               <div>
                 <Reveal variant='fade-up'>
@@ -422,7 +422,7 @@ export default function SalonPage() {
 
               {/* Location card */}
               <Reveal variant='scale-up' delay={0.4} className='relative'>
-                <div className='bg-navy-secondary/80 backdrop-blur-sm border border-gold/10 p-8 md:p-12'>
+                <div className='bg-navy-secondary/80 backdrop-blur-sm border border-gold/10 p-6 md:p-8 lg:p-12'>
                   <div className='flex items-start gap-6 mb-8'>
                     <div className='w-12 h-12 border border-gold/30 flex items-center justify-center flex-shrink-0'>
                       <svg

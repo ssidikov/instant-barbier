@@ -249,13 +249,13 @@ export default function GaleriePage() {
           <div className='absolute top-[40%] left-[5%] w-[20vw] h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-15' />
 
           {/* Hero content */}
-          <div className='relative z-10 w-full px-6 md:px-12 lg:px-20 pb-16 md:pb-24'>
+          <div className='relative z-10 w-full px-5 md:px-12 lg:px-20 pb-16 md:pb-24'>
             <div className='max-w-7xl mx-auto'>
               <Reveal variant='fade-up'>
                 <span className='inline-block text-gold/60 text-[10px] uppercase tracking-[0.5em] mb-6'>
                   Barbier &amp; Coiffeur — Paris
                 </span>
-                <h1 className='text-5xl md:text-7xl lg:text-[8rem] font-title text-gold leading-[0.9] tracking-tight mb-6'>
+                <h1 className='text-4xl md:text-7xl lg:text-[8rem] font-title text-gold leading-[0.9] tracking-tight mb-6'>
                   La
                   <br />
                   <span className='text-cream'>Galerie</span>
@@ -289,11 +289,11 @@ export default function GaleriePage() {
         {/* ═══════════════════════════════════════════════════════════════════
             INTRODUCTION - Asymmetric text layout
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-24 md:py-40 relative'>
+        <section className='py-16 md:py-24 lg:py-40 relative'>
           {/* Decorative background */}
           <div className='absolute top-0 right-0 w-1/3 h-full bg-navy-secondary/15 -skew-x-12 origin-top-right' />
 
-          <div className='relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20'>
+          <div className='relative z-10 max-w-7xl mx-auto px-5 md:px-12 lg:px-20'>
             <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8'>
               {/* Left - Large statement */}
               <div className='lg:col-span-6'>
@@ -338,7 +338,7 @@ export default function GaleriePage() {
           {/* Floating background orb */}
           <div className='absolute top-1/3 left-0 w-[50vw] h-[50vw] rounded-full bg-gold/3 blur-3xl -translate-x-1/3 pointer-events-none' />
 
-          <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
+          <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20 relative z-10'>
             {/* Section header + Filter */}
             <div className='mb-16'>
               <Reveal
@@ -372,7 +372,7 @@ export default function GaleriePage() {
             </div>
 
             {/* Masonry grid */}
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 auto-rows-[350px] transition-all duration-500'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 auto-rows-[350px] transition-all duration-500'>
               {filteredImages.map((image, i) => (
                 <Reveal key={`${activeCategory}-${i}`} variant='scale-up' delay={i * 0.1}>
                   <GalleryCard image={image} onClick={() => openLightbox(i)} />
@@ -385,7 +385,7 @@ export default function GaleriePage() {
         {/* ═══════════════════════════════════════════════════════════════════
             FEATURED QUOTE SECTION - Full-width cinematic
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='relative py-32 md:py-48 overflow-hidden'>
+        <section className='relative py-20 md:py-32 lg:py-48 overflow-hidden'>
           {/* Background image (subtle) */}
           <div className='absolute inset-0'>
             <Image
@@ -402,7 +402,7 @@ export default function GaleriePage() {
             &amp;
           </div>
 
-          <div className='max-w-5xl mx-auto px-6 md:px-12 relative z-10 text-center'>
+          <div className='max-w-5xl mx-auto px-5 md:px-12 relative z-10 text-center'>
             <Reveal variant='fade-up' className='mb-8'>
               <div className='w-16 h-px bg-gold/40 mx-auto mb-8' />
               <span className='text-gold/60 text-xs uppercase tracking-[0.4em]'>
@@ -430,12 +430,12 @@ export default function GaleriePage() {
         {/* ═══════════════════════════════════════════════════════════════════
             BOTTOM SECTION - Showcase strip + CTA
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-24 md:py-32 bg-dark relative overflow-hidden'>
+        <section className='py-16 md:py-24 lg:py-32 bg-dark relative overflow-hidden'>
           {/* Subtle gradient accent */}
           <div className='absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-gold/5 to-transparent' />
 
-          <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-16 items-center'>
+          <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20 relative z-10'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center'>
               {/* Image strip */}
               <Reveal variant='scale-up' className='relative'>
                 <div className='grid grid-cols-2 gap-3'>

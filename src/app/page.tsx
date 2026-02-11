@@ -408,10 +408,10 @@ export default function Home() {
                   <div className='max-w-[380px] xl:max-w-full space-y-2'>
                     <Reveal variant='blur-in' delay={0.4} duration={1}>
                       <div>
-                        <span className='block text-4xl md:text-5xl lg:text-8xl font-title text-gold leading-[0.8] tracking-[-4px] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
+                        <span className='block text-4xl md:text-5xl lg:text-8xl font-title text-gold leading-[0.8] tracking-[-2px] md:tracking-[-4px] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
                           BARBIER
                         </span>
-                        <span className='block text-4xl md:text-5xl lg:text-8xl font-title text-gold leading-[0.8] tracking-[-4px] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
+                        <span className='block text-4xl md:text-5xl lg:text-8xl font-title text-gold leading-[0.8] tracking-[-2px] md:tracking-[-4px] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
                           & COIFFEUR
                         </span>
                       </div>
@@ -426,7 +426,7 @@ export default function Home() {
                   </div>
 
                   {/* Mobile Logo */}
-                  <div className='md:hidden w-screen relative -ml-6 overflow-hidden flex justify-center py-4'>
+                  <div className='md:hidden w-full overflow-hidden flex justify-center py-4'>
                     <Image
                       src={LOGOS.golden.src}
                       alt={LOGOS.golden.alt}
@@ -459,7 +459,7 @@ export default function Home() {
                   </Reveal>
 
                   {/* Static Stats for Mobile */}
-                  <div className='flex lg:hidden flex-wrap gap-4 pt-10'>
+                  <div className='grid grid-cols-2 sm:flex lg:hidden gap-3 sm:gap-4 pt-10'>
                     {[
                       { label: 'Années d\u2019expérience', val: '23+' },
                       { label: 'Clients satisfaits', val: '2000+' },
@@ -506,14 +506,14 @@ export default function Home() {
           </div>
 
           {/* Decorative Corners */}
-          <div className='absolute top-32 right-16 w-24 h-24 border-t border-r border-gold/15'></div>
-          <div className='absolute bottom-32 left-16 w-24 h-24 border-b border-l border-gold/15'></div>
+          <div className='absolute top-32 right-16 w-24 h-24 border-t border-r border-gold/15 hidden md:block'></div>
+          <div className='absolute bottom-32 left-16 w-24 h-24 border-b border-l border-gold/15 hidden md:block'></div>
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
           À PROPOS SECTION
       ═══════════════════════════════════════════════════════════════════ */}
-        <Section id='a-propos' className='bg-navy relative overflow-hidden py-24 lg:py-32'>
+        <Section id='a-propos' className='bg-navy relative overflow-hidden py-16 md:py-24 lg:py-32'>
           <div className='absolute inset-0 pointer-events-none opacity-5'>
             <div className='absolute top-1/4 right-1/4 w-96 h-96 border border-gold/10 rotate-12' />
             <div className='absolute bottom-1/4 left-1/4 w-64 h-64 border border-gold/10 -rotate-6' />
@@ -531,8 +531,8 @@ export default function Home() {
             </Reveal>
           </Container>
 
-          <div className='max-w-7xl mx-auto px-6 lg:px-12'>
-            <div className='grid lg:grid-cols-2 gap-12 lg:gap-16 items-center'>
+          <div className='max-w-7xl mx-auto px-5 md:px-6 lg:px-12'>
+            <div className='grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center'>
               <div className='relative'>
                 <Reveal variant='scale-up' duration={1.2} className='aspect-[4/5]'>
                   <div className='relative aspect-[9/16] md:aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'>
@@ -674,7 +674,7 @@ export default function Home() {
               <SectionTitle subtitle='Nos Services' title='Prestations' />
             </Reveal>
 
-            <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
+            <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8'>
               {services.map((service, index) => (
                 <Reveal key={index} variant='fade-up' delay={index * 0.1}>
                   <TiltCard>
@@ -716,9 +716,9 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           ATMOSPHÈRE SECTION
       ═══════════════════════════════════════════════════════════════════ */}
-        <section className='relative py-32 md:py-40 lg:py-52 bg-dark overflow-hidden'>
+        <section className='relative py-20 md:py-32 lg:py-40 xl:py-52 bg-dark overflow-hidden'>
           <div
-            className='absolute inset-0 bg-cover bg-center bg-fixed'
+            className='absolute inset-0 bg-cover bg-center bg-scroll md:bg-fixed'
             style={{ backgroundImage: `url('${BACKGROUNDS.homeAtmosphere.src}')` }}
           />
           <div className='absolute inset-0 bg-dark/85' />
@@ -774,7 +774,7 @@ export default function Home() {
               <SectionTitle subtitle='Les Experts' title='Notre Équipe' />
             </Reveal>
 
-            <div className='grid lg:grid-cols-2 gap-12 lg:gap-20 items-start'>
+            <div className='grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-start'>
               <div>
                 {team.map((member, index) => (
                   <Reveal key={index} variant='scale-up' delay={index * 0.1} threshold={0.2}>
@@ -870,7 +870,7 @@ export default function Home() {
               <SectionTitle subtitle='Notre Travail' title='Galerie' />
             </Reveal>
 
-            <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
+            <div className='grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4'>
               {/* Large Image */}
               <div className='col-span-2 row-span-2 aspect-square md:aspect-auto'>
                 <Reveal variant='scale-up' threshold={0.2} className='h-full'>
@@ -982,13 +982,13 @@ export default function Home() {
           <Container>
             <SectionTitle subtitle='Témoignages' title='Avis Clients' />
 
-            <div className='grid md:grid-cols-3 gap-8'>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8'>
               {reviews.map((review, index) => (
                 <article
                   key={index}
                   className='bg-dark/50 border border-gold/20 p-8 relative hover:border-gold/40 cursor-default transition-all duration-500 h-full overflow-visible group/review flex flex-col'>
                   <div className='absolute -top-10 left-6'>
-                    <span className='text-gold text-[5.5rem] leading-normal font-title'>
+                    <span className='text-gold text-[4rem] md:text-[5.5rem] leading-normal font-title'>
                       &ldquo;
                     </span>
                   </div>
@@ -1083,7 +1083,7 @@ export default function Home() {
                 </div>
 
                 <div className='relative group'>
-                  <div className='relative aspect-4/3 lg:aspect-auto lg:h-full min-h-[400px] overflow-hidden'>
+                  <div className='relative aspect-4/3 lg:aspect-auto lg:h-full min-h-[300px] md:min-h-[400px] overflow-hidden'>
                     <div
                       className='absolute inset-0 bg-cover bg-center'
                       style={{ backgroundImage: `url('${BACKGROUNDS.homeSchedule.src}')` }}
@@ -1120,7 +1120,7 @@ export default function Home() {
                 </div>
 
                 <div className='absolute bottom-0 left-0 right-0 p-6'>
-                  <div className='bg-navy/90 backdrop-blur-sm border border-gold/30 p-6 space-y-4'>
+                  <div className='bg-navy/90 backdrop-blur-sm border border-gold/30 p-4 md:p-6 space-y-3 md:space-y-4'>
                     {[
                       { label: 'Adresse', value: '43 rue de Turenne, 75003 Paris' },
                       { label: 'Téléphone', value: '+33 1 42 72 00 00' },
@@ -1170,7 +1170,7 @@ export default function Home() {
 
           <Container className='relative z-10 py-20'>
             <div className='max-w-4xl mx-auto'>
-              <div className='relative bg-navy/40 backdrop-blur-xl border border-gold/20 rounded-sm p-8 md:p-12 shadow-2xl overflow-hidden'>
+              <div className='relative bg-navy/40 backdrop-blur-xl border border-gold/20 rounded-sm p-6 md:p-8 lg:p-12 shadow-2xl overflow-hidden'>
                 <div className='absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/5 pointer-events-none' />
 
                 <div className='w-24 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-8' />

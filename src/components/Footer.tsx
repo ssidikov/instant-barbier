@@ -5,14 +5,16 @@ import Image from 'next/image'
 export default function Footer() {
   return (
     <footer className='bg-dark pt-16 pb-8 overflow-hidden'>
-      <div className='max-w-6xl mx-auto px-6'>
+      <div className='max-w-6xl mx-auto px-5 md:px-6 lg:px-8'>
         {/* Large Headline */}
         <h2 className='text-center text-3xl md:text-5xl lg:text-6xl font-title italic text-gold mb-16'>
           Votre Style, Notre Passion
         </h2>
 
         {/* Logo Marquee - Moved under Headline */}
-        <div className='relative w-screen left-1/2 -translate-x-1/2 overflow-hidden py-8 mb-12'>
+        <div
+          className='relative w-full overflow-hidden py-6 md:py-8 mb-8 md:mb-12 -mx-5 md:-mx-6 lg:-mx-8 px-0'
+          style={{ width: 'calc(100% + 2.5rem)' }}>
           <div className='animate-marquee-rtl flex items-center gap-16 w-max'>
             {/* Duplicate logos for seamless loop */}
             {[...Array(12)].map((_, i) => (
@@ -22,14 +24,14 @@ export default function Footer() {
                 alt="L'Instant Barbier"
                 width={120}
                 height={120}
-                className='h-32 md:h-40 lg:h-80 w-auto object-contain opacity-80'
+                className='h-20 sm:h-32 md:h-40 lg:h-80 w-auto object-contain opacity-80'
               />
             ))}
           </div>
         </div>
 
         {/* Contact & Social Bar - New Top Container */}
-        <div className='flex flex-col md:flex-row flex-wrap justify-between items-center gap-6 border-b border-cream/10 pb-12 mb-12'>
+        <div className='flex flex-col md:flex-row flex-wrap justify-between items-center gap-4 md:gap-6 border-b border-cream/10 pb-8 md:pb-12 mb-8 md:mb-12'>
           {/* Address & Phone */}
           <div className='flex flex-col md:flex-row items-center gap-6 text-cream/80'>
             <div className='flex items-center gap-3'>
@@ -135,7 +137,7 @@ export default function Footer() {
         </div>
 
         {/* Two Column Layout */}
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-8 mb-16'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-8 mb-12 md:mb-16'>
           {/* Left Column - Legal */}
           <div className='flex flex-col items-center md:items-start gap-6'>
             <div className='flex flex-col gap-2'>

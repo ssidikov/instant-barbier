@@ -27,7 +27,7 @@ function ContactCard({
     <Reveal
       variant='fade-up'
       delay={delay}
-      className='group relative bg-navy-secondary/40 backdrop-blur-sm border border-gold/10 p-8 hover:border-gold/30 transition-all duration-700'>
+      className='group relative bg-navy-secondary/40 backdrop-blur-sm border border-gold/10 p-6 md:p-8 hover:border-gold/30 transition-all duration-700'>
       {/* Corner accent */}
       <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
       <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
@@ -118,13 +118,13 @@ export default function ContactPage() {
           <div className='absolute bottom-[35%] right-[8%] w-[15vw] h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-10' />
 
           {/* Hero content */}
-          <div className='relative z-10 w-full px-6 md:px-12 lg:px-20 pb-16 md:pb-24'>
+          <div className='relative z-10 w-full px-5 md:px-12 lg:px-20 pb-16 md:pb-24'>
             <div className='max-w-7xl mx-auto'>
               <Reveal variant='fade-up'>
                 <span className='inline-block text-gold/60 text-[10px] uppercase tracking-[0.5em] mb-6'>
                   Paris 3ᵉ — Le Marais
                 </span>
-                <h1 className='text-5xl md:text-7xl lg:text-[8rem] font-title text-gold leading-[0.9] tracking-tight mb-6'>
+                <h1 className='text-4xl md:text-7xl lg:text-[8rem] font-title text-gold leading-[0.9] tracking-tight mb-6'>
                   Nous
                   <br />
                   <span className='text-cream'>Trouver</span>
@@ -157,11 +157,11 @@ export default function ContactPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             CONTACT CARDS - Three main info blocks
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-24 md:py-32 relative'>
+        <section className='py-16 md:py-24 lg:py-32 relative'>
           {/* Floating bg orb */}
           <div className='absolute top-1/4 right-0 w-[40vw] h-[40vw] rounded-full bg-gold/3 blur-3xl translate-x-1/4 pointer-events-none' />
 
-          <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
+          <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20 relative z-10'>
             {/* Section header */}
             <div className='mb-16'>
               <Reveal variant='fade-up'>
@@ -265,7 +265,7 @@ export default function ContactPage() {
           {/* Background accent */}
           <div className='absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-gold/5 to-transparent' />
 
-          <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
+          <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20 relative z-10'>
             <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8'>
               {/* Map side */}
               <div className='lg:col-span-7'>
@@ -417,10 +417,10 @@ export default function ContactPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             PRESENTATION TEXT - Asymmetric editorial
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-24 md:py-40 relative'>
+        <section className='py-16 md:py-24 lg:py-40 relative'>
           <div className='absolute top-0 right-0 w-1/3 h-full bg-navy-secondary/15 -skew-x-12 origin-top-right' />
 
-          <div className='relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20'>
+          <div className='relative z-10 max-w-7xl mx-auto px-5 md:px-12 lg:px-20'>
             <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8'>
               {/* Left - Statement */}
               <div className='lg:col-span-6'>
@@ -463,8 +463,8 @@ export default function ContactPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             CONTACT FORM SECTION
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-24 md:py-32 bg-dark relative'>
-          <div className='max-w-3xl mx-auto px-6 md:px-12 relative z-10'>
+        <section className='py-16 md:py-24 lg:py-32 bg-dark relative'>
+          <div className='max-w-3xl mx-auto px-5 md:px-12 relative z-10'>
             <div className='mb-16 text-center'>
               <Reveal variant='fade-up'>
                 <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
@@ -485,7 +485,7 @@ export default function ContactPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             CTA - Full-width cinematic closing
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='relative py-32 md:py-48 overflow-hidden'>
+        <section className='relative py-20 md:py-32 lg:py-48 overflow-hidden'>
           {/* Background */}
           <div className='absolute inset-0'>
             <Image
@@ -502,7 +502,7 @@ export default function ContactPage() {
             &amp;
           </div>
 
-          <div className='max-w-5xl mx-auto px-6 md:px-12 relative z-10 text-center'>
+          <div className='max-w-5xl mx-auto px-5 md:px-12 relative z-10 text-center'>
             <Reveal variant='fade-up' className='mb-8'>
               <div className='w-16 h-px bg-gold/40 mx-auto mb-8' />
               <span className='text-gold/60 text-xs uppercase tracking-[0.4em]'>Rendez-vous</span>
