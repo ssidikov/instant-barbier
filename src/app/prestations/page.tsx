@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import Reveal from '@/components/Reveal'
+import { BACKGROUNDS } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PREMIUM IMAGE COMPONENT (Replaces Parallax)
@@ -120,8 +121,8 @@ export default function PrestationsPage() {
           <div className='absolute inset-0 z-0'>
             <div className='absolute inset-0 animate-[kenburns_20s_infinite_alternate]'>
               <Image
-                src='/images/prestations.jpg'
-                alt='Prestations L Instant Barbier'
+                src={BACKGROUNDS.prestationsHero.src}
+                alt={BACKGROUNDS.prestationsHero.alt}
                 fill
                 className='object-cover'
                 priority
@@ -230,7 +231,7 @@ export default function PrestationsPage() {
                 'Coiffure contemporaine',
                 'Conseil personnalisé',
               ]}
-              image='https://placehold.co/900x1100/0f0f0f/AF9778?text=Coiffure+Homme'
+              image={BACKGROUNDS.prestationCoiffure.src}
             />
           </div>
         </section>
@@ -252,7 +253,7 @@ export default function PrestationsPage() {
                 'Soins spécifiques',
                 'Finitions soignées',
               ]}
-              image='https://placehold.co/900x1100/07181E/AF9778?text=Barbe+Rituel'
+              image={BACKGROUNDS.prestationBarbe.src}
               reverse
             />
           </div>
@@ -273,7 +274,7 @@ export default function PrestationsPage() {
                 'Massage relaxant',
                 'Produits haut de gamme',
               ]}
-              image='https://placehold.co/900x1100/0f0f0f/AF9778?text=Soins+Premium'
+              image={BACKGROUNDS.prestationSoins.src}
             />
           </div>
         </section>
@@ -311,8 +312,8 @@ export default function PrestationsPage() {
                 duration={1}
                 className='md:col-span-2 md:row-span-2 relative h-[400px] md:h-auto overflow-hidden group'>
                 <PremiumImage
-                  src='https://placehold.co/1000x800/07181E/AF9778?text=Experience+Premium'
-                  alt='Experience haut de gamme'
+                  src={BACKGROUNDS.prestationBentoLarge.src}
+                  alt={BACKGROUNDS.prestationBentoLarge.alt}
                   className='absolute inset-0'
                 />
                 <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent' />
@@ -388,8 +389,8 @@ export default function PrestationsPage() {
         <section className='py-32 md:py-48 relative overflow-hidden'>
           <div className='absolute inset-0'>
             <Image
-              src='https://placehold.co/1920x800/0f0f0f/AF9778?text=CTA+Background'
-              alt='Background'
+              src={BACKGROUNDS.prestationCta.src}
+              alt={BACKGROUNDS.prestationCta.alt}
               fill
               className='object-cover opacity-20'
             />

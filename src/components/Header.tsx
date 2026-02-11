@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { LOGOS } from '@/lib/images'
 import Button from './Button'
 import { useState, useEffect, useRef, useCallback } from 'react'
 
@@ -64,8 +65,8 @@ export default function Header() {
           {/* Logo - visible on all screens */}
           <Link href='/' onClick={closeMenu} className='z-20'>
             <Image
-              src='/logo/logo-header.svg'
-              alt="L'Instant Barbier"
+              src={LOGOS.header.src}
+              alt={LOGOS.header.alt}
               width={120}
               height={56}
               className='h-10 w-auto'

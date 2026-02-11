@@ -6,6 +6,7 @@ import Button from '@/components/Button'
 import { PLANITY_URL } from '@/lib/constants'
 import ContactForm from '@/components/ContactForm'
 import Reveal from '@/components/Reveal'
+import { BACKGROUNDS } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // CONTACT INFO CARD
@@ -102,8 +103,8 @@ export default function ContactPage() {
           {/* Background */}
           <div className='absolute inset-0 z-0'>
             <Image
-              src='/images/gallery/gallery-3.jpg'
-              alt="Salon L'Instant Barbier — Paris Marais"
+              src={BACKGROUNDS.contactHero.src}
+              alt={BACKGROUNDS.contactHero.alt}
               fill
               className='object-cover'
               priority
@@ -480,7 +481,7 @@ export default function ContactPage() {
           {/* Background */}
           <div className='absolute inset-0'>
             <Image
-              src='/images/gallery/gallery-1.jpg'
+              src={BACKGROUNDS.contactCta.src}
               alt=''
               fill
               className='object-cover opacity-10'

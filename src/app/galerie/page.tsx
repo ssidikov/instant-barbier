@@ -6,6 +6,7 @@ import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import { PLANITY_URL } from '@/lib/constants'
 import Reveal from '@/components/Reveal'
+import { GALLERY_IMAGES, type GalleryImageData } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // GALLERY DATA
@@ -14,51 +15,7 @@ import Reveal from '@/components/Reveal'
 const categories = ['Tout', 'Coupes', 'Barbe', 'Ambiance'] as const
 type Category = (typeof categories)[number]
 
-interface GalleryImage {
-  src: string
-  alt: string
-  category: Exclude<Category, 'Tout'>
-  span: 'normal' | 'tall' | 'wide'
-}
-
-const galleryImages: GalleryImage[] = [
-  {
-    src: '/images/gallery/gallery-1.jpg',
-    alt: "Coupe homme moderne réalisée chez L'Instant Barbier",
-    category: 'Coupes',
-    span: 'tall',
-  },
-  {
-    src: '/images/gallery/gallery-2.jpg',
-    alt: 'Taille de barbe précise au rasoir',
-    category: 'Barbe',
-    span: 'normal',
-  },
-  {
-    src: '/images/gallery/gallery-3.jpg',
-    alt: 'Ambiance chaleureuse du salon dans le Marais',
-    category: 'Ambiance',
-    span: 'wide',
-  },
-  {
-    src: '/images/gallery/gallery-4.jpg',
-    alt: 'Dégradé réalisé avec précision aux ciseaux',
-    category: 'Coupes',
-    span: 'normal',
-  },
-  {
-    src: '/images/gallery/gallery-5.jpg',
-    alt: 'Barbe sculptée avec soin et produits premium',
-    category: 'Barbe',
-    span: 'tall',
-  },
-  {
-    src: '/images/gallery/gallery-6.jpg',
-    alt: "Espace élégant et raffiné du salon L'Instant Barbier",
-    category: 'Ambiance',
-    span: 'normal',
-  },
-]
+const galleryImages = GALLERY_IMAGES
 
 // ═══════════════════════════════════════════════════════════════════════════
 // LIGHTBOX COMPONENT
@@ -69,7 +26,7 @@ function Lightbox({
   currentIndex,
   onClose,
 }: {
-  images: GalleryImage[]
+  images: GalleryImageData[]
   currentIndex: number
   onClose: () => void
 }) {
@@ -184,7 +141,7 @@ function Lightbox({
 // GALLERY CARD COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════
 
-function GalleryCard({ image, onClick }: { image: GalleryImage; onClick: () => void }) {
+function GalleryCard({ image, onClick }: { image: GalleryImageData; onClick: () => void }) {
   const spanClasses = {
     normal: '',
     tall: 'md:row-span-2',

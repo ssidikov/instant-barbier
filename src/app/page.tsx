@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { useState, useEffect, useCallback } from 'react'
 import ContactForm from '@/components/ContactForm'
 import Reveal from '@/components/Reveal'
+import { LOGOS, VIDEO, GALLERY_IMAGES, TEAM, PRODUCT_GRID, BACKGROUNDS } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // ═══════════════════════════════════════════════════════════════════════════
@@ -273,23 +274,17 @@ const services = [
   },
 ]
 
-const team = [
-  {
-    name: 'RICCARDO',
-    role: 'Coiffeur-barbier et directeur artistique',
-    experience: "23 ans d'expérience",
-    image: '/images/team/Riccardo.avif',
-  },
-]
+const team = TEAM.map((member) => ({
+  name: member.name,
+  role: member.role,
+  experience: member.experience,
+  image: member.src,
+}))
 
-const galleryImages = [
-  { src: '/images/gallery/gallery-1.jpg', alt: 'Coupe moderne' },
-  { src: '/images/gallery/gallery-2.jpg', alt: 'Rasage traditionnel' },
-  { src: '/images/gallery/gallery-3.jpg', alt: 'Taille de barbe' },
-  { src: '/images/gallery/gallery-4.jpg', alt: 'Ambiance du salon' },
-  { src: '/images/gallery/gallery-5.jpg', alt: 'Détail coupe' },
-  { src: '/images/gallery/gallery-6.jpg', alt: 'Finitions' },
-]
+const galleryImages = GALLERY_IMAGES.map((img) => ({
+  src: img.src,
+  alt: img.shortAlt,
+}))
 
 const reviews = [
   {
@@ -346,7 +341,10 @@ export default function Home() {
           {/* Background Image */}
           <div className='absolute inset-0'>
             <div className='absolute inset-0 scale-110'>
-              <div className="absolute inset-0 bg-[url('/images/hero-barbershop.jpg')] bg-cover bg-center" />
+              <div
+                className='absolute inset-0 bg-cover bg-center'
+                style={{ backgroundImage: `url('${BACKGROUNDS.homeHero.src}')` }}
+              />
               <div
                 className='absolute inset-0'
                 style={{
@@ -377,13 +375,13 @@ export default function Home() {
               <div className='flex flex-col items-center h-max animate-marquee-vertical-up min-h-full'>
                 {/* Duplicated for seamless loop (enough to cover >100vh + buffer) */}
                 {[0, 1, 2, 3].map((i) => (
-                  <div key={i} className='shrink-0 h-[50vh] flex items-center justify-center'>
+                  <div key={i} className='shrink-0 h-[70vh] flex items-center justify-center'>
                     <Image
-                      src='/logo/logo-golden.svg'
-                      alt="L'Instant Barbier"
+                      src={LOGOS.golden.src}
+                      alt={LOGOS.golden.alt}
                       width={600}
                       height={200}
-                      className='w-[45vh] h-auto object-contain drop-shadow-[0_4px_16px_rgba(156,131,88,0.4)] opacity-60 -rotate-90'
+                      className='w-[65vh] max-w-none h-auto object-contain drop-shadow-[0_4px_16px_rgba(156,131,88,0.4)] opacity-60 -rotate-90'
                       priority={i === 0}
                     />
                   </div>
@@ -427,8 +425,8 @@ export default function Home() {
                   {/* Mobile Logo */}
                   <div className='md:hidden w-screen relative -ml-6 overflow-hidden flex justify-center py-4'>
                     <Image
-                      src='/logo/logo-golden.svg'
-                      alt="L'Instant Barbier"
+                      src={LOGOS.golden.src}
+                      alt={LOGOS.golden.alt}
                       width={120}
                       height={120}
                       className='h-14 w-auto object-contain opacity-50'
@@ -541,7 +539,7 @@ export default function Home() {
                       muted
                       playsInline
                       className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'>
-                      <source src="/video/l'instant-barbier-paris.mp4" type='video/mp4' />
+                      <source src={VIDEO.aboutSection.src} type={VIDEO.aboutSection.type} />
                     </video>
                     <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent' />
                     {/* Corner accent */}
@@ -642,17 +640,12 @@ export default function Home() {
             </div>
 
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-16'>
-              {[
-                'barbershop-equipments.jpg',
-                'barbershop-premium-products.jpg',
-                'barbershop-face-cream.jpg',
-                'barbershop-hair-products.jpeg',
-              ].map((img, i) => (
+              {PRODUCT_GRID.map((img, i) => (
                 <Reveal key={i} variant='scale-up' delay={0.1 * i} threshold={0.1}>
                   <div className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl hover:border-gold/60 transition-all duration-500'>
                     <div
                       className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
-                      style={{ backgroundImage: `url('/images/${img}')` }}
+                      style={{ backgroundImage: `url('${img.src}')` }}
                     />
                     <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
                     {/* Corner accent */}
@@ -723,7 +716,7 @@ export default function Home() {
         <section className='relative py-32 md:py-40 lg:py-52 bg-dark overflow-hidden'>
           <div
             className='absolute inset-0 bg-cover bg-center bg-fixed'
-            style={{ backgroundImage: "url('/images/Atmosph%C3%A8re.jpg')" }}
+            style={{ backgroundImage: `url('${BACKGROUNDS.homeAtmosphere.src}')` }}
           />
           <div className='absolute inset-0 bg-dark/85' />
           <Container className='relative z-10'>
@@ -955,8 +948,11 @@ export default function Home() {
       ═══════════════════════════════════════════════════════════════════ */}
         <section className='relative h-[50vh] md:h-[60vh] overflow-hidden'>
           <div
-            className="absolute inset-0 bg-[url('/images/salon-interior-1.jpg')] bg-cover bg-center"
-            style={{ backgroundAttachment: 'fixed' }}
+            className='absolute inset-0 bg-cover bg-center'
+            style={{
+              backgroundImage: `url('${BACKGROUNDS.homeInterior.src}')`,
+              backgroundAttachment: 'fixed',
+            }}
           />
           <div className='absolute inset-0 bg-navy/60' />
           <div className='absolute inset-0 flex items-center justify-center'>
@@ -1085,7 +1081,10 @@ export default function Home() {
 
                 <div className='relative group'>
                   <div className='relative aspect-4/3 lg:aspect-auto lg:h-full min-h-[400px] overflow-hidden'>
-                    <div className="absolute inset-0 bg-[url('/images/salon-interior-2.jpg')] bg-cover bg-center" />
+                    <div
+                      className='absolute inset-0 bg-cover bg-center'
+                      style={{ backgroundImage: `url('${BACKGROUNDS.homeSchedule.src}')` }}
+                    />
                     <div className='absolute inset-0 bg-dark/15' />
                   </div>
                   {/* Corner accent */}
@@ -1107,7 +1106,10 @@ export default function Home() {
             <div className='grid lg:grid-cols-2 gap-12 lg:gap-20'>
               <div className='relative'>
                 <div className='relative aspect-4/3 overflow-hidden group hover:scale-[1.02] transition-transform duration-500'>
-                  <div className="absolute inset-0 bg-[url('/images/marais-paris.jpg')] bg-cover bg-center" />
+                  <div
+                    className='absolute inset-0 bg-cover bg-center'
+                    style={{ backgroundImage: `url('${BACKGROUNDS.homeMap.src}')` }}
+                  />
                   <div className='absolute inset-0 bg-navy/40' />
                   {/* Corner accent */}
                   <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
@@ -1154,7 +1156,10 @@ export default function Home() {
       ═══════════════════════════════════════════════════════════════════ */}
         <section className='relative min-h-[80vh] flex items-center overflow-hidden border-t border-gold/10'>
           <div className='absolute inset-0'>
-            <div className="absolute inset-0 bg-[url('/images/barber-tools-luxury.jpg')] bg-cover bg-center" />
+            <div
+              className='absolute inset-0 bg-cover bg-center'
+              style={{ backgroundImage: `url('${BACKGROUNDS.homeCta.src}')` }}
+            />
             <div className='absolute inset-0 bg-gradient-to-b from-navy/65 via-dark/55 to-navy/65' />
             <div className='absolute inset-0 bg-gradient-to-r from-navy/40 via-transparent to-navy/40' />
             <div className='absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:4px_4px]' />

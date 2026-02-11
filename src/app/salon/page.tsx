@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import Reveal from '@/components/Reveal'
+import { BACKGROUNDS } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PREMIUM IMAGE COMPONENT (Replaces Parallax)
@@ -66,8 +67,8 @@ export default function SalonPage() {
           {/* Background */}
           <div className='absolute inset-0 z-0'>
             <Image
-              src='https://placehold.co/1920x1080/07181E/AF9778?text=Hero+Salon+Atmosphere'
-              alt='Salon L Instant Barbier'
+              src={BACKGROUNDS.salonHero.src}
+              alt={BACKGROUNDS.salonHero.alt}
               fill
               className='object-cover'
               priority
@@ -178,8 +179,8 @@ export default function SalonPage() {
                   duration={1.2}
                   className='absolute top-0 left-0 w-[75%] h-[70%] z-10'>
                   <PremiumImage
-                    src='https://placehold.co/800x1000/0f0f0f/AF9778?text=Salon+Interior+Main'
-                    alt='Intérieur du salon'
+                    src={BACKGROUNDS.salonAtmosphereMain.src}
+                    alt={BACKGROUNDS.salonAtmosphereMain.alt}
                     className='w-full h-full'
                   />
                 </Reveal>
@@ -190,8 +191,8 @@ export default function SalonPage() {
                   delay={0.3}
                   className='absolute bottom-0 right-0 w-[55%] h-[50%] z-20 border-8 border-navy'>
                   <PremiumImage
-                    src='https://placehold.co/600x800/142233/AF9778?text=Detail+Ambiance'
-                    alt='Détail ambiance'
+                    src={BACKGROUNDS.salonAtmosphereDetail.src}
+                    alt={BACKGROUNDS.salonAtmosphereDetail.alt}
                     className='w-full h-full'
                   />
                 </Reveal>
@@ -280,8 +281,8 @@ export default function SalonPage() {
               {/* Center - Large image */}
               <Reveal variant='scale-up' className='lg:col-span-5 h-[50vh] md:h-[70vh] relative'>
                 <PremiumImage
-                  src='https://placehold.co/700x900/07181E/AF9778?text=Barber+at+Work'
-                  alt='Barbier en action'
+                  src={BACKGROUNDS.salonExpertise.src}
+                  alt={BACKGROUNDS.salonExpertise.alt}
                   className='w-full h-full'
                 />
                 {/* Gold corner accents */}
@@ -331,8 +332,8 @@ export default function SalonPage() {
                 variant='scale-up'
                 className='md:col-span-2 lg:col-span-2 lg:row-span-2 relative h-[400px] lg:h-auto overflow-hidden group'>
                 <PremiumImage
-                  src='https://placehold.co/900x700/0f0f0f/AF9778?text=Premium+Experience'
-                  alt='Expérience premium'
+                  src={BACKGROUNDS.salonExperienceLarge.src}
+                  alt={BACKGROUNDS.salonExperienceLarge.alt}
                   className='absolute inset-0'
                 />
                 <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent' />
@@ -350,12 +351,12 @@ export default function SalonPage() {
                 {
                   title: 'Conseils Experts',
                   desc: 'Écoute attentive pour votre style unique.',
-                  image: 'https://placehold.co/500x600/142233/AF9778?text=Consultation',
+                  image: BACKGROUNDS.salonExperienceSmall1.src,
                 },
                 {
                   title: 'Détente Absolue',
                   desc: 'Un moment hors du temps.',
-                  image: 'https://placehold.co/500x600/07181E/AF9778?text=Relaxation',
+                  image: BACKGROUNDS.salonExperienceSmall2.src,
                 },
               ].map((item, i) => (
                 <Reveal
@@ -382,8 +383,8 @@ export default function SalonPage() {
           {/* Background */}
           <div className='absolute inset-0'>
             <Image
-              src='https://placehold.co/1920x800/07181E/AF9778?text=Paris+Marais+Street'
-              alt='Le Marais, Paris'
+              src={BACKGROUNDS.salonLocation.src}
+              alt={BACKGROUNDS.salonLocation.alt}
               fill
               className='object-cover opacity-20'
             />
@@ -445,8 +446,8 @@ export default function SalonPage() {
                   </div>
                   <div className='h-48 relative overflow-hidden border border-gold/10'>
                     <Image
-                      src='https://placehold.co/600x300/142233/AF9778?text=Map+Placeholder'
-                      alt='Carte'
+                      src={BACKGROUNDS.salonMap.src}
+                      alt={BACKGROUNDS.salonMap.alt}
                       fill
                       className='object-cover opacity-70'
                     />
