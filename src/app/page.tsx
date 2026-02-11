@@ -374,14 +374,14 @@ export default function Home() {
             <div className='hidden md:flex w-[15vw] shrink-0 h-full overflow-hidden relative items-center justify-center'>
               <div className='flex flex-col items-center h-max animate-marquee-vertical-up min-h-full'>
                 {/* Duplicated for seamless loop (enough to cover >100vh + buffer) */}
-                {[0, 1, 2, 3].map((i) => (
-                  <div key={i} className='shrink-0 h-[70vh] flex items-center justify-center'>
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
+                  <div key={i} className='shrink-0 h-[40vh] flex items-center justify-center'>
                     <Image
                       src={LOGOS.golden.src}
                       alt={LOGOS.golden.alt}
-                      width={600}
-                      height={200}
-                      className='w-[65vh] max-w-none h-auto object-contain drop-shadow-[0_4px_16px_rgba(156,131,88,0.4)] opacity-60 -rotate-90'
+                      width={100}
+                      height={300}
+                      className='w-[100vw] h-auto object-contain drop-shadow-[0_4px_16px_rgba(156,131,88,0.4)] opacity-60 -rotate-90'
                       priority={i === 0}
                     />
                   </div>
@@ -397,7 +397,7 @@ export default function Home() {
                   <Reveal variant='fade-side' delay={0.2}>
                     <div className='flex items-center gap-4'>
                       <span className='w-16 h-[1px] bg-gradient-to-r from-transparent to-gold' />
-                      <p className='text-gold uppercase tracking-[0.3em] text-sm font-light [text-shadow:0_1px_8px_rgba(7,24,30,0.8)]'>
+                      <p className='text-gold uppercase tracking-[0.2em] text-sm font-light [text-shadow:0_1px_8px_rgba(7,24,30,0.8)]'>
                         L’ART DU BARBIER SUR MESURE
                       </p>
                       <span className='w-16 h-[1px] bg-gradient-to-r from-gold to-transparent' />
@@ -408,14 +408,17 @@ export default function Home() {
                   <div className='max-w-[380px] xl:max-w-full space-y-2'>
                     <Reveal variant='blur-in' delay={0.4} duration={1}>
                       <div>
-                        <span className='block text-4xl md:text-5xl lg:text-8xl font-title text-gold leading-[1.1] tracking-[0.02em] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
-                          BARBIER & COIFFEUR
+                        <span className='block text-4xl md:text-5xl lg:text-8xl font-title text-gold leading-[0.8] tracking-[-4px] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
+                          BARBIER
+                        </span>
+                        <span className='block text-4xl md:text-5xl lg:text-8xl font-title text-gold leading-[0.8] tracking-[-4px] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
+                          & COIFFEUR
                         </span>
                       </div>
                     </Reveal>
                     <Reveal variant='blur-in' delay={0.6} duration={1}>
                       <div>
-                        <span className='block text-2xl md:text-3xl lg:text-5xl font-title text-gold/85 leading-[1.1] tracking-[0.15em] font-light [text-shadow:0_2px_8px_rgba(7,24,30,0.7),0_4px_16px_rgba(7,24,30,0.4)]'>
+                        <span className='block text-2xl md:text-3xl lg:text-5xl font-title text-gold/85 leading-[0.4] tracking-[-0.5px] font-light [text-shadow:0_2px_8px_rgba(7,24,30,0.7),0_4px_16px_rgba(7,24,30,0.4)]'>
                           homme à Paris
                         </span>
                       </div>
@@ -480,7 +483,7 @@ export default function Home() {
           </div>
 
           {/* Static Stats for Desktop */}
-          <div className='hidden lg:block absolute top-[50vh lg:top-[40vh] xl:top-[42vh] 2xl:top-[40vh] right-16 z-20'>
+          <div className='hidden lg:block absolute top-[50vh] right-16 z-20'>
             <div className='flex flex-col gap-4 items-end justify-end'>
               {[
                 { label: 'Années d\u2019expérience', val: '23+' },
@@ -551,14 +554,14 @@ export default function Home() {
 
               <div className='space-y-10 lg:space-y-12'>
                 <Reveal variant='fade-up' delay={0.2}>
-                  <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-gold leading-[1.4] tracking-wide'>
+                  <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-gold leading-[0.9] tracking-[0.002em]'>
                     Plus de <span className='text-gold/90 font-semibold'>23 ans</span> au service du{' '}
                     <span className='text-gold/90 font-semibold'>style masculin</span>
                   </h2>
                 </Reveal>
 
                 <Reveal variant='fade-up' delay={0.3}>
-                  <p className='text-cream/90 text-base lg:text-lg leading-relaxed'>
+                  <p className='text-cream/90 text-base lg:text-lg leading-[1.4] tracking-[0.01em]'>
                     Fondé par <span className='text-gold font-medium'>Riccardo</span>, maître
                     barbier reconnu, nous maîtrisons les{' '}
                     <span className='text-gold font-medium'>techniques classiques</span> comme les
@@ -592,7 +595,7 @@ export default function Home() {
                             <h3 className='text-gold text-base font-semibold uppercase tracking-wider mb-2'>
                               Savoir-faire artisanal
                             </h3>
-                            <p className='text-cream/80 text-base leading-relaxed'>
+                            <p className='text-cream/80 text-base leading-[1.4] tracking-[0.01em]'>
                               Formés aux meilleures écoles, nous perpétuons les gestes authentiques
                               du métier avec passion et rigueur.
                             </p>
@@ -626,7 +629,7 @@ export default function Home() {
                             <h3 className='text-gold text-base font-semibold uppercase tracking-wider mb-2'>
                               Produits premium
                             </h3>
-                            <p className='text-cream/80 text-base leading-relaxed'>
+                            <p className='text-cream/80 text-base leading-[1.4] tracking-[0.01em]'>
                               Huiles essentielles, baumes naturels et cosmétiques haut de gamme pour
                               un résultat impeccable.
                             </p>

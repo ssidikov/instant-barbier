@@ -9,6 +9,9 @@ export default function CookieConsent() {
 
   useEffect(() => {
     setMounted(true)
+  }, [])
+
+  useEffect(() => {
     const consent = localStorage.getItem('cookie-consent')
     if (!consent) {
       // Small delay so it doesn't flash on load

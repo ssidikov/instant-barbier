@@ -6,7 +6,7 @@ type MaskedTextProps = {
   delay?: number
 }
 
-export default function MaskedText({ children, className = '', delay = 0 }: MaskedTextProps) {
+export default function MaskedText({ children, className = '' }: MaskedTextProps) {
   return (
     <div className={`overflow-hidden ${className}`}>
       <div>{children}</div>

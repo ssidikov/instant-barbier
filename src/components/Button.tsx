@@ -24,7 +24,7 @@ export default function Button({ children, href, className = '' }: ButtonProps) 
       <span className='absolute inset-0 border-2 border-gold/50 opacity-0 group-hover:opacity-100 scale-110 group-hover:scale-100 transition-all duration-700' />
 
       {/* Text */}
-      <span className='relative block px-8 py-4 text-gold group-hover:text-navy uppercase tracking-[0.25em] text-xs font-semibold transition-all duration-300 group-hover:tracking-[0.3em]'>
+      <span className='relative block px-8 py-4 text-gold group-hover:text-navy uppercase tracking-[0.2em] text-xs font-semibold transition-all duration-300'>
         {children}
       </span>
 
