@@ -480,7 +480,7 @@ export default function Home() {
           </div>
 
           {/* Static Stats for Desktop */}
-          <div className='hidden lg:block absolute top-[50vh] right-16 z-20'>
+          <div className='hidden lg:block absolute top-[50vh lg:top-[40vh] xl:top-[42vh] 2xl:top-[40vh] right-16 z-20'>
             <div className='flex flex-col gap-4 items-end justify-end'>
               {[
                 { label: 'Années d\u2019expérience', val: '23+' },
@@ -534,8 +534,8 @@ export default function Home() {
                 <Reveal variant='scale-up' duration={1.2} className='aspect-[4/5]'>
                   <div className='relative aspect-[9/16] md:aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'>
                     <video
-                      autoPlay
-                      loop
+                      // autoPlay
+                      // loop
                       muted
                       playsInline
                       className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'>

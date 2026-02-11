@@ -37,8 +37,13 @@
   h1,
   h2,
   h3,
-  h4,
-  h5 {
+  h4 {
+    font-family: 'Sweet Sans Pro', var(--font-sweet), sans-serif;
+    color: var(--color-gold);
+  }
+
+  h5,
+  h6 {
     font-family: 'Sweet Sans Pro', var(--font-sweet), sans-serif;
     color: var(--color-gold);
     text-transform: uppercase;
@@ -207,5 +212,206 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PREMIUM TYPOGRAPHY SYSTEM
+   Sweet Sans Pro (headings) + Mulish (body)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* --- Display: Hero headlines, page titles --- */
+.type-display {
+  font-family: 'Sweet Sans Pro', var(--font-sweet), sans-serif;
+  font-size: 4.5rem;
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+/* --- H1: Primary page headings --- */
+.type-h1 {
+  font-family: 'Sweet Sans Pro', var(--font-sweet), sans-serif;
+  font-size: 3.5rem;
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+}
+
+/* --- H2: Section headings --- */
+.type-h2 {
+  font-family: 'Sweet Sans Pro', var(--font-sweet), sans-serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+/* --- H3: Sub-section headings --- */
+.type-h3 {
+  font-family: 'Sweet Sans Pro', var(--font-sweet), sans-serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0em;
+}
+
+/* --- H4: Card titles, feature headings --- */
+.type-h4 {
+  font-family: 'Sweet Sans Pro', var(--font-sweet), sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+
+/* --- H5: Small section labels (uppercase) --- */
+.type-h5 {
+  font-family: 'Sweet Sans Pro', var(--font-sweet), sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* --- H6: Smallest label (uppercase) --- */
+.type-h6 {
+  font-family: 'Sweet Sans Pro', var(--font-sweet), sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* --- Subtitle: Lead paragraphs, hero descriptions --- */
+.type-subtitle {
+  font-family: var(--font-muli);
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0em;
+}
+
+/* --- Body Large: Featured paragraphs --- */
+.type-body-lg {
+  font-family: var(--font-muli);
+  font-size: 1.125rem;
+  font-weight: 300;
+  line-height: 1.75;
+  letter-spacing: 0em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MARQUEE ANIMATION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes marquee-rtl {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-rtl {
+  animation: marquee-rtl 300s linear infinite;
+}
+
+/* --- Body: Default text --- */
+.type-body {
+  font-family: var(--font-muli);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.7;
+  letter-spacing: 0em;
+}
+
+/* --- Body Small: Secondary text, descriptions --- */
+.type-body-sm {
+  font-family: var(--font-muli);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: 0.005em;
+}
+
+/* --- Caption: Metadata, timestamps, fine print --- */
+.type-caption {
+  font-family: var(--font-muli);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+/* --- Overline: Section label above headings (uppercase) --- */
+.type-overline {
+  font-family: var(--font-muli);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* --- Button: CTA text (uppercase) --- */
+.type-button {
+  font-family: var(--font-muli);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* --- Nav: Navigation links (uppercase) --- */
+.type-nav {
+  font-family: var(--font-muli);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+/* --- Mobile responsive overrides --- */
+@media (max-width: 768px) {
+  .type-display {
+    font-size: 2.5rem;
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+  }
+
+  .type-h1 {
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .type-h2 {
+    font-size: 1.75rem;
+    line-height: 1.1;
+    letter-spacing: -0.005em;
+  }
+
+  .type-h3 {
+    font-size: 1.375rem;
+    line-height: 1.2;
+  }
+
+  .type-h4 {
+    font-size: 1.125rem;
+  }
+
+  .type-body-lg {
+    font-size: 1rem;
+  }
+
+  .type-body {
+    font-size: 0.9375rem;
   }
 }
