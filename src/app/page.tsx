@@ -537,8 +537,8 @@ export default function Home() {
                 <Reveal variant='scale-up' duration={1.2} className='aspect-[4/5]'>
                   <div className='relative aspect-[9/16] md:aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'>
                     <video
-                      // autoPlay
-                      // loop
+                      autoPlay
+                      loop
                       muted
                       playsInline
                       className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'>
