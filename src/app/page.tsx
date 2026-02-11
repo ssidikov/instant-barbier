@@ -408,17 +408,17 @@ export default function Home() {
                   <div className='max-w-[380px] xl:max-w-full space-y-2'>
                     <Reveal variant='blur-in' delay={0.4} duration={1}>
                       <div>
-                        <span className='block text-4xl md:text-5xl lg:text-8xl font-title text-gold leading-[0.8] tracking-[-2px] md:tracking-[-4px] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
+                        <span className='block text-6xl md:text-7xl lg:text-8xl font-title text-gold leading-[0.8] tracking-[-2px] md:tracking-[-4px] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
                           BARBIER
                         </span>
-                        <span className='block text-4xl md:text-5xl lg:text-8xl font-title text-gold leading-[0.8] tracking-[-2px] md:tracking-[-4px] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
+                        <span className='block text-6xl md:text-7xl lg:text-8xl font-title text-gold leading-[0.8] tracking-[-2px] md:tracking-[-4px] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
                           & COIFFEUR
                         </span>
                       </div>
                     </Reveal>
                     <Reveal variant='blur-in' delay={0.6} duration={1}>
                       <div>
-                        <span className='block text-2xl md:text-3xl lg:text-5xl font-title text-gold/85 leading-[0.4] tracking-[-0.5px] font-light [text-shadow:0_2px_8px_rgba(7,24,30,0.7),0_4px_16px_rgba(7,24,30,0.4)]'>
+                        <span className='block text-3xl md:text-4xl lg:text-5xl font-title text-gold/85 leading-[0.4] tracking-[-0.5px] font-light [text-shadow:0_2px_8px_rgba(7,24,30,0.7),0_4px_16px_rgba(7,24,30,0.4)]'>
                           homme à Paris
                         </span>
                       </div>

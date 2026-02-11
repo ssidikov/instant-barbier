@@ -12,20 +12,19 @@ export default function Footer() {
         </h2>
 
         {/* Logo Marquee - Moved under Headline */}
-        <div
-          className='relative w-full overflow-hidden py-6 md:py-8 mb-8 md:mb-12 -mx-5 md:-mx-6 lg:-mx-8 px-0'
-          style={{ width: 'calc(100% + 2.5rem)' }}>
+        <div className='relative w-screen left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] overflow-hidden py-6 md:py-8 mb-8 md:mb-12 bg-navy/50 backdrop-blur-sm border-y border-gold/5'>
           <div className='animate-marquee-rtl flex items-center gap-16 w-max'>
-            {/* Duplicate logos for seamless loop */}
-            {[...Array(12)].map((_, i) => (
-              <Image
-                key={i}
-                src='/logo/logo-golden.svg'
-                alt="L'Instant Barbier"
-                width={120}
-                height={120}
-                className='h-20 sm:h-32 md:h-40 lg:h-80 w-auto object-contain opacity-80'
-              />
+            {/* Duplicate logos for seamless loop - increased count for wide screens */}
+            {[...Array(20)].map((_, i) => (
+              <div key={i} className='relative flex-shrink-0'>
+                <Image
+                  src='/logo/logo-golden.svg'
+                  alt="L'Instant Barbier"
+                  width={120}
+                  height={120}
+                  className='h-20 sm:h-32 md:h-40 lg:h-80 w-auto object-contain opacity-80'
+                />
+              </div>
             ))}
           </div>
         </div>
