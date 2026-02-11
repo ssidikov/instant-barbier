@@ -104,7 +104,7 @@ export default function SalonPage() {
                 <div className='lg:col-span-4 lg:pb-8'>
                   <Reveal variant='fade-side' delay={0.4}>
                     <p className='text-cream/60 text-lg font-light leading-relaxed max-w-xs'>
-                      Un lieu d'élégance dédié à l'excellence masculine.
+                      Un lieu d&apos;élégance dédié à l&apos;excellence masculine.
                     </p>
                     <div className='mt-6 w-16 h-px bg-gold/40' />
                   </Reveal>
@@ -141,7 +141,7 @@ export default function SalonPage() {
                     "
                   </span>
                   <h2 className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[1.1] -mt-16'>
-                    Bien plus qu'un
+                    Bien plus qu&apos;un
                     <span className='block text-gold'>salon de coiffure</span>
                   </h2>
                 </Reveal>
@@ -152,7 +152,7 @@ export default function SalonPage() {
                 <Reveal variant='fade-side' delay={0.2}>
                   <p className='text-xl md:text-2xl text-cream/70 font-light leading-relaxed'>
                     Situé au cœur du <strong className='text-gold font-normal'>Marais</strong>,
-                    L'Instant Barbier est un lieu pensé pour l'élégance masculine, où le
+                    L&apos;Instant Barbier est un lieu pensé pour l&apos;élégance masculine, où le
                     savoir-faire artisanal rencontre une atmosphère raffinée.
                   </p>
                   <div className='mt-8 flex items-center gap-4'>
@@ -207,7 +207,7 @@ export default function SalonPage() {
               <div className='lg:col-span-5 lg:pl-8'>
                 <Reveal variant='fade-up'>
                   <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
-                    01 — L'Espace
+                    01 — L&apos;Espace
                   </span>
                 </Reveal>
                 <Reveal variant='fade-up' delay={0.1}>
@@ -220,13 +220,14 @@ export default function SalonPage() {
                 <Reveal variant='fade-up' delay={0.2}>
                   <p className='text-cream/70 text-lg font-light leading-relaxed mb-6'>
                     Dès votre entrée, plongez dans une ambiance chaleureuse et apaisante. Les
-                    matières nobles et l'éclairage maîtrisé créent un espace propice à la détente.
+                    matières nobles et l&apos;éclairage maîtrisé créent un espace propice à la
+                    détente.
                   </p>
                 </Reveal>
                 <Reveal variant='fade-up' delay={0.3}>
                   <p className='text-cream/50 text-base font-light leading-relaxed'>
-                    Chaque détail reflète notre exigence : un lieu où l'on prend le temps, où chaque
-                    client est unique.
+                    Chaque détail reflète notre exigence : un lieu où l&apos;on prend le temps, où
+                    chaque client est unique.
                   </p>
                 </Reveal>
               </div>
@@ -248,7 +249,7 @@ export default function SalonPage() {
                 02 — Savoir-Faire
               </span>
               <h3 className='text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-title text-cream leading-[0.9]'>
-                L'Art du
+                L&apos;Art du
                 <br />
                 <span className='text-gold'>Barbier</span>
               </h3>
@@ -436,7 +437,7 @@ export default function SalonPage() {
                       </svg>
                     </div>
                     <div>
-                      <h4 className='text-gold font-title text-2xl mb-2'>L'Instant Barbier</h4>
+                      <h4 className='text-gold font-title text-2xl mb-2'>L&apos;Instant Barbier</h4>
                       <p className='text-cream/60 font-light'>
                         Rue des Archives
                         <br />
