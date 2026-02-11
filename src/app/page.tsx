@@ -331,32 +331,34 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           HERO SECTION
       ═══════════════════════════════════════════════════════════════════ */}
-        <section className='relative h-screen flex items-center overflow-hidden'>
+        <section className='relative min-h-screen flex items-center overflow-hidden'>
           {/* Static Background Patterns */}
           <div className='absolute inset-0 opacity-10 hidden md:block'>
             <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-gold rounded-full blur-[120px]' />
             <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold rounded-full blur-[120px]' />
           </div>
 
-          {/* Background Image */}
+          {/* Background Image - extends behind header */}
           <div className='absolute inset-0'>
             <div className='absolute inset-0 scale-110'>
               <div
                 className='absolute inset-0 bg-cover bg-center'
                 style={{ backgroundImage: `url('${BACKGROUNDS.homeHero.src}')` }}
               />
+              {/* Main gradient overlay - stronger on left for text readability */}
               <div
                 className='absolute inset-0'
                 style={{
                   background:
-                    'linear-gradient(to right, rgba(7, 24, 30, 0.98) 0%, rgba(7, 24, 30, 0.93) 30%, rgba(7, 24, 30, 0.65) 60%, transparent 100%)',
+                    'linear-gradient(to right, rgba(7, 24, 30, 0.96) 0%, rgba(7, 24, 30, 0.90) 35%, rgba(7, 24, 30, 0.60) 65%, transparent 100%)',
                 }}
               />
+              {/* Subtle vignette effect */}
               <div
-                className='absolute top-0 inset-x-0 h-40'
+                className='absolute inset-0'
                 style={{
                   background:
-                    'linear-gradient(to bottom, rgba(7, 24, 30, 0.65) 0%, rgba(7, 24, 30, 0.25) 50%, transparent 100%)',
+                    'radial-gradient(ellipse at center, transparent 0%, rgba(7, 24, 30, 0.3) 100%)',
                 }}
               />
             </div>
@@ -368,138 +370,103 @@ export default function Home() {
           {/* Grid Overlay */}
           <div className='absolute inset-0 bg-[linear-gradient(rgba(156,131,88,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(156,131,88,0.03)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]' />
 
-          {/* Content */}
-          <div className='relative z-10 h-full flex'>
-            {/* Logo on left side */}
-            <div className='hidden md:flex w-[15vw] shrink-0 h-full overflow-hidden relative items-center justify-center'>
-              <div className='flex flex-col items-center h-max animate-marquee-vertical-up min-h-full'>
-                {/* Duplicated for seamless loop (enough to cover >100vh + buffer) */}
-                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
-                  <div key={i} className='shrink-0 h-[40vh] flex items-center justify-center'>
-                    <Image
-                      src={LOGOS.golden.src}
-                      alt={LOGOS.golden.alt}
-                      width={100}
-                      height={300}
-                      className='w-[100vw] h-auto object-contain drop-shadow-[0_4px_16px_rgba(156,131,88,0.4)] opacity-60 -rotate-90'
-                      priority={i === 0}
-                    />
+          {/* Content - True vertical centering */}
+          <div className='relative z-10 w-full py-32 md:py-40'>
+            <Container>
+              <div className='max-w-4xl'>
+                {/* Subtitle */}
+                <Reveal variant='fade-side' delay={0.1} duration={0.8}>
+                  <div className='flex items-center gap-4 mb-8'>
+                    <span className='w-12 h-[1px] bg-gradient-to-r from-transparent to-gold/60' />
+                    <p className='text-gold uppercase tracking-[0.25em] text-xs md:text-sm font-light [text-shadow:0_2px_12px_rgba(7,24,30,0.9)]'>
+                      L&apos;ART DU BARBIER SUR MESURE
+                    </p>
+                    <span className='w-16 h-[1px] bg-gradient-to-r from-gold to-transparent' />
                   </div>
-                ))}
-              </div>
-            </div>
+                </Reveal>
 
-            {/* Hero content */}
-            <Container className='flex-1 flex items-center pt-32 md:pt-24'>
-              <div className='w-full flex flex-col'>
-                <div className='max-w-3xl space-y-8 md:space-y-10'>
-                  {/* Subtitle */}
-                  <Reveal variant='fade-side' delay={0.2}>
-                    <div className='flex items-center gap-4'>
-                      <span className='w-16 h-[1px] bg-gradient-to-r from-transparent to-gold' />
-                      <p className='text-gold uppercase tracking-[0.2em] text-sm font-light [text-shadow:0_1px_8px_rgba(7,24,30,0.8)]'>
-                        L’ART DU BARBIER SUR MESURE
-                      </p>
-                      <span className='w-16 h-[1px] bg-gradient-to-r from-gold to-transparent' />
-                    </div>
+                {/* Main Title - Enhanced scale */}
+                <div className='mb-6'>
+                  <Reveal variant='blur-in' delay={0.3} duration={0.9}>
+                    <h1 className='text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-[0.85] tracking-[-0.02em] mb-4 [text-shadow:0_4px_24px_rgba(7,24,30,0.9),0_8px_48px_rgba(7,24,30,0.6)] ml-[-6px]'>
+                      <span className='text-gold'>Coiffeur</span>
+                      <span className='text-gold block'>& Barbier</span>
+                    </h1>
                   </Reveal>
+                  <Reveal variant='blur-in' delay={0.5} duration={0.8}>
+                    <p className='text-xl md:text-2xl lg:text-3xl font-title text-gold/80 leading-[0.5] tracking-wide font-light [text-shadow:0_2px_16px_rgba(7,24,30,0.8)]'>
+                      homme à Paris le Marais
+                    </p>
+                  </Reveal>
+                </div>
 
-                  {/* Main Title */}
-                  <div className='max-w-[380px] xl:max-w-full space-y-2'>
-                    <Reveal variant='blur-in' delay={0.4} duration={1}>
-                      <div>
-                        <span className='block text-6xl md:text-7xl lg:text-8xl font-title text-gold leading-[0.8] tracking-[-2px] md:tracking-[-4px] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
-                          BARBIER
-                        </span>
-                        <span className='block text-6xl md:text-7xl lg:text-8xl font-title text-gold leading-[0.8] tracking-[-2px] md:tracking-[-4px] [text-shadow:0_2px_12px_rgba(7,24,30,0.8),0_4px_24px_rgba(7,24,30,0.5)]'>
-                          & COIFFEUR
-                        </span>
-                      </div>
-                    </Reveal>
-                    <Reveal variant='blur-in' delay={0.6} duration={1}>
-                      <div>
-                        <span className='block text-3xl md:text-4xl lg:text-5xl font-title text-gold/85 leading-[0.4] tracking-[-0.5px] font-light [text-shadow:0_2px_8px_rgba(7,24,30,0.7),0_4px_16px_rgba(7,24,30,0.4)]'>
-                          homme à Paris
-                        </span>
-                      </div>
-                    </Reveal>
+                {/* CTA Button - After context */}
+                <Reveal variant='fade-up' delay={0.9} duration={0.7}>
+                  <div className='relative inline-flex mb-16 mt-8'>
+                    <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-40 bg-gold/15 blur-3xl rounded-full animate-cta-glow' />
+                    <Button href='/reservation'>Prendre rendez-vous</Button>
                   </div>
+                </Reveal>
 
-                  {/* Mobile Logo */}
-                  <div className='md:hidden w-full overflow-hidden flex justify-center py-4'>
-                    <Image
-                      src={LOGOS.golden.src}
-                      alt={LOGOS.golden.alt}
-                      width={120}
-                      height={120}
-                      className='h-14 w-auto object-contain opacity-50'
-                    />
-                  </div>
-
-                  {/* Description */}
-                  <Reveal variant='fade-up' delay={0.8}>
-                    <div className='text-lg md:text-xl text-cream/90 max-w-xl font-light leading-relaxed relative pl-6 border-l-2 border-gold/50 [text-shadow:0_1px_8px_rgba(7,24,30,0.8)]'>
-                      <p>
-                        <strong className='text-gold font-medium'>Au cœur du Marais</strong>,
-                        L&apos;Instant Barbier est un{' '}
-                        <strong className='text-gold font-medium'>
-                          salon de coiffure homme à Paris
-                        </strong>{' '}
-                        dédié à l&apos;élégance, au détail et au savoir-faire artisanal.
-                      </p>
-                    </div>
-                  </Reveal>
-
-                  {/* CTA Button */}
-                  <Reveal variant='fade-up' delay={1}>
-                    <div className='pt-6 relative inline-flex'>
-                      <div className='cta-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 bg-gold/20 blur-2xl rounded-full' />
-                      <Button href='/reservation'>Prendre rendez-vous</Button>
-                    </div>
-                  </Reveal>
-
-                  {/* Static Stats for Mobile */}
-                  <div className='grid grid-cols-2 sm:flex lg:hidden gap-3 sm:gap-4 pt-10'>
-                    {[
-                      { label: 'Années d\u2019expérience', val: '23+' },
-                      { label: 'Clients satisfaits', val: '2000+' },
-                      { label: 'Note moyenne sur Google', val: '5★' },
-                    ].map((stat, i) => (
-                      <Reveal key={i} variant='fade-up' delay={1.2 + i * 0.1}>
-                        <div className='flex items-center gap-3 bg-navy/60 backdrop-blur-xl border border-gold/15 rounded-xl px-5 py-3 shadow-[0_4px_16px_rgba(0,0,0,0.25)]'>
-                          <div className='text-2xl font-title text-gold font-light leading-none'>
-                            {stat.val}
-                          </div>
-                          <div className='text-[0.625rem] text-cream/50 tracking-[0.12em] font-light'>
-                            {stat.label}
-                          </div>
+                {/* Mobile Stats */}
+                <div className='grid grid-cols-2 sm:grid-cols-3 lg:hidden gap-4'>
+                  {[
+                    { label: 'Années d\u2019expérience', val: '23+' },
+                    { label: 'Clients satisfaits', val: '2000+' },
+                    { label: 'Note Google', val: '5★' },
+                  ].map((stat, i) => (
+                    <Reveal key={i} variant='fade-up' delay={1.1 + i * 0.1}>
+                      <div className='bg-navy/40 backdrop-blur-xl border border-gold/10 rounded-xl px-4 py-4 shadow-xl'>
+                        <div className='text-3xl font-title text-gold font-light leading-none mb-2'>
+                          {stat.val}
                         </div>
-                      </Reveal>
-                    ))}
-                  </div>
+                        <div className='text-[0.625rem] text-cream/60 tracking-[0.15em] font-light uppercase'>
+                          {stat.label}
+                        </div>
+                      </div>
+                    </Reveal>
+                  ))}
                 </div>
               </div>
             </Container>
           </div>
 
-          {/* Static Stats for Desktop */}
-          <div className='hidden lg:block absolute top-[50vh] right-16 z-20'>
-            <div className='flex flex-col gap-4 items-end justify-end'>
+          {/* Desktop Stats - Right side */}
+          <div className='hidden lg:block absolute top-1/2 -translate-y-1/2 right-12 xl:right-20 z-20'>
+            <div className='flex flex-col gap-6'>
               {[
                 { label: 'Années d\u2019expérience', val: '23+' },
                 { label: 'Clients satisfaits', val: '2000+' },
-                { label: 'Note moyenne sur Google', val: '5★' },
+                { label: 'Note Google', val: '5★' },
               ].map((stat, i) => (
                 <div
                   key={stat.label}
-                  className='flex items-center gap-5 bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] rounded-2xl px-7 py-5 shadow-xl ring-1 ring-white/[0.03] animate-slide-in-up opacity-0'
-                  style={{ animationDelay: `${1000 + i * 1000}ms` }}>
-                  <div className='text-5xl font-title text-gold font-light leading-none'>
+                  className='flex items-center gap-6 bg-white/[0.03] backdrop-blur-2xl border border-white/[0.06] rounded-2xl px-8 py-6 shadow-2xl ring-1 ring-white/[0.02] animate-slide-in-up opacity-0'
+                  style={{ animationDelay: `${800 + i * 200}ms` }}>
+                  <div className='text-5xl xl:text-6xl font-title text-gold font-light leading-none'>
                     {stat.val}
                   </div>
-                  <div className='text-xs text-cream/60 tracking-[0.12em] font-light leading-tight'>
+                  <div className='text-xs text-cream/60 tracking-[0.15em] font-light leading-tight uppercase max-w-[100px]'>
                     {stat.label}
                   </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom Logo Marquee */}
+          <div className='absolute bottom-0 left-0 w-full h-24 overflow-hidden z-20 flex items-end pb-6 pointer-events-none'>
+            <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent' />
+            <div className='flex items-center w-max animate-marquee-rtl relative z-10'>
+              {[...Array(30)].map((_, i) => (
+                <div key={i} className='shrink-0 px-6 lg:px-10 opacity-25'>
+                  <Image
+                    src={LOGOS.golden.src}
+                    alt={LOGOS.golden.alt}
+                    width={100}
+                    height={50}
+                    className='w-auto h-7 lg:h-10 object-contain'
+                  />
                 </div>
               ))}
             </div>
@@ -537,8 +504,8 @@ export default function Home() {
                 <Reveal variant='scale-up' duration={1.2} className='aspect-[4/5]'>
                   <div className='relative aspect-[9/16] md:aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'>
                     <video
-                      autoPlay
-                      loop
+                      // autoPlay
+                      // loop
                       muted
                       playsInline
                       className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'>
@@ -959,19 +926,27 @@ export default function Home() {
           />
           <div className='absolute inset-0 bg-navy/60' />
           <div className='absolute inset-0 flex items-center justify-center'>
-            <div className='text-center'>
-              <div className='flex items-center justify-center gap-4 mb-4'>
-                <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold' />
-                <span className='text-gold text-xs uppercase tracking-[0.4em]'>
-                  Le Marais, Paris
-                </span>
-                <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent' />
+            <Reveal variant='fade-up' duration={1}>
+              <div className='text-center'>
+                <Reveal variant='fade-up' delay={0.2}>
+                  <div className='flex items-center justify-center gap-4 mb-4'>
+                    <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold' />
+                    <span className='text-gold text-xs uppercase tracking-[0.4em]'>
+                      Le Marais, Paris
+                    </span>
+                    <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent' />
+                  </div>
+                </Reveal>
+                <Reveal variant='blur-in' delay={0.4} duration={1.2}>
+                  <h2 className='text-4xl md:text-6xl font-title text-gold'>
+                    Un Cadre d&apos;Exception
+                  </h2>
+                </Reveal>
+                <Reveal variant='scale-up' delay={0.6}>
+                  <div className='mt-8 mx-auto h-px bg-gold/50 w-24' />
+                </Reveal>
               </div>
-              <h2 className='text-4xl md:text-6xl font-title text-gold'>
-                Un Cadre d&apos;Exception
-              </h2>
-              <div className='mt-8 mx-auto h-px bg-gold/50 w-24' />
-            </div>
+            </Reveal>
           </div>
         </section>
 
@@ -980,37 +955,39 @@ export default function Home() {
       ═══════════════════════════════════════════════════════════════════ */}
         <Section id='avis' className='bg-navy border-t border-gold/10'>
           <Container>
-            <SectionTitle subtitle='Témoignages' title='Avis Clients' />
+            <Reveal variant='fade-up'>
+              <SectionTitle subtitle='Témoignages' title='Avis Clients' />
+            </Reveal>
 
             <div className='grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8'>
               {reviews.map((review, index) => (
-                <article
-                  key={index}
-                  className='bg-dark/50 border border-gold/20 p-8 relative hover:border-gold/40 cursor-default transition-all duration-500 h-full overflow-visible group/review flex flex-col'>
-                  <div className='absolute -top-10 left-6'>
-                    <span className='text-gold text-[4rem] md:text-[5.5rem] leading-normal font-title'>
-                      &ldquo;
-                    </span>
-                  </div>
-
-                  <div className='pt-4 flex flex-col flex-1'>
-                    <p className='text-cream/80 text-sm leading-relaxed mb-6 italic flex-1'>
-                      {review.text}
-                    </p>
-
-                    <div className='flex items-center justify-between'>
-                      <div className='flex items-center gap-3'>
-                        <div className='w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center'>
-                          <span className='text-gold text-sm font-title'>
-                            {review.author.charAt(0)}
-                          </span>
-                        </div>
-                        <span className='text-cream text-sm'>{review.author}</span>
-                      </div>
-                      <StarRating rating={review.rating} />
+                <Reveal key={index} variant='fade-up' delay={index * 0.15} threshold={0.1}>
+                  <article className='bg-dark/50 border border-gold/20 p-8 relative hover:border-gold/40 hover:-translate-y-1 hover:shadow-2xl hover:shadow-gold/10 cursor-default transition-all duration-500 h-full overflow-visible group/review flex flex-col'>
+                    <div className='absolute -top-10 left-6'>
+                      <span className='text-gold text-[4rem] md:text-[5.5rem] leading-normal font-title opacity-90 group-hover/review:opacity-100 transition-opacity duration-500'>
+                        &ldquo;
+                      </span>
                     </div>
-                  </div>
-                </article>
+
+                    <div className='pt-4 flex flex-col flex-1'>
+                      <p className='text-cream/80 text-sm leading-relaxed mb-6 italic flex-1'>
+                        {review.text}
+                      </p>
+
+                      <div className='flex items-center justify-between'>
+                        <div className='flex items-center gap-3'>
+                          <div className='w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center group-hover/review:bg-gold/30 transition-colors duration-500'>
+                            <span className='text-gold text-sm font-title'>
+                              {review.author.charAt(0)}
+                            </span>
+                          </div>
+                          <span className='text-cream text-sm'>{review.author}</span>
+                        </div>
+                        <StarRating rating={review.rating} />
+                      </div>
+                    </div>
+                  </article>
+                </Reveal>
               ))}
             </div>
 
@@ -1041,59 +1018,74 @@ export default function Home() {
         <Section id='horaires' className='bg-dark'>
           <Container>
             <div>
-              <div className='flex items-center justify-center gap-4 mb-8'>
-                <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold' />
-                <span className='text-gold text-xs uppercase tracking-[0.3em] font-body'>
-                  Informations pratiques
-                </span>
-                <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent' />
-              </div>
+              <Reveal variant='fade-up'>
+                <div className='flex items-center justify-center gap-4 mb-8'>
+                  <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold' />
+                  <span className='text-gold text-xs uppercase tracking-[0.3em] font-body'>
+                    Informations pratiques
+                  </span>
+                  <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent' />
+                </div>
+              </Reveal>
 
-              <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-gold mb-16 leading-tight'>
-                Votre barbier à Paris 3ᵉ — Le Marais
-              </h2>
+              <Reveal variant='fade-up' delay={0.2}>
+                <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-gold mb-16 leading-tight'>
+                  Votre barbier à Paris 3ᵉ — Le Marais
+                </h2>
+              </Reveal>
 
               <div className='grid lg:grid-cols-2 gap-16 lg:gap-24'>
                 <div>
-                  <h3 className='text-lg font-title text-gold/90 mb-6 tracking-wide'>
-                    Horaires d&apos;ouverture
-                  </h3>
+                  <Reveal variant='fade-up' delay={0.3}>
+                    <h3 className='text-lg font-title text-gold/90 mb-6 tracking-wide'>
+                      Horaires d&apos;ouverture
+                    </h3>
+                  </Reveal>
 
                   <div className='space-y-0'>
                     {hours.map((item, index) => (
-                      <div
+                      <Reveal
                         key={index}
-                        className={`flex justify-between items-center py-3.5 border-b border-gold/8 ${
-                          item.hours === 'Fermé' ? 'opacity-40' : ''
-                        }`}>
-                        <span className='text-cream/80 text-[15px] font-body'>{item.day}</span>
-                        <span
-                          className={`text-[15px] font-body tracking-wide ${
-                            item.hours === 'Fermé' ? 'text-cream/40 italic' : 'text-gold/80'
+                        variant='fade-side'
+                        delay={0.4 + index * 0.05}
+                        threshold={0.1}>
+                        <div
+                          className={`flex justify-between items-center py-3.5 border-b border-gold/8 ${
+                            item.hours === 'Fermé' ? 'opacity-40' : ''
                           }`}>
-                          {item.hours}
-                        </span>
-                      </div>
+                          <span className='text-cream/80 text-[15px] font-body'>{item.day}</span>
+                          <span
+                            className={`text-[15px] font-body tracking-wide ${
+                              item.hours === 'Fermé' ? 'text-cream/40 italic' : 'text-gold/80'
+                            }`}>
+                            {item.hours}
+                          </span>
+                        </div>
+                      </Reveal>
                     ))}
                   </div>
 
-                  <div className='mt-12'>
-                    <Button href='/reservation'>Réserver un créneau</Button>
-                  </div>
+                  <Reveal variant='fade-up' delay={0.8}>
+                    <div className='mt-12'>
+                      <Button href='/reservation'>Réserver un créneau</Button>
+                    </div>
+                  </Reveal>
                 </div>
 
-                <div className='relative group'>
-                  <div className='relative aspect-4/3 lg:aspect-auto lg:h-full min-h-[300px] md:min-h-[400px] overflow-hidden'>
-                    <div
-                      className='absolute inset-0 bg-cover bg-center'
-                      style={{ backgroundImage: `url('${BACKGROUNDS.homeSchedule.src}')` }}
-                    />
-                    <div className='absolute inset-0 bg-dark/15' />
+                <Reveal variant='scale-up' delay={0.4} threshold={0.2}>
+                  <div className='relative group'>
+                    <div className='relative aspect-4/3 lg:aspect-auto lg:h-full min-h-[300px] md:min-h-[400px] overflow-hidden'>
+                      <div
+                        className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
+                        style={{ backgroundImage: `url('${BACKGROUNDS.homeSchedule.src}')` }}
+                      />
+                      <div className='absolute inset-0 bg-dark/15' />
+                    </div>
+                    {/* Corner accent */}
+                    <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
+                    <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
                   </div>
-                  {/* Corner accent */}
-                  <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                  <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                </div>
+                </Reveal>
               </div>
             </div>
           </Container>
@@ -1104,51 +1096,59 @@ export default function Home() {
       ═══════════════════════════════════════════════════════════════════ */}
         <Section id='contact' className='bg-navy border-t border-gold/10'>
           <Container>
-            <SectionTitle subtitle='Nous Contacter' title='Contact' />
+            <Reveal variant='fade-up'>
+              <SectionTitle subtitle='Nous Contacter' title='Contact' />
+            </Reveal>
 
             <div className='grid lg:grid-cols-2 gap-12 lg:gap-20'>
-              <div className='relative'>
-                <div className='relative aspect-4/3 overflow-hidden group hover:scale-[1.02] transition-transform duration-500'>
-                  <div
-                    className='absolute inset-0 bg-cover bg-center'
-                    style={{ backgroundImage: `url('${BACKGROUNDS.homeMap.src}')` }}
-                  />
-                  <div className='absolute inset-0 bg-navy/40' />
-                  {/* Corner accent */}
-                  <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                  <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                </div>
+              <Reveal variant='scale-up' delay={0.2} threshold={0.2}>
+                <div className='relative'>
+                  <div className='relative aspect-4/3 overflow-hidden group hover:scale-[1.02] transition-transform duration-500'>
+                    <div
+                      className='absolute inset-0 bg-cover bg-center'
+                      style={{ backgroundImage: `url('${BACKGROUNDS.homeMap.src}')` }}
+                    />
+                    <div className='absolute inset-0 bg-navy/40' />
+                    {/* Corner accent */}
+                    <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
+                    <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
+                  </div>
 
-                <div className='absolute bottom-0 left-0 right-0 p-6'>
-                  <div className='bg-navy/90 backdrop-blur-sm border border-gold/30 p-4 md:p-6 space-y-3 md:space-y-4'>
-                    {[
-                      { label: 'Adresse', value: '43 rue de Turenne, 75003 Paris' },
-                      { label: 'Téléphone', value: '+33 1 42 72 00 00' },
-                      { label: 'Email', value: 'linstantbarbier@gmail.com' },
-                    ].map((item, i) => (
-                      <div key={i}>
-                        <p className='text-gold text-xs uppercase tracking-widest mb-2'>
-                          {item.label}
-                        </p>
-                        <p className='text-cream'>{item.value}</p>
-                      </div>
-                    ))}
+                  <div className='absolute bottom-0 left-0 right-0 p-6'>
+                    <div className='bg-navy/90 backdrop-blur-sm border border-gold/30 p-4 md:p-6 space-y-3 md:space-y-4'>
+                      {[
+                        { label: 'Adresse', value: '43 rue de Turenne, 75003 Paris' },
+                        { label: 'Téléphone', value: '+33 1 42 72 00 00' },
+                        { label: 'Email', value: 'linstantbarbier@gmail.com' },
+                      ].map((item, i) => (
+                        <div key={i} className='group/contact-item'>
+                          <p className='text-gold text-xs uppercase tracking-widest mb-2 group-hover/contact-item:text-gold/80 transition-colors'>
+                            {item.label}
+                          </p>
+                          <p className='text-cream'>{item.value}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Reveal>
 
               <div>
-                <p className='text-cream/70 mb-8 leading-relaxed'>
-                  Pour prendre rendez-vous, consultez notre{' '}
-                  <Link
-                    href='/prestations'
-                    className='text-gold hover:text-gold/80 underline underline-offset-4 transition-colors'>
-                    page prestations
-                  </Link>
-                  . Pour toute autre demande ou information, contactez-nous via ce formulaire.
-                </p>
+                <Reveal variant='fade-up' delay={0.3}>
+                  <p className='text-cream/70 mb-8 leading-relaxed'>
+                    Pour prendre rendez-vous, consultez notre{' '}
+                    <Link
+                      href='/prestations'
+                      className='text-gold hover:text-gold/80 underline underline-offset-4 transition-colors'>
+                      page prestations
+                    </Link>
+                    . Pour toute autre demande ou information, contactez-nous via ce formulaire.
+                  </p>
+                </Reveal>
 
-                <ContactForm />
+                <Reveal variant='fade-up' delay={0.4}>
+                  <ContactForm />
+                </Reveal>
               </div>
             </div>
           </Container>
@@ -1170,53 +1170,69 @@ export default function Home() {
 
           <Container className='relative z-10 py-20'>
             <div className='max-w-4xl mx-auto'>
-              <div className='relative bg-navy/40 backdrop-blur-xl border border-gold/20 rounded-sm p-6 md:p-8 lg:p-12 shadow-2xl overflow-hidden'>
-                <div className='absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/5 pointer-events-none' />
+              <Reveal variant='scale-up' duration={1} threshold={0.2}>
+                <div className='relative bg-navy/40 backdrop-blur-xl border border-gold/20 rounded-sm p-6 md:p-8 lg:p-12 shadow-2xl overflow-hidden'>
+                  <div className='absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/5 pointer-events-none' />
 
-                <div className='w-24 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-8' />
+                  <Reveal variant='scale-up' delay={0.2}>
+                    <div className='w-24 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-8' />
+                  </Reveal>
 
-                <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-gold mb-6 leading-tight text-center'>
-                  Réservez votre expérience chez L&apos;Instant Barbier
-                </h2>
+                  <Reveal variant='blur-in' delay={0.3} duration={1.2}>
+                    <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-gold mb-6 leading-tight text-center'>
+                      Réservez votre expérience chez L&apos;Instant Barbier
+                    </h2>
+                  </Reveal>
 
-                <p className='text-cream/90 text-base md:text-lg leading-relaxed mb-10 text-center max-w-2xl mx-auto'>
-                  Prenez rendez-vous en quelques clics et découvrez une approche exigeante et
-                  élégante de la{' '}
-                  <span className='text-gold font-medium'>
-                    coiffure homme et du barbier à Paris
-                  </span>
-                  .
-                </p>
+                  <Reveal variant='fade-up' delay={0.5}>
+                    <p className='text-cream/90 text-base md:text-lg leading-relaxed mb-10 text-center max-w-2xl mx-auto'>
+                      Prenez rendez-vous en quelques clics et découvrez une approche exigeante et
+                      élégante de la{' '}
+                      <span className='text-gold font-medium'>
+                        coiffure homme et du barbier à Paris
+                      </span>
+                      .
+                    </p>
+                  </Reveal>
 
-                <div className='flex justify-center mb-10'>
-                  <div className='relative'>
-                    <Button href='/reservation'>Prendre rendez-vous maintenant</Button>
-                  </div>
-                </div>
-
-                <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-gold/10'>
-                  {[
-                    { value: '23+', label: "Années d'expérience" },
-                    { value: '2000+', label: 'Clients satisfaits' },
-                    { value: '5★', label: 'Note moyenne sur Google' },
-                  ].map((stat, i) => (
-                    <div key={i} className='text-center'>
-                      <div className='text-2xl md:text-3xl font-title text-gold mb-2'>
-                        {stat.value}
-                      </div>
-                      <div className='text-cream/60 text-xs uppercase tracking-wider'>
-                        {stat.label}
+                  <Reveal variant='fade-up' delay={0.7}>
+                    <div className='flex justify-center mb-10'>
+                      <div className='relative'>
+                        <Button href='/reservation'>Prendre rendez-vous maintenant</Button>
                       </div>
                     </div>
-                  ))}
+                  </Reveal>
+
+                  <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-gold/10'>
+                    {[
+                      { value: '23+', label: "Années d'expérience" },
+                      { value: '2000+', label: 'Clients satisfaits' },
+                      { value: '5★', label: 'Note moyenne sur Google' },
+                    ].map((stat, i) => (
+                      <Reveal key={i} variant='fade-up' delay={0.8 + i * 0.1} threshold={0.1}>
+                        <div className='text-center'>
+                          <div className='text-2xl md:text-3xl font-title text-gold mb-2'>
+                            {stat.value}
+                          </div>
+                          <div className='text-cream/60 text-xs uppercase tracking-wider'>
+                            {stat.label}
+                          </div>
+                        </div>
+                      </Reveal>
+                    ))}
+                  </div>
+
+                  <Reveal variant='scale-up' delay={1.1}>
+                    <div className='w-24 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent mx-auto mt-8' />
+                  </Reveal>
                 </div>
+              </Reveal>
 
-                <div className='w-24 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent mx-auto mt-8' />
-              </div>
-
-              <p className='text-center text-cream/50 text-xs uppercase tracking-[0.3em] mt-8'>
-                Quartier Le Marais • Paris 3ᵉ • Réservation instantanée
-              </p>
+              <Reveal variant='fade-up' delay={1.2}>
+                <p className='text-center text-cream/50 text-xs uppercase tracking-[0.3em] mt-8'>
+                  Quartier Le Marais • Paris 3ᵉ • Réservation instantanée
+                </p>
+              </Reveal>
             </div>
           </Container>
         </section>

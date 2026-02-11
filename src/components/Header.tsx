@@ -50,37 +50,52 @@ export default function Header() {
     <>
       <header
         ref={headerRef}
-        className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+        className={`fixed w-full top-0 z-50 transition-all duration-500 ease-in-out ${
           isScrolled
-            ? 'bg-navy/85 backdrop-blur-2xl shadow-[0_4px_30px_rgba(7,24,30,0.6)] border-b border-gold/10'
-            : 'bg-transparent'
+            ? 'h-16 lg:h-20 bg-navy/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(7,24,30,0.4)] border-b border-gold/10'
+            : 'h-24 lg:h-32 bg-transparent'
         }`}>
         {/* Premium top gradient border */}
-        <div className='absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold/60 to-transparent' />
+        <div className='absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold/60 to-transparent opacity-80' />
 
         {/* Subtle shimmer effect */}
         <div className='absolute inset-0 bg-gradient-to-r from-transparent via-gold/3 to-transparent opacity-50 pointer-events-none' />
 
-        <div className='max-w-7xl mx-auto px-6 h-20 lg:h-28 flex items-center justify-between relative'>
-          {/* Logo - visible on all screens */}
-          <Link href='/' onClick={closeMenu} className='z-20'>
+        <div className='max-w-[1400px] mx-auto px-6 md:px-12 h-full flex items-center justify-between relative'>
+          {/* Logo Section - visible on all screens */}
+          <Link
+            href='/'
+            onClick={closeMenu}
+            className='relative z-30 flex items-center gap-2 group'>
             <Image
               src={LOGOS.header.src}
               alt={LOGOS.header.alt}
-              width={120}
-              height={56}
-              className='h-10 w-auto'
+              width={100}
+              height={50}
+              className='h-8 lg:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105'
+              priority
+            />
+
+            {/* Secondary Logo */}
+            <Image
+              src={LOGOS.barbierLogo.src}
+              alt={LOGOS.barbierLogo.alt}
+              width={100}
+              height={45}
+              className='h-8 lg:h-10 w-auto object-contain opacity-90 group-hover:opacity-100 transition-all duration-300'
               priority
             />
           </Link>
 
           {/* Desktop Navigation - Premium centered layout */}
-          <nav ref={navRef} className='hidden lg:flex items-center space-x-12'>
+          <nav
+            ref={navRef}
+            className='hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center space-x-8 xl:space-x-12'>
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className='group relative text-[0.7rem] uppercase tracking-[0.3em] text-cream/90 font-light hover:text-gold transition-all duration-300'>
+                className='group relative text-[0.65rem] xl:text-[0.7rem] uppercase tracking-[0.2em] xl:tracking-[0.3em] text-cream/90 font-light hover:text-gold transition-all duration-300 whitespace-nowrap'>
                 <span className='relative z-10 [text-shadow:_0_2px_12px_rgb(11_22_34_/_90%)] group-hover:[text-shadow:_0_2px_20px_rgba(175,151,120,0.6)]'>
                   {item.label}
                 </span>

@@ -41,6 +41,10 @@ export const LOGOS = {
     src: '/logo/logo-black.svg',
     alt: "L'Instant Barbier",
   },
+  barbierLogo: {
+    src: '/logo/linstant-barbier-logo.png',
+    alt: "L'Instant Barbier Logo",
+  },
 } as const satisfies Record<string, ImageData>
 
 // ── Video ──────────────────────────────────────────────────────────────────
@@ -106,7 +110,7 @@ export const GALLERY_IMAGES: GalleryImageData[] = [
 export const TEAM: TeamMemberImage[] = [
   {
     src: '/images/team/Riccardo.avif',
-    alt: 'Riccardo — Coiffeur-barbier chez L\'Instant Barbier',
+    alt: "Riccardo — Coiffeur-barbier chez L'Instant Barbier",
     name: 'RICCARDO',
     role: 'Coiffeur-barbier et directeur artistique',
     experience: "23 ans d'expérience",
@@ -151,7 +155,7 @@ export const BACKGROUNDS = {
   },
   homeInterior: {
     src: '/images/salon-interior-1.jpg',
-    alt: 'Intérieur du salon L\'Instant Barbier',
+    alt: "Intérieur du salon L'Instant Barbier",
   },
   homeSchedule: {
     src: '/images/salon-interior-2.jpg',

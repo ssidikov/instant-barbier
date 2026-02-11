@@ -470,3 +470,73 @@
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   PREMIUM HERO ANIMATIONS
+   Modern, fluid entrance animations for logo and CTA elements
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Logo entrance: slide + scale + blur reveal */
+@keyframes logo-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px) scale(0.9);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.animate-logo-slide-in {
+  animation: logo-slide-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
+  opacity: 0;
+}
+
+/* Ambient glow pulse around logo */
+@keyframes glow-pulse {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s cubic-bezier(0.45, 0.05, 0.55, 0.95) 1s infinite;
+}
+
+/* CTA button glow effect */
+@keyframes cta-glow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+}
+
+.animate-cta-glow {
+  animation: cta-glow 2.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) 1.1s infinite;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-logo-slide-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  
+  .animate-glow-pulse,
+  .animate-cta-glow {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
