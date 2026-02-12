@@ -18,7 +18,7 @@ export default function Footer() {
         <div className='relative w-screen left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] overflow-hidden py-6 md:py-8 mb-8 md:mb-12'>
           <div className='animate-marquee-rtl flex items-center gap-16 w-max'>
             {/* Duplicate logos for seamless loop - increased count for wide screens */}
-            {[...Array(20)].map((_, i) => (
+            {[...Array(3)].map((_, i) => (
               <div key={i} className='relative flex-shrink-0'>
                 <Image
                   src='/logo/logo-golden.svg'
@@ -103,15 +103,19 @@ export default function Footer() {
                 ),
               },
             ].map((item, i) => (
-              <Reveal key={i} variant='fade-up' delay={0.2 + i * 0.1} threshold={0.1}>
-                <div className='flex items-center gap-3'>
-                  <div className='w-10 h-10 border border-gold/30 flex items-center justify-center group-hover:border-gold/50 transition-colors'>
-                    {item.icon}
+              <>
+                <Reveal key={i} variant='fade-up' delay={0.2 + i * 0.1} threshold={0.1}>
+                  <div className='flex items-center gap-3'>
+                    <div className='w-10 h-10 border border-gold/30 flex items-center justify-center group-hover:border-gold/50 transition-colors'>
+                      {item.icon}
+                    </div>
+                    {item.content}
                   </div>
-                  {item.content}
-                </div>
-                {i < 2 && <div className='hidden md:block w-px h-4 bg-cream/20'></div>}
-              </Reveal>
+                </Reveal>
+                {i < 2 && (
+                  <div key={`sep-${i}`} className='hidden md:block w-px h-6 bg-cream/20'></div>
+                )}
+              </>
             ))}
           </div>
 

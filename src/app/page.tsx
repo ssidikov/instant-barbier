@@ -10,6 +10,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import ContactForm from '@/components/ContactForm'
 import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { LOGOS, VIDEO, GALLERY_IMAGES, TEAM, PRODUCT_GRID, BACKGROUNDS } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -395,12 +396,12 @@ export default function Home() {
           <div className='absolute inset-0 bg-[linear-gradient(rgba(156,131,88,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(156,131,88,0.03)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]' />
 
           {/* Content - True vertical centering */}
-          <div className='relative z-10 w-full py-32 md:py-40'>
+          <div className='relative z-10 w-full pt-32 pb-12 md:py-40'>
             <Container>
               <div className='max-w-4xl'>
                 {/* Subtitle */}
                 <Reveal variant='fade-side' delay={0.1} duration={0.8}>
-                  <div className='flex items-center gap-4 mb-8'>
+                  <div className='flex items-center gap-4 mb-[240px] lg:mb-8'>
                     <span className='w-12 h-[1px] bg-gradient-to-r from-transparent to-gold/60' />
                     <p className='text-gold uppercase tracking-[0.25em] text-xs md:text-sm font-light [text-shadow:0_2px_12px_rgba(7,24,30,0.9)]'>
                       L&apos;ART DU BARBIER SUR MESURE
@@ -425,28 +426,28 @@ export default function Home() {
                 </div>
 
                 {/* CTA Button - After context */}
-                <Reveal variant='fade-up' delay={0.9} duration={0.7}>
-                  <div className='relative inline-flex mb-16 mt-8'>
+                <Reveal variant='fade-up' delay={0.7} duration={0.7}>
+                  <div className='relative inline-flex mb-12 mt-8'>
                     <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-40 bg-gold/15 blur-3xl rounded-full animate-cta-glow' />
                     <Button href='/reservation'>Prendre rendez-vous</Button>
                   </div>
                 </Reveal>
 
-                {/* Mobile Stats */}
-                <div className='grid grid-cols-2 sm:grid-cols-3 lg:hidden gap-4'>
+                {/* Mobile Stats - Text Style below CTA */}
+                <div className='flex flex-row items-center justify-between gap-4 lg:hidden max-w-sm mb-8'>
                   {[
-                    { label: 'Années d\u2019expérience', val: '23+' },
-                    { label: 'Clients satisfaits', val: '2000+' },
-                    { label: 'Note Google', val: '5★' },
+                    { label: 'Expérience', val: '23 Ans' },
+                    { label: 'Clients', val: '2k+' },
+                    { label: 'Avis Google', val: '5.0★' },
                   ].map((stat, i) => (
-                    <Reveal key={i} variant='fade-up' delay={1.1 + i * 0.1}>
-                      <div className='bg-navy/40 backdrop-blur-xl border border-gold/10 rounded-xl px-4 py-4 shadow-xl'>
-                        <div className='text-3xl font-title text-gold font-light leading-none mb-2'>
+                    <Reveal key={i} variant='fade-up' delay={0.9 + i * 0.1}>
+                      <div className='flex flex-col items-start'>
+                        <span className='text-2xl font-title text-gold font-light leading-none mb-1'>
                           {stat.val}
-                        </div>
-                        <div className='text-[0.625rem] text-cream/60 tracking-[0.15em] font-light uppercase'>
+                        </span>
+                        <span className='text-[0.6rem] text-cream/60 tracking-[0.1em] font-light uppercase leading-tight'>
                           {stat.label}
-                        </div>
+                        </span>
                       </div>
                     </Reveal>
                   ))}
@@ -506,153 +507,273 @@ export default function Home() {
       ═══════════════════════════════════════════════════════════════════ */}
         <Section id='a-propos' className='bg-navy relative overflow-hidden py-16 md:py-24 lg:py-32'>
           <div className='absolute inset-0 pointer-events-none opacity-5'>
-            <div className='absolute top-1/4 right-1/4 w-96 h-96 border border-gold/10 rotate-12' />
-            <div className='absolute bottom-1/4 left-1/4 w-64 h-64 border border-gold/10 -rotate-6' />
+            <motion.div
+              className='absolute top-1/4 right-1/4 w-96 h-96 border border-gold/10'
+              animate={{ rotate: 360 }}
+              transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+            />
+            <motion.div
+              className='absolute bottom-1/4 left-1/4 w-64 h-64 border border-gold/10'
+              animate={{ rotate: -360 }}
+              transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+            />
           </div>
 
           <Container>
-            <Reveal variant='fade-up'>
-              <div className='flex items-center justify-center gap-4 mb-16'>
-                <div className='w-16 h-px bg-gradient-to-r from-transparent to-gold' />
-                <span className='text-gold text-[10px] uppercase tracking-[0.4em] font-medium'>
-                  À propos
-                </span>
-                <div className='w-16 h-px bg-gradient-to-r from-gold to-transparent' />
-              </div>
-            </Reveal>
+            <div className='flex items-center justify-center gap-4 mb-16'>
+              <motion.div
+                className='w-16 h-px bg-gradient-to-r from-transparent to-gold'
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              />
+              <TextReveal
+                className='text-gold text-[10px] uppercase tracking-[0.4em] font-medium'
+                delay={0.4}>
+                À propos
+              </TextReveal>
+              <motion.div
+                className='w-16 h-px bg-gradient-to-r from-gold to-transparent'
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              />
+            </div>
           </Container>
 
           <div className='max-w-7xl mx-auto px-5 md:px-6 lg:px-12'>
             <div className='grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center'>
-              <div className='relative'>
-                <Reveal variant='scale-up' duration={1.2} className='aspect-[4/5]'>
-                  <div className='relative aspect-[9/16] md:aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'>
-                    <video
-                      ref={videoRef}
-                      loop
-                      muted
-                      playsInline
-                      className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'>
-                      <source src={VIDEO.aboutSection.src} type={VIDEO.aboutSection.type} />
-                    </video>
-                    <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent' />
-                    {/* Corner accent */}
-                    <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                    <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
+              <motion.div
+                className='relative'
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-100px' }}
+                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}>
+                <motion.div
+                  className='relative aspect-[9/16] md:aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.4 }}>
+                  <video
+                    ref={videoRef}
+                    loop
+                    muted
+                    playsInline
+                    className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'>
+                    <source src={VIDEO.aboutSection.src} type={VIDEO.aboutSection.type} />
+                  </video>
+                  <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent' />
+                  {/* Corner accent */}
+                  <motion.div
+                    className='absolute top-0 left-0 border-t border-l border-gold/20'
+                    initial={{ width: 24, height: 24 }}
+                    whileHover={{ width: 40, height: 40, borderColor: 'rgba(156, 131, 88, 0.5)' }}
+                    transition={{ duration: 0.7 }}
+                  />
+                  <motion.div
+                    className='absolute bottom-0 right-0 border-b border-r border-gold/20'
+                    initial={{ width: 24, height: 24 }}
+                    whileHover={{ width: 40, height: 40, borderColor: 'rgba(156, 131, 88, 0.5)' }}
+                    transition={{ duration: 0.7 }}
+                  />
+                </motion.div>
+              </motion.div>
+
+              <div className='space-y-12 lg:space-y-16'>
+                {/* Headline */}
+                <div>
+                  <div className='flex items-baseline gap-3 mb-3'>
+                    <motion.div
+                      className='text-6xl md:text-7xl lg:text-8xl font-title text-gold font-light leading-none'
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, delay: 0.2 }}>
+                      23
+                    </motion.div>
+                    <div className='flex flex-col'>
+                      <TextReveal
+                        className='text-lg md:text-xl font-title text-gold/80 uppercase tracking-[0.15em]'
+                        delay={0.4}>
+                        ans
+                      </TextReveal>
+                    </div>
                   </div>
-                </Reveal>
-              </div>
+                  <div className='flex justify-start mb-6'>
+                    <TextReveal
+                      className='text-2xl md:text-3xl lg:text-4xl font-title text-cream leading-[1.2] tracking-wide'
+                      delay={0.5}>
+                      au service du style masculin
+                    </TextReveal>
+                  </div>
+                  <motion.div
+                    className='w-20 h-px bg-linear-to-r from-gold via-gold/40 to-transparent'
+                    initial={{ scaleX: 0, originX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.7 }}
+                  />
+                </div>
 
-              <div className='space-y-10 lg:space-y-12'>
-                <Reveal variant='fade-up' delay={0.2}>
-                  <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-gold leading-[0.9] tracking-[0.002em]'>
-                    Plus de <span className='text-gold/90 font-semibold'>23 ans</span> au service du{' '}
-                    <span className='text-gold/90 font-semibold'>style masculin</span>
-                  </h2>
-                </Reveal>
+                {/* Description */}
+                <div className='space-y-6'>
+                  <div className='flex justify-start'>
+                    <TextReveal
+                      className='text-cream/95 text-lg lg:text-xl leading-[1.7] tracking-wide font-light'
+                      delay={0.8}
+                      stagger={0.02}>
+                      Fondé par Riccardo, maître barbier reconnu, nous maîtrisons les techniques
+                      classiques comme les tendances contemporaines.
+                    </TextReveal>
+                  </div>
+                  <div className='flex justify-start'>
+                    <TextReveal
+                      className='text-cream/70 text-base leading-[1.7] tracking-wide'
+                      delay={1}
+                      stagger={0.015}>
+                      Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est
+                      précis.
+                    </TextReveal>
+                  </div>
+                </div>
 
-                <Reveal variant='fade-up' delay={0.3}>
-                  <p className='text-cream/90 text-base lg:text-lg leading-[1.4] tracking-[0.01em]'>
-                    Fondé par <span className='text-gold font-medium'>Riccardo</span>, maître
-                    barbier reconnu, nous maîtrisons les{' '}
-                    <span className='text-gold font-medium'>techniques classiques</span> comme les
-                    tendances contemporaines. Du taper fade au rasage traditionnel à la serviette
-                    chaude, chaque geste est précis.
-                  </p>
-                </Reveal>
-
-                <div className='grid gap-6'>
-                  <Reveal variant='fade-up' delay={0.4}>
-                    <TiltCard>
-                      <div className='relative bg-navy-secondary/40 backdrop-blur-sm border border-gold/20 p-6 rounded-sm overflow-hidden group hover:border-gold/50 transition-all duration-500'>
-                        <div className='relative flex items-start gap-4'>
-                          <div className='flex-shrink-0 w-12 h-12 flex items-center justify-center bg-gold/10 rounded-sm border border-gold/30'>
-                            <svg
-                              className='w-6 h-6 text-gold'
-                              viewBox='0 0 24 24'
-                              fill='none'
-                              stroke='currentColor'
-                              strokeWidth='1.5'
-                              strokeLinecap='round'
-                              strokeLinejoin='round'>
-                              <circle cx='6' cy='6' r='3' />
-                              <circle cx='6' cy='18' r='3' />
-                              <line x1='20' y1='4' x2='8.12' y2='15.88' />
-                              <line x1='14.47' y1='14.48' x2='20' y2='20' />
-                              <line x1='8.12' y1='8.12' x2='12' y2='12' />
-                            </svg>
-                          </div>
-                          <div className='flex-1'>
-                            <h3 className='text-gold text-base font-semibold uppercase tracking-wider mb-2'>
-                              Savoir-faire artisanal
-                            </h3>
-                            <p className='text-cream/80 text-base leading-[1.4] tracking-[0.01em]'>
-                              Formés aux meilleures écoles, nous perpétuons les gestes authentiques
-                              du métier avec passion et rigueur.
-                            </p>
-                          </div>
-                        </div>
+                {/* Benefits */}
+                <div className='space-y-4'>
+                  <motion.div
+                    className='flex items-start gap-4 group'
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: '-50px' }}
+                    transition={{ duration: 0.6, delay: 1.2 }}>
+                    <div className='flex-shrink-0 relative'>
+                      <motion.div
+                        className='w-14 h-14 flex items-center justify-center border border-gold/30 bg-gold/5'
+                        whileHover={{
+                          borderColor: 'rgba(156, 131, 88, 0.6)',
+                          backgroundColor: 'rgba(156, 131, 88, 0.1)',
+                        }}
+                        transition={{ duration: 0.3 }}>
+                        <svg
+                          className='w-7 h-7 text-gold'
+                          viewBox='0 0 24 24'
+                          fill='none'
+                          stroke='currentColor'
+                          strokeWidth='1.5'
+                          strokeLinecap='round'
+                          strokeLinejoin='round'>
+                          <circle cx='6' cy='6' r='3' />
+                          <circle cx='6' cy='18' r='3' />
+                          <line x1='20' y1='4' x2='8.12' y2='15.88' />
+                          <line x1='14.47' y1='14.48' x2='20' y2='20' />
+                          <line x1='8.12' y1='8.12' x2='12' y2='12' />
+                        </svg>
+                      </motion.div>
+                      <div className='absolute -top-2 -right-2 text-[10px] font-title text-gold/40 tracking-wider'>
+                        01
                       </div>
-                    </TiltCard>
-                  </Reveal>
+                    </div>
+                    <div className='flex-1 pt-1'>
+                      <h3 className='text-gold text-sm font-semibold uppercase tracking-[0.2em] mb-2'>
+                        Savoir-faire artisanal
+                      </h3>
+                      <p className='text-cream/75 text-sm leading-[1.6]'>
+                        Formés aux meilleures écoles, nous perpétuons les gestes authentiques du
+                        métier avec passion et rigueur.
+                      </p>
+                    </div>
+                  </motion.div>
 
-                  <Reveal variant='fade-up' delay={0.5}>
-                    <TiltCard>
-                      <div className='relative bg-navy-secondary/40 backdrop-blur-sm border border-gold/20 p-6 rounded-sm overflow-hidden group hover:border-gold/50 transition-all duration-500'>
-                        <div className='relative flex items-start gap-4'>
-                          <div className='flex-shrink-0 w-12 h-12 flex items-center justify-center bg-gold/10 rounded-sm border border-gold/30'>
-                            <svg
-                              className='w-6 h-6 text-gold'
-                              viewBox='0 0 24 24'
-                              fill='none'
-                              stroke='currentColor'
-                              strokeWidth='1.5'
-                              strokeLinecap='round'
-                              strokeLinejoin='round'>
-                              <path d='M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z' />
-                              <path d='M20 3v4' />
-                              <path d='M22 5h-4' />
-                              <path d='M4 17v2' />
-                              <path d='M5 18H3' />
-                            </svg>
-                          </div>
-                          <div className='flex-1'>
-                            <h3 className='text-gold text-base font-semibold uppercase tracking-wider mb-2'>
-                              Produits premium
-                            </h3>
-                            <p className='text-cream/80 text-base leading-[1.4] tracking-[0.01em]'>
-                              Huiles essentielles, baumes naturels et cosmétiques haut de gamme pour
-                              un résultat impeccable.
-                            </p>
-                          </div>
-                        </div>
+                  <motion.div
+                    className='flex items-start gap-4 group'
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: '-50px' }}
+                    transition={{ duration: 0.6, delay: 1.4 }}>
+                    <div className='flex-shrink-0 relative'>
+                      <motion.div
+                        className='w-14 h-14 flex items-center justify-center border border-gold/30 bg-gold/5'
+                        whileHover={{
+                          borderColor: 'rgba(156, 131, 88, 0.6)',
+                          backgroundColor: 'rgba(156, 131, 88, 0.1)',
+                        }}
+                        transition={{ duration: 0.3 }}>
+                        <svg
+                          className='w-7 h-7 text-gold'
+                          viewBox='0 0 24 24'
+                          fill='none'
+                          stroke='currentColor'
+                          strokeWidth='1.5'
+                          strokeLinecap='round'
+                          strokeLinejoin='round'>
+                          <path d='M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z' />
+                          <path d='M20 3v4' />
+                          <path d='M22 5h-4' />
+                          <path d='M4 17v2' />
+                          <path d='M5 18H3' />
+                        </svg>
+                      </motion.div>
+                      <div className='absolute -top-2 -right-2 text-[10px] font-title text-gold/40 tracking-wider'>
+                        02
                       </div>
-                    </TiltCard>
-                  </Reveal>
+                    </div>
+                    <div className='flex-1 pt-1'>
+                      <h3 className='text-gold text-sm font-semibold uppercase tracking-[0.2em] mb-2'>
+                        Produits premium
+                      </h3>
+                      <p className='text-cream/75 text-sm leading-[1.6]'>
+                        Huiles essentielles, baumes naturels et cosmétiques haut de gamme pour un
+                        résultat impeccable.
+                      </p>
+                    </div>
+                  </motion.div>
                 </div>
               </div>
             </div>
 
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-16'>
               {PRODUCT_GRID.map((img, i) => (
-                <Reveal key={i} variant='scale-up' delay={0.1 * i} threshold={0.1}>
-                  <div className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl hover:border-gold/60 transition-all duration-500'>
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.5, delay: 0.1 * i }}>
+                  <motion.div
+                    className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl cursor-pointer'
+                    whileHover={{ borderColor: 'rgba(156, 131, 88, 0.6)', scale: 1.05 }}
+                    transition={{ duration: 0.3 }}>
                     <div
                       className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
                       style={{ backgroundImage: `url('${img.src}')` }}
                     />
                     <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
                     {/* Corner accent */}
-                    <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                    <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                  </div>
-                </Reveal>
+                    <motion.div
+                      className='absolute top-0 left-0 border-t border-l border-gold/20'
+                      initial={{ width: 24, height: 24 }}
+                      whileHover={{ width: 40, height: 40, borderColor: 'rgba(156, 131, 88, 0.5)' }}
+                      transition={{ duration: 0.5 }}
+                    />
+                    <motion.div
+                      className='absolute bottom-0 right-0 border-b border-r border-gold/20'
+                      initial={{ width: 24, height: 24 }}
+                      whileHover={{ width: 40, height: 40, borderColor: 'rgba(156, 131, 88, 0.5)' }}
+                      transition={{ duration: 0.5 }}
+                    />
+                  </motion.div>
+                </motion.div>
               ))}
             </div>
 
-            <div className='flex justify-center mt-12'>
+            <motion.div
+              className='flex justify-center mt-12'
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.6 }}>
               <Button href='/salon'>Découvrir notre univers</Button>
-            </div>
+            </motion.div>
           </div>
         </Section>
 
@@ -676,12 +797,12 @@ export default function Home() {
                       </div>
 
                       {/* Title */}
-                      <h3 className='text-lg font-title text-gold mb-4 uppercase tracking-wide leading-tight relative z-10'>
+                      <h3 className='text-lg h-12 font-title text-gold mb-4 uppercase tracking-wide leading-tight relative z-10'>
                         {service.title}
                       </h3>
 
                       {/* Description */}
-                      <p className='text-cream/70 text-sm leading-relaxed mb-6 relative z-10'>
+                      <p className='text-cream/70 h-36 text-sm leading-relaxed mb-6 relative z-10'>
                         {service.description}
                       </p>
 

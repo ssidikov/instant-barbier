@@ -90,12 +90,12 @@ export default function Header() {
           {/* Desktop Navigation - Premium centered layout */}
           <nav
             ref={navRef}
-            className='hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center space-x-8 xl:space-x-12'>
+            className='hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center space-x-6 xl:space-x-12'>
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className='group relative text-[0.65rem] xl:text-[0.7rem] uppercase tracking-[0.2em] xl:tracking-[0.3em] text-cream/90 font-light hover:text-gold transition-all duration-300 whitespace-nowrap'>
+                className='group relative text-[0.65rem] xl:text-[0.7rem] uppercase tracking-[0.2em] xl:tracking-[0.25em] text-cream/90 font-light hover:text-gold transition-all duration-300 whitespace-nowrap'>
                 <span className='relative z-10 [text-shadow:_0_2px_12px_rgb(11_22_34_/_90%)] group-hover:[text-shadow:_0_2px_20px_rgba(175,151,120,0.6)]'>
                   {item.label}
                 </span>
@@ -108,7 +108,7 @@ export default function Header() {
           </nav>
 
           {/* CTA - Right side with premium glow */}
-          <div ref={ctaRef} className='hidden xl:block relative'>
+          <div ref={ctaRef} className='hidden lg:block relative'>
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-36 bg-gold/15 blur-3xl rounded-full animate-pulse-glow' />
             <Button href='/reservation'>Prendre rendez-vous</Button>
           </div>
