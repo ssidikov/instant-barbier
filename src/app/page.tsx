@@ -6,9 +6,10 @@ import Button from '@/components/Button'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import ContactForm from '@/components/ContactForm'
 import Reveal from '@/components/Reveal'
+import TextReveal from '@/components/TextReveal'
 import { LOGOS, VIDEO, GALLERY_IMAGES, TEAM, PRODUCT_GRID, BACKGROUNDS } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -320,6 +321,29 @@ const hours = [
 
 export default function Home() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch((error) => console.log('Video play failed:', error))
+          } else {
+            video.pause()
+          }
+        })
+      },
+      { threshold: 0.5 },
+    )
+
+    observer.observe(video)
+
+    return () => observer.disconnect()
+  }, [])
 
   // Particles removed for performance/anim cleanup as requested
   // Parallax logic removed
@@ -463,9 +487,9 @@ export default function Home() {
                   <Image
                     src={LOGOS.golden.src}
                     alt={LOGOS.golden.alt}
-                    width={100}
-                    height={50}
-                    className='w-auto h-7 lg:h-10 object-contain'
+                    width={200}
+                    height={100}
+                    className='w-auto h-14 lg:h-20 object-contain'
                   />
                 </div>
               ))}
@@ -504,7 +528,7 @@ export default function Home() {
                 <Reveal variant='scale-up' duration={1.2} className='aspect-[4/5]'>
                   <div className='relative aspect-[9/16] md:aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'>
                     <video
-                      autoPlay
+                      ref={videoRef}
                       loop
                       muted
                       playsInline
@@ -690,7 +714,7 @@ export default function Home() {
           />
           <div className='absolute inset-0 bg-dark/85' />
           <Container className='relative z-10'>
-            <div className='max-w-2xl lg:max-w-3xl mx-auto text-center'>
+            <div className='max-w-2xl lg:max-w-4xl mx-auto text-center'>
               <Reveal variant='fade-up'>
                 <div className='flex items-center justify-center gap-4 mb-16 lg:mb-20'>
                   <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold' />
@@ -703,29 +727,50 @@ export default function Home() {
 
               <div className='w-14 h-px bg-gold/25 mx-auto mb-14 lg:mb-18 origin-center' />
 
-              <Reveal variant='blur-in' duration={1.2}>
-                <h2 className='font-title text-gold mb-14 lg:mb-18'>
-                  <span className='block text-2xl md:text-3xl lg:text-[2.75rem] leading-[1.35] tracking-wide'>
-                    Un salon de barbier dans le Marais
-                  </span>
-                  <span className='block text-2xl md:text-3xl lg:text-[2.75rem] leading-[1.35] tracking-wide mt-1'>
+              <div className='mb-14 lg:mb-18 space-y-2'>
+                <div className='flex justify-center'>
+                  <TextReveal className='font-title text-gold text-2xl md:text-3xl lg:text-[3.5rem] leading-[1.2] tracking-wide'>
+                    Un salon de barbier
+                  </TextReveal>
+                </div>
+                <div className='flex justify-center'>
+                  <TextReveal
+                    className='font-title text-gold text-2xl md:text-3xl lg:text-[3.5rem] leading-[1.2] tracking-wide'
+                    delay={0.2}>
+                    dans le Marais
+                  </TextReveal>
+                </div>
+                <div className='flex justify-center'>
+                  <TextReveal
+                    className='font-title text-gold/80 text-2xl md:text-3xl lg:text-[3.5rem] leading-[1.2] tracking-wide italic'
+                    delay={0.4}>
                     au style unique
-                  </span>
-                </h2>
-              </Reveal>
+                  </TextReveal>
+                </div>
+              </div>
 
               <div className='w-10 h-px bg-gold/15 mx-auto mb-12 lg:mb-16 origin-center' />
 
-              <Reveal variant='fade-up' delay={0.3}>
-                <p className='text-cream/65 text-base md:text-lg leading-[1.9] max-w-xl mx-auto mb-10 lg:mb-12 font-body'>
-                  L&apos;Instant Barbier, c&apos;est aussi une ambiance : lumière chaleureuse,
-                  matières nobles, lignes épurées et atmosphère feutrée.
-                </p>
-                <p className='text-cream/40 text-sm md:text-[15px] leading-[1.9] max-w-md mx-auto font-body italic'>
-                  Chaque détail du salon reflète notre exigence et notre vision du barbier moderne à
-                  Paris.
-                </p>
-              </Reveal>
+              <div className='max-w-xl mx-auto mb-10 lg:mb-12'>
+                <div className='flex justify-center mb-6'>
+                  <TextReveal
+                    className='text-cream/80 text-base md:text-lg leading-[1.9] font-body text-center'
+                    delay={0.6}
+                    stagger={0.02}>
+                    L&apos;Instant Barbier, c&apos;est aussi une ambiance : lumière chaleureuse,
+                    matières nobles, lignes épurées et atmosphère feutrée.
+                  </TextReveal>
+                </div>
+                <div className='flex justify-center'>
+                  <TextReveal
+                    className='text-cream/50 text-sm md:text-[15px] leading-[1.9] font-body italic text-center'
+                    delay={0.8}
+                    stagger={0.02}>
+                    Chaque détail du salon reflète notre exigence et notre vision du barbier moderne
+                    à Paris.
+                  </TextReveal>
+                </div>
+              </div>
 
               <div className='w-20 h-px bg-linear-to-r from-transparent via-gold/20 to-transparent mx-auto mt-16 lg:mt-20 origin-center' />
             </div>
@@ -773,52 +818,52 @@ export default function Home() {
 
               <div className='flex flex-col justify-center lg:py-8'>
                 <Reveal variant='fade-side' delay={0.2}>
-                  <div className='flex items-center gap-4 mb-8'>
-                    <div className='w-10 h-px bg-gold/30 origin-left' />
-                    <span className='text-gold/50 text-[11px] uppercase tracking-[0.4em] font-body'>
+                  <div className='flex items-center gap-4 mb-10'>
+                    <div className='w-12 h-px bg-gold/30 origin-left' />
+                    <span className='text-gold/60 text-[11px] uppercase tracking-[0.4em] font-body'>
                       Héritage & Savoir-faire
                     </span>
                   </div>
 
-                  <div className='space-y-6'>
-                    <p className='text-cream/75 text-[15px] leading-[1.9] font-body'>
-                      Depuis plusieurs générations, l&apos;art de la{' '}
-                      <strong className='text-gold/90 font-medium'>coiffure masculine</strong> se
-                      transmet au sein de la famille de Riccardo comme un véritable héritage.
-                    </p>
-
-                    <p className='text-cream/60 text-[15px] leading-[1.9] font-body'>
-                      De père en fils, ce savoir-faire s&apos;est enrichi au fil du temps, porté par
-                      une exigence constante de précision, d&apos;élégance et de maîtrise du geste.
-                    </p>
-
-                    <div className='w-12 h-px bg-gold/20 origin-left' />
-
-                    <p className='text-cream/75 text-[15px] leading-[1.9] font-body'>
-                      Spécialisé dans la{' '}
-                      <strong className='text-gold/90 font-medium'>
-                        coiffure homme et le métier de barbier à Paris
-                      </strong>
-                      , L&apos;Instant Barbier perpétue des techniques intemporelles&nbsp;:
-                    </p>
-
-                    <div className='pl-5 border-l border-gold/15 space-y-2'>
-                      {[
-                        'Dégradés maîtrisés',
-                        'Coupes classiques aux ciseaux',
-                        'Entretien des cheveux mi-longs et longs',
-                        'Travail minutieux de la barbe',
-                      ].map((technique, i) => (
-                        <p
-                          key={i}
-                          className='text-cream/55 text-sm leading-relaxed font-body flex items-center gap-3'>
-                          <span className='w-1 h-1 bg-gold/40 rounded-full shrink-0' />
-                          {technique}
-                        </p>
-                      ))}
+                  <div className='space-y-10'>
+                    {/* Heritage Block */}
+                    <div className='relative pl-6 border-l-2 border-gold/20'>
+                      <p className='text-cream/90 text-lg leading-relaxed font-title italic mb-4'>
+                        &ldquo;Depuis plusieurs générations, l&apos;art de la{' '}
+                        <span className='text-gold not-italic'>coiffure masculine</span> se transmet
+                        comme un véritable héritage.&rdquo;
+                      </p>
+                      <p className='text-cream/60 text-sm leading-relaxed font-body tracking-wide'>
+                        De père en fils, ce savoir-faire s&apos;est enrichi, porté par une exigence
+                        constante de précision et d&apos;élégance.
+                      </p>
                     </div>
 
-                    <div className='pt-6'>
+                    {/* Expertise Block */}
+                    <div>
+                      <h4 className='text-gold text-sm uppercase tracking-[0.2em] mb-6 flex items-center gap-4'>
+                        <span className='w-2 h-2 rounded-full border border-gold/40'></span>
+                        Expertise Technique
+                      </h4>
+
+                      <div className='grid sm:grid-cols-2 gap-x-8 gap-y-4'>
+                        {[
+                          'Dégradés maîtrisés',
+                          'Coupes aux ciseaux',
+                          'Cheveux mi-longs',
+                          'Tailleur de barbe',
+                        ].map((technique, i) => (
+                          <div key={i} className='group flex items-center gap-3'>
+                            <div className='w-1.5 h-1.5 bg-gold/40 rotate-45 group-hover:bg-gold transition-colors duration-300' />
+                            <span className='text-cream/70 text-sm tracking-wide group-hover:text-cream/90 transition-colors duration-300'>
+                              {technique}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className='pt-4'>
                       <Button href='/reservation?staff=Riccardo'>Réserver avec Riccardo</Button>
                     </div>
                   </div>
