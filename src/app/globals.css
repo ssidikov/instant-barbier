@@ -318,7 +318,7 @@
 }
 
 .animate-marquee-rtl {
-  animation: marquee-rtl 30s linear infinite;
+  animation: marquee-rtl 180s linear infinite;
 }
 
 /* --- Body: Default text --- */

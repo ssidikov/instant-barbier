@@ -18,6 +18,6 @@ export const CONTACT = {
 
 export const SOCIAL = {
   instagram: 'https://www.instagram.com/linstantbarbier/',
-  facebook: '#',
-  x: '#',
+  facebook: 'https://www.facebook.com/p/Linstant-barbier-100093700605913/',
+  tiktok: 'https://www.tiktok.com/@linstantbarbier',
 } as const

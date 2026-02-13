@@ -839,7 +839,11 @@ export default function Home() {
 
             <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8'>
               {services.map((service, index) => (
-                <Reveal key={index} variant='fade-up' delay={index * 0.1}>
+                <Reveal
+                  key={index}
+                  variant='fade-up'
+                  delay={index * 0.1}
+                  className={index === 2 ? 'hidden lg:block' : ''}>
                   <TiltCard>
                     <article className='group text-center p-8 border border-gold/20 hover:border-gold/50 transition-all duration-500 relative overflow-hidden h-full'>
                       {/* Icon */}
@@ -1303,9 +1307,14 @@ export default function Home() {
               </div>
             </Reveal>
 
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8'>
               {reviews.map((review, index) => (
-                <Reveal key={index} variant='fade-up' delay={index * 0.15} threshold={0.1}>
+                <Reveal
+                  key={index}
+                  variant='fade-up'
+                  delay={index * 0.15}
+                  threshold={0.1}
+                  className={index === 2 ? 'hidden lg:block' : ''}>
                   <article className='bg-dark/50 border border-gold/20 p-8 relative hover:border-gold/40 hover:-translate-y-1 hover:shadow-2xl hover:shadow-gold/10 cursor-default transition-all duration-500 h-full overflow-visible group/review flex flex-col'>
                     <div className='absolute -top-10 left-6'>
                       <span className='text-gold text-[4rem] md:text-[5.5rem] leading-normal font-title opacity-90 group-hover/review:opacity-100 transition-opacity duration-500'>
