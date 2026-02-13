@@ -566,33 +566,25 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}>
-                <motion.div
-                  className='relative aspect-[9/16] md:aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}>
-                  <video
-                    ref={videoRef}
-                    loop
-                    muted
-                    playsInline
-                    className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'>
-                    <source src={VIDEO.aboutSection.src} type={VIDEO.aboutSection.type} />
-                  </video>
-                  <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent' />
-                  {/* Corner accent */}
+                <div className='relative'>
                   <motion.div
-                    className='absolute top-0 left-0 border-t border-l border-gold/20'
-                    initial={{ width: 24, height: 24 }}
-                    whileHover={{ width: 40, height: 40, borderColor: 'rgba(156, 131, 88, 0.5)' }}
-                    transition={{ duration: 0.7 }}
-                  />
-                  <motion.div
-                    className='absolute bottom-0 right-0 border-b border-r border-gold/20'
-                    initial={{ width: 24, height: 24 }}
-                    whileHover={{ width: 40, height: 40, borderColor: 'rgba(156, 131, 88, 0.5)' }}
-                    transition={{ duration: 0.7 }}
-                  />
-                </motion.div>
+                    className='relative aspect-[9/16] md:aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.4 }}>
+                    <video
+                      ref={videoRef}
+                      loop
+                      muted
+                      playsInline
+                      className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'>
+                      <source src={VIDEO.aboutSection.src} type={VIDEO.aboutSection.type} />
+                    </video>
+                    <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent' />
+                  </motion.div>
+                  {/* Corner accents - outside frame, not affected by hover */}
+                  <div className='absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-gold/40 pointer-events-none' />
+                  <div className='absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-gold/40 pointer-events-none' />
+                </div>
               </motion.div>
 
               <div className='space-y-12 lg:space-y-16'>
@@ -606,7 +598,7 @@ export default function Home() {
                   aria-hidden='true'
                 />
                 {/* Headline */}
-                <div>
+                <div className='mb-4 xl:mb-14'>
                   <h2 className='flex items-baseline gap-3'>
                     <motion.span
                       className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold font-light leading-none'
@@ -626,7 +618,7 @@ export default function Home() {
                   </h2>
                   <div className='flex justify-start mb-6'>
                     <TextReveal
-                      className='text-2xl md:text-3xl lg:text-4xl font-title text-cream/60 leading-[-0.05em] tracking-[1px] mt-[-24px]'
+                      className='text-2xl md:text-3xl lg:text-4xl font-title text-cream/60 leading-[0.8] xl:leading-[-0.05em] tracking-[1px] mt-[-10px] xl:mt-[-24px]'
                       delay={0.5}>
                       au service du style masculin
                     </TextReveal>
@@ -665,7 +657,7 @@ export default function Home() {
                 {/* Benefits */}
                 <div className='space-y-4'>
                   <motion.div
-                    className='flex items-start gap-4 group'
+                    className='flex items-center gap-4 group'
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: '-50px' }}
@@ -709,7 +701,7 @@ export default function Home() {
                   </motion.div>
 
                   <motion.div
-                    className='flex items-start gap-4 group'
+                    className='flex items-center gap-4 group'
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: '-50px' }}
