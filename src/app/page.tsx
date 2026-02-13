@@ -982,19 +982,21 @@ export default function Home() {
             </Reveal>
 
             <div className='grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start'>
-              <div>
+              <div className='p-4'>
                 {team.map((member, index) => (
                   <Reveal key={index} variant='scale-up' delay={index * 0.1} threshold={0.2}>
-                    <article className='group relative overflow-hidden touch-card-lift'>
-                      <div className='relative aspect-3/4 md:aspect-3/4 overflow-hidden bg-navy'>
-                        <div
-                          className='absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105'
-                          style={{ backgroundImage: `url(${member.image})` }}
-                        />
-                        <div className='absolute inset-0 bg-linear-to-t from-navy via-navy/20 to-transparent' />
-                        {/* Corner accent */}
-                        <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                        <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
+                    <article className='group relative touch-card-lift'>
+                      <div className='relative'>
+                        <div className='relative aspect-3/4 md:aspect-3/4 overflow-hidden bg-navy'>
+                          <div
+                            className='absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105'
+                            style={{ backgroundImage: `url(${member.image})` }}
+                          />
+                          <div className='absolute inset-0 bg-linear-to-t from-navy to-navy/20' />
+                        </div>
+                        {/* Corner accent - outside frame, not affected by hover */}
+                        <div className='absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-gold/40 pointer-events-none' />
+                        <div className='absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-gold/40 pointer-events-none' />
                       </div>
 
                       <div className='absolute bottom-0 left-0 right-0 p-6 text-center'>

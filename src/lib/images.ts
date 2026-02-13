@@ -109,7 +109,7 @@ export const GALLERY_IMAGES: GalleryImageData[] = [
 
 export const TEAM: TeamMemberImage[] = [
   {
-    src: '/images/team/Riccardo.avif',
+    src: '/images/team/Riccardo-barber.jpg',
     alt: "Riccardo — Coiffeur-barbier chez L'Instant Barbier",
     name: 'RICCARDO',
     role: 'Coiffeur-barbier et directeur artistique',
