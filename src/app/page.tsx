@@ -1231,10 +1231,9 @@ export default function Home() {
       ═══════════════════════════════════════════════════════════════════ */}
         <section className='relative h-[40vh] md:h-[60vh] overflow-hidden'>
           <div
-            className='absolute inset-0 bg-cover bg-center'
+            className='absolute inset-0 bg-contain md:bg-cover bg-center bg-no-repeat md:bg-fixed'
             style={{
               backgroundImage: `url('${BACKGROUNDS.homeInterior.src}')`,
-              backgroundAttachment: 'fixed',
             }}
           />
           <div className='absolute inset-0 bg-navy/60' />
