@@ -24,7 +24,7 @@ export default function Button({ children, href, className = '' }: ButtonProps) 
       <span className='absolute inset-0 border-2 border-gold/50 opacity-0 group-hover:opacity-100 scale-110 group-hover:scale-100 transition-all duration-700' />
 
       {/* Text */}
-      <span className='relative block px-6 py-3.5 md:px-8 md:py-4 text-gold group-hover:text-navy uppercase tracking-[0.15em] md:tracking-[0.2em] text-[10px] md:text-xs font-semibold transition-all duration-300'>
+      <span className='relative block px-10 py-5 md:px-6 md:py-4 text-gold group-hover:text-navy uppercase tracking-[0.15em] md:tracking-[0.2em] text-xs md:text-sm font-semibold transition-all duration-300'>
         {children}
       </span>
 

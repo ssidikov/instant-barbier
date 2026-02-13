@@ -41,7 +41,7 @@ export const LOGOS = {
     src: '/logo/logo-black.svg',
     alt: "L'Instant Barbier",
   },
-  barbierLogo: {
+  linstant: {
     src: '/logo/linstant-barbier-logo.png',
     alt: "L'Instant Barbier Logo",
   },

@@ -396,52 +396,19 @@ export default function Home() {
           <div className='absolute inset-0 bg-[linear-gradient(rgba(156,131,88,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(156,131,88,0.03)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]' />
 
           {/* Content - True vertical centering */}
-          <div className='relative z-10 w-full pt-32 pb-12 md:py-40'>
+          <div className='relative z-10 w-full pt-20 translate-y-[100px] md:translate-y-[0px]'>
             <Container>
               <div className='max-w-4xl'>
-                {/* Subtitle */}
-                <Reveal variant='fade-side' delay={0.1} duration={0.8}>
-                  <div className='flex items-center gap-4 mb-[240px] lg:mb-8'>
-                    <span className='w-12 h-[1px] bg-gradient-to-r from-transparent to-gold/60' />
-                    <p className='text-gold uppercase tracking-[0.25em] text-xs md:text-sm font-light [text-shadow:0_2px_12px_rgba(7,24,30,0.9)]'>
-                      L&apos;ART DU BARBIER SUR MESURE
-                    </p>
-                    <span className='w-16 h-[1px] bg-gradient-to-r from-gold to-transparent' />
-                  </div>
-                </Reveal>
-
-                {/* Main Title - Enhanced scale */}
-                <div className='mb-6'>
-                  <Reveal variant='blur-in' delay={0.3} duration={0.9}>
-                    <h1 className='text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-[0.85] tracking-[-0.02em] mb-4 [text-shadow:0_4px_24px_rgba(7,24,30,0.9),0_8px_48px_rgba(7,24,30,0.6)] ml-[-6px]'>
-                      <span className='text-gold'>Coiffeur</span>
-                      <span className='text-gold block'>& Barbier</span>
-                    </h1>
-                  </Reveal>
-                  <Reveal variant='blur-in' delay={0.5} duration={0.8}>
-                    <p className='text-xl md:text-2xl lg:text-3xl font-title text-gold/80 leading-[0.5] tracking-wide font-light [text-shadow:0_2px_16px_rgba(7,24,30,0.8)]'>
-                      homme à Paris le Marais
-                    </p>
-                  </Reveal>
-                </div>
-
-                {/* CTA Button - After context */}
-                <Reveal variant='fade-up' delay={0.7} duration={0.7}>
-                  <div className='relative inline-flex mb-12 mt-8'>
-                    <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-40 bg-gold/15 blur-3xl rounded-full animate-cta-glow' />
-                    <Button href='/reservation'>Prendre rendez-vous</Button>
-                  </div>
-                </Reveal>
-
-                {/* Mobile Stats - Text Style below CTA */}
-                <div className='flex flex-row items-center justify-between gap-4 lg:hidden max-w-sm mb-8'>
+                {/* Main Title - Grand Badge Design */}
+                {/* Mobile Stats - Text Style at Top */}
+                <div className='flex flex-row items-center mx-auto justify-between gap-4 md:hidden max-w-md mb-8 translate-y-[-240px]'>
                   {[
-                    { label: 'Expérience', val: '23 Ans' },
-                    { label: 'Clients', val: '2k+' },
-                    { label: 'Avis Google', val: '5.0★' },
+                    { label: 'Expérience', val: '23 ans' },
+                    { label: 'Avis Google', val: '★★★★★' },
+                    { label: 'Clients', val: '2000+' },
                   ].map((stat, i) => (
-                    <Reveal key={i} variant='fade-up' delay={0.9 + i * 0.1}>
-                      <div className='flex flex-col items-start'>
+                    <Reveal key={i} variant='fade-up' delay={0.1 + i * 0.1}>
+                      <div className='flex flex-col items-center'>
                         <span className='text-2xl font-title text-gold font-light leading-none mb-1'>
                           {stat.val}
                         </span>
@@ -452,12 +419,58 @@ export default function Home() {
                     </Reveal>
                   ))}
                 </div>
+
+                {/* Main Title - Grand Badge Design */}
+                <div className='mb-6'>
+                  <Reveal variant='blur-in' delay={0.3} duration={0.9}>
+                    <div className='relative block lg:inline-block group ml-0 lg:ml-[-8px]'>
+                      {/* Badge Content - New Asymmetric Design */}
+                      <h1 className='relative flex flex-col items-center md:items-start lg:items-center justify-center text-center md:text-left lg:text-center bg-navy/20 backdrop-blur-sm'>
+                        {/* Main Composition */}
+                        <span className='relative flex flex-col items-center md:items-start lg:items-center justify-center lg:mb-8'>
+                          {/* Center Content - Mobile: stacked, Tablet: one line, Desktop: stacked */}
+                          <span className='flex flex-col gap-2 md:gap-3 lg:gap-0 items-center md:items-start lg:items-center'>
+                            {/* COIFFEUR */}
+                            <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.8] tracking-[-0.02em]'>
+                              COIFFEUR
+                            </span>
+
+                            {/* & BARBIER - Mobile: flex row, Tablet: continue same row, Desktop: flex row */}
+                            <span className='flex items-center gap-4 md:gap-6'>
+                              <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-none'>
+                                &
+                              </span>
+                              <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-none tracking-[-0.04em]'>
+                                BARBIER
+                              </span>
+                            </span>
+                          </span>
+                        </span>
+
+                        {/* Bottom Script with Lines - 280px gap on tablet only */}
+                        <span className='flex items-center gap-4 w-full justify-center md:justify-start lg:justify-center lg:mb-8 mt-2 md:mt-[4px] lg:mt-[-20px]'>
+                          <span className='h-[1px] w-8 md:w-24 bg-gradient-to-r from-transparent to-gold/50' />
+                          <span className='text-xl lg:text-3xl italic text-gold/80 tracking-[0.01em] font-light [text-shadow:0_2px_16px_rgba(7,24,30,0.8)]'>
+                            à Paris le Marais
+                          </span>
+                          <span className='h-[1px] w-8 md:w-24 bg-gradient-to-l from-transparent to-gold/50' />
+                        </span>
+                      </h1>
+                      <Reveal variant='fade-up' delay={0.7} duration={0.7}>
+                        <div className='relative flex mt-8 mb-4 md:translate-y-24 lg:translate-y-0 justify-center items-center'>
+                          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-40 bg-gold/15 blur-3xl rounded-full animate-cta-glow' />
+                          <Button href='/reservation'>Prendre rendez-vous</Button>
+                        </div>
+                      </Reveal>
+                    </div>
+                  </Reveal>
+                </div>
               </div>
             </Container>
           </div>
 
-          {/* Desktop Stats - Right side */}
-          <div className='hidden lg:block absolute top-1/2 -translate-y-1/2 right-12 xl:right-20 z-20'>
+          {/* Desktop & Tablet Stats - Right side */}
+          <div className='hidden md:block absolute top-1/2 -translate-y-1/2 right-6 md:right-8 lg:right-12 xl:right-20 z-20'>
             <div className='flex flex-col gap-6'>
               {[
                 { label: 'Années d\u2019expérience', val: '23+' },
@@ -466,12 +479,12 @@ export default function Home() {
               ].map((stat, i) => (
                 <div
                   key={stat.label}
-                  className='flex items-center gap-6 bg-white/[0.03] backdrop-blur-2xl border border-white/[0.06] rounded-2xl px-8 py-6 shadow-2xl ring-1 ring-white/[0.02] animate-slide-in-up opacity-0'
+                  className='flex items-center gap-3 md:gap-5 lg:gap-6 bg-white/[0.03] backdrop-blur-2xl border border-white/[0.06] rounded-2xl px-4 py-3 md:px-6 md:py-4 xl:px-8 lg:py-6 shadow-2xl ring-1 ring-white/[0.02] animate-slide-in-up opacity-0 transition-all duration-300'
                   style={{ animationDelay: `${800 + i * 200}ms` }}>
-                  <div className='text-5xl xl:text-6xl font-title text-gold font-light leading-none'>
+                  <div className='text-3xl lg:text-6xl font-title text-gold font-light leading-none'>
                     {stat.val}
                   </div>
-                  <div className='text-xs text-cream/60 tracking-[0.15em] font-light leading-tight uppercase max-w-[100px]'>
+                  <div className='text-[0.6rem] lg:text-xs text-cream/60 tracking-[0.15em] font-light leading-tight uppercase max-w-[70px]'>
                     {stat.label}
                   </div>
                 </div>
@@ -480,7 +493,7 @@ export default function Home() {
           </div>
 
           {/* Bottom Logo Marquee */}
-          <div className='absolute bottom-0 left-0 w-full h-24 overflow-hidden z-20 flex items-end pb-6 pointer-events-none'>
+          <div className='absolute bottom-0 left-0 w-full h-24 overflow-hidden z-20 flex items-end pointer-events-none'>
             <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent' />
             <div className='flex items-center w-max animate-marquee-rtl relative z-10'>
               {[...Array(30)].map((_, i) => (
