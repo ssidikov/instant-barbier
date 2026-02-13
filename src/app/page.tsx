@@ -183,7 +183,9 @@ function SectionTitle({
           <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent origin-left' />
         </div>
       )}
-      <h2 className='text-3xl md:text-5xl font-title text-gold leading-tight'>{title}</h2>
+      <h2 className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-tight tracking-[-2px] mb-6'>
+        {title}
+      </h2>
       <div className='mx-auto mt-6 w-16 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent' />
     </div>
   )
@@ -594,11 +596,20 @@ export default function Home() {
               </motion.div>
 
               <div className='space-y-12 lg:space-y-16'>
+                {/* Logo stamp - bottom left */}
+                <Image
+                  src={LOGOS.linstant.src}
+                  alt=''
+                  width={250}
+                  height={250}
+                  className='absolute bottom-20 left-10 opacity-[0.03] -rotate-12 select-none pointer-events-none z-0'
+                  aria-hidden='true'
+                />
                 {/* Headline */}
                 <div>
                   <h2 className='flex items-baseline gap-3'>
                     <motion.span
-                      className='text-6xl md:text-7xl lg:text-8xl font-title text-gold font-light leading-none'
+                      className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold font-light leading-none'
                       initial={{ opacity: 0, scale: 0.8 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
@@ -607,7 +618,7 @@ export default function Home() {
                     </motion.span>
                     <span className='flex flex-col'>
                       <TextReveal
-                        className='text-lg md:text-xl font-title text-gold/80 uppercase tracking-[0.15em]'
+                        className='text-xl md:text-2xl lg:text-3xl xl:text-4xl font-title text-gold/80 uppercase tracking-[1px]'
                         delay={0.4}>
                         ans
                       </TextReveal>
@@ -615,7 +626,7 @@ export default function Home() {
                   </h2>
                   <div className='flex justify-start mb-6'>
                     <TextReveal
-                      className='text-2xl md:text-3xl lg:text-4xl font-title text-cream leading-[-0.05em] tracking-[1px] mt-[-24px]'
+                      className='text-2xl md:text-3xl lg:text-4xl font-title text-cream/60 leading-[-0.05em] tracking-[1px] mt-[-24px]'
                       delay={0.5}>
                       au service du style masculin
                     </TextReveal>
@@ -793,10 +804,45 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           SERVICES SECTION
       ═══════════════════════════════════════════════════════════════════ */}
-        <Section id='services' className='bg-navy border-t border-gold/10'>
-          <Container>
+        <Section id='services' className='bg-navy border-t border-gold/10 relative overflow-hidden'>
+          {/* Decorative background elements */}
+          <div className='absolute inset-0 pointer-events-none'>
+            {/* Logo stamp - top right */}
+            <Image
+              src={LOGOS.linstant.src}
+              alt=''
+              width={200}
+              height={200}
+              className='absolute top-10 right-10 opacity-[0.04] rotate-12 select-none'
+              aria-hidden='true'
+            />
+            {/* Large watermark ampersand */}
+            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[25rem] md:text-[35rem] lg:text-[45rem] font-title text-gold select-none leading-none opacity-[0.03]'>
+              &
+            </div>
+            {/* Gradient orbs */}
+            <div className='absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl' />
+            <div className='absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl' />
+          </div>
+
+          <Container className='relative z-10'>
             <Reveal variant='fade-up'>
-              <SectionTitle subtitle='Nos Services' title='Prestations' />
+              <div className='text-center mb-16'>
+                {/* Subtitle */}
+                <div className='flex items-center justify-center gap-4 mb-6'>
+                  <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold origin-right' />
+                  <span className='text-gold text-xs uppercase tracking-[0.3em]'>Nos Services</span>
+                  <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent origin-left' />
+                </div>
+
+                {/* Large Title */}
+                <h2 className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-tight tracking-[-2px] mb-6'>
+                  Prestations
+                </h2>
+
+                {/* Decorative line */}
+                <div className='mx-auto w-24 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent' />
+              </div>
             </Reveal>
 
             <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8'>
@@ -862,23 +908,45 @@ export default function Home() {
               <div className='w-14 h-px bg-gold/25 mx-auto mb-14 lg:mb-18 origin-center' />
 
               <div className='mb-14 lg:mb-18 space-y-2'>
-                <div className='flex justify-center'>
-                  <TextReveal className='font-title text-gold text-2xl md:text-3xl lg:text-[3.5rem] leading-[1.2] tracking-wide'>
-                    Un salon de barbier
+                <div className='flex justify-center gap-x-3 md:gap-x-4'>
+                  <TextReveal className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-[0.8] tracking-[-4px]'>
+                    Un
+                  </TextReveal>
+                  <TextReveal
+                    className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-cream/60 leading-[0.8] tracking-[-4px]'
+                    delay={0.05}>
+                    salon
+                  </TextReveal>
+                </div>
+                <div className='flex justify-center gap-x-3 md:gap-x-4'>
+                  <TextReveal
+                    className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-cream/60 leading-[0.8] tracking-[-4px]'
+                    delay={0.1}>
+                    de
+                  </TextReveal>
+                  <TextReveal
+                    className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-[0.8] tracking-[-4px]'
+                    delay={0.15}>
+                    barbier
                   </TextReveal>
                 </div>
                 <div className='flex justify-center'>
                   <TextReveal
-                    className='font-title text-gold text-2xl md:text-3xl lg:text-[3.5rem] leading-[1.2] tracking-wide'
+                    className='font-title text-gold text-2xl md:text-3xl lg:text-[3.5rem] leading-[1.2] tracking-[-4px]'
                     delay={0.2}>
                     dans le Marais
                   </TextReveal>
                 </div>
-                <div className='flex justify-center'>
+                <div className='flex justify-center '>
                   <TextReveal
-                    className='font-title text-gold/80 text-2xl md:text-3xl lg:text-[3.5rem] leading-[1.2] tracking-wide italic'
+                    className='font-title text-cream/70 text-2xl md:text-3xl lg:text-[3.5rem] leading-[0.5] tracking-[-4px] italic'
                     delay={0.4}>
-                    au style unique
+                    au style
+                  </TextReveal>
+                  <TextReveal
+                    className='font-title text-gold text-2xl md:text-3xl lg:text-[3.5rem] leading-[0.5] tracking-[-4px] italic'
+                    delay={0.45}>
+                    unique
                   </TextReveal>
                 </div>
               </div>
@@ -1010,10 +1078,80 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           GALERIE SECTION
       ═══════════════════════════════════════════════════════════════════ */}
-        <Section id='galerie' className='bg-navy border-t border-gold/10'>
-          <Container>
+        <Section id='galerie' className='bg-navy border-t border-gold/10 relative overflow-hidden'>
+          {/* Decorative background elements */}
+          <div className='absolute inset-0 pointer-events-none'>
+            {/* Logo stamp - bottom right */}
+            <Image
+              src={LOGOS.linstant.src}
+              alt=''
+              width={180}
+              height={180}
+              className='absolute bottom-20 right-10 opacity-[0.04] rotate-6 select-none'
+              aria-hidden='true'
+            />
+            {/* Large watermark scissors icon */}
+            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]'>
+              <svg
+                className='w-[25rem] h-[25rem] md:w-[35rem] md:h-[35rem] lg:w-[45rem] lg:h-[45rem] text-gold'
+                viewBox='0 0 24 24'
+                fill='currentColor'>
+                <circle cx='6' cy='6' r='3' />
+                <circle cx='6' cy='18' r='3' />
+                <line
+                  x1='20'
+                  y1='4'
+                  x2='8.12'
+                  y2='15.88'
+                  stroke='currentColor'
+                  strokeWidth='1.5'
+                  fill='none'
+                />
+                <line
+                  x1='14.47'
+                  y1='14.48'
+                  x2='20'
+                  y2='20'
+                  stroke='currentColor'
+                  strokeWidth='1.5'
+                  fill='none'
+                />
+                <line
+                  x1='8.12'
+                  y1='8.12'
+                  x2='12'
+                  y2='12'
+                  stroke='currentColor'
+                  strokeWidth='1.5'
+                  fill='none'
+                />
+              </svg>
+            </div>
+            {/* Gradient orbs */}
+            <div className='absolute top-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl' />
+            <div className='absolute bottom-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl' />
+          </div>
+
+          <Container className='relative z-10'>
             <Reveal variant='fade-up'>
-              <SectionTitle subtitle='Notre Travail' title='Galerie' />
+              <div className='text-center mb-16'>
+                {/* Subtitle */}
+                <div className='flex items-center justify-center gap-4 mb-6'>
+                  <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold origin-right' />
+                  <span className='text-gold text-xs uppercase tracking-[0.3em]'>
+                    Notre Travail
+                  </span>
+                  <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent origin-left' />
+                </div>
+
+                {/* Large Title */}
+                <h2 className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-tight tracking-[-2px] mb-6'>
+                  Galerie
+                </h2>
+
+                {/* Decorative line */}
+                <div className='mx-auto w-24 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent' />
+              </div>
             </Reveal>
 
             <div className='grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4'>
@@ -1117,7 +1255,7 @@ export default function Home() {
                   </div>
                 </Reveal>
                 <Reveal variant='blur-in' delay={0.4} duration={1.2}>
-                  <h2 className='text-4xl md:text-6xl font-title text-gold'>
+                  <h2 className='text-5xl md:text-7xl lg:text-8xl font-title text-gold'>
                     Un Cadre d&apos;Exception
                   </h2>
                 </Reveal>
@@ -1132,10 +1270,45 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           AVIS SECTION
       ═══════════════════════════════════════════════════════════════════ */}
-        <Section id='avis' className='bg-navy border-t border-gold/10'>
-          <Container>
+        <Section id='avis' className='bg-navy border-t border-gold/10 relative overflow-hidden'>
+          {/* Decorative background elements */}
+          <div className='absolute inset-0 pointer-events-none'>
+            {/* Logo stamp - top left */}
+            <Image
+              src={LOGOS.linstant.src}
+              alt=''
+              width={220}
+              height={220}
+              className='absolute top-10 left-10 opacity-[0.04] -rotate-6 select-none'
+              aria-hidden='true'
+            />
+            {/* Large watermark quote */}
+            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[25rem] md:text-[35rem] lg:text-[45rem] font-serif text-gold select-none leading-none opacity-[0.03]'>
+              &ldquo;
+            </div>
+            {/* Gradient orbs */}
+            <div className='absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl' />
+            <div className='absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl' />
+          </div>
+
+          <Container className='relative z-10'>
             <Reveal variant='fade-up'>
-              <SectionTitle subtitle='Témoignages' title='Avis Clients' />
+              <div className='text-center mb-16'>
+                {/* Subtitle */}
+                <div className='flex items-center justify-center gap-4 mb-6'>
+                  <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold origin-right' />
+                  <span className='text-gold text-xs uppercase tracking-[0.3em]'>Témoignages</span>
+                  <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent origin-left' />
+                </div>
+
+                {/* Large Title */}
+                <h2 className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-tight tracking-[-2px] mb-6'>
+                  Avis Clients
+                </h2>
+
+                {/* Decorative line */}
+                <div className='mx-auto w-24 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent' />
+              </div>
             </Reveal>
 
             <div className='grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8'>
@@ -1208,8 +1381,8 @@ export default function Home() {
               </Reveal>
 
               <Reveal variant='fade-up' delay={0.2}>
-                <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-gold mb-16 leading-tight'>
-                  Votre barbier à Paris 3ᵉ — Le Marais
+                <h2 className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-[0.8] tracking-[-2px] mb-16 text-center'>
+                  Votre barbier <br /> à Paris — Le Marais
                 </h2>
               </Reveal>
 
