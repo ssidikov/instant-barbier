@@ -796,7 +796,7 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           SERVICES SECTION
       ═══════════════════════════════════════════════════════════════════ */}
-        <Section id='services' className='bg-navy border-t border-gold/10 relative overflow-hidden'>
+        <Section id='services' className='bg-navy border-gold/10 relative overflow-hidden z-10'>
           {/* Decorative background elements */}
           <div className='absolute inset-0 pointer-events-none'>
             {/* Logo stamp - top right */}
@@ -812,9 +812,6 @@ export default function Home() {
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12rem] md:text-[25rem] lg:text-[35rem] xl:text-[45rem] font-title text-gold select-none leading-none opacity-[0.03]'>
               &
             </div>
-            {/* Gradient orbs */}
-            <div className='absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl' />
-            <div className='absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl' />
           </div>
 
           <Container className='relative z-10'>

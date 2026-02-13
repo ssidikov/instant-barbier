@@ -172,7 +172,7 @@ export const BACKGROUNDS = {
 
   // ── Prestations page ──
   prestationsHero: {
-    src: '/images/prestations.jpg',
+    src: '/images/prestation-bg.jpg',
     alt: "Prestations L'Instant Barbier",
   },
 

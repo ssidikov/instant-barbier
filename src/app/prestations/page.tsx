@@ -128,7 +128,7 @@ export default function PrestationsPage() {
                 priority
               />
             </div>
-            <div className='absolute inset-0 bg-navy/70' />
+            <div className='absolute inset-0 bg-navy/85 mix-blend-multiply' />
           </div>
 
           {/* Floating lines */}
