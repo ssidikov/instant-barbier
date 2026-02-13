@@ -270,7 +270,9 @@ export default function GaleriePage() {
                 </p>
               </Reveal>
 
-              <Reveal variant='fade-up' delay={0.3} className='mt-8 w-24 h-px bg-gold/30' />
+              <Reveal variant='fade-up' delay={0.3} className='mt-8'>
+                <div className='w-24 h-px bg-gold/30' />
+              </Reveal>
             </div>
           </div>
 
