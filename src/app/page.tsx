@@ -12,6 +12,7 @@ import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
 import { motion } from 'framer-motion'
 import { LOGOS, VIDEO, GALLERY_IMAGES, TEAM, PRODUCT_GRID, BACKGROUNDS } from '@/lib/images'
+import GoogleMap from '@/components/GoogleMap'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1155,7 +1156,7 @@ export default function Home() {
                 <Reveal variant='scale-up' threshold={0.2} className='h-full'>
                   <div
                     onClick={() => setLightboxIndex(0)}
-                    className='relative w-full h-full overflow-hidden group cursor-pointer touch-feedback touch-highlight'>
+                    className='relative w-full h-full overflow-hidden group cursor-pointer touch-feedback touch-highlight '>
                     <div
                       className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
                       style={{ backgroundImage: `url(${galleryImages[0].src})` }}
@@ -1423,20 +1424,26 @@ export default function Home() {
                   </Reveal>
                 </div>
 
-                <Reveal variant='scale-up' delay={0.4} threshold={0.2}>
-                  <div className='relative group w-full max-w-full'>
-                    <div className='relative aspect-4/3 lg:aspect-auto lg:h-full min-h-[280px] md:min-h-[400px] overflow-hidden w-full'>
-                      <div
-                        className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
-                        style={{ backgroundImage: `url('${BACKGROUNDS.homeSchedule.src}')` }}
-                      />
-                      <div className='absolute inset-0 bg-dark/15' />
-                    </div>
-                    {/* Corner accent */}
-                    <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                    <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                  </div>
-                </Reveal>
+                <div className='space-y-6'>
+                  <Reveal variant='fade-up' delay={0.3}>
+                    <h3 className='text-lg font-title text-gold/90 mb-4 tracking-wide text-center lg:text-left'>
+                      Notre adresse
+                    </h3>
+                    <p className='text-cream/80 text-[15px] font-body mb-6 text-center lg:text-left'>
+                      43 rue de Turenne, 75003 Paris
+                    </p>
+                  </Reveal>
+
+                  <Reveal variant='scale-up' delay={0.4} threshold={0.2}>
+                    <GoogleMap
+                      address='43 rue de Turenne, 75003 Paris'
+                      lat={48.8606}
+                      lng={2.3644}
+                      zoom={15}
+                      className='w-full h-[280px] md:h-[400px] lg:h-full lg:min-h-[500px]'
+                    />
+                  </Reveal>
+                </div>
               </div>
             </div>
           </Container>
