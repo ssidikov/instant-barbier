@@ -264,8 +264,9 @@ export default function GaleriePage() {
 
               <Reveal variant='fade-up' delay={0.2} className='max-w-xl'>
                 <p className='text-cream/60 text-lg md:text-xl font-light leading-relaxed'>
-                  Découvrez l'univers de L'Instant Barbier à travers une sélection d'images mettant
-                  en lumière l'ambiance, le savoir-faire et l'exigence du salon.
+                  Découvrez l&apos;univers de L&apos;Instant Barbier à travers une sélection
+                  d&apos;images mettant en lumière l&apos;ambiance, le savoir-faire et
+                  l&apos;exigence du salon.
                 </p>
               </Reveal>
 
@@ -310,9 +311,9 @@ export default function GaleriePage() {
                 <Reveal variant='fade-side' delay={0.2}>
                   <p className='text-lg md:text-xl text-cream/60 font-light leading-relaxed mb-6'>
                     Situé au cœur du{' '}
-                    <strong className='text-gold font-normal'>Marais à Paris</strong>, L'Instant
-                    Barbier propose un cadre élégant et raffiné, pensé pour offrir une expérience
-                    unique à chaque visite.
+                    <strong className='text-gold font-normal'>Marais à Paris</strong>,
+                    L&apos;Instant Barbier propose un cadre élégant et raffiné, pensé pour offrir
+                    une expérience unique à chaque visite.
                   </p>
                   <p className='text-base text-cream/45 font-light leading-relaxed'>
                     Des coupes réalisées avec précision, des barbes sculptées avec soin et un espace
@@ -346,7 +347,7 @@ export default function GaleriePage() {
                     Nos Réalisations
                   </span>
                   <h3 className='text-4xl md:text-5xl lg:text-6xl font-title text-cream'>
-                    Explorer <span className='text-gold'>l'univers</span>
+                    Explorer <span className='text-gold'>l&apos;univers</span>
                   </h3>
                 </div>
 
@@ -416,7 +417,7 @@ export default function GaleriePage() {
 
             <Reveal variant='fade-up' delay={0.2}>
               <p className='text-cream/50 text-lg font-light max-w-2xl mx-auto leading-relaxed mb-12'>
-                L'attention portée aux détails, la qualité des prestations et l'atmosphère
+                L&apos;attention portée aux détails, la qualité des prestations et l&apos;atmosphère
                 chaleureuse caractérisent chaque moment passé dans notre salon.
               </p>
               <Button href={PLANITY_URL}>Prendre rendez-vous</Button>
@@ -464,15 +465,15 @@ export default function GaleriePage() {
                 </Reveal>
                 <Reveal variant='fade-up' delay={0.1}>
                   <h3 className='text-3xl md:text-5xl font-title text-cream mb-8 leading-tight'>
-                    Vivez l'expérience
+                    Vivez l&apos;expérience
                     <br />
                     <span className='text-gold'>en personne</span>
                   </h3>
                 </Reveal>
                 <Reveal variant='fade-up' delay={0.2}>
                   <p className='text-cream/60 text-lg font-light mb-10 max-w-md leading-relaxed'>
-                    Les photos ne racontent qu'une partie de l'histoire. Réservez votre créneau et
-                    découvrez notre savoir-faire.
+                    Les photos ne racontent qu&apos;une partie de l&apos;histoire. Réservez votre
+                    créneau et découvrez notre savoir-faire.
                   </p>
                 </Reveal>
                 <Reveal variant='fade-up' delay={0.3} className='flex flex-wrap gap-4'>

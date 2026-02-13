@@ -138,7 +138,7 @@ export default function SalonPage() {
               <div className='lg:col-span-7 lg:pr-12'>
                 <Reveal variant='fade-up'>
                   <span className='text-gold text-8xl font-serif leading-none opacity-20 block mb-4'>
-                    "
+                    &quot;
                   </span>
                   <h2 className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[1.1] -mt-16'>
                     Bien plus qu&apos;un

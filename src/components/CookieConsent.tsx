@@ -5,11 +5,6 @@ import Link from 'next/link'
 
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   useEffect(() => {
     const consent = localStorage.getItem('cookie-consent')
@@ -30,7 +25,7 @@ export default function CookieConsent() {
     setVisible(false)
   }
 
-  if (!mounted || !visible) return null
+  if (!visible) return null
 
   return (
     <div className='fixed bottom-6 right-6 z-[999] max-w-sm w-[calc(100vw-3rem)] animate-in slide-in-from-bottom-4 duration-500 fade-in'>

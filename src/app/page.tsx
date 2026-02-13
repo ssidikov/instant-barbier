@@ -10,7 +10,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import ContactForm from '@/components/ContactForm'
 import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { LOGOS, VIDEO, GALLERY_IMAGES, TEAM, PRODUCT_GRID, BACKGROUNDS } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -596,26 +596,26 @@ export default function Home() {
               <div className='space-y-12 lg:space-y-16'>
                 {/* Headline */}
                 <div>
-                  <div className='flex items-baseline gap-3 mb-3'>
-                    <motion.div
+                  <h2 className='flex items-baseline gap-3'>
+                    <motion.span
                       className='text-6xl md:text-7xl lg:text-8xl font-title text-gold font-light leading-none'
                       initial={{ opacity: 0, scale: 0.8 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.8, delay: 0.2 }}>
                       23
-                    </motion.div>
-                    <div className='flex flex-col'>
+                    </motion.span>
+                    <span className='flex flex-col'>
                       <TextReveal
                         className='text-lg md:text-xl font-title text-gold/80 uppercase tracking-[0.15em]'
                         delay={0.4}>
                         ans
                       </TextReveal>
-                    </div>
-                  </div>
+                    </span>
+                  </h2>
                   <div className='flex justify-start mb-6'>
                     <TextReveal
-                      className='text-2xl md:text-3xl lg:text-4xl font-title text-cream leading-[1.2] tracking-wide'
+                      className='text-2xl md:text-3xl lg:text-4xl font-title text-cream leading-[-0.05em] tracking-[1px] mt-[-24px]'
                       delay={0.5}>
                       au service du style masculin
                     </TextReveal>
