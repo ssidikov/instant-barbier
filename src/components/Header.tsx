@@ -52,7 +52,7 @@ export default function Header() {
         ref={headerRef}
         className={`fixed w-full top-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-navy/85 backdrop-blur-2xl shadow-[0_4px_30px_rgba(7,24,30,0.6)] border-b border-gold/10'
+            ? 'bg-navy/85 backdrop-blur-2xl shadow-[0_4px_30px_rgba(7,24,30,0.6)]'
             : 'bg-transparent'
         }`}>
         {/* Premium top gradient border */}
