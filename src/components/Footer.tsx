@@ -33,7 +33,7 @@ export default function Footer() {
         </div>
 
         {/* Contact & Social Bar - New Top Container */}
-        <div className='flex flex-col md:flex-row flex-wrap justify-between items-center gap-4 md:gap-6 border-b border-cream/10 pb-8 md:pb-12 mb-8 md:mb-12'>
+        <div className='flex flex-col md:flex-row flex-wrap justify-center xl:justify-between items-center gap-4 md:gap-6 border-b border-cream/10 pb-8 md:pb-12 mb-8 md:mb-12'>
           {/* Address & Phone */}
           <div className='flex flex-col md:flex-row items-center gap-6 text-cream/80'>
             {[

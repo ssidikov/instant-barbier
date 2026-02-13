@@ -853,7 +853,7 @@ export default function Home() {
                       </h3>
 
                       {/* Description */}
-                      <p className='text-cream/70 h-36 text-sm leading-relaxed mb-6 relative z-10'>
+                      <p className='text-cream/70 h-40 text-sm leading-relaxed mb-6 relative z-10'>
                         {service.description}
                       </p>
 
@@ -901,42 +901,42 @@ export default function Home() {
 
               <div className='mb-14 lg:mb-18 space-y-2'>
                 <div className='flex justify-center gap-x-3 md:gap-x-4'>
-                  <TextReveal className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-[0.8] tracking-[-4px]'>
+                  <TextReveal className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-[0.8] tracking-[-2px] lg:tracking-[-4px]'>
                     Un
                   </TextReveal>
                   <TextReveal
-                    className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-cream/60 leading-[0.8] tracking-[-4px]'
+                    className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-cream/60 leading-[0.8] tracking-[-2px] lg:tracking-[-4px]'
                     delay={0.05}>
                     salon
                   </TextReveal>
                 </div>
                 <div className='flex justify-center gap-x-3 md:gap-x-4'>
                   <TextReveal
-                    className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-cream/60 leading-[0.8] tracking-[-4px]'
+                    className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-cream/60 leading-[0.8] tracking-[-2px] lg:tracking-[-4px]'
                     delay={0.1}>
                     de
                   </TextReveal>
                   <TextReveal
-                    className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-[0.8] tracking-[-4px]'
+                    className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-[0.8] tracking-[-2px] lg:tracking-[-4px]'
                     delay={0.15}>
                     barbier
                   </TextReveal>
                 </div>
                 <div className='flex justify-center'>
                   <TextReveal
-                    className='font-title text-gold text-2xl md:text-3xl lg:text-[3.5rem] leading-[1.2] tracking-[-4px]'
+                    className='font-title text-gold text-2xl md:text-3xl lg:text-[3.5rem] leading-[1.2] tracking-[-2px] lg:tracking-[-4px]'
                     delay={0.2}>
                     dans le Marais
                   </TextReveal>
                 </div>
                 <div className='flex justify-center '>
                   <TextReveal
-                    className='font-title text-cream/70 text-2xl md:text-3xl lg:text-[3.5rem] leading-[0.5] tracking-[-4px] italic'
+                    className='font-title text-cream/70 text-2xl md:text-3xl lg:text-[3.5rem] leading-[0.5] tracking-[-2px] lg:tracking-[-4px] italic'
                     delay={0.4}>
                     au style
                   </TextReveal>
                   <TextReveal
-                    className='font-title text-gold text-2xl md:text-3xl lg:text-[3.5rem] leading-[0.5] tracking-[-4px] italic'
+                    className='font-title text-gold text-2xl md:text-3xl lg:text-[3.5rem] leading-[0.5] tracking-[-1px] lg:tracking-[-4px] italic'
                     delay={0.45}>
                     unique
                   </TextReveal>
@@ -1024,8 +1024,8 @@ export default function Home() {
                     <div className='relative pl-6 border-l-2 border-gold/20'>
                       <p className='text-cream/90 text-lg leading-relaxed font-title italic mb-4'>
                         &ldquo;Depuis plusieurs générations, l&apos;art de la{' '}
-                        <span className='text-gold not-italic'>coiffure masculine</span> se transmet
-                        comme un véritable héritage.&rdquo;
+                        <span className='text-gold'>coiffure masculine</span> se transmet comme un
+                        véritable héritage.&rdquo;
                       </p>
                       <p className='text-cream/60 text-sm leading-relaxed font-body tracking-wide'>
                         De père en fils, ce savoir-faire s&apos;est enrichi, porté par une exigence
@@ -1057,7 +1057,7 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className='pt-4'>
+                    <div className='pt-4 flex justify-center lg:justify-start'>
                       <Button href='/reservation?staff=Riccardo'>Réserver avec Riccardo</Button>
                     </div>
                   </div>
