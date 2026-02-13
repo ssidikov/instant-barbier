@@ -1368,12 +1368,12 @@ export default function Home() {
           HORAIRES SECTION
       ═══════════════════════════════════════════════════════════════════ */}
         <Section id='horaires' className='bg-dark'>
-          <Container>
+          <Container className='px-4 md:px-6'>
             <div>
               <Reveal variant='fade-up'>
                 <div className='flex items-center justify-center gap-4 mb-8'>
                   <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold' />
-                  <span className='text-gold text-xs uppercase tracking-[0.3em] font-body'>
+                  <span className='text-gold text-xs uppercase text-center tracking-[0.3em] font-body'>
                     Informations pratiques
                   </span>
                   <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent' />
@@ -1386,10 +1386,10 @@ export default function Home() {
                 </h2>
               </Reveal>
 
-              <div className='grid lg:grid-cols-2 gap-16 lg:gap-24'>
+              <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-24'>
                 <div>
                   <Reveal variant='fade-up' delay={0.3}>
-                    <h3 className='text-lg font-title text-gold/90 mb-6 tracking-wide'>
+                    <h3 className='text-lg font-title text-gold/90 mb-6 tracking-wide text-center lg:text-left'>
                       Horaires d&apos;ouverture
                     </h3>
                   </Reveal>
@@ -1418,15 +1418,15 @@ export default function Home() {
                   </div>
 
                   <Reveal variant='fade-up' delay={0.8}>
-                    <div className='mt-12'>
+                    <div className='mt-12 flex justify-center lg:justify-start'>
                       <Button href='/reservation'>Réserver un créneau</Button>
                     </div>
                   </Reveal>
                 </div>
 
                 <Reveal variant='scale-up' delay={0.4} threshold={0.2}>
-                  <div className='relative group'>
-                    <div className='relative aspect-4/3 lg:aspect-auto lg:h-full min-h-[280px] md:min-h-[400px] overflow-hidden'>
+                  <div className='relative group w-full max-w-full'>
+                    <div className='relative aspect-4/3 lg:aspect-auto lg:h-full min-h-[280px] md:min-h-[400px] overflow-hidden w-full'>
                       <div
                         className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
                         style={{ backgroundImage: `url('${BACKGROUNDS.homeSchedule.src}')` }}
