@@ -398,12 +398,12 @@ export default function Home() {
           <div className='absolute inset-0 bg-[linear-gradient(rgba(156,131,88,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(156,131,88,0.03)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]' />
 
           {/* Content - True vertical centering */}
-          <div className='relative z-10 w-full pt-20 translate-y-[100px] md:translate-y-[0px]'>
+          <div className='relative z-10 w-full pt-4 translate-y-[100px] md:translate-y-[0px]'>
             <Container>
               <div className='max-w-4xl'>
                 {/* Main Title - Grand Badge Design */}
                 {/* Mobile Stats - Text Style at Top */}
-                <div className='flex flex-row items-center mx-auto justify-between gap-4 md:hidden max-w-md mb-8 translate-y-[-240px]'>
+                <div className='flex flex-row items-center mx-auto justify-between gap-4 md:hidden max-w-md translate-y-[-240px]'>
                   {[
                     { label: 'Expérience', val: '23 ans' },
                     { label: 'Avis Google', val: '★★★★★' },
@@ -427,22 +427,22 @@ export default function Home() {
                   <Reveal variant='blur-in' delay={0.3} duration={0.9}>
                     <div className='relative block lg:inline-block group ml-0 lg:ml-[-8px]'>
                       {/* Badge Content - New Asymmetric Design */}
-                      <h1 className='relative flex flex-col items-center md:items-start lg:items-center justify-center text-center md:text-left lg:text-center bg-navy/20 backdrop-blur-sm'>
+                      <h1 className='relative flex flex-col items-center md:items-start lg:items-center justify-center text-center md:text-left lg:text-center'>
                         {/* Main Composition */}
                         <span className='relative flex flex-col items-center md:items-start lg:items-center justify-center lg:mb-8'>
                           {/* Center Content - Mobile: stacked, Tablet: one line, Desktop: stacked */}
                           <span className='flex flex-col gap-2 md:gap-3 lg:gap-0 items-center md:items-start lg:items-center'>
                             {/* COIFFEUR */}
-                            <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.8] tracking-[-0.02em]'>
+                            <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] tracking-[-0.02em]'>
                               COIFFEUR
                             </span>
 
                             {/* & BARBIER - Mobile: flex row, Tablet: continue same row, Desktop: flex row */}
                             <span className='flex items-center gap-4 md:gap-6'>
-                              <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-none'>
+                              <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7]'>
                                 &
                               </span>
-                              <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-none tracking-[-0.04em]'>
+                              <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] tracking-[-0.04em]'>
                                 BARBIER
                               </span>
                             </span>
@@ -459,7 +459,7 @@ export default function Home() {
                         </span>
                       </h1>
                       <Reveal variant='fade-up' delay={0.7} duration={0.7}>
-                        <div className='relative flex mt-8 mb-4 md:translate-y-24 lg:translate-y-0 justify-center items-center'>
+                        <div className='relative flex mt-8 mb-4 justify-center items-center'>
                           <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-40 bg-gold/15 blur-3xl rounded-full animate-cta-glow' />
                           <Button href='/reservation'>Prendre rendez-vous</Button>
                         </div>
@@ -558,7 +558,7 @@ export default function Home() {
             </div>
           </Container>
 
-          <div className='max-w-7xl mx-auto px-5 md:px-6 lg:px-12'>
+          <div className='max-w-7xl mx-auto px-4 md:px-6 lg:px-12'>
             <div className='grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center'>
               <motion.div
                 className='relative'
@@ -568,7 +568,7 @@ export default function Home() {
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}>
                 <div className='relative'>
                   <motion.div
-                    className='relative aspect-[9/16] md:aspect-[4/5] overflow-hidden group border-2 border-gold/30 shadow-xl'
+                    className='relative aspect-4/5 md:aspect-4/5 overflow-hidden group border-2 border-gold/30 shadow-xl'
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.4 }}>
                     <video
@@ -592,9 +592,9 @@ export default function Home() {
                 <Image
                   src={LOGOS.linstant.src}
                   alt=''
-                  width={250}
-                  height={250}
-                  className='absolute bottom-20 left-10 opacity-[0.03] -rotate-12 select-none pointer-events-none z-0'
+                  width={180}
+                  height={180}
+                  className='absolute bottom-10 left-4 md:bottom-20 md:left-10 opacity-[0.03] -rotate-12 select-none pointer-events-none z-0 w-32 h-32 md:w-48 md:h-48'
                   aria-hidden='true'
                 />
                 {/* Headline */}
@@ -747,7 +747,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-16'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-12 md:mt-16'>
               {PRODUCT_GRID.map((img, i) => (
                 <motion.div
                   key={i}
@@ -803,13 +803,13 @@ export default function Home() {
             <Image
               src={LOGOS.linstant.src}
               alt=''
-              width={200}
-              height={200}
-              className='absolute top-10 right-10 opacity-[0.04] rotate-12 select-none'
+              width={180}
+              height={180}
+              className='absolute top-4 right-4 md:top-10 md:right-10 opacity-[0.04] rotate-12 select-none w-24 h-24 md:w-40 md:h-40'
               aria-hidden='true'
             />
             {/* Large watermark ampersand */}
-            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[25rem] md:text-[35rem] lg:text-[45rem] font-title text-gold select-none leading-none opacity-[0.03]'>
+            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12rem] md:text-[25rem] lg:text-[35rem] xl:text-[45rem] font-title text-gold select-none leading-none opacity-[0.03]'>
               &
             </div>
             {/* Gradient orbs */}
@@ -857,7 +857,7 @@ export default function Home() {
                       </h3>
 
                       {/* Description */}
-                      <p className='text-cream/70 h-40 text-sm leading-relaxed mb-6 relative z-10'>
+                      <p className='text-cream/70 md:h-40 text-sm leading-relaxed mb-6 relative z-10'>
                         {service.description}
                       </p>
 
@@ -883,7 +883,7 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           ATMOSPHÈRE SECTION
       ═══════════════════════════════════════════════════════════════════ */}
-        <section className='relative py-20 md:py-32 lg:py-40 xl:py-52 bg-dark overflow-hidden'>
+        <section className='relative py-16 md:py-24 lg:py-32 xl:py-40 bg-dark overflow-hidden'>
           <div
             className='absolute inset-0 bg-cover bg-center bg-scroll md:bg-fixed'
             style={{ backgroundImage: `url('${BACKGROUNDS.homeAtmosphere.src}')` }}
@@ -984,12 +984,12 @@ export default function Home() {
               <SectionTitle subtitle='Les Experts' title='Notre Équipe' />
             </Reveal>
 
-            <div className='grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-start'>
+            <div className='grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start'>
               <div>
                 {team.map((member, index) => (
                   <Reveal key={index} variant='scale-up' delay={index * 0.1} threshold={0.2}>
                     <article className='group relative overflow-hidden'>
-                      <div className='relative aspect-3/4 overflow-hidden bg-navy'>
+                      <div className='relative aspect-3/4 md:aspect-3/4 overflow-hidden bg-navy'>
                         <div
                           className='absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105'
                           style={{ backgroundImage: `url(${member.image})` }}
@@ -1081,15 +1081,15 @@ export default function Home() {
             <Image
               src={LOGOS.linstant.src}
               alt=''
-              width={180}
-              height={180}
-              className='absolute bottom-20 right-10 opacity-[0.04] rotate-6 select-none'
+              width={160}
+              height={160}
+              className='absolute bottom-10 right-4 md:bottom-20 md:right-10 opacity-[0.04] rotate-6 select-none w-24 h-24 md:w-36 md:h-36'
               aria-hidden='true'
             />
             {/* Large watermark scissors icon */}
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]'>
               <svg
-                className='w-[25rem] h-[25rem] md:w-[35rem] md:h-[35rem] lg:w-[45rem] lg:h-[45rem] text-gold'
+                className='w-[12rem] h-[12rem] md:w-[25rem] md:h-[25rem] lg:w-[35rem] lg:h-[35rem] xl:w-[45rem] xl:h-[45rem] text-gold'
                 viewBox='0 0 24 24'
                 fill='currentColor'>
                 <circle cx='6' cy='6' r='3' />
@@ -1150,7 +1150,7 @@ export default function Home() {
               </div>
             </Reveal>
 
-            <div className='grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4'>
+            <div className='grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4'>
               {/* Large Image */}
               <div className='col-span-2 row-span-2 aspect-square md:aspect-auto'>
                 <Reveal variant='scale-up' threshold={0.2} className='h-full'>
@@ -1229,7 +1229,7 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           INTERIOR IMAGE BREAK
       ═══════════════════════════════════════════════════════════════════ */}
-        <section className='relative h-[50vh] md:h-[60vh] overflow-hidden'>
+        <section className='relative h-[40vh] md:h-[60vh] overflow-hidden'>
           <div
             className='absolute inset-0 bg-cover bg-center'
             style={{
@@ -1273,13 +1273,13 @@ export default function Home() {
             <Image
               src={LOGOS.linstant.src}
               alt=''
-              width={220}
-              height={220}
-              className='absolute top-10 left-10 opacity-[0.04] -rotate-6 select-none'
+              width={200}
+              height={200}
+              className='absolute top-4 left-4 md:top-10 md:left-10 opacity-[0.04] -rotate-6 select-none w-24 h-24 md:w-44 md:h-44'
               aria-hidden='true'
             />
             {/* Large watermark quote */}
-            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[25rem] md:text-[35rem] lg:text-[45rem] font-serif text-gold select-none leading-none opacity-[0.03]'>
+            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12rem] md:text-[25rem] lg:text-[35rem] xl:text-[45rem] font-serif text-gold select-none leading-none opacity-[0.03]'>
               &ldquo;
             </div>
             {/* Gradient orbs */}
@@ -1315,8 +1315,8 @@ export default function Home() {
                   delay={index * 0.15}
                   threshold={0.1}
                   className={index === 2 ? 'hidden lg:block' : ''}>
-                  <article className='bg-dark/50 border border-gold/20 p-8 relative hover:border-gold/40 hover:-translate-y-1 hover:shadow-2xl hover:shadow-gold/10 cursor-default transition-all duration-500 h-full overflow-visible group/review flex flex-col'>
-                    <div className='absolute -top-10 left-6'>
+                  <article className='bg-dark/50 border border-gold/20 p-6 md:p-8 relative hover:border-gold/40 hover:-translate-y-1 hover:shadow-2xl hover:shadow-gold/10 cursor-default transition-all duration-500 h-full overflow-visible group/review flex flex-col mt-8 md:mt-0'>
+                    <div className='absolute -top-8 md:-top-10 left-4 md:left-6'>
                       <span className='text-gold text-[4rem] md:text-[5.5rem] leading-normal font-title opacity-90 group-hover/review:opacity-100 transition-opacity duration-500'>
                         &ldquo;
                       </span>
@@ -1427,7 +1427,7 @@ export default function Home() {
 
                 <Reveal variant='scale-up' delay={0.4} threshold={0.2}>
                   <div className='relative group'>
-                    <div className='relative aspect-4/3 lg:aspect-auto lg:h-full min-h-[300px] md:min-h-[400px] overflow-hidden'>
+                    <div className='relative aspect-4/3 lg:aspect-auto lg:h-full min-h-[280px] md:min-h-[400px] overflow-hidden'>
                       <div
                         className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105'
                         style={{ backgroundImage: `url('${BACKGROUNDS.homeSchedule.src}')` }}
@@ -1467,8 +1467,8 @@ export default function Home() {
                     <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
                   </div>
 
-                  <div className='absolute bottom-0 left-0 right-0 p-6'>
-                    <div className='bg-navy/90 backdrop-blur-sm border border-gold/30 p-4 md:p-6 space-y-3 md:space-y-4'>
+                  <div className='absolute bottom-0 left-0 right-0 p-4 md:p-6'>
+                    <div className='bg-navy/90 backdrop-blur-sm border border-gold/30 p-3 md:p-6 space-y-2 md:space-y-4'>
                       {[
                         { label: 'Adresse', value: '43 rue de Turenne, 75003 Paris' },
                         { label: 'Téléphone', value: '+33 1 42 72 00 00' },
@@ -1488,7 +1488,7 @@ export default function Home() {
 
               <div>
                 <Reveal variant='fade-up' delay={0.3}>
-                  <p className='text-cream/70 mb-8 leading-relaxed'>
+                  <p className='text-cream/70 text-sm md:text-base mb-8 leading-relaxed'>
                     Pour prendre rendez-vous, consultez notre{' '}
                     <Link
                       href='/prestations'
@@ -1524,7 +1524,7 @@ export default function Home() {
           <Container className='relative z-10 py-20'>
             <div className='max-w-4xl mx-auto'>
               <Reveal variant='scale-up' duration={1} threshold={0.2}>
-                <div className='relative bg-navy/40 backdrop-blur-xl border border-gold/20 rounded-sm p-6 md:p-8 lg:p-12 shadow-2xl overflow-hidden'>
+                <div className='relative bg-navy/40 backdrop-blur-xl border border-gold/20 rounded-sm p-5 md:p-8 lg:p-12 shadow-2xl overflow-hidden'>
                   <div className='absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/5 pointer-events-none' />
 
                   <Reveal variant='scale-up' delay={0.2}>
