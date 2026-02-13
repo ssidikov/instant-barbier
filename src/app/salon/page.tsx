@@ -31,29 +31,6 @@ function PremiumImage({
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// FLOATING BADGE COMPONENT
-// ═══════════════════════════════════════════════════════════════════════════
-
-function FloatingBadge({
-  children,
-  className = '',
-  delay = 0,
-}: {
-  children: React.ReactNode
-  className?: string
-  delay?: number
-}) {
-  return (
-    <Reveal
-      variant='fade-up'
-      delay={delay}
-      className={`absolute bg-navy/95 backdrop-blur-md border border-gold/20 px-5 py-3 z-20 ${className}`}>
-      {children}
-    </Reveal>
-  )
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
 // MAIN PAGE
 // ═══════════════════════════════════════════════════════════════════════════
 

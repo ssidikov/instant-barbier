@@ -12,9 +12,6 @@ export default function GoogleMap({
   // Encode the address for URL usage
   const encodedAddress = encodeURIComponent(address)
 
-  // Use Google Maps embed URL — no API key required for basic embeds
-  const mapSrc = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.7!2d2.3622!3d48.8606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e18a5f84801%3A0x6eb5daa624bdebd4!2s43%20Rue%20de%20Turenne%2C%2075003%20Paris!5e0!3m2!1sfr!2sfr!4v1`
-
   // Fallback: use the simpler place embed if the above doesn't work
   const fallbackSrc = `https://maps.google.com/maps?q=${encodedAddress}&t=&z=15&ie=UTF8&iwloc=&output=embed`
 

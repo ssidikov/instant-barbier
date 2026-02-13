@@ -5,7 +5,6 @@ import { Header, Footer, Section, Container } from '@/components'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
 
 export default function GlobalError({
-  error: _error,
   reset,
 }: {
   error: Error & { digest?: string }

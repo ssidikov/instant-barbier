@@ -1437,9 +1437,6 @@ export default function Home() {
                   <Reveal variant='scale-up' delay={0.4} threshold={0.2}>
                     <GoogleMap
                       address='43 rue de Turenne, 75003 Paris'
-                      lat={48.8606}
-                      lng={2.3644}
-                      zoom={15}
                       className='w-full h-[280px] md:h-[400px] lg:h-full lg:min-h-[500px]'
                     />
                   </Reveal>
