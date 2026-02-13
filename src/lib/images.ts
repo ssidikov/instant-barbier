@@ -150,7 +150,7 @@ export const BACKGROUNDS = {
     alt: "L'Instant Barbier — salon de coiffure et barbier à Paris",
   },
   homeAtmosphere: {
-    src: '/images/Atmosph%C3%A8re.jpg',
+    src: '/images/atmosphere.jpg',
     alt: 'Atmosphère élégante du salon',
   },
   homeInterior: {
@@ -182,35 +182,35 @@ export const BACKGROUNDS = {
 
   // ── Salon page (placeholders — replace with real images) ──
   salonHero: {
-    src: 'https://placehold.co/1920x1080/07181E/AF9778?text=Hero+Salon+Atmosphere',
+    src: '/images/salon/salon-l-instant-barbier.jpg',
     alt: "Salon L'Instant Barbier",
   },
   salonAtmosphereMain: {
-    src: 'https://placehold.co/800x1000/0f0f0f/AF9778?text=Salon+Interior+Main',
+    src: '/images/salon/interieur-du-salon-barbier.jpg',
     alt: 'Intérieur du salon',
   },
   salonAtmosphereDetail: {
-    src: 'https://placehold.co/600x800/142233/AF9778?text=Detail+Ambiance',
+    src: '/images/salon/detail-ambiance.jpg',
     alt: 'Détail ambiance',
   },
   salonExpertise: {
-    src: 'https://placehold.co/700x900/07181E/AF9778?text=Barber+at+Work',
+    src: '/images/salon/barbier-en-action.jpg',
     alt: 'Barbier en action',
   },
   salonExperienceLarge: {
-    src: 'https://placehold.co/900x700/0f0f0f/AF9778?text=Premium+Experience',
+    src: '/images/salon/salon-experience.jpg',
     alt: 'Expérience premium',
   },
   salonExperienceSmall1: {
-    src: 'https://placehold.co/500x600/142233/AF9778?text=Consultation',
+    src: '/images/salon/salon-consultation.jpg',
     alt: 'Consultation',
   },
   salonExperienceSmall2: {
-    src: 'https://placehold.co/500x600/07181E/AF9778?text=Relaxation',
+    src: '/images/salon/salon-relaxation-1.jpg',
     alt: 'Relaxation',
   },
   salonLocation: {
-    src: 'https://placehold.co/1920x800/07181E/AF9778?text=Paris+Marais+Street',
+    src: '/images/salon/instant-barbier-salon.jpg',
     alt: 'Le Marais, Paris',
   },
   salonMap: {

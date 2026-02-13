@@ -4,7 +4,8 @@ import Image from 'next/image'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import Reveal from '@/components/Reveal'
-import { BACKGROUNDS } from '@/lib/images'
+import GoogleMap from '@/components/GoogleMap'
+import { BACKGROUNDS, LOGOS } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PREMIUM IMAGE COMPONENT (Replaces Parallax)
@@ -20,7 +21,7 @@ function PremiumImage({
   className?: string
 }) {
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`relative overflow-hidden w-full h-full ${className}`}>
       <div className='absolute inset-0 transition-transform duration-[2000ms] hover:scale-105'>
         <Image src={src} alt={alt} fill className='object-cover' />
       </div>
@@ -73,7 +74,7 @@ export default function SalonPage() {
               className='object-cover'
               priority
             />
-            <div className='absolute inset-0 bg-navy/60' />
+            <div className='absolute inset-0 bg-navy/85 mix-blend-multiply' />
           </div>
 
           {/* Floating decorative elements */}
@@ -112,17 +113,6 @@ export default function SalonPage() {
               </div>
             </div>
           </div>
-
-          {/* Scroll indicator - bottom left */}
-          <Reveal
-            variant='fade-up'
-            delay={1.5}
-            className='absolute bottom-12 left-12 flex items-center gap-4 z-20'>
-            <div className='w-px h-16 bg-gradient-to-b from-gold to-transparent animate-pulse' />
-            <span className='text-[10px] text-gold/50 uppercase tracking-[0.3em] rotate-90 origin-left translate-x-2'>
-              Scroll
-            </span>
-          </Reveal>
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
@@ -196,11 +186,6 @@ export default function SalonPage() {
                     className='w-full h-full'
                   />
                 </Reveal>
-
-                {/* Floating badge */}
-                <FloatingBadge className='bottom-[30%] right-[15%]' delay={0.6}>
-                  <span className='text-gold text-xs uppercase tracking-widest'>Atmosphère</span>
-                </FloatingBadge>
               </div>
 
               {/* Text content - free flowing */}
@@ -331,7 +316,7 @@ export default function SalonPage() {
               {/* Large card */}
               <Reveal
                 variant='scale-up'
-                className='md:col-span-2 lg:col-span-2 lg:row-span-2 relative h-[400px] lg:h-auto overflow-hidden group'>
+                className='md:col-span-2 lg:col-span-2 lg:row-span-2 relative h-[400px] lg:h-full overflow-hidden group'>
                 <PremiumImage
                   src={BACKGROUNDS.salonExperienceLarge.src}
                   alt={BACKGROUNDS.salonExperienceLarge.alt}
@@ -387,9 +372,9 @@ export default function SalonPage() {
               src={BACKGROUNDS.salonLocation.src}
               alt={BACKGROUNDS.salonLocation.alt}
               fill
-              className='object-cover opacity-20'
+              className='object-cover'
             />
-            <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy/80' />
+            <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-navy/60' />
           </div>
 
           <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20 relative z-10'>
@@ -422,40 +407,103 @@ export default function SalonPage() {
               </div>
 
               {/* Location card */}
-              <Reveal variant='scale-up' delay={0.4} className='relative'>
-                <div className='bg-navy-secondary/80 backdrop-blur-sm border border-gold/10 p-6 md:p-8 lg:p-12'>
-                  <div className='flex items-start gap-6 mb-8'>
-                    <div className='w-12 h-12 border border-gold/30 flex items-center justify-center flex-shrink-0'>
-                      <svg
-                        className='w-5 h-5 text-gold'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='currentColor'
-                        strokeWidth='1.5'>
-                        <path d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z' />
-                        <circle cx='12' cy='9' r='2.5' />
-                      </svg>
+              <Reveal
+                variant='fade-up'
+                delay={0.4}
+                className='relative lg:h-full min-h-[500px] flex flex-col'>
+                {/* Glow effect */}
+                <div className='absolute inset-0 bg-gold/5 blur-3xl rounded-full opacity-20 pointer-events-none' />
+
+                {/* Card Container */}
+                <div className='grow bg-navy-secondary border border-gold/10 w-full relative overflow-hidden flex flex-col group'>
+                  {/* Top Info */}
+                  <div className='p-8 md:p-10 border-b border-gold/10 relative z-20 bg-navy-secondary/95 backdrop-blur-sm'>
+                    <div className='flex justify-between items-start'>
+                      <div>
+                        <span className='text-gold/50 text-[10px] uppercase tracking-[0.3em] font-medium mb-3 block'>
+                          Localisation
+                        </span>
+                        <h4 className='text-3xl md:text-4xl font-title text-cream mb-2'>
+                          L&apos;Instant <span className='text-gold'>Barbier</span>
+                        </h4>
+                        <p className='text-cream/50 font-light text-sm italic'>
+                          Au cœur du Marais historique
+                        </p>
+                      </div>
+                      <div className='hidden sm:block relative w-16 h-16 opacity-80'>
+                        <Image
+                          src={LOGOS.linstant.src}
+                          alt={LOGOS.linstant.alt}
+                          fill
+                          className='object-contain'
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <h4 className='text-gold font-title text-2xl mb-2'>L&apos;Instant Barbier</h4>
-                      <p className='text-cream/60 font-light'>
-                        Rue des Archives
-                        <br />
-                        75003 Paris, France
-                      </p>
+
+                    <div className='mt-8 flex items-center gap-4'>
+                      <div className='w-10 h-10 border border-gold/30 flex items-center justify-center shrink-0 text-gold'>
+                        <svg
+                          className='w-5 h-5'
+                          viewBox='0 0 24 24'
+                          fill='none'
+                          stroke='currentColor'
+                          strokeWidth='1.5'>
+                          <path d='M12 21c-4.5-4.5-8-9.5-8-13a8 8 0 1 1 16 0c0 3.5-3.5 8.5-8 13z' />
+                          <circle cx='12' cy='8' r='3' />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className='text-lg text-cream'>43 rue de Turenne</p>
+                        <p className='text-sm text-cream/60'>75003 Paris, France</p>
+                      </div>
                     </div>
                   </div>
-                  <div className='h-48 relative overflow-hidden border border-gold/10'>
-                    <Image
-                      src={BACKGROUNDS.salonMap.src}
-                      alt={BACKGROUNDS.salonMap.alt}
-                      fill
-                      className='object-cover opacity-70'
+
+                  {/* Map - Fills space */}
+                  <div className='relative grow min-h-[300px] z-10 grayscale-50 hover:grayscale-0 transition-all duration-700'>
+                    <GoogleMap
+                      address='43 rue de Turenne, 75003 Paris'
+                      className='absolute inset-0 w-full h-full'
                     />
+                    {/* Inner shadows for depth */}
+                    <div className='absolute inset-0 pointer-events-none shadow-[inset_0_0_40px_rgba(5,17,20,0.8)]' />
+                  </div>
+
+                  {/* Footer Info */}
+                  <div className='p-6 bg-navy-secondary border-t border-gold/10 flex flex-wrap gap-6 justify-between items-center relative z-20'>
+                    <a
+                      href='tel:0145354722'
+                      className='flex items-center gap-3 group/tel cursor-pointer'>
+                      <span className='w-8 h-8 flex items-center justify-center border border-gold/20 group-hover/tel:border-gold text-gold transition-colors'>
+                        <svg
+                          className='w-3 h-3'
+                          fill='none'
+                          viewBox='0 0 24 24'
+                          stroke='currentColor'
+                          strokeWidth='1.5'>
+                          <path
+                            strokeLinecap='round'
+                            d='M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'
+                          />
+                        </svg>
+                      </span>
+                      <span className='text-cream/80 text-sm tracking-widest group-hover/tel:text-gold transition-colors'>
+                        01 45 35 47 22
+                      </span>
+                    </a>
+
+                    <div className='text-right'>
+                      <span className='block text-[10px] text-gold/60 uppercase tracking-[0.2em] mb-1'>
+                        Ouverture
+                      </span>
+                      <span className='block text-cream/70 text-xs'>7j/7 • Nocturne 21h</span>
+                    </div>
                   </div>
                 </div>
-                {/* Decorative corner */}
-                <div className='absolute -top-3 -right-3 w-12 h-12 border-t border-r border-gold/30' />
+
+                {/* Exterior Accents */}
+                <div className='absolute -top-3 -right-3 w-40 h-40 border-t border-r border-gold/20 pointer-events-none' />
+                <div className='absolute -bottom-3 -left-3 w-12 h-12 border-b border-l border-gold/20 pointer-events-none' />
               </Reveal>
             </div>
           </div>
