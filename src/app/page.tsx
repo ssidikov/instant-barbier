@@ -403,7 +403,7 @@ export default function Home() {
               <div className='max-w-4xl'>
                 {/* Main Title - Grand Badge Design */}
                 {/* Mobile Stats - Text Style at Top */}
-                <div className='flex flex-row items-center mx-auto justify-between gap-4 md:hidden max-w-md translate-y-[-240px]'>
+                <div className='flex flex-row items-center mx-auto justify-between gap-4 lg:hidden max-w-md translate-y-[-240px] md:translate-y-[-140px]'>
                   {[
                     { label: 'Expérience', val: '23 ans' },
                     { label: 'Avis Google', val: '★★★★★' },
@@ -427,22 +427,22 @@ export default function Home() {
                   <Reveal variant='blur-in' delay={0.3} duration={0.9}>
                     <div className='relative block lg:inline-block group ml-0 lg:ml-[-8px]'>
                       {/* Badge Content - New Asymmetric Design */}
-                      <h1 className='relative flex flex-col items-center md:items-start lg:items-center justify-center text-center md:text-left lg:text-center'>
+                      <h1 className='relative flex flex-col items-center lg:items-start lg:items-center justify-center text-center md:text-left lg:text-center md:translate-y-[100px] lg:translate-y-[40px]'>
                         {/* Main Composition */}
                         <span className='relative flex flex-col items-center md:items-start lg:items-center justify-center lg:mb-8'>
                           {/* Center Content - Mobile: stacked, Tablet: one line, Desktop: stacked */}
                           <span className='flex flex-col gap-2 md:gap-3 lg:gap-0 items-center md:items-start lg:items-center'>
                             {/* COIFFEUR */}
-                            <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] tracking-[-0.02em]'>
+                            <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9] tracking-[-0.02em]'>
                               COIFFEUR
                             </span>
 
                             {/* & BARBIER - Mobile: flex row, Tablet: continue same row, Desktop: flex row */}
                             <span className='flex items-center gap-4 md:gap-6'>
-                              <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7]'>
+                              <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9]'>
                                 &
                               </span>
-                              <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] tracking-[-0.04em]'>
+                              <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9] tracking-[-0.04em]'>
                                 BARBIER
                               </span>
                             </span>
@@ -450,7 +450,7 @@ export default function Home() {
                         </span>
 
                         {/* Bottom Script with Lines - 280px gap on tablet only */}
-                        <span className='flex items-center gap-4 w-full justify-center md:justify-start lg:justify-center lg:mb-8 mt-2 md:mt-[4px] lg:mt-[-20px]'>
+                        <span className='flex items-center gap-4 w-full justify-center lg:justify-start lg:justify-center lg:mb-8 mt-2 md:mt-[4px] lg:mt-[-20px]'>
                           <span className='h-[1px] w-8 md:w-24 bg-gradient-to-r from-transparent to-gold/50' />
                           <span className='text-xl lg:text-3xl italic text-gold/80 tracking-[0.01em] font-light [text-shadow:0_2px_16px_rgba(7,24,30,0.8)]'>
                             à Paris le Marais
@@ -459,7 +459,7 @@ export default function Home() {
                         </span>
                       </h1>
                       <Reveal variant='fade-up' delay={0.7} duration={0.7}>
-                        <div className='relative flex mt-8 mb-4 justify-center items-center'>
+                        <div className='relative flex mt-8 mb-4 md:translate-y-32 lg:translate-y-4 justify-center items-center'>
                           <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-40 bg-gold/15 blur-3xl rounded-full animate-cta-glow' />
                           <Button href='/reservation'>Prendre rendez-vous</Button>
                         </div>
@@ -472,7 +472,7 @@ export default function Home() {
           </div>
 
           {/* Desktop & Tablet Stats - Right side */}
-          <div className='hidden md:block absolute top-1/2 -translate-y-1/2 right-6 md:right-8 lg:right-12 xl:right-20 z-20'>
+          <div className='hidden lg:block absolute top-1/2 -translate-y-1/2 right-6 md:right-8 lg:right-12 xl:right-20 z-20'>
             <div className='flex flex-col gap-6'>
               {[
                 { label: 'Années d\u2019expérience', val: '23+' },
@@ -495,7 +495,7 @@ export default function Home() {
           </div>
 
           {/* Bottom Logo Marquee */}
-          <div className='absolute bottom-0 left-0 w-full h-24 overflow-hidden z-20 flex items-end pointer-events-none'>
+          <div className='absolute bottom-0 left-0 w-full h-40 overflow-hidden z-20 flex items-end pointer-events-none'>
             <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent' />
             <div className='flex items-center w-max animate-marquee-rtl relative z-10'>
               {[...Array(30)].map((_, i) => (
@@ -503,9 +503,9 @@ export default function Home() {
                   <Image
                     src={LOGOS.golden.src}
                     alt={LOGOS.golden.alt}
-                    width={200}
-                    height={100}
-                    className='w-auto h-14 lg:h-20 object-contain'
+                    width={240}
+                    height={160}
+                    className='w-auto h-24 lg:h-32 object-contain'
                   />
                 </div>
               ))}
@@ -756,7 +756,7 @@ export default function Home() {
                   viewport={{ once: true, margin: '-50px' }}
                   transition={{ duration: 0.5, delay: 0.1 * i }}>
                   <motion.div
-                    className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl cursor-pointer'
+                    className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl cursor-pointer touch-image-zoom'
                     whileHover={{ borderColor: 'rgba(156, 131, 88, 0.6)', scale: 1.05 }}
                     transition={{ duration: 0.3 }}>
                     <div
@@ -845,7 +845,7 @@ export default function Home() {
                   delay={index * 0.1}
                   className={index === 2 ? 'hidden lg:block' : ''}>
                   <TiltCard>
-                    <article className='group text-center p-8 border border-gold/20 hover:border-gold/50 transition-all duration-500 relative overflow-hidden h-full'>
+                    <article className='group text-center p-8 border border-gold/20 hover:border-gold/50 transition-all duration-500 relative overflow-hidden h-full touch-card-lift md:hover:-translate-y-2'>
                       {/* Icon */}
                       <div className='flex justify-center mb-6 relative z-10'>
                         <div className='text-gold'>{service.icon}</div>
@@ -864,7 +864,7 @@ export default function Home() {
                       {/* En savoir plus link */}
                       <Link
                         href={service.link}
-                        className='inline-flex items-center gap-2 text-gold text-xs uppercase tracking-widest hover:text-cream transition-colors group relative z-10'>
+                        className='inline-flex items-center gap-2 text-gold text-xs uppercase tracking-widest hover:text-cream transition-colors group relative z-10 touch-link'>
                         En savoir plus
                         <span>→</span>
                       </Link>
@@ -988,7 +988,7 @@ export default function Home() {
               <div>
                 {team.map((member, index) => (
                   <Reveal key={index} variant='scale-up' delay={index * 0.1} threshold={0.2}>
-                    <article className='group relative overflow-hidden'>
+                    <article className='group relative overflow-hidden touch-card-lift'>
                       <div className='relative aspect-3/4 md:aspect-3/4 overflow-hidden bg-navy'>
                         <div
                           className='absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105'
@@ -1156,7 +1156,7 @@ export default function Home() {
                 <Reveal variant='scale-up' threshold={0.2} className='h-full'>
                   <div
                     onClick={() => setLightboxIndex(0)}
-                    className='relative w-full h-full overflow-hidden group cursor-pointer'>
+                    className='relative w-full h-full overflow-hidden group cursor-pointer touch-feedback touch-highlight'>
                     <div
                       className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
                       style={{ backgroundImage: `url(${galleryImages[0].src})` }}
@@ -1186,7 +1186,7 @@ export default function Home() {
                   <div className='aspect-square'>
                     <div
                       onClick={() => setLightboxIndex(index + 1)}
-                      className='relative w-full h-full overflow-hidden group cursor-pointer'>
+                      className='relative w-full h-full overflow-hidden group cursor-pointer touch-feedback touch-highlight'>
                       <div
                         className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
                         style={{ backgroundImage: `url(${image.src})` }}
@@ -1210,7 +1210,7 @@ export default function Home() {
             <Reveal variant='fade-up' delay={0.2} className='text-center mt-10'>
               <Link
                 href='/galerie'
-                className='inline-flex items-center gap-2 text-gold text-sm uppercase tracking-widest hover:text-cream transition-colors group'>
+                className='inline-flex items-center gap-2 text-gold text-sm uppercase tracking-widest hover:text-cream transition-colors group touch-link'>
                 Voir plus
                 <span>→</span>
               </Link>
@@ -1315,7 +1315,7 @@ export default function Home() {
                   delay={index * 0.15}
                   threshold={0.1}
                   className={index === 2 ? 'hidden lg:block' : ''}>
-                  <article className='bg-dark/50 border border-gold/20 p-6 md:p-8 relative hover:border-gold/40 hover:-translate-y-1 hover:shadow-2xl hover:shadow-gold/10 cursor-default transition-all duration-500 h-full overflow-visible group/review flex flex-col mt-8 md:mt-0'>
+                  <article className='bg-dark/50 border border-gold/20 p-6 md:p-8 relative hover:border-gold/40 hover:-translate-y-1 hover:shadow-2xl hover:shadow-gold/10 cursor-default transition-all duration-500 h-full overflow-visible group/review flex flex-col mt-8 md:mt-0 touch-card-lift'>
                     <div className='absolute -top-8 md:-top-10 left-4 md:left-6'>
                       <span className='text-gold text-[4rem] md:text-[5.5rem] leading-normal font-title opacity-90 group-hover/review:opacity-100 transition-opacity duration-500'>
                         &ldquo;
@@ -1349,7 +1349,7 @@ export default function Home() {
                 href='https://maps.app.goo.gl/n37HSH1uoHfUEB5R8'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='inline-flex items-center gap-3 text-gold text-sm uppercase tracking-[0.2em] hover:text-cream transition-colors duration-500 group'>
+                className='inline-flex items-center gap-3 text-gold text-sm uppercase tracking-[0.2em] hover:text-cream transition-colors duration-500 group touch-link touch-highlight'>
                 <svg
                   width='18'
                   height='18'
@@ -1492,7 +1492,7 @@ export default function Home() {
                     Pour prendre rendez-vous, consultez notre{' '}
                     <Link
                       href='/prestations'
-                      className='text-gold hover:text-gold/80 underline underline-offset-4 transition-colors'>
+                      className='text-gold hover:text-gold/80 underline underline-offset-4 transition-colors touch-link'>
                       page prestations
                     </Link>
                     . Pour toute autre demande ou information, contactez-nous via ce formulaire.

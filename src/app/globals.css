@@ -318,7 +318,7 @@
 }
 
 .animate-marquee-rtl {
-  animation: marquee-rtl 180s linear infinite;
+  animation: marquee-rtl 100s linear infinite;
 }
 
 /* --- Body: Default text --- */
@@ -538,5 +538,228 @@
     animation: none;
     opacity: 0.4;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PREMIUM MOBILE TOUCH ANIMATIONS
+   Optimized for touch devices with smooth, luxurious interactions
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Touch feedback - subtle scale on tap */
+@keyframes touch-tap {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.97);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.touch-feedback {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.touch-feedback:active {
+  transform: scale(0.97);
+}
+
+/* Touch ripple effect */
+@keyframes touch-ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.touch-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.touch-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(175, 151, 120, 0.3) 0%, transparent 70%);
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.touch-ripple:active::after {
+  animation: touch-ripple 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smooth tap highlight */
+.touch-highlight {
+  -webkit-tap-highlight-color: rgba(175, 151, 120, 0.1);
+  tap-highlight-color: rgba(175, 151, 120, 0.1);
+}
+
+/* Premium card lift on touch */
+@keyframes card-lift {
+  0% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(175, 151, 120, 0.15);
+  }
+}
+
+.touch-card-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.touch-card-lift:active {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(175, 151, 120, 0.15);
+}
+
+/* Smooth button press */
+@keyframes button-press {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.touch-button {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.touch-button:active {
+  transform: scale(0.95);
+}
+
+/* Elegant fade-scale reveal for mobile */
+@keyframes mobile-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.mobile-reveal {
+  animation: mobile-reveal 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Touch-optimized hover states */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .touch-optimized {
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .touch-optimized:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Smooth scroll snap for mobile */
+.touch-scroll-snap {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.touch-scroll-snap > * {
+  scroll-snap-align: start;
+}
+
+/* Premium glow on touch */
+@keyframes touch-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(175, 151, 120, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(175, 151, 120, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(175, 151, 120, 0);
+  }
+}
+
+.touch-glow:active {
+  animation: touch-glow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smooth image zoom on touch */
+.touch-image-zoom {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.touch-image-zoom:active {
+  transform: scale(1.05);
+}
+
+/* Mobile-specific smooth transitions */
+@media (max-width: 768px) {
+  .mobile-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Reduce motion for better performance */
+  .mobile-reduce-motion {
+    animation-duration: 0.3s !important;
+    transition-duration: 0.2s !important;
+  }
+}
+
+/* Touch-friendly link feedback */
+.touch-link {
+  position: relative;
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.touch-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.touch-link:active::after {
+  width: 100%;
+}
+
+/* Premium bounce effect */
+@keyframes touch-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.touch-bounce:active {
+  animation: touch-bounce 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 

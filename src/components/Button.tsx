@@ -6,7 +6,9 @@ type ButtonProps = {
 
 export default function Button({ children, href, className = '' }: ButtonProps) {
   return (
-    <a href={href} className={`group relative inline-block overflow-hidden ${className}`}>
+    <a
+      href={href}
+      className={`group relative inline-block overflow-hidden touch-button touch-ripple touch-glow touch-highlight ${className}`}>
       {/* Liquid glass backdrop */}
       <span className='absolute inset-0 bg-gradient-to-br from-navy/40 via-navy/30 to-navy/40 backdrop-blur-md border border-gold/30 rounded-sm' />
 
