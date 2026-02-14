@@ -213,30 +213,34 @@ export const BACKGROUNDS = {
     src: '/images/salon/instant-barbier-salon.jpg',
     alt: 'Le Marais, Paris',
   },
-  salonMap: {
-    src: 'https://placehold.co/600x300/142233/AF9778?text=Map+Placeholder',
-    alt: 'Carte',
-  },
 
   // ── Prestations page (placeholders — replace with real images) ──
   prestationCoiffure: {
-    src: 'https://placehold.co/900x1100/0f0f0f/AF9778?text=Coiffure+Homme',
+    src: '/images/prestation/coiffure-homme.jpg',
     alt: 'Coiffure Homme',
   },
   prestationBarbe: {
-    src: 'https://placehold.co/900x1100/07181E/AF9778?text=Barbe+Rituel',
+    src: '/images/prestation/prestation-barbe.jpg',
     alt: 'Barbe',
   },
   prestationSoins: {
-    src: 'https://placehold.co/900x1100/0f0f0f/AF9778?text=Soins+Premium',
+    src: '/images/prestation/prestation-soins.jpg',
     alt: 'Soins & Bien-être',
   },
   prestationBentoLarge: {
-    src: 'https://placehold.co/1000x800/07181E/AF9778?text=Experience+Premium',
+    src: '/images/prestation/prestation-large.jpg',
     alt: 'Expérience haut de gamme',
   },
+  prestationBentoRendezVous: {
+    src: '/images/prestation/sur-rdv.jpg',
+    alt: 'Sur Rendez-vous',
+  },
+  prestationBentoPremium: {
+    src: '/images/prestation/premium-products.jpg',
+    alt: 'Produits Premium',
+  },
   prestationCta: {
-    src: 'https://placehold.co/1920x800/0f0f0f/AF9778?text=CTA+Background',
+    src: '/images/prestation/prestation-cta.jpg',
     alt: 'Background',
   },
 } as const satisfies Record<string, ImageData>

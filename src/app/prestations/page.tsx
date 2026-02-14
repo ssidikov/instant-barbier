@@ -19,9 +19,13 @@ function PremiumImage({
   alt: string
   className?: string
 }) {
+  // Check if className already contains positioning (absolute, relative, fixed)
+  const hasPositioning = /\b(absolute|relative|fixed)\b/.test(className)
+  const positionClass = hasPositioning ? '' : 'relative'
+
   return (
-    <div className={`relative overflow-hidden ${className}`}>
-      <div className='absolute inset-0 transition-transform duration-[2000ms] hover:scale-105'>
+    <div className={`${positionClass} overflow-hidden ${className}`}>
+      <div className='absolute inset-0 transition-transform duration-[2000ms] group-hover:scale-105'>
         <Image src={src} alt={alt} fill className='object-cover' />
       </div>
       <div className='absolute inset-0 bg-gradient-to-t from-navy via-transparent to-navy/30 pointer-events-none' />
@@ -310,13 +314,13 @@ export default function PrestationsPage() {
               <Reveal
                 variant='scale-up'
                 duration={1}
-                className='md:col-span-2 md:row-span-2 relative h-[400px] md:h-auto overflow-hidden group'>
+                className='md:col-span-2 md:row-span-2 relative h-[400px] md:h-full overflow-hidden group border border-gold/10'>
                 <PremiumImage
                   src={BACKGROUNDS.prestationBentoLarge.src}
                   alt={BACKGROUNDS.prestationBentoLarge.alt}
                   className='absolute inset-0'
                 />
-                <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent' />
+                <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent pointer-events-none' />
                 <div className='absolute bottom-0 left-0 p-8 md:p-12'>
                   <span className='text-gold/60 text-xs uppercase tracking-[0.2em] mb-3 block'>
                     Notre Promesse
@@ -335,18 +339,14 @@ export default function PrestationsPage() {
               <Reveal
                 variant='fade-up'
                 delay={0.2}
-                className='relative h-[250px] overflow-hidden group bg-dark border border-gold/10'>
-                <div className='absolute inset-0 p-6 flex flex-col justify-between'>
-                  <div className='w-12 h-12 border border-gold/30 flex items-center justify-center'>
-                    <svg
-                      className='w-6 h-6 text-gold'
-                      viewBox='0 0 24 24'
-                      fill='none'
-                      stroke='currentColor'
-                      strokeWidth='1.5'>
-                      <path d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' />
-                    </svg>
-                  </div>
+                className='relative h-[250px] overflow-hidden group border border-gold/10'>
+                <PremiumImage
+                  src={BACKGROUNDS.prestationBentoRendezVous.src}
+                  alt={BACKGROUNDS.prestationBentoRendezVous.alt}
+                  className='absolute inset-0'
+                />
+                <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent pointer-events-none' />
+                <div className='absolute inset-0 p-6 flex flex-col justify-end relative z-10 h-full'>
                   <div>
                     <h4 className='text-xl font-title text-gold mb-2'>Sur Rendez-vous</h4>
                     <p className='text-cream/50 text-sm font-light'>
@@ -359,18 +359,14 @@ export default function PrestationsPage() {
               <Reveal
                 variant='fade-up'
                 delay={0.4}
-                className='relative h-[250px] overflow-hidden group bg-dark border border-gold/10'>
-                <div className='absolute inset-0 p-6 flex flex-col justify-between'>
-                  <div className='w-12 h-12 border border-gold/30 flex items-center justify-center'>
-                    <svg
-                      className='w-6 h-6 text-gold'
-                      viewBox='0 0 24 24'
-                      fill='none'
-                      stroke='currentColor'
-                      strokeWidth='1.5'>
-                      <path d='M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z' />
-                    </svg>
-                  </div>
+                className='relative h-[250px] overflow-hidden group border border-gold/10'>
+                <PremiumImage
+                  src={BACKGROUNDS.prestationBentoPremium.src}
+                  alt={BACKGROUNDS.prestationBentoPremium.alt}
+                  className='absolute inset-0'
+                />
+                <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent pointer-events-none' />
+                <div className='absolute inset-0 p-6 flex flex-col justify-end relative z-10 h-full'>
                   <div>
                     <h4 className='text-xl font-title text-gold mb-2'>Produits Premium</h4>
                     <p className='text-cream/50 text-sm font-light'>
@@ -392,9 +388,9 @@ export default function PrestationsPage() {
               src={BACKGROUNDS.prestationCta.src}
               alt={BACKGROUNDS.prestationCta.alt}
               fill
-              className='object-cover opacity-20'
+              className='object-cover'
             />
-            <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy/80' />
+            <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/60 to-navy/50' />
           </div>
 
           <div className='max-w-5xl mx-auto px-5 md:px-12 lg:px-20 relative z-10 text-center'>
