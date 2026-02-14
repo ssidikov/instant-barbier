@@ -136,6 +136,7 @@ function ReservationContent() {
         }
 
         /* ── Service set module cards (category containers) ── */
+
         [class*='service_set_module_card'],
         [class*='service_set_module'],
         [class*='service_module'],
@@ -149,6 +150,7 @@ function ReservationContent() {
           border-radius: 6px !important;
           margin: 0 !important;
           transition: all 0.3s ease !important;
+          width: 100% !important;
         }
 
         [class*='_wrapper'] {
@@ -176,7 +178,7 @@ function ReservationContent() {
         * {
           border: none !important;
           border-top: none !important;
-          border-bottom: none !important;
+          // border-bottom: none !important;
           border-left: none !important;
           border-right: none !important;
         }
@@ -315,12 +317,17 @@ function ReservationContent() {
           background-color: #07181e !important;
           color: #af9778 !important;
           border: none !important;
+          transition: none !important;
+          box-shadow: none !important;
+          padding: 12px 6px !important;
         }
         [class*='service-module_toggle']:hover,
         [class*='service_module_toggle']:hover,
         [class*='toggle-']:hover,
         button[class*='toggle']:hover {
-          color: #f4f1ec !important;
+          background-color: #07181e !important;
+          color: #af9778 !important;
+          box-shadow: none !important;
         }
 
         /* ── "Choisir avec qui" menu ── */
@@ -1460,6 +1467,55 @@ function ReservationContent() {
         [class*='flag-module_icon'],
         .flag-module_icon-bLHC6 {
           display: block !important;
+        }
+
+        /* ═══════════════════════════════════════════════
+           FIXES FOR MOBILE & MISSING ELEMENTS
+           ═══════════════════════════════════════════════ */
+
+        /* ── Restore borders for service set containers ── */
+        [class*='service_set_module_card'],
+        [class*='service_set-module_card'],
+        [class*='service_set_module_container'] {
+          border: 1px solid rgba(175, 151, 120, 0.2) !important;
+          margin-bottom: 16px !important;
+        }
+
+        /* ── Mobile adjustments ── */
+        @media (max-width: 768px) {
+          /* Reduce generic wrapper padding */
+          [class*='_wrapper'],
+          [class*='service_set_module_card'],
+          [class*='service_set-module_card'] {
+            padding: 12px 0px !important;
+          }
+
+          /* Adjust margins for lists */
+          .planity_ui_item-list-element {
+            margin-bottom: 8px !important;
+            border-bottom: 1px solid rgba(175, 151, 120, 0.25) !important;
+            padding-bottom: 16px !important;
+          }
+
+          /* Ensure service set headers have breathing room */
+          [class*='service_set_module_header'] {
+            margin-bottom: 12px !important;
+          }
+
+          /* Force primary buttons (Prendre RDV etc) to full width on mobile */
+          button[class*='button-module_primary'],
+          [class*='booking_auth-module'] button[class*='primary'],
+          [class*='authentication-module'] button[class*='primary'],
+          button[class*='primary'],
+          button[class*='submit'],
+          .planity_ui_button_root,
+          button[id*='signup-comp__submit'] {
+            width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            display: block !important;
+            max-width: none !important;
+          }
         }
       `}</style>
 

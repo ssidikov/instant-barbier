@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import { PLANITY_URL } from '@/lib/constants'
 import Reveal from '@/components/Reveal'
-import { GALLERY_IMAGES, type GalleryImageData } from '@/lib/images'
+import { GALLERY_IMAGES, LOGOS, type GalleryImageData } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // GALLERY DATA
@@ -224,10 +224,10 @@ export default function GaleriePage() {
         {/* ═══════════════════════════════════════════════════════════════════
             HERO - Cinematic opening
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='relative h-[70vh] md:h-[85vh] flex items-end overflow-hidden'>
+        <section className='relative h-screen flex items-end overflow-hidden'>
           {/* Background mosaic effect */}
-          <div className='absolute inset-0 z-0 opacity-40'>
-            <div className='absolute inset-0 grid grid-cols-3 gap-1 opacity-30'>
+          <div className='absolute inset-0 z-0 opacity-70'>
+            <div className='absolute inset-0 grid grid-cols-3 gap-1'>
               {galleryImages.map((img, i) => (
                 <div key={i} className='relative overflow-hidden'>
                   <Image
@@ -240,8 +240,7 @@ export default function GaleriePage() {
                 </div>
               ))}
             </div>
-            <div className='absolute inset-0 bg-navy/75' />
-            <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-navy/30' />
+            <div className='absolute inset-0 bg-navy/85 mix-blend-multiply' />
           </div>
 
           {/* Decorative lines */}
@@ -276,14 +275,7 @@ export default function GaleriePage() {
             </div>
           </div>
 
-          {/* Scroll indicator */}
-          <Reveal
-            variant='fade-up'
-            delay={1.5}
-            className='absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20'>
-            <span className='text-[9px] text-gold/40 uppercase tracking-[0.4em]'>Défiler</span>
-            <div className='w-px h-10 bg-gradient-to-b from-gold/50 to-transparent animate-pulse' />
-          </Reveal>
+          {/* Scroll indicator removed */}
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
@@ -397,10 +389,14 @@ export default function GaleriePage() {
             <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy/90' />
           </div>
 
-          {/* Decorative elements */}
-          <div className='absolute top-1/2 right-[10%] -translate-y-1/2 text-[20rem] font-title text-gold select-none pointer-events-none leading-none opacity-[0.08]'>
-            &amp;
-          </div>
+          {/* Logo watermark */}
+          <Image
+            src={LOGOS.linstant.src}
+            alt=''
+            width={400}
+            height={400}
+            className='absolute top-1/2 right-[5%] -translate-y-1/2 w-[30vh] h-[30vh] md:w-[50vh] md:h-[50vh] object-contain opacity-[0.04] -rotate-12 select-none pointer-events-none'
+          />
 
           <div className='max-w-5xl mx-auto px-6 md:px-12 relative z-10 text-center'>
             <Reveal variant='fade-up' className='mb-8'>

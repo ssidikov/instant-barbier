@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import Reveal from '@/components/Reveal'
-import { BACKGROUNDS } from '@/lib/images'
+import { BACKGROUNDS, LOGOS } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PREMIUM IMAGE COMPONENT (Replaces Parallax)
@@ -173,12 +173,7 @@ export default function PrestationsPage() {
           </div>
 
           {/* Scroll indicator */}
-          <div className='absolute bottom-12 left-12 flex items-center gap-4 z-20 animate-bounce duration-[3s]'>
-            <div className='w-px h-16 bg-gradient-to-b from-gold to-transparent' />
-            <span className='text-[10px] text-gold/50 uppercase tracking-[0.3em] rotate-90 origin-left translate-x-2'>
-              Découvrir
-            </span>
-          </div>
+          {/* Scroll indicator removed */}
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
@@ -289,6 +284,11 @@ export default function PrestationsPage() {
         <section className='py-20 md:py-32 lg:py-48 bg-navy-secondary/30 relative overflow-hidden'>
           <div className='absolute bottom-0 left-0 w-[50vw] h-[50vw] rounded-full bg-gold/3 blur-3xl translate-y-1/2 -translate-x-1/4 pointer-events-none' />
 
+          {/* Logo watermark */}
+          <div className='absolute top-10 left-0 w-[400px] h-[400px] opacity-[0.03] -rotate-12 select-none pointer-events-none'>
+            <Image src={LOGOS.linstant.src} alt='' fill className='object-contain' />
+          </div>
+
           <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20 relative z-10'>
             {/* Section Header */}
             <div className='text-center mb-20'>
@@ -314,12 +314,17 @@ export default function PrestationsPage() {
               <Reveal
                 variant='scale-up'
                 duration={1}
-                className='md:col-span-2 md:row-span-2 relative h-[400px] md:h-full overflow-hidden group border border-gold/10'>
+                className='md:col-span-2 md:row-span-2 relative h-[400px] md:h-full group border border-gold/10'>
                 <PremiumImage
                   src={BACKGROUNDS.prestationBentoLarge.src}
                   alt={BACKGROUNDS.prestationBentoLarge.alt}
                   className='absolute inset-0'
                 />
+
+                {/* Corner accents */}
+                <div className='absolute -top-3 -left-3 w-12 h-12 border-t border-l border-gold/30 z-20 transition-all duration-700 group-hover:w-16 group-hover:h-16' />
+                <div className='absolute -bottom-3 -right-3 w-12 h-12 border-b border-r border-gold/30 z-20 transition-all duration-700 group-hover:w-16 group-hover:h-16' />
+
                 <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent pointer-events-none' />
                 <div className='absolute bottom-0 left-0 p-8 md:p-12'>
                   <span className='text-gold/60 text-xs uppercase tracking-[0.2em] mb-3 block'>
@@ -337,7 +342,7 @@ export default function PrestationsPage() {
 
               {/* Smaller cards */}
               <Reveal
-                variant='fade-up'
+                variant='scale-up'
                 delay={0.2}
                 className='relative h-[250px] overflow-hidden group border border-gold/10'>
                 <PremiumImage
@@ -346,7 +351,7 @@ export default function PrestationsPage() {
                   className='absolute inset-0'
                 />
                 <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent pointer-events-none' />
-                <div className='absolute inset-0 p-6 flex flex-col justify-end relative z-10 h-full'>
+                <div className='absolute inset-0 p-6 flex flex-col justify-end z-10 h-full'>
                   <div>
                     <h4 className='text-xl font-title text-gold mb-2'>Sur Rendez-vous</h4>
                     <p className='text-cream/50 text-sm font-light'>
@@ -357,7 +362,7 @@ export default function PrestationsPage() {
               </Reveal>
 
               <Reveal
-                variant='fade-up'
+                variant='scale-up'
                 delay={0.4}
                 className='relative h-[250px] overflow-hidden group border border-gold/10'>
                 <PremiumImage
@@ -366,7 +371,7 @@ export default function PrestationsPage() {
                   className='absolute inset-0'
                 />
                 <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent pointer-events-none' />
-                <div className='absolute inset-0 p-6 flex flex-col justify-end relative z-10 h-full'>
+                <div className='absolute inset-0 p-6 flex flex-col justify-end z-10 h-full'>
                   <div>
                     <h4 className='text-xl font-title text-gold mb-2'>Produits Premium</h4>
                     <p className='text-cream/50 text-sm font-light'>

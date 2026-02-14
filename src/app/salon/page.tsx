@@ -204,6 +204,15 @@ export default function SalonPage() {
           {/* Background accent */}
           <div className='absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-gold/5 to-transparent' />
 
+          {/* Logo watermark */}
+          <Image
+            src={LOGOS.linstant.src}
+            alt=''
+            width={400}
+            height={400}
+            className='absolute top-1/2 right-0 -translate-y-1/2 w-[400px] h-[400px] object-contain opacity-[0.03] -rotate-12 select-none pointer-events-none'
+          />
+
           <div className='max-w-7xl mx-auto px-5 md:px-12 lg:px-20 relative z-10'>
             {/* Section header - spanning full width */}
             <Reveal variant='fade-up' className='mb-20 md:mb-32'>

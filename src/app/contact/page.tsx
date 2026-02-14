@@ -6,7 +6,7 @@ import Button from '@/components/Button'
 import { PLANITY_URL } from '@/lib/constants'
 import ContactForm from '@/components/ContactForm'
 import Reveal from '@/components/Reveal'
-import { BACKGROUNDS } from '@/lib/images'
+import { BACKGROUNDS, LOGOS } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // CONTACT INFO CARD
@@ -99,7 +99,7 @@ export default function ContactPage() {
         {/* ═══════════════════════════════════════════════════════════════════
             HERO - Clean, editorial opening
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className='relative h-[65vh] md:h-[75vh] flex items-end overflow-hidden'>
+        <section className='relative h-screen flex items-end overflow-hidden'>
           {/* Background */}
           <div className='absolute inset-0 z-0'>
             <Image
@@ -144,14 +144,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Scroll indicator */}
-          <Reveal
-            variant='fade-up'
-            delay={1.5}
-            className='absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20'>
-            <span className='text-[9px] text-gold/40 uppercase tracking-[0.4em]'>Défiler</span>
-            <div className='w-px h-10 bg-gradient-to-b from-gold/50 to-transparent animate-pulse' />
-          </Reveal>
+          {/* Scroll indicator removed */}
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
@@ -376,10 +369,13 @@ export default function ContactPage() {
                         viewBox='0 0 24 24'
                         fill='none'
                         stroke='currentColor'
-                        strokeWidth='1.5'>
-                        <circle cx='12' cy='12' r='10' />
-                        <circle cx='12' cy='12' r='3' />
-                        <path d='M12 2v3M12 19v3M2 12h3M19 12h3' />
+                        strokeWidth='1.5'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'>
+                        <circle cx='18.5' cy='17.5' r='3.5' />
+                        <circle cx='5.5' cy='17.5' r='3.5' />
+                        <circle cx='15' cy='5' r='1' />
+                        <path d='M12 17.5V14l-3-3 4-3 2 3h2' />
                       </svg>
                     }
                     title="Vélib'"
@@ -488,19 +484,18 @@ export default function ContactPage() {
         <section className='relative py-20 md:py-32 lg:py-48 overflow-hidden'>
           {/* Background */}
           <div className='absolute inset-0'>
-            <Image
-              src={BACKGROUNDS.contactCta.src}
-              alt=''
-              fill
-              className='object-cover opacity-10'
-            />
-            <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy/90' />
+            <Image src={BACKGROUNDS.contactCta.src} alt='' fill className='object-cover' />
+            <div className='absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/80 to-navy/90' />
           </div>
 
-          {/* Large decorative ampersand */}
-          <div className='absolute top-1/2 right-[8%] -translate-y-1/2 text-[20rem] font-title text-gold select-none pointer-events-none leading-none opacity-[0.06]'>
-            &amp;
-          </div>
+          {/* Logo watermark */}
+          <Image
+            src={LOGOS.linstant.src}
+            alt=''
+            width={400}
+            height={400}
+            className='absolute top-1/2 right-[5%] -translate-y-1/2 w-[30vh] h-[30vh] md:w-[50vh] md:h-[50vh] object-contain opacity-[0.04] -rotate-12 select-none pointer-events-none'
+          />
 
           <div className='max-w-5xl mx-auto px-5 md:px-12 relative z-10 text-center'>
             <Reveal variant='fade-up' className='mb-8'>

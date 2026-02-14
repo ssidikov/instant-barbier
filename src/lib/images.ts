@@ -177,8 +177,14 @@ export const BACKGROUNDS = {
   },
 
   // ── Contact page (uses gallery images) ──
-  contactHero: GALLERY_IMAGES[2], // gallery-3.jpg
-  contactCta: GALLERY_IMAGES[0], // gallery-1.jpg
+  contactHero: {
+    src: '/images/prestation/sur-rdv.jpg',
+    alt: "L'Instant barbier Paris 3 Marais",
+  },
+  contactCta: {
+    src: '/images/contact/contact-cta.jpg',
+    alt: "Prendre rendez-vous à L'Instant Barbier",
+  },
 
   // ── Salon page (placeholders — replace with real images) ──
   salonHero: {
