@@ -194,7 +194,7 @@ export const BACKGROUNDS = {
     alt: 'Détail ambiance',
   },
   salonExpertise: {
-    src: '/images/salon/barbier-en-action.jpg',
+    src: '/images/salon/barbier-action.jpg',
     alt: 'Barbier en action',
   },
   salonExperienceLarge: {

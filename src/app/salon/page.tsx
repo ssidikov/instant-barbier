@@ -364,7 +364,7 @@ export default function SalonPage() {
                   </span>
                 </Reveal>
                 <Reveal variant='fade-up' delay={0.1}>
-                  <h3 className='text-4xl md:text-6xl font-title text-cream mb-8 leading-tight'>
+                  <h3 className='text-4xl md:text-6xl font-title text-cream mb-8 leading-[0.8]'>
                     Votre barbier
                     <br />
                     <span className='text-gold'>dans le Marais</span>
