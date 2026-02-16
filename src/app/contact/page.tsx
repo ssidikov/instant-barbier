@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
-import { PLANITY_URL } from '@/lib/constants'
+import { PLANITY_URL, SITE_URL } from '@/lib/constants'
 import ContactForm from '@/components/ContactForm'
 import Reveal from '@/components/Reveal'
 import { BACKGROUNDS, LOGOS } from '@/lib/images'
@@ -93,8 +93,31 @@ function TransportItem({
 // ═══════════════════════════════════════════════════════════════════════════
 
 export default function ContactPage() {
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Accueil',
+        item: SITE_URL,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Contact',
+        item: `${SITE_URL}/contact`,
+      },
+    ],
+  }
+
   return (
     <div className='bg-navy min-h-screen text-cream overflow-x-hidden selection:bg-gold selection:text-navy'>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <main>
         {/* ═══════════════════════════════════════════════════════════════════
             HERO - Clean, editorial opening

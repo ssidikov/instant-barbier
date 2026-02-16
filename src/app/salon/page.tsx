@@ -6,6 +6,7 @@ import Button from '@/components/Button'
 import Reveal from '@/components/Reveal'
 import GoogleMap from '@/components/GoogleMap'
 import { BACKGROUNDS, LOGOS } from '@/lib/images'
+import { SITE_URL } from '@/lib/constants'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PREMIUM IMAGE COMPONENT (Replaces Parallax)
@@ -35,8 +36,31 @@ function PremiumImage({
 // ═══════════════════════════════════════════════════════════════════════════
 
 export default function SalonPage() {
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Accueil',
+        item: SITE_URL,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Salon',
+        item: `${SITE_URL}/salon`,
+      },
+    ],
+  }
+
   return (
     <div className='bg-navy min-h-screen text-cream overflow-x-hidden selection:bg-gold selection:text-navy'>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <main>
         {/* ═══════════════════════════════════════════════════════════════════
             HERO - Full viewport immersive opening

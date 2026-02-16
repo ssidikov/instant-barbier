@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
-import { PLANITY_URL } from '@/lib/constants'
+import { PLANITY_URL, SITE_URL } from '@/lib/constants'
 import Reveal from '@/components/Reveal'
 import { GALLERY_IMAGES, LOGOS, type GalleryImageData } from '@/lib/images'
 
@@ -218,8 +218,31 @@ export default function GaleriePage() {
     setLightboxIndex(filteredIndex)
   }
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Accueil',
+        item: SITE_URL,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Galerie',
+        item: `${SITE_URL}/galerie`,
+      },
+    ],
+  }
+
   return (
     <div className='bg-navy min-h-screen text-cream overflow-x-hidden selection:bg-gold selection:text-navy'>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <main>
         {/* ═══════════════════════════════════════════════════════════════════
             HERO - Cinematic opening

@@ -1,0 +1,10 @@
+# robots.txt for linstantbarbier.fr
+User-agent: *
+Allow: /
+
+# Block admin/internal pages
+Disallow: /_next/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://www.linstantbarbier.fr/sitemap.xml
