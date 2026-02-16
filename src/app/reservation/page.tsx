@@ -150,7 +150,7 @@ function ReservationContent() {
           border-radius: 6px !important;
           margin: 0 !important;
           transition: all 0.3s ease !important;
-          width: 100% !important;
+          // width: 100% !important;
         }
 
         [class*='_wrapper'] {
@@ -312,7 +312,7 @@ function ReservationContent() {
         /* ── "Plus de détails" toggle buttons ── */
         [class*='service-module_toggle'],
         [class*='service_module_toggle'],
-        [class*='toggle-'],
+        // [class*='toggle-'],
         button[class*='toggle'] {
           background-color: #07181e !important;
           color: #af9778 !important;
@@ -334,6 +334,8 @@ function ReservationContent() {
         .planity_ui_action_action_choose-with,
         #planity-widget-container [class*='choose-with'],
         #planity-widget-container [class*='choose_with'],
+        #planity-widget-container [class*='chooseWith'],
+        #planity-widget-container [class*='ChooseWith'],
         #planity-widget-container [class*='booking_service-module_bottom'],
         #planity-widget-container [class*='booking_service-module'],
         #planity-widget-container div[class*='action_choose'],
@@ -346,6 +348,41 @@ function ReservationContent() {
           padding: 24px !important;
           margin-bottom: 24px !important;
           overflow: visible !important;
+        }
+
+        /* ── "Choisir avec qui ?" dropdown button ── */
+        #planity-widget-container button[class*='select-module_container'],
+        #planity-widget-container button[class*='select-module'],
+        #planity-widget-container [class*='select-module_container'],
+        #planity-widget-container [class*='select-module'][class*='container'],
+        #planity-widget-container div[class*='select-module_container'],
+        #planity-widget-container div[class*='select-module'][class*='container'],
+        #planity-widget-container [class*='select'][class*='module'][class*='container'],
+        .select-module_select-xnYv6 .select-module_container-73bMD,
+        [class*='select-module_select'] [class*='select-module_container'],
+        #planity-widget-container [class*='select-module_select'] > [class*='container'],
+        #planity-widget-container div[class*='select-module_select'] > div[class*='container'],
+        #planity-widget-container
+          div[class*='rel']
+          > div[class*='select-module']
+          [class*='container'] {
+          background-color: #07181e !important;
+          background: #07181e !important;
+          color: #f4f1ec !important;
+          border: 1px solid rgba(175, 151, 120, 0.3) !important;
+          border-radius: 4px !important;
+          padding: 12px 16px !important;
+          padding-left: 16px !important;
+          padding-right: 16px !important;
+          transition: all 0.3s ease !important;
+        }
+        #planity-widget-container button[class*='select-module_container']:hover,
+        #planity-widget-container button[class*='select-module']:hover,
+        #planity-widget-container [class*='select-module_container']:hover,
+        #planity-widget-container div[class*='select-module_container']:hover,
+        [class*='select-module_select'] [class*='select-module_container']:hover {
+          border-color: #af9778 !important;
+          box-shadow: 0 0 12px rgba(175, 151, 120, 0.2) !important;
         }
 
         /* ── Worker profiles container ── */
@@ -918,6 +955,22 @@ function ReservationContent() {
         #planity-widget-container .planity_ui_item-list-element {
           background-color: #07181e !important;
           border: 1px solid rgba(175, 151, 120, 0.25) !important;
+        }
+
+        /* ── Profile gallery slideshow modal ── */
+        #planity-widget-container [class*='profile_gallery'],
+        #planity-widget-container [class*='profile-gallery'],
+        #planity-widget-container div[class*='profile_gallery-module'],
+        #planity-widget-container div[class*='gallery'],
+        #planity-widget-container [class*='slideshow'] {
+          margin: 0 !important;
+          margin-right: 0 !important;
+          margin-left: 0 !important;
+          padding: 0 !important;
+          left: 50% !important;
+          transform: translateX(-50%) !important;
+          width: auto !important;
+          max-width: 90vw !important;
         }
 
         #planity-widget-container h1,
