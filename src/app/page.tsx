@@ -6,318 +6,17 @@ import Button from '@/components/Button'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import ContactForm from '@/components/ContactForm'
 import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
 import { motion } from 'framer-motion'
-import { LOGOS, VIDEO, GALLERY_IMAGES, TEAM, PRODUCT_GRID, BACKGROUNDS } from '@/lib/images'
+import { LOGOS, VIDEO, PRODUCT_GRID, BACKGROUNDS } from '@/lib/images'
 import GoogleMap from '@/components/GoogleMap'
-
-// ═══════════════════════════════════════════════════════════════════════════
-// ═══════════════════════════════════════════════════════════════════════════
-// STATIC COMPONENTS
-// ═══════════════════════════════════════════════════════════════════════════
-
-function ScrollProgressBar() {
-  return null
-}
-
-function TiltCard({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <div className={className}>{children}</div>
-}
-
-function GalleryLightbox({
-  images,
-  currentIndex,
-  onClose,
-}: {
-  images: { src: string; alt: string }[]
-  currentIndex: number
-  onClose: () => void
-}) {
-  const [index, setIndex] = useState(currentIndex)
-
-  const goTo = useCallback(
-    (newIndex: number) => {
-      setIndex(((newIndex % images.length) + images.length) % images.length)
-    },
-    [images.length],
-  )
-
-  const goNext = useCallback(() => goTo(index + 1), [goTo, index])
-  const goPrev = useCallback(() => goTo(index - 1), [goTo, index])
-
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-      if (e.key === 'ArrowRight') goNext()
-      if (e.key === 'ArrowLeft') goPrev()
-    }
-    window.addEventListener('keydown', handleKey)
-    document.body.style.overflow = 'hidden'
-    return () => {
-      window.removeEventListener('keydown', handleKey)
-      document.body.style.overflow = ''
-    }
-  }, [onClose, goNext, goPrev])
-
-  return (
-    <div className='fixed inset-0 z-[9999] flex items-center justify-center' onClick={onClose}>
-      <div className='absolute inset-0 bg-dark/95 backdrop-blur-md' />
-
-      <button
-        onClick={onClose}
-        className='absolute top-6 right-6 z-50 w-12 h-12 border border-gold/40 flex items-center justify-center hover:bg-gold/10 transition-colors cursor-pointer'
-        aria-label='Fermer'>
-        <svg
-          width='20'
-          height='20'
-          viewBox='0 0 20 20'
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='1.5'
-          className='text-gold'>
-          <line x1='4' y1='4' x2='16' y2='16' />
-          <line x1='16' y1='4' x2='4' y2='16' />
-        </svg>
-      </button>
-
-      <div className='absolute top-7 left-6 z-50 text-gold/60 text-xs uppercase tracking-[0.3em] font-body'>
-        {index + 1} / {images.length}
-      </div>
-
-      <p className='absolute bottom-8 left-1/2 -translate-x-1/2 z-50 text-cream/50 text-xs uppercase tracking-[0.25em] font-body'>
-        {images[index].alt}
-      </p>
-
-      <button
-        onClick={(e) => {
-          e.stopPropagation()
-          goPrev()
-        }}
-        className='absolute left-4 md:left-8 z-50 w-12 h-12 border border-gold/30 flex items-center justify-center hover:bg-gold/10 hover:border-gold/60 transition-all cursor-pointer'
-        aria-label='Photo précédente'>
-        <svg
-          width='18'
-          height='18'
-          viewBox='0 0 18 18'
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='1.5'
-          className='text-gold'>
-          <polyline points='12,3 6,9 12,15' />
-        </svg>
-      </button>
-
-      <button
-        onClick={(e) => {
-          e.stopPropagation()
-          goNext()
-        }}
-        className='absolute right-4 md:right-8 z-50 w-12 h-12 border border-gold/30 flex items-center justify-center hover:bg-gold/10 hover:border-gold/60 transition-all cursor-pointer'
-        aria-label='Photo suivante'>
-        <svg
-          width='18'
-          height='18'
-          viewBox='0 0 18 18'
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='1.5'
-          className='text-gold'>
-          <polyline points='6,3 12,9 6,15' />
-        </svg>
-      </button>
-
-      <div
-        className='relative w-full h-full flex items-center justify-center px-16 md:px-24 py-20'
-        onClick={(e) => e.stopPropagation()}>
-        <div className='relative w-full h-full max-w-5xl max-h-[80vh] mx-auto'>
-          {/* Gold frame accent */}
-          <div className='absolute -inset-[1px] border border-gold/20 pointer-events-none z-10' />
-          <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/50 pointer-events-none z-10' />
-          <div className='absolute top-0 right-0 w-6 h-6 border-t border-r border-gold/50 pointer-events-none z-10' />
-          <div className='absolute bottom-0 left-0 w-6 h-6 border-b border-l border-gold/50 pointer-events-none z-10' />
-          <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/50 pointer-events-none z-10' />
-
-          <div
-            className='w-full h-full bg-cover bg-center'
-            style={{ backgroundImage: `url(${images[index].src})` }}
-          />
-        </div>
-      </div>
-
-      <div className='absolute bottom-16 left-1/2 -translate-x-1/2 z-50 flex gap-2'>
-        {images.map((img, i) => (
-          <button
-            key={i}
-            onClick={(e) => {
-              e.stopPropagation()
-              goTo(i)
-            }}
-            className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
-              i === index ? 'bg-gold w-6' : 'bg-gold/30 hover:bg-gold/60'
-            }`}
-            aria-label={`Photo ${i + 1}`}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function SectionTitle({
-  subtitle,
-  title,
-  className = '',
-}: {
-  subtitle?: string
-  title: string
-  className?: string
-}) {
-  return (
-    <div className={`text-center mb-16 ${className}`}>
-      {subtitle && (
-        <div className='flex items-center justify-center gap-4 mb-4'>
-          <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold origin-right' />
-          <span className='text-gold text-xs uppercase tracking-[0.3em]'>{subtitle}</span>
-          <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent origin-left' />
-        </div>
-      )}
-      <h2 className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-tight tracking-[-2px] mb-6'>
-        {title}
-      </h2>
-      <div className='mx-auto mt-6 w-16 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent' />
-    </div>
-  )
-}
-
-function StarRating({ rating }: { rating: number; animate?: boolean }) {
-  return (
-    <div className='flex gap-1'>
-      {[...Array(5)].map((_, i) => (
-        <svg
-          key={i}
-          className={`w-4 h-4 ${i < rating ? 'text-gold' : 'text-cream/20'}`}
-          fill='currentColor'
-          viewBox='0 0 20 20'>
-          <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
-        </svg>
-      ))}
-    </div>
-  )
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════════════════════════════════════════
-
-const services = [
-  {
-    icon: (
-      <svg
-        className='w-10 h-10'
-        viewBox='0 0 24 24'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='1.5'
-        strokeLinecap='round'
-        strokeLinejoin='round'>
-        <circle cx='6' cy='6' r='3' />
-        <circle cx='6' cy='18' r='3' />
-        <line x1='20' y1='4' x2='8.12' y2='15.88' />
-        <line x1='14.47' y1='14.48' x2='20' y2='20' />
-        <line x1='8.12' y1='8.12' x2='12' y2='12' />
-      </svg>
-    ),
-    title: 'Cheveux – Coupe homme sur mesure',
-    description:
-      'Transformez votre style avec une coupe homme personnalisée, adaptée à votre morphologie et à vos envies. Du dégradé taper fade aux coupes classiques ou modernes, nous travaillons chaque détail pour un résultat net, équilibré et durable.',
-    link: '/prestations',
-  },
-  {
-    icon: (
-      <svg
-        className='w-10 h-10'
-        viewBox='0 0 24 24'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='1.5'
-        strokeLinecap='round'
-        strokeLinejoin='round'>
-        <path d='M7 4h10' />
-        <rect x='5' y='3' width='14' height='4' rx='1' />
-        <line x1='12' y1='7' x2='12' y2='21' />
-        <line x1='9' y1='21' x2='15' y2='21' />
-      </svg>
-    ),
-    title: 'Barbe – Rituel barbier à Paris',
-    description:
-      "Offrez à votre barbe l'attention qu'elle mérite grâce à un rituel barbe complet : taille précise, serviettes chaudes et soins aux huiles essentielles, notamment à l'ylang-ylang. Un service idéal pour un rendu élégant, structuré et naturel.",
-    link: '/prestations',
-  },
-  {
-    icon: (
-      <svg
-        className='w-10 h-10'
-        viewBox='0 0 24 24'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='1.5'
-        strokeLinecap='round'
-        strokeLinejoin='round'>
-        <path d='M12 21c-2.4-1.2-5.7-4-5.7-9 0-3.3 3.3-6.3 5.7-9 2.4 2.7 5.7 5.7 5.7 9 0 5-3.3 7.8-5.7 9z' />
-        <path d='M12 21c1.8-1.5 5-5.5 5-9 0-3.5-3-5.5-5-5.5-2 0-5 2-5 5.5 0 3.5 3.2 7.5 5 9z' />
-        <path d='M12 11c1.1 0 2.2.4 3 1 .8.6 1.3 1.5 1.7 2.5' />
-        <path d='M12 11c-1.1 0-2.2.4-3 1-.8.6-1.3 1.5-1.7 2.5' />
-      </svg>
-    ),
-    title: 'Soins – Soin visage homme & bien-être',
-    description:
-      'Nos soins visage homme à Paris sont conçus pour revitaliser la peau et les cheveux. Nous utilisons des produits haut de gamme pour hydrater, nourrir et offrir un véritable moment de détente dans un cadre apaisant.',
-    link: '/prestations',
-  },
-]
-
-const team = TEAM.map((member) => ({
-  name: member.name,
-  role: member.role,
-  experience: member.experience,
-  image: member.src,
-}))
-
-const galleryImages = GALLERY_IMAGES.map((img) => ({
-  src: img.src,
-  alt: img.shortAlt,
-}))
-
-const reviews = [
-  {
-    text: "Ambiance géniale et service impeccable. Les barbiers sont attentifs et prennent le temps de comprendre ce que l'on souhaite. Je recommande vivement !",
-    author: 'Jean-Pierre D.',
-    rating: 5,
-  },
-  {
-    text: "Je me suis senti accueilli dès mon arrivée. Coupe parfaite, rasage traditionnel d'exception. Un vrai moment de détente pour hommes.",
-    author: 'Antoine L.',
-    rating: 5,
-  },
-  {
-    text: 'Une expérience incroyable à chaque visite. Des barbiers qualifiés et un cadre raffiné. On sent le souci du détail et de la précision.',
-    author: 'Charles M.',
-    rating: 5,
-  },
-]
-
-const hours = [
-  { day: 'Lundi', hours: '09:00 – 21:00' },
-  { day: 'Mardi', hours: '09:00 – 21:00' },
-  { day: 'Mercredi', hours: '09:00 – 21:00' },
-  { day: 'Jeudi', hours: '09:00 – 21:00' },
-  { day: 'Vendredi', hours: '09:00 – 21:00' },
-  { day: 'Samedi', hours: '09:00 – 20:00' },
-  { day: 'Dimanche', hours: '10:00 – 20:00' },
-]
+import GalleryLightbox from '@/components/GalleryLightbox'
+import SectionTitle from '@/components/SectionTitle'
+import StarRating from '@/components/StarRating'
+import { services, team, galleryImages, reviews, hours } from '@/lib/data'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PAGE PRINCIPALE
@@ -356,7 +55,6 @@ export default function Home() {
 
   return (
     <>
-      <ScrollProgressBar />
       <main className='grow'>
         {/* ═══════════════════════════════════════════════════════════════════
           HERO SECTION
@@ -844,32 +542,30 @@ export default function Home() {
                   variant='fade-up'
                   delay={index * 0.1}
                   className={index === 2 ? 'hidden lg:block' : ''}>
-                  <TiltCard>
-                    <article className='group text-center p-8 border border-gold/20 hover:border-gold/50 transition-all duration-500 relative overflow-hidden h-full touch-card-lift md:hover:-translate-y-2'>
-                      {/* Icon */}
-                      <div className='flex justify-center mb-6 relative z-10'>
-                        <div className='text-gold'>{service.icon}</div>
-                      </div>
+                  <article className='group text-center p-8 border border-gold/20 hover:border-gold/50 transition-all duration-500 relative overflow-hidden h-full touch-card-lift md:hover:-translate-y-2'>
+                    {/* Icon */}
+                    <div className='flex justify-center mb-6 relative z-10'>
+                      <div className='text-gold'>{service.icon}</div>
+                    </div>
 
-                      {/* Title */}
-                      <h3 className='text-lg h-12 font-title text-gold mb-4 uppercase tracking-wide leading-tight relative z-10'>
-                        {service.title}
-                      </h3>
+                    {/* Title */}
+                    <h3 className='text-lg h-12 font-title text-gold mb-4 uppercase tracking-wide leading-tight relative z-10'>
+                      {service.title}
+                    </h3>
 
-                      {/* Description */}
-                      <p className='text-cream/70 md:h-40 text-sm leading-relaxed mb-6 relative z-10'>
-                        {service.description}
-                      </p>
+                    {/* Description */}
+                    <p className='text-cream/70 md:h-40 text-sm leading-relaxed mb-6 relative z-10'>
+                      {service.description}
+                    </p>
 
-                      {/* En savoir plus link */}
-                      <Link
-                        href={service.link}
-                        className='inline-flex items-center gap-2 text-gold text-xs uppercase tracking-widest hover:text-cream transition-colors group relative z-10 touch-link'>
-                        En savoir plus
-                        <span>→</span>
-                      </Link>
-                    </article>
-                  </TiltCard>
+                    {/* En savoir plus link */}
+                    <Link
+                      href={service.link}
+                      className='inline-flex items-center gap-2 text-gold text-xs uppercase tracking-widest hover:text-cream transition-colors group relative z-10 touch-link'>
+                      En savoir plus
+                      <span>→</span>
+                    </Link>
+                  </article>
                 </Reveal>
               ))}
             </div>

@@ -180,6 +180,15 @@ function ReservationContent() {
           padding: 20px !important;
         }
 
+        /* ── Mobile: Services container width ── */
+        @media (max-width: 768px) {
+          [class*='services-module_servicesContainer'],
+          .services-module_servicesContainer {
+            width: 90% !important;
+            max-width: 90% !important;
+          }
+        }
+
         /* ── Service list rows ── */
         .planity_ui_item-list-element {
           background-color: #07181e !important;
@@ -614,7 +623,9 @@ function ReservationContent() {
           span[class*='radio_picture-module_input'],
         #planity-widget-container
           .planity_ui_action_worker:has(input:checked)
-          span[class*='radio_picture-module_input'] {
+          span[class*='radio_picture-module_input'],
+        #planity-widget-container span.radio_picture-module_input-zcCJH[aria-checked='true'],
+        #planity-widget-container span[class*='radio_picture-module_input'][aria-checked='true'] {
           background-color: #af9778 !important;
           background: #af9778 !important;
           border-color: #af9778 !important;

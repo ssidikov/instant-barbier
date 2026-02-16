@@ -1,14 +1,17 @@
+import Link from 'next/link'
+
 type ButtonProps = {
   children: React.ReactNode
   href?: string
   className?: string
+  external?: boolean
 }
 
-export default function Button({ children, href, className = '' }: ButtonProps) {
-  return (
-    <a
-      href={href}
-      className={`group relative inline-block overflow-hidden touch-button touch-ripple touch-glow touch-highlight ${className}`}>
+export default function Button({ children, href, className = '', external = false }: ButtonProps) {
+  const sharedClassName = `group relative inline-block overflow-hidden touch-button touch-ripple touch-glow touch-highlight ${className}`
+
+  const content = (
+    <>
       {/* Liquid glass backdrop */}
       <span className='absolute inset-0 bg-gradient-to-br from-navy/40 via-navy/30 to-navy/40 backdrop-blur-md border border-gold/30 rounded-sm' />
 
@@ -33,6 +36,24 @@ export default function Button({ children, href, className = '' }: ButtonProps) 
       {/* Corner accents with animation */}
       <span className='absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-gold opacity-0 group-hover:opacity-100 -translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500' />
       <span className='absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-gold opacity-0 group-hover:opacity-100 translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500' />
-    </a>
+    </>
+  )
+
+  if (!href) {
+    return <span className={sharedClassName}>{content}</span>
+  }
+
+  if (external) {
+    return (
+      <a href={href} target='_blank' rel='noopener noreferrer' className={sharedClassName}>
+        {content}
+      </a>
+    )
+  }
+
+  return (
+    <Link href={href} className={sharedClassName}>
+      {content}
+    </Link>
   )
 }
