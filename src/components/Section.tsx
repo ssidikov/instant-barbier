@@ -1,12 +1,7 @@
-'use client'
-
 type SectionProps = {
   children: React.ReactNode
   className?: string
   id?: string
-  animate?: boolean
-  animationType?: 'fade-up' | 'fade-in' | 'scale'
-  delay?: number
 }
 
 export default function Section({ children, className = '', id }: SectionProps) {

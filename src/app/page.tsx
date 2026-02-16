@@ -335,7 +335,9 @@ export default function Home() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            video.play().catch((error) => console.log('Video play failed:', error))
+            video.play().catch(() => {
+              /* Autoplay blocked by browser — expected */
+            })
           } else {
             video.pause()
           }

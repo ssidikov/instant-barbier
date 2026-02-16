@@ -3,7 +3,6 @@
 import { useRef } from 'react'
 import { motion, useInView, useScroll, useSpring } from 'framer-motion'
 import Footer from '@/components/Footer'
-import { fadeInUp, staggerContainer } from '@/lib/animations'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // POLICY SECTION COMPONENT
@@ -116,35 +115,31 @@ export default function ConfidentialitePage() {
           />
 
           <div className='max-w-4xl mx-auto px-6 md:px-12'>
-            <motion.div initial='hidden' animate='visible' variants={staggerContainer}>
-              <motion.span
-                variants={fadeInUp}
-                className='inline-block text-gold/50 text-[10px] uppercase tracking-[0.5em] mb-6'>
+            <div>
+              <span className='inline-block text-gold/50 text-[10px] uppercase tracking-[0.5em] mb-6'>
                 Protection des données
-              </motion.span>
+              </span>
 
-              <motion.h1
-                variants={fadeInUp}
-                className='text-4xl md:text-6xl lg:text-7xl font-title text-gold leading-[0.95] tracking-tight mb-8'>
+              <h1 className='text-4xl md:text-6xl lg:text-7xl font-title text-gold leading-[0.95] tracking-tight mb-8'>
                 Politique de
                 <br />
                 <span className='text-cream'>Confidentialité</span>
-              </motion.h1>
+              </h1>
 
-              <motion.div variants={fadeInUp} className='max-w-xl'>
+              <div className='max-w-xl'>
                 <p className='text-cream/50 text-base md:text-lg font-light leading-relaxed'>
                   Comment nous protégeons vos données personnelles, conformément au Règlement
                   Général sur la Protection des Données (RGPD).
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div variants={fadeInUp} className='mt-10 flex items-center gap-4'>
+              <div className='mt-10 flex items-center gap-4'>
                 <div className='w-20 h-px bg-gold/25' />
                 <span className='text-gold/30 text-[10px] uppercase tracking-[0.3em]'>
                   En vigueur depuis le 26 janvier 2026
                 </span>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </div>
         </section>
 

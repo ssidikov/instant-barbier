@@ -3,7 +3,6 @@
 import { useRef } from 'react'
 import { motion, useInView, useScroll, useSpring } from 'framer-motion'
 import Footer from '@/components/Footer'
-import { fadeInUp, staggerContainer } from '@/lib/animations'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // LEGAL SECTION COMPONENT
@@ -107,30 +106,26 @@ export default function LegalPage() {
           />
 
           <div className='max-w-4xl mx-auto px-6 md:px-12'>
-            <motion.div initial='hidden' animate='visible' variants={staggerContainer}>
-              <motion.span
-                variants={fadeInUp}
-                className='inline-block text-gold/50 text-[10px] uppercase tracking-[0.5em] mb-6'>
+            <div>
+              <span className='inline-block text-gold/50 text-[10px] uppercase tracking-[0.5em] mb-6'>
                 Informations légales
-              </motion.span>
+              </span>
 
-              <motion.h1
-                variants={fadeInUp}
-                className='text-4xl md:text-6xl lg:text-7xl font-title text-gold leading-[0.95] tracking-tight mb-8'>
+              <h1 className='text-4xl md:text-6xl lg:text-7xl font-title text-gold leading-[0.95] tracking-tight mb-8'>
                 Mentions
                 <br />
                 <span className='text-cream'>Légales</span>
-              </motion.h1>
+              </h1>
 
-              <motion.div variants={fadeInUp} className='max-w-xl'>
+              <div className='max-w-xl'>
                 <p className='text-cream/50 text-base md:text-lg font-light leading-relaxed'>
                   Conformément à la loi n° 2004-575 du 21 juin 2004 pour la confiance dans
                   l&apos;économie numérique.
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div variants={fadeInUp} className='mt-10 w-20 h-px bg-gold/25' />
-            </motion.div>
+              <div className='mt-10 w-20 h-px bg-gold/25' />
+            </div>
           </div>
         </section>
 

@@ -95,7 +95,7 @@ export default function ContactForm() {
 
     try {
       // Sanitize all inputs before submission
-      const sanitizedData = {
+      const _sanitizedData = {
         name: sanitizeInput(formData.name),
         phone: sanitizeInput(formData.phone),
         email: sanitizeInput(formData.email),
@@ -103,7 +103,7 @@ export default function ContactForm() {
       }
 
       // Handle form submission
-      console.log('Form submitted:', sanitizedData)
+      // TODO: Implement actual form submission (API route or email service)
 
       // Reset form on success
       setFormData({ name: '', phone: '', email: '', message: '' })
