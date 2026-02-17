@@ -849,60 +849,51 @@ export default function Home() {
             </Reveal>
 
             <div className='grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4'>
-              {/* Large Image */}
-              <div className='col-span-2 row-span-2 aspect-square md:aspect-auto'>
-                <Reveal variant='scale-up' threshold={0.2} className='h-full'>
+              {galleryImages.slice(0, 6).map((image, index) => {
+                const isFirst = index === 0
+                return (
                   <div
-                    onClick={() => setLightboxIndex(0)}
-                    className='relative w-full h-full overflow-hidden group cursor-pointer touch-feedback touch-highlight '>
-                    <div
-                      className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
-                      style={{ backgroundImage: `url(${galleryImages[0].src})` }}
-                    />
-                    <div className='absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors duration-500' />
-                    {/* Corner accent */}
-                    <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                    <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                    <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500'>
-                      <div className='absolute inset-0 bg-navy/50 backdrop-blur-[2px]' />
-                      <div className='relative w-12 h-12 border border-gold/60 flex items-center justify-center'>
-                        <span className='text-gold text-2xl'>+</span>
-                      </div>
-                    </div>
-                  </div>
-                </Reveal>
-              </div>
-
-              {/* Smaller Images */}
-              {galleryImages.slice(1).map((image, index) => (
-                <Reveal
-                  key={index}
-                  variant='scale-up'
-                  delay={0.1 * (index + 1)}
-                  threshold={0.2}
-                  className='aspect-square'>
-                  <div className='aspect-square'>
-                    <div
-                      onClick={() => setLightboxIndex(index + 1)}
-                      className='relative w-full h-full overflow-hidden group cursor-pointer touch-feedback touch-highlight'>
+                    key={index}
+                    className={`${isFirst ? 'col-span-2 row-span-2' : ''} aspect-square transition-all ease-premium opacity-100 scale-100`}
+                    style={{
+                      transitionDuration: '0.8s',
+                      transitionDelay: `${index * 0.1}s`,
+                      willChange: 'transform, opacity, filter',
+                    }}>
+                    <div className={`${isFirst ? 'h-full' : 'aspect-square'}`}>
                       <div
-                        className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
-                        style={{ backgroundImage: `url(${image.src})` }}
-                      />
-                      <div className='absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors duration-500' />
-                      {/* Corner accent */}
-                      <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                      <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-                      <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500'>
-                        <div className='absolute inset-0 bg-navy/50 backdrop-blur-[2px]' />
-                        <div className='relative w-9 h-9 border border-gold/60 flex items-center justify-center'>
-                          <span className='text-gold text-lg'>+</span>
+                        onClick={() => setLightboxIndex(index)}
+                        className='relative w-full h-full overflow-hidden group cursor-pointer touch-feedback touch-highlight'>
+                        {/* Image background */}
+                        <div
+                          className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
+                          style={{ backgroundImage: `url("${image.src}")` }}
+                        />
+
+                        {/* Navy overlay that becomes transparent on hover */}
+                        <div className='absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors duration-500' />
+
+                        {/* Top-left corner accent */}
+                        <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
+
+                        {/* Bottom-right corner accent */}
+                        <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
+
+                        {/* Center "+" icon with backdrop blur */}
+                        <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500'>
+                          <div className='absolute inset-0 bg-navy/50 backdrop-blur-[2px]' />
+                          <div
+                            className={`relative ${isFirst ? 'w-12 h-12' : 'w-9 h-9'} border border-gold/60 flex items-center justify-center`}>
+                            <span className={`text-gold ${isFirst ? 'text-2xl' : 'text-lg'}`}>
+                              +
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </Reveal>
-              ))}
+                )
+              })}
             </div>
 
             <Reveal variant='fade-up' delay={0.2} className='text-center mt-10'>

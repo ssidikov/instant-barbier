@@ -12,7 +12,17 @@ import { GALLERY_IMAGES, LOGOS, type GalleryImageData } from '@/lib/images'
 // GALLERY DATA
 // ═══════════════════════════════════════════════════════════════════════════
 
-const categories = ['Tout', 'Coupes', 'Barbe', 'Ambiance'] as const
+const categories = [
+  'Tout',
+  'Coupes',
+  'Barbe',
+  'Ambiance',
+  'Barbiers',
+  'Outils',
+  'Produit',
+  'Salon',
+  'Soins',
+] as const
 type Category = (typeof categories)[number]
 
 const galleryImages = GALLERY_IMAGES
@@ -141,61 +151,54 @@ function Lightbox({
 // GALLERY CARD COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════
 
-function GalleryCard({ image, onClick }: { image: GalleryImageData; onClick: () => void }) {
-  const spanClasses = {
-    normal: '',
-    tall: 'md:row-span-2',
-    wide: 'md:col-span-2',
-  }
-
-  const heightClasses = {
-    normal: 'h-[300px] md:h-[350px]',
-    tall: 'h-[300px] md:h-[720px]',
-    wide: 'h-[300px] md:h-[350px]',
-  }
+function GalleryCard({
+  image,
+  onClick,
+  index,
+}: {
+  image: GalleryImageData
+  onClick: () => void
+  index: number
+}) {
+  // Determine if this is the first item (for larger size)
+  const isFirst = index === 0
 
   return (
     <div
-      onClick={onClick}
-      className={`relative overflow-hidden cursor-pointer group ${spanClasses[image.span]} ${heightClasses[image.span]}`}>
-      {/* Image */}
-      <Image
-        src={image.src}
-        alt={image.alt}
-        fill
-        className='object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110'
-        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-      />
+      className={`${isFirst ? 'col-span-2 row-span-2' : ''} aspect-square transition-all ease-premium opacity-100 scale-100`}
+      style={{
+        transitionDuration: '0.8s',
+        transitionDelay: `${index * 0.1}s`,
+        willChange: 'transform, opacity, filter',
+      }}>
+      <div className={`${isFirst ? 'h-full' : 'aspect-square'}`}>
+        <div className='relative w-full h-full overflow-hidden group cursor-pointer touch-feedback touch-highlight'>
+          {/* Image background */}
+          <div
+            className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
+            style={{ backgroundImage: `url("${image.src}")` }}
+          />
 
-      {/* Overlay */}
-      <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-700' />
+          {/* Navy overlay that becomes transparent on hover */}
+          <div className='absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors duration-500' />
 
-      {/* Corner accents on hover */}
-      <div className='absolute top-4 left-4 w-8 h-8 border-t border-l border-gold/0 group-hover:border-gold/60 transition-all duration-700 group-hover:w-12 group-hover:h-12' />
-      <div className='absolute bottom-4 right-4 w-8 h-8 border-b border-r border-gold/0 group-hover:border-gold/60 transition-all duration-700 group-hover:w-12 group-hover:h-12' />
+          {/* Top-left corner accent */}
+          <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
 
-      {/* Content overlay */}
-      <div className='absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-500'>
-        <span className='text-gold/70 text-[10px] uppercase tracking-[0.3em] block mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100'>
-          {image.category}
-        </span>
-        <p className='text-cream/80 text-sm font-light leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200'>
-          {image.alt}
-        </p>
-      </div>
+          {/* Bottom-right corner accent */}
+          <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
 
-      {/* Zoom icon */}
-      <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 border border-gold/40 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500'>
-        <svg
-          className='w-5 h-5 text-gold'
-          viewBox='0 0 24 24'
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='1.5'>
-          <circle cx='11' cy='11' r='8' />
-          <path d='M21 21l-4.35-4.35' />
-          <path d='M11 8v6M8 11h6' />
-        </svg>
+          {/* Center "+" icon with backdrop blur */}
+          <div
+            className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500'
+            onClick={onClick}>
+            <div className='absolute inset-0 bg-navy/50 backdrop-blur-[2px]' />
+            <div
+              className={`relative ${isFirst ? 'w-12 h-12' : 'w-9 h-9'} border border-gold/60 flex items-center justify-center`}>
+              <span className={`text-gold ${isFirst ? 'text-2xl' : 'text-lg'}`}>+</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -208,11 +211,25 @@ function GalleryCard({ image, onClick }: { image: GalleryImageData; onClick: () 
 export default function GaleriePage() {
   const [activeCategory, setActiveCategory] = useState<Category>('Tout')
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [visibleCount, setVisibleCount] = useState(6)
 
   const filteredImages =
     activeCategory === 'Tout'
       ? galleryImages
       : galleryImages.filter((img) => img.category === activeCategory)
+
+  const visibleImages = filteredImages.slice(0, visibleCount)
+  const hasMore = visibleCount < filteredImages.length
+
+  const loadMore = () => {
+    setVisibleCount((prev) => prev + 6)
+  }
+
+  // Reset visible count when category changes
+  useEffect(() => {
+    const timer = setTimeout(() => setVisibleCount(6), 0)
+    return () => clearTimeout(timer)
+  }, [activeCategory])
 
   const openLightbox = (filteredIndex: number) => {
     setLightboxIndex(filteredIndex)
@@ -251,7 +268,7 @@ export default function GaleriePage() {
           {/* Background mosaic effect */}
           <div className='absolute inset-0 z-0 opacity-70'>
             <div className='absolute inset-0 grid grid-cols-3 gap-1'>
-              {galleryImages.map((img, i) => (
+              {galleryImages.slice(0, 6).map((img, i) => (
                 <div key={i} className='relative overflow-hidden'>
                   <Image
                     src={img.src}
@@ -369,12 +386,12 @@ export default function GaleriePage() {
                 </div>
 
                 {/* Category filter */}
-                <div className='flex gap-1'>
+                <div className='flex flex-wrap gap-2 md:gap-1 justify-start md:justify-end'>
                   {categories.map((cat) => (
                     <button
                       key={cat}
                       onClick={() => setActiveCategory(cat)}
-                      className={`relative px-5 py-2.5 text-xs uppercase tracking-[0.2em] transition-all duration-300 ${
+                      className={`relative px-3 py-2 md:px-5 md:py-2.5 text-[10px] md:text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] transition-all duration-300 whitespace-nowrap ${
                         activeCategory === cat
                           ? 'text-navy bg-gold'
                           : 'text-cream/50 hover:text-cream hover:bg-white/5'
@@ -386,14 +403,48 @@ export default function GaleriePage() {
               </Reveal>
             </div>
 
-            {/* Masonry grid */}
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 auto-rows-[350px] transition-all duration-500'>
-              {filteredImages.map((image, i) => (
-                <Reveal key={`${activeCategory}-${i}`} variant='scale-up' delay={i * 0.1}>
-                  <GalleryCard image={image} onClick={() => openLightbox(i)} />
-                </Reveal>
+            {/* Gallery grid */}
+            <div className='grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4'>
+              {visibleImages.map((image, i) => (
+                <GalleryCard
+                  key={`${activeCategory}-${i}`}
+                  image={image}
+                  onClick={() => openLightbox(i)}
+                  index={i}
+                />
               ))}
             </div>
+
+            {/* Load More Button */}
+            {hasMore && (
+              <Reveal variant='fade-up' delay={0.3} className='mt-16 text-center'>
+                <button
+                  onClick={loadMore}
+                  className='group relative inline-flex items-center gap-4 px-10 py-4 border border-gold/30 text-gold hover:bg-gold hover:text-navy transition-all duration-500 overflow-hidden'>
+                  {/* Background shine effect */}
+                  <div className='absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-gold/10 to-transparent' />
+
+                  <span className='relative text-sm uppercase tracking-[0.3em] font-light'>
+                    Voir plus
+                  </span>
+
+                  {/* Animated arrow */}
+                  <svg
+                    className='relative w-4 h-4 transition-transform duration-500 group-hover:translate-y-1'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    stroke='currentColor'
+                    strokeWidth='1.5'>
+                    <path d='M12 5v14M19 12l-7 7-7-7' />
+                  </svg>
+                </button>
+
+                {/* Display counter */}
+                <p className='mt-6 text-cream/40 text-xs tracking-wider'>
+                  <span className='text-gold'>{visibleCount}</span> / {filteredImages.length} images
+                </p>
+              </Reveal>
+            )}
           </div>
         </section>
 

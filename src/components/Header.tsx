@@ -61,7 +61,7 @@ export default function Header() {
         {/* Subtle shimmer effect */}
         <div className='absolute inset-0 bg-gradient-to-r from-transparent via-gold/3 to-transparent opacity-50 pointer-events-none' />
 
-        <div className='max-w-7xl mx-auto px-6 xl:px-0 h-20 lg:h-28 flex items-center justify-between relative'>
+        <div className='max-w-7xl mx-auto px-6 xl:px-0 h-18 lg:h-22 flex items-center justify-between relative'>
           {/* Logo - visible on all screens */}
           {/* Logo - visible on all screens */}
           <Link href='/' onClick={closeMenu} className='z-20 flex items-center gap-4'>
