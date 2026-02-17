@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import CookieConsent from '@/components/CookieConsent'
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, CONTACT, SOCIAL } from '@/lib/constants'
+import { Analytics } from '@vercel/analytics/next'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -152,6 +153,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <Header />
         {children}
+        <Analytics />
         <CookieConsent />
       </body>
     </html>

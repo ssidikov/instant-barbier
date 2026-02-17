@@ -354,8 +354,66 @@ export default function LegalPage() {
               </p>
             </LegalSection>
 
-            {/* ── 10. Droit applicable ── */}
-            <LegalSection number='10' title='Droit applicable et juridiction compétente'>
+            {/* ── 10. Vercel Analytics ── */}
+            <LegalSection number='10' title='Analyse de fréquentation (Vercel Analytics)'>
+              <p>
+                Le site utilise{' '}
+                <strong className='text-cream/80 font-normal'>Vercel Analytics</strong>, un service
+                d&apos;analyse de fréquentation fourni par Vercel Inc., pour mesurer et améliorer
+                les performances du site.
+              </p>
+              <p>
+                Vercel Analytics collecte des données anonymisées concernant la navigation des
+                utilisateurs, notamment :
+              </p>
+              <ul className='list-disc list-inside space-y-2 ml-4 text-cream/60'>
+                <li>Les pages visitées et le temps passé sur chaque page</li>
+                <li>Le type d&apos;appareil utilisé (ordinateur, mobile, tablette)</li>
+                <li>Le navigateur web et le système d&apos;exploitation</li>
+                <li>La provenance géographique approximative (pays)</li>
+                <li>Les performances de chargement des pages</li>
+              </ul>
+              <p>
+                Ces données sont collectées de manière{' '}
+                <strong className='text-cream/80 font-normal'>
+                  strictement anonyme et agrégée
+                </strong>
+                , sans identification personnelle. Aucune adresse IP n&apos;est stockée ou utilisée
+                pour le suivi.
+              </p>
+              <InfoBlock label='Finalité'>
+                <p>
+                  Les données collectées par Vercel Analytics sont utilisées exclusivement pour :
+                </p>
+                <ul className='list-disc list-inside space-y-1 mt-2'>
+                  <li>Améliorer l&apos;expérience utilisateur du site</li>
+                  <li>Optimiser les performances techniques</li>
+                  <li>Comprendre l&apos;utilisation générale du site</li>
+                </ul>
+              </InfoBlock>
+              <p>
+                Pour plus d&apos;informations sur Vercel Analytics et la protection des données,
+                consultez :
+              </p>
+              <a
+                href='https://vercel.com/docs/analytics/privacy-policy'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='inline-flex items-center gap-1.5 text-gold/70 hover:text-gold transition-colors duration-300 text-sm'>
+                Politique de confidentialité Vercel Analytics
+                <svg
+                  className='w-3 h-3'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  strokeWidth='1.5'>
+                  <path d='M7 17L17 7M17 7H7M17 7v10' />
+                </svg>
+              </a>
+            </LegalSection>
+
+            {/* ── 11. Droit applicable ── */}
+            <LegalSection number='11' title='Droit applicable et juridiction compétente'>
               <p>
                 Tout litige en relation avec l&apos;utilisation du site{' '}
                 <span className='text-gold/70'>www.linstantbarbier.fr</span> est soumis au droit
@@ -367,8 +425,8 @@ export default function LegalPage() {
               </p>
             </LegalSection>
 
-            {/* ── 11. Lexique ── */}
-            <LegalSection number='11' title='Lexique'>
+            {/* ── 12. Lexique ── */}
+            <LegalSection number='12' title='Lexique'>
               <div className='space-y-4'>
                 <div>
                   <span className='text-cream/80 font-title text-base'>Utilisateur</span>
