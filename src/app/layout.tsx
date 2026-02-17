@@ -17,6 +17,12 @@ const mulish = Mulish({
   display: 'swap',
 })
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -25,11 +31,6 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   authors: [{ name: SITE_NAME }],
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
   alternates: {
     canonical: '/',
   },

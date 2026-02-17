@@ -18,6 +18,7 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Input sanitization helper
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const sanitizeInput = (input: string): string => {
     return input
       .replace(/<script[^>]*>.*?<\/script>/gi, '')
@@ -95,12 +96,13 @@ export default function ContactForm() {
 
     try {
       // Sanitize all inputs before submission
-      const _sanitizedData = {
-        name: sanitizeInput(formData.name),
-        phone: sanitizeInput(formData.phone),
-        email: sanitizeInput(formData.email),
-        message: sanitizeInput(formData.message),
-      }
+      // TODO: Use sanitizedData when implementing actual form submission (API route or email service)
+      // const sanitizedData = {
+      //   name: sanitizeInput(formData.name),
+      //   phone: sanitizeInput(formData.phone),
+      //   email: sanitizeInput(formData.email),
+      //   message: sanitizeInput(formData.message),
+      // }
 
       // Handle form submission
       // TODO: Implement actual form submission (API route or email service)

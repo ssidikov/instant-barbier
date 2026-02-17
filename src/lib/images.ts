@@ -13,7 +13,7 @@ export interface ImageData {
 
 export interface GalleryImageData extends ImageData {
   /** Category for filtering on the gallery page */
-  category: 'Coupes' | 'Barbe' | 'Ambiance'
+  category: 'Coupes' | 'Barbe' | 'Ambiance' | 'Barbiers' | 'Outils' | 'Produit' | 'Salon' | 'Soins'
   /** Grid layout span on the gallery page */
   span: 'normal' | 'tall' | 'wide'
   /** Short alt used on the home page gallery grid */
