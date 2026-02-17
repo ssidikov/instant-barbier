@@ -509,19 +509,27 @@ export default function GaleriePage() {
               {/* Image strip */}
               <Reveal variant='scale-up' className='relative'>
                 <div className='grid grid-cols-2 gap-3'>
-                  {galleryImages.slice(0, 4).map((img, i) => (
-                    <div
-                      key={i}
-                      className={`relative overflow-hidden group ${i === 0 ? 'h-48 md:h-56' : i === 3 ? 'h-48 md:h-56' : 'h-40 md:h-48'}`}>
-                      <Image
-                        src={img.src}
-                        alt={img.alt}
-                        fill
-                        className='object-cover hover:scale-105 transition-transform duration-700'
-                      />
-                      <div className='absolute inset-0 bg-navy/30 hover:bg-navy/10 transition-colors duration-500' />
-                    </div>
-                  ))}
+                  {[
+                    galleryImages.find((img) => img.src.includes('Coupes (19)')),
+                    galleryImages.find((img) => img.src.includes('Ambiance (23)')),
+                    galleryImages.find((img) => img.src.includes('Soins (4)')),
+                    galleryImages.find((img) => img.src.includes('Barbe (23)')),
+                  ].map((img, i) => {
+                    if (!img) return null
+                    return (
+                      <div
+                        key={i}
+                        className={`relative overflow-hidden group ${i === 0 ? 'h-48 md:h-56' : i === 3 ? 'h-48 md:h-56' : 'h-40 md:h-48'}`}>
+                        <Image
+                          src={img.src}
+                          alt={img.alt}
+                          fill
+                          className='object-cover hover:scale-105 transition-transform duration-700'
+                        />
+                        <div className='absolute inset-0 bg-navy/30 hover:bg-navy/10 transition-colors duration-500' />
+                      </div>
+                    )
+                  })}
                 </div>
                 {/* Gold corner accent */}
                 <div className='absolute -top-3 -left-3 w-12 h-12 border-t border-l border-gold/30' />

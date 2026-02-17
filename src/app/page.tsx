@@ -458,7 +458,7 @@ export default function Home() {
                   transition={{ duration: 0.5, delay: 0.1 * i }}>
                   <motion.div
                     className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl cursor-pointer touch-image-zoom'
-                    whileHover={{ borderColor: 'rgba(156, 131, 88, 0.6)', scale: 1.05 }}
+                    whileHover={{ borderColor: 'rgba(156, 131, 88, 0.6)' }}
                     transition={{ duration: 0.3 }}>
                     <div
                       className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
@@ -1147,7 +1147,7 @@ export default function Home() {
             <div className='grid lg:grid-cols-2 gap-12 lg:gap-20'>
               <Reveal variant='scale-up' delay={0.2} threshold={0.2}>
                 <div className='relative'>
-                  <div className='relative aspect-4/3 overflow-hidden group hover:scale-[1.02] transition-transform duration-500'>
+                  <div className='relative aspect-4/3 overflow-hidden group transition-transform duration-500'>
                     <div
                       className='absolute inset-0 bg-cover bg-center'
                       style={{ backgroundImage: `url('${BACKGROUNDS.homeMap.src}')` }}

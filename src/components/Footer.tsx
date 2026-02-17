@@ -128,6 +128,11 @@ export default function Footer() {
                   Accueil
                 </Link>
                 <Link
+                  href='/salon'
+                  className='text-sm uppercase tracking-widest text-cream/80 hover:text-gold transition-colors'>
+                  Salon
+                </Link>
+                <Link
                   href='/prestations'
                   className='text-sm uppercase tracking-widest text-cream/80 hover:text-gold transition-colors'>
                   Prestations
@@ -136,6 +141,11 @@ export default function Footer() {
                   href='/galerie'
                   className='text-sm uppercase tracking-widest text-cream/80 hover:text-gold transition-colors'>
                   Galerie
+                </Link>
+                <Link
+                  href='/reservation'
+                  className='text-sm uppercase tracking-widest text-cream/80 hover:text-gold transition-colors'>
+                  Réservation
                 </Link>
                 <Link
                   href='/contact'
