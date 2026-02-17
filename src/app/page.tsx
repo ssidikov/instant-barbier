@@ -340,8 +340,9 @@ export default function Home() {
                       className='text-cream/95 text-lg lg:text-xl leading-[1.7] tracking-wide font-light'
                       delay={0.8}
                       stagger={0.02}>
-                      Fondé par Riccardo, maître barbier reconnu, nous maîtrisons les techniques
-                      classiques comme les tendances contemporaines.
+                      Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de 23 ans, nous
+                      maîtrisons les techniques classiques comme les tendances contemporaines dans
+                      notre salon du Marais.
                     </TextReveal>
                   </div>
                   <div className='flex justify-start'>
