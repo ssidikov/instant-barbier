@@ -1476,7 +1476,7 @@ export const BACKGROUNDS = {
 
   // ── Contact page (uses gallery images) ──
   contactHero: {
-    src: '/images/prestation/sur-rdv.jpg',
+    src: '/images/contact/contact-hero-bg.jpg',
     alt: "L'Instant barbier Paris 3 Marais",
   },
   contactCta: {
@@ -1510,7 +1510,7 @@ export const BACKGROUNDS = {
     alt: 'Consultation',
   },
   salonExperienceSmall2: {
-    src: '/images/salon/salon-relaxation-1.jpg',
+    src: '/images/salon/detente-1.jpeg',
     alt: 'Relaxation',
   },
   salonLocation: {
@@ -1544,7 +1544,7 @@ export const BACKGROUNDS = {
     alt: 'Produits Premium',
   },
   prestationCta: {
-    src: '/images/prestation/prestation-cta.jpg',
+    src: '/images/prestation/prestation-reservez.jpg',
     alt: 'Background',
   },
   galleryQuote: {

@@ -419,7 +419,7 @@ export default function PrestationsPage() {
               fill
               className='object-cover'
             />
-            <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/60 to-navy/50' />
+            <div className='absolute inset-0 bg-gradient-to-r from-navy/80 via-navy/90 to-navy/60' />
           </div>
 
           <div className='max-w-5xl mx-auto px-5 md:px-12 lg:px-20 relative z-10 text-center'>
