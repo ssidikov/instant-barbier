@@ -1530,7 +1530,7 @@ export const BACKGROUNDS = {
     alt: 'Sur Rendez-vous',
   },
   prestationBentoPremium: {
-    src: '/images/prestation/premium-products.jpg',
+    src: '/images/prestation/produits-premium.JPG',
     alt: 'Produits Premium',
   },
   prestationCta: {
