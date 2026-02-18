@@ -1438,7 +1438,7 @@ export const BACKGROUNDS = {
     alt: "L'Instant Barbier — salon de coiffure et barbier à Paris",
   },
   homeAtmosphere: {
-    src: '/images/atmosphere.jpg',
+    src: '/images/atmosphere-salon.JPG',
     alt: 'Atmosphère élégante du salon',
   },
   homeInterior: {
@@ -1536,5 +1536,9 @@ export const BACKGROUNDS = {
   prestationCta: {
     src: '/images/prestation/prestation-cta.jpg',
     alt: 'Background',
+  },
+  galleryQuote: {
+    src: '/images/gallery/Salon-1.jpg',
+    alt: "L'Instant Barbier - Ambiance",
   },
 } as const satisfies Record<string, ImageData>

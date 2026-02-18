@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import { PLANITY_URL, SITE_URL } from '@/lib/constants'
 import Reveal from '@/components/Reveal'
-import { GALLERY_IMAGES, LOGOS, type GalleryImageData } from '@/lib/images'
+import { GALLERY_IMAGES, LOGOS, BACKGROUNDS, type GalleryImageData } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // GALLERY DATA
@@ -227,7 +227,9 @@ export default function GaleriePage() {
 
   // Reset visible count when category changes
   useEffect(() => {
-    const timer = setTimeout(() => setVisibleCount(6), 0)
+    const isMobile = window.innerWidth < 768
+    const initialCount = isMobile ? 5 : 6
+    const timer = setTimeout(() => setVisibleCount(initialCount), 0)
     return () => clearTimeout(timer)
   }, [activeCategory])
 
@@ -333,7 +335,7 @@ export default function GaleriePage() {
                   <span className='text-gold text-7xl md:text-8xl font-serif leading-none opacity-15 block mb-4'>
                     &ldquo;
                   </span>
-                  <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-cream leading-[1.1] -mt-14'>
+                  <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-cream leading-[0.8] tracking-[-2px] -mt-14'>
                     Chaque image reflète
                     <span className='block text-gold mt-2'>notre exigence</span>
                   </h2>
@@ -380,7 +382,7 @@ export default function GaleriePage() {
                   <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                     Nos Réalisations
                   </span>
-                  <h3 className='text-4xl md:text-5xl lg:text-6xl font-title text-cream'>
+                  <h3 className='text-4xl md:text-5xl lg:text-6xl font-title text-cream leading-[0.8] tracking-[-2px]'>
                     Explorer <span className='text-gold'>l&apos;univers</span>
                   </h3>
                 </div>
@@ -455,12 +457,12 @@ export default function GaleriePage() {
           {/* Background image (subtle) */}
           <div className='absolute inset-0'>
             <Image
-              src='/images/gallery/gallery-3.jpg'
-              alt=''
+              src={BACKGROUNDS.galleryQuote.src}
+              alt={BACKGROUNDS.galleryQuote.alt}
               fill
-              className='object-cover opacity-10'
+              className='object-cover opacity-100'
             />
-            <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy/90' />
+            <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy' />
           </div>
 
           {/* Logo watermark */}
@@ -481,7 +483,7 @@ export default function GaleriePage() {
             </Reveal>
 
             <Reveal variant='blur-in' className='mb-10'>
-              <blockquote className='text-2xl md:text-4xl lg:text-5xl font-title text-cream leading-[1.2]'>
+              <blockquote className='text-2xl md:text-4xl lg:text-5xl font-title text-cream leading-[0.8] tracking-[-2px]'>
                 Où tradition et modernité se rencontrent pour{' '}
                 <span className='text-gold'>sublimer le style masculin</span>
               </blockquote>
@@ -544,7 +546,7 @@ export default function GaleriePage() {
                   </span>
                 </Reveal>
                 <Reveal variant='fade-up' delay={0.1}>
-                  <h3 className='text-3xl md:text-5xl font-title text-cream mb-8 leading-tight'>
+                  <h3 className='text-3xl md:text-5xl font-title text-cream mb-8  leading-[0.8] tracking-[-2px]'>
                     Vivez l&apos;expérience
                     <br />
                     <span className='text-gold'>en personne</span>

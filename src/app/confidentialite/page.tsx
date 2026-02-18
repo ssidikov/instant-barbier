@@ -32,7 +32,9 @@ function PolicySection({
         {number}
       </span>
 
-      <h2 className='text-xl md:text-2xl font-title text-gold mb-6 leading-tight'>{title}</h2>
+      <h2 className='text-xl md:text-2xl font-title text-gold mb-6 leading-[0.8] tracking-[-2px]'>
+        {title}
+      </h2>
 
       <div className='space-y-4 text-cream/60 font-light leading-relaxed text-[15px]'>
         {children}

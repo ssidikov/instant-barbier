@@ -131,7 +131,7 @@ export default function SalonPage() {
                   <span className='text-gold text-8xl font-serif leading-none opacity-20 block mb-4'>
                     &quot;
                   </span>
-                  <h2 className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[1.1] -mt-16'>
+                  <h2 className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[0.8] tracking-[-2px] -mt-16'>
                     Bien plus qu&apos;un
                     <span className='block text-gold'>salon de coiffure</span>
                   </h2>
@@ -197,7 +197,7 @@ export default function SalonPage() {
                   </span>
                 </Reveal>
                 <Reveal variant='fade-up' delay={0.1}>
-                  <h3 className='text-4xl md:text-5xl font-title text-cream mb-8 leading-tight'>
+                  <h3 className='text-4xl md:text-5xl font-title text-cream mb-8 leading-[0.8] tracking-[-2px]'>
                     Élégance
                     <br />
                     <span className='text-gold'>&</span> Chaleur
@@ -243,7 +243,7 @@ export default function SalonPage() {
               <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                 02 — Savoir-Faire
               </span>
-              <h3 className='text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-title text-cream leading-[0.9]'>
+              <h3 className='text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-title text-cream leading-[0.8] tracking-[-2px]'>
                 L&apos;Art du
                 <br />
                 <span className='text-gold'>Barbier</span>
@@ -316,7 +316,7 @@ export default function SalonPage() {
               <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                 03 — Expérience
               </span>
-              <h3 className='text-4xl md:text-6xl font-title text-cream'>
+              <h3 className='text-4xl md:text-6xl font-title text-cream leading-[0.8] tracking-[-2px]'>
                 Un Moment <span className='text-gold'>Privilégié</span>
               </h3>
             </Reveal>
@@ -334,7 +334,9 @@ export default function SalonPage() {
                 />
                 <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent' />
                 <div className='absolute bottom-0 left-0 p-8 md:p-12'>
-                  <h4 className='text-3xl md:text-4xl font-title text-gold mb-4'>Soins Premium</h4>
+                  <h4 className='text-3xl md:text-4xl font-title text-gold mb-4 leading-[0.8] tracking-[-2px]'>
+                    Soins Premium
+                  </h4>
                   <p className='text-cream/70 font-light max-w-md'>
                     Serviettes chaudes, huiles essentielles et produits haut de gamme pour une
                     expérience sensorielle complète.
@@ -397,7 +399,7 @@ export default function SalonPage() {
                   </span>
                 </Reveal>
                 <Reveal variant='fade-up' delay={0.1}>
-                  <h3 className='text-4xl md:text-6xl font-title text-cream mb-8 leading-[0.8]'>
+                  <h3 className='text-4xl md:text-6xl font-title text-cream mb-8 leading-[0.8] tracking-[-2px]'>
                     Votre barbier
                     <br />
                     <span className='text-gold'>dans le Marais</span>
@@ -433,7 +435,7 @@ export default function SalonPage() {
                         <span className='text-gold/50 text-[10px] uppercase tracking-[0.3em] font-medium mb-3 block'>
                           Localisation
                         </span>
-                        <h4 className='text-3xl md:text-4xl font-title text-cream mb-2'>
+                        <h4 className='text-3xl md:text-4xl font-title text-cream mb-2 leading-[0.8] tracking-[-2px]'>
                           L&apos;Instant <span className='text-gold'>Barbier</span>
                         </h4>
                         <p className='text-cream/50 font-light text-sm italic'>

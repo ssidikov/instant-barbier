@@ -26,6 +26,23 @@ export default function Home() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
 
+  // State for gallery count
+  const [galleryCount, setGalleryCount] = useState(6)
+
+  useEffect(() => {
+    // Adjust gallery count based on screen width
+    const handleResize = () => {
+      setGalleryCount(window.innerWidth < 768 ? 5 : 6)
+    }
+
+    // Set initial value
+    handleResize()
+
+    // Add event listener
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
@@ -302,7 +319,7 @@ export default function Home() {
                 <div className='mb-4 xl:mb-14'>
                   <h2 className='flex items-baseline gap-3'>
                     <motion.span
-                      className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold font-light leading-none'
+                      className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold font-light leading-[0.8] tracking-[-2px]'
                       initial={{ opacity: 0, scale: 0.8 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
@@ -527,7 +544,7 @@ export default function Home() {
                 </div>
 
                 {/* Large Title */}
-                <h2 className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-tight tracking-[-2px] mb-6'>
+                <h2 className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-[0.8] tracking-[-2px] mb-6'>
                   Prestations
                 </h2>
 
@@ -850,7 +867,7 @@ export default function Home() {
             </Reveal>
 
             <div className='grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4'>
-              {galleryImages.slice(0, 6).map((image, index) => {
+              {galleryImages.slice(0, galleryCount).map((image, index) => {
                 const isFirst = index === 0
                 return (
                   <div

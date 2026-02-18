@@ -184,7 +184,7 @@ export default function ContactPage() {
                 <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                   Informations
                 </span>
-                <h2 className='text-4xl md:text-5xl lg:text-6xl font-title text-cream'>
+                <h2 className='text-4xl md:text-5xl lg:text-6xl font-title text-cream leading-[0.8] tracking-[-2px]'>
                   Nous <span className='text-gold'>contacter</span>
                 </h2>
               </Reveal>
@@ -290,7 +290,7 @@ export default function ContactPage() {
                   <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                     Localisation
                   </span>
-                  <h3 className='text-3xl md:text-4xl lg:text-5xl font-title text-cream'>
+                  <h3 className='text-3xl md:text-4xl lg:text-5xl font-title text-cream leading-[0.8] tracking-[-2px]'>
                     Accès au <span className='text-gold'>salon</span>
                   </h3>
                 </Reveal>
@@ -327,7 +327,7 @@ export default function ContactPage() {
                   <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                     Comment venir
                   </span>
-                  <h3 className='text-2xl md:text-3xl font-title text-cream'>
+                  <h3 className='text-2xl md:text-3xl font-title text-cream leading-[0.8] tracking-[-2px]'>
                     Transports <span className='text-gold'>&amp;</span> accès
                   </h3>
                 </Reveal>
@@ -447,7 +447,7 @@ export default function ContactPage() {
                   <span className='text-gold text-7xl md:text-8xl font-serif leading-none opacity-15 block mb-4'>
                     &ldquo;
                   </span>
-                  <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-cream leading-[1.1] -mt-14'>
+                  <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-cream leading-[0.8] tracking-[-2px] -mt-14'>
                     Votre barbier
                     <span className='block text-gold mt-2'>dans le Marais</span>
                   </h2>
@@ -489,7 +489,7 @@ export default function ContactPage() {
                 <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                   Une question ?
                 </span>
-                <h2 className='text-3xl md:text-5xl font-title text-cream'>
+                <h2 className='text-3xl md:text-5xl font-title text-cream leading-[0.8] tracking-[-2px]'>
                   Envoyez-nous un <span className='text-gold'>message</span>
                 </h2>
               </Reveal>
@@ -527,8 +527,10 @@ export default function ContactPage() {
             </Reveal>
 
             <Reveal variant='fade-up' delay={0.1}>
-              <h3 className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[1.15] mb-8'>
-                Prêt pour une expérience <span className='text-gold'>sur mesure</span> ?
+              <h3 className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[0.8] tracking-[-2px] mb-8'>
+                Prêt pour une expérience
+                <br />
+                <span className='text-gold'>sur mesure</span> ?
               </h3>
             </Reveal>
 

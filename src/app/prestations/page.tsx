@@ -84,7 +84,7 @@ function PrestationCard({
           </span>
         </Reveal>
         <Reveal variant='fade-up' delay={0.1}>
-          <h3 className='text-4xl md:text-5xl lg:text-6xl font-title text-cream mb-8 leading-[0.95]'>
+          <h3 className='text-4xl md:text-5xl lg:text-6xl font-title text-cream mb-8 leading-[0.8] tracking-[-2px]'>
             {title}
           </h3>
         </Reveal>
@@ -215,7 +215,7 @@ export default function PrestationsPage() {
                   </span>
                 </Reveal>
                 <Reveal variant='fade-up' delay={0.2}>
-                  <h2 className='text-3xl md:text-5xl font-title text-cream leading-[1.1] -mt-12'>
+                  <h2 className='text-3xl md:text-5xl font-title text-cream leading-[0.8] tracking-[-2px] -mt-12'>
                     Des prestations
                     <span className='block text-gold'>sur mesure</span>
                   </h2>
@@ -320,7 +320,7 @@ export default function PrestationsPage() {
                 <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                   L&apos;Excellence
                 </span>
-                <h2 className='text-4xl md:text-6xl font-title text-cream'>
+                <h2 className='text-4xl md:text-6xl font-title text-cream leading-[0.8] tracking-[-2px]'>
                   Une expérience <span className='text-gold'>haut de gamme</span>
                 </h2>
               </Reveal>
@@ -354,7 +354,7 @@ export default function PrestationsPage() {
                   <span className='text-gold/60 text-xs uppercase tracking-[0.2em] mb-3 block'>
                     Notre Promesse
                   </span>
-                  <h3 className='text-3xl md:text-4xl font-title text-cream mb-4'>
+                  <h3 className='text-3xl md:text-4xl font-title text-cream mb-4 leading-[0.8] tracking-[-2px]'>
                     Élégance <span className='text-gold'>&</span> Personnalisation
                   </h3>
                   <p className='text-cream/70 font-light max-w-md'>
@@ -427,7 +427,7 @@ export default function PrestationsPage() {
               <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-6 block'>
                 Prêt ?
               </span>
-              <h2 className='text-4xl md:text-6xl lg:text-7xl font-title text-cream mb-8'>
+              <h2 className='text-4xl md:text-6xl lg:text-7xl font-title text-cream mb-8 leading-[0.8] tracking-[-2px]'>
                 Réservez votre
                 <br />
                 <span className='text-gold'>instant</span>
