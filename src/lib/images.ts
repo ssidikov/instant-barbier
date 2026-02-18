@@ -1551,4 +1551,8 @@ export const BACKGROUNDS = {
     src: '/images/gallery/Salon-1.jpg',
     alt: "L'Instant Barbier - Ambiance",
   },
+  reservationHero: {
+    src: '/images/reservatoon/reservation-hero.jpg',
+    alt: 'Réservation background',
+  },
 } as const satisfies Record<string, ImageData>

@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect, Suspense } from 'react'
+import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import Footer from '@/components/Footer'
-import { Section, Container } from '@/components'
+import { Section, Container, Button, Reveal } from '@/components'
 import { PLANITY_KEY, SITE_URL } from '@/lib/constants'
+import { BACKGROUNDS } from '@/lib/images'
 
 export default function ReservationPage() {
   return (
@@ -1606,25 +1608,60 @@ function ReservationContent() {
         }
       `}</style>
 
-      <main className='min-h-screen pt-20 grow bg-navy'>
-        <Section className='py-12'>
-          <Container>
-            <div className='text-center mb-12'>
-              <h1 className='font-title text-4xl md:text-6xl text-gold mb-6'>
-                Prendre rendez-vous
-              </h1>
-              <p className='font-body text-cream text-lg max-w-2xl mx-auto'>
-                Réservez votre créneau en ligne et profitez d&apos;un moment de détente dans notre
-                salon. Choisissez votre prestation et votre barbier préféré.
-              </p>
-            </div>
-
-            {/* Conteneur du widget Planity */}
-            <div
-              id='planity-widget-container'
-              className='w-full rounded-lg shadow-xl overflow-hidden border border-gold/20'
-              style={{ minHeight: '600px' }}
+      <main className='min-h-screen bg-navy'>
+        {/* HERO SECTION */}
+        <section className='relative w-full h-screen flex items-center justify-center overflow-hidden'>
+          {/* Background Image */}
+          <div className='absolute inset-0'>
+            <Image
+              src={BACKGROUNDS.reservationHero.src}
+              alt={BACKGROUNDS.reservationHero.alt}
+              fill
+              className='object-cover'
+              priority
+              quality={90}
             />
+            {/* Dark Overlay for readability */}
+            <div className='absolute inset-0 bg-black/50' />
+            {/* Subtle Gradient at bottom */}
+            <div className='absolute inset-0 bg-gradient-to-b from-navy/30 via-transparent to-navy transform translate-y-px' />
+          </div>
+
+          {/* Content */}
+          <Container className='relative z-10 text-center px-4'>
+            <Reveal variant='fade-up' duration={1}>
+              <div className='max-w-4xl mx-auto space-y-6 md:space-y-8'>
+                <h1 className='text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-title text-gold font-light leading-[1.1] tracking-tight'>
+                  Réservez votre <br className='hidden md:block' />
+                  <span className='italic'>Moment d&apos;Exception</span>
+                </h1>
+
+                <div className='w-24 h-px bg-gold/50 mx-auto' />
+
+                <p className='text-lg md:text-xl text-cream/90 font-light max-w-2xl mx-auto leading-relaxed'>
+                  Sélectionnez votre prestation et profitez de l&apos;expertise de nos maîtres
+                  barbiers au cœur du Marais.
+                </p>
+
+                <div className='pt-8'>
+                  <Button href='#planity-widget-container'>MOMENT DE DÉTENTE</Button>
+                </div>
+              </div>
+            </Reveal>
+          </Container>
+        </section>
+
+        {/* PLANITY WIDGET SECTION */}
+        <Section className='py-16 md:py-24 bg-navy relative'>
+          <Container>
+            {/* Wrapper for spacing/shadow */}
+            <div className='relative z-10 w-full max-w-[1200px] mx-auto'>
+              {/* Planity Container - DO NOT TOUCH ID */}
+              <div
+                id='planity-widget-container'
+                className='w-full min-h-[600px] rounded-xl overflow-hidden border border-gold/10 bg-navy/50 shadow-2xl backdrop-blur-sm'
+              />
+            </div>
           </Container>
         </Section>
       </main>

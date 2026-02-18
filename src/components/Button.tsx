@@ -5,9 +5,16 @@ type ButtonProps = {
   href?: string
   className?: string
   external?: boolean
+  onClick?: (e: React.MouseEvent) => void
 }
 
-export default function Button({ children, href, className = '', external = false }: ButtonProps) {
+export default function Button({
+  children,
+  href,
+  className = '',
+  external = false,
+  onClick,
+}: ButtonProps) {
   const sharedClassName = `group relative inline-block overflow-hidden touch-button touch-ripple touch-glow touch-highlight ${className}`
 
   const content = (
@@ -40,19 +47,28 @@ export default function Button({ children, href, className = '', external = fals
   )
 
   if (!href) {
-    return <span className={sharedClassName}>{content}</span>
+    return (
+      <button className={sharedClassName} onClick={onClick}>
+        {content}
+      </button>
+    )
   }
 
   if (external) {
     return (
-      <a href={href} target='_blank' rel='noopener noreferrer' className={sharedClassName}>
+      <a
+        href={href}
+        target='_blank'
+        rel='noopener noreferrer'
+        className={sharedClassName}
+        onClick={onClick}>
         {content}
       </a>
     )
   }
 
   return (
-    <Link href={href} className={sharedClassName}>
+    <Link href={href} className={sharedClassName} onClick={onClick}>
       {content}
     </Link>
   )
