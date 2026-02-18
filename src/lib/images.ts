@@ -1,10 +1,10 @@
-﻿// ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+﻿// ═══════════════════════════════════════════════════════════════════════════
 // CENTRALIZED IMAGE REGISTRY
 // Single source of truth for all images used across the website.
 // Update paths or alt texts here to reflect changes everywhere.
-// ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+// ═══════════════════════════════════════════════════════════════════════════
 
-// ΓöÇΓöÇ Types ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ── Types ──────────────────────────────────────────────────────────────────
 
 export interface ImageData {
   src: string
@@ -26,7 +26,7 @@ export interface TeamMemberImage extends ImageData {
   experience: string
 }
 
-// ΓöÇΓöÇ Logos ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ── Logos ──────────────────────────────────────────────────────────────────
 
 export const LOGOS = {
   header: {
@@ -47,7 +47,7 @@ export const LOGOS = {
   },
 } as const satisfies Record<string, ImageData>
 
-// ΓöÇΓöÇ Video ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ── Video ──────────────────────────────────────────────────────────────────
 
 export const VIDEO = {
   aboutSection: {
@@ -56,7 +56,7 @@ export const VIDEO = {
   },
 } as const
 
-// ΓöÇΓöÇ Gallery Images ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ── Gallery Images ─────────────────────────────────────────────────────────
 // Used on: Home page (gallery grid), Gallery page (masonry + lightbox),
 //          Contact page (hero & CTA backgrounds)
 
@@ -1393,25 +1393,25 @@ export const GALLERY_IMAGES: GalleryImageData[] = [
   },
 ]
 
-// ΓöÇΓöÇ Team ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ── Team ───────────────────────────────────────────────────────────────────
 
 export const TEAM: TeamMemberImage[] = [
   {
-    src: '/images/team/Riccardo-barber.jpg',
-    alt: "Riccardo ΓÇö Coiffeur-barbier chez L'Instant Barbier",
+    src: '/images/team/Riccardo.JPG',
+    alt: "Riccardo — Coiffeur-barbier chez L'Instant Barbier",
     name: 'RICCARDO',
     role: 'Coiffeur-barbier et directeur artistique',
-    experience: "23 ans d'exp├⌐rience",
+    experience: "23 ans d'expérience",
   },
 ]
 
-// ΓöÇΓöÇ Product / Equipment Grid ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
-// Used on: Home page ΓÇö ├Ç propos section (4-column product grid)
+// ── Product / Equipment Grid ─────────────────────────────────────────────
+// Used on: Home page — À propos section (4-column product grid)
 
 export const PRODUCT_GRID: ImageData[] = [
   {
     src: '/images/barbershop-equipments.jpg',
-    alt: '├ëquipements professionnels de barbier',
+    alt: 'Équipements professionnels de barbier',
   },
   {
     src: '/images/barbershop-premium-products.jpg',
@@ -1419,7 +1419,7 @@ export const PRODUCT_GRID: ImageData[] = [
   },
   {
     src: '/images/barbershop-face-cream.jpg',
-    alt: 'Cr├¿me visage homme haut de gamme',
+    alt: 'Crème visage homme haut de gamme',
   },
   {
     src: '/images/barbershop-hair-products.jpeg',
@@ -1427,65 +1427,65 @@ export const PRODUCT_GRID: ImageData[] = [
   },
 ]
 
-// ΓöÇΓöÇ Page Heroes & Backgrounds ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ── Page Heroes & Backgrounds ────────────────────────────────────────────
 // Centralized background images used across pages.
 // Keys are named by page + section for easy identification.
 
 export const BACKGROUNDS = {
-  // ΓöÇΓöÇ Home page ΓöÇΓöÇ
+  // ── Home page ──
   homeHero: {
     src: '/images/hero-barbershop.jpg',
-    alt: "L'Instant Barbier ΓÇö salon de coiffure et barbier ├á Paris",
+    alt: "L'Instant Barbier — salon de coiffure et barbier à Paris",
   },
   homeAtmosphere: {
     src: '/images/atmosphere.jpg',
-    alt: 'Atmosph├¿re ├⌐l├⌐gante du salon',
+    alt: 'Atmosphère élégante du salon',
   },
   homeInterior: {
     src: '/images/salon-interior-1.jpg',
-    alt: "Int├⌐rieur du salon L'Instant Barbier",
+    alt: "Intérieur du salon L'Instant Barbier",
   },
   homeSchedule: {
     src: '/images/salon-interior-2.jpg',
-    alt: 'Vue du salon ΓÇö horaires',
+    alt: 'Vue du salon — horaires',
   },
   homeMap: {
     src: '/images/marais-paris.jpg',
-    alt: 'Le Marais, Paris 3ß╡ë',
+    alt: 'Le Marais, Paris 3ème',
   },
   homeCta: {
     src: '/images/barber-tools-luxury.jpg',
     alt: 'Outils de barbier haut de gamme',
   },
 
-  // ΓöÇΓöÇ Prestations page ΓöÇΓöÇ
+  // ── Prestations page ──
   prestationsHero: {
     src: '/images/prestation-bg.jpg',
     alt: "Prestations L'Instant Barbier",
   },
 
-  // ΓöÇΓöÇ Contact page (uses gallery images) ΓöÇΓöÇ
+  // ── Contact page (uses gallery images) ──
   contactHero: {
     src: '/images/prestation/sur-rdv.jpg',
     alt: "L'Instant barbier Paris 3 Marais",
   },
   contactCta: {
     src: '/images/contact/contact-cta.jpg',
-    alt: "Prendre rendez-vous ├á L'Instant Barbier",
+    alt: "Prendre rendez-vous à L'Instant Barbier",
   },
 
-  // ΓöÇΓöÇ Salon page (placeholders ΓÇö replace with real images) ΓöÇΓöÇ
+  // ── Salon page (placeholders — replace with real images) ──
   salonHero: {
     src: '/images/salon/salon-l-instant-barbier.jpg',
     alt: "Salon L'Instant Barbier",
   },
   salonAtmosphereMain: {
     src: '/images/salon/interieur-du-salon-barbier.jpg',
-    alt: 'Int├⌐rieur du salon',
+    alt: 'Intérieur du salon',
   },
   salonAtmosphereDetail: {
     src: '/images/salon/detail-ambiance.jpg',
-    alt: 'D├⌐tail ambiance',
+    alt: 'Détail ambiance',
   },
   salonExpertise: {
     src: '/images/salon/barbier-action.jpg',
@@ -1493,7 +1493,7 @@ export const BACKGROUNDS = {
   },
   salonExperienceLarge: {
     src: '/images/salon/salon-experience.jpg',
-    alt: 'Exp├⌐rience premium',
+    alt: 'Expérience premium',
   },
   salonExperienceSmall1: {
     src: '/images/salon/salon-consultation.jpg',
@@ -1508,7 +1508,7 @@ export const BACKGROUNDS = {
     alt: 'Le Marais, Paris',
   },
 
-  // ΓöÇΓöÇ Prestations page (placeholders ΓÇö replace with real images) ΓöÇΓöÇ
+  // ── Prestations page (placeholders — replace with real images) ──
   prestationCoiffure: {
     src: '/images/prestation/coiffure-homme.jpg',
     alt: 'Coiffure Homme',
@@ -1519,11 +1519,11 @@ export const BACKGROUNDS = {
   },
   prestationSoins: {
     src: '/images/prestation/prestation-soins.jpg',
-    alt: 'Soins & Bien-├¬tre',
+    alt: 'Soins & Bien-être',
   },
   prestationBentoLarge: {
     src: '/images/prestation/prestation-large.jpg',
-    alt: 'Exp├⌐rience haut de gamme',
+    alt: 'Expérience haut de gamme',
   },
   prestationBentoRendezVous: {
     src: '/images/prestation/sur-rdv.jpg',
