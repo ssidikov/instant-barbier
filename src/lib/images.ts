@@ -1427,6 +1427,16 @@ export const PRODUCT_GRID: ImageData[] = [
   },
 ]
 
+// ── About Section Images ──────────────────────────────────────────────────
+// Used on: Home page — À propos section (benefit blocks)
+
+export const ABOUT_IMAGES = {
+  savoirFaire: {
+    src: '/images/savoir-faire-artisanal.jpg',
+    alt: 'Savoir-faire artisanal — geste précis du barbier',
+  },
+} as const satisfies Record<string, ImageData>
+
 // ── Page Heroes & Backgrounds ────────────────────────────────────────────
 // Centralized background images used across pages.
 // Keys are named by page + section for easy identification.

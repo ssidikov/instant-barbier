@@ -11,7 +11,7 @@ import ContactForm from '@/components/ContactForm'
 import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
 import { motion } from 'framer-motion'
-import { LOGOS, VIDEO, PRODUCT_GRID, BACKGROUNDS } from '@/lib/images'
+import { LOGOS, VIDEO, PRODUCT_GRID, ABOUT_IMAGES, BACKGROUNDS } from '@/lib/images'
 import GoogleMap from '@/components/GoogleMap'
 import GalleryLightbox from '@/components/GalleryLightbox'
 import SectionTitle from '@/components/SectionTitle'
@@ -277,16 +277,16 @@ export default function Home() {
           </Container>
 
           <div className='max-w-7xl mx-auto px-4 md:px-6 lg:px-12'>
-            <div className='grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center'>
+            <div className='grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-stretch'>
               <motion.div
-                className='relative'
+                className='relative h-full'
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}>
-                <div className='relative'>
+                <div className='relative h-full'>
                   <motion.div
-                    className='relative aspect-4/5 md:aspect-4/5 overflow-hidden group border-2 border-gold/30 shadow-xl'
+                    className='relative aspect-[4/5] lg:aspect-auto lg:h-full w-full overflow-hidden group border-2 border-gold/30 shadow-xl'
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.4 }}>
                     <video
@@ -351,7 +351,7 @@ export default function Home() {
                 </div>
 
                 {/* Description */}
-                <div className='space-y-6'>
+                <div className='mt-0 mb-6 space-y-4'>
                   <div className='flex justify-start'>
                     <TextReveal
                       className='text-cream/95 text-lg lg:text-xl leading-[1.7] tracking-wide font-light'
@@ -372,141 +372,70 @@ export default function Home() {
                     </TextReveal>
                   </div>
                 </div>
-
-                {/* Benefits */}
-                <div className='space-y-4'>
-                  <motion.div
-                    className='flex items-center gap-4 group'
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.6, delay: 1.2 }}>
-                    <div className='flex-shrink-0 relative'>
-                      <motion.div
-                        className='w-14 h-14 flex items-center justify-center border border-gold/30 bg-gold/5'
-                        whileHover={{
-                          borderColor: 'rgba(156, 131, 88, 0.6)',
-                          backgroundColor: 'rgba(156, 131, 88, 0.1)',
-                        }}
-                        transition={{ duration: 0.3 }}>
-                        <svg
-                          className='w-7 h-7 text-gold'
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='currentColor'
-                          strokeWidth='1.5'
-                          strokeLinecap='round'
-                          strokeLinejoin='round'>
-                          <circle cx='6' cy='6' r='3' />
-                          <circle cx='6' cy='18' r='3' />
-                          <line x1='20' y1='4' x2='8.12' y2='15.88' />
-                          <line x1='14.47' y1='14.48' x2='20' y2='20' />
-                          <line x1='8.12' y1='8.12' x2='12' y2='12' />
-                        </svg>
-                      </motion.div>
-                      <div className='absolute -top-2 -right-2 text-[10px] font-title text-gold/40 tracking-wider'>
-                        01
-                      </div>
-                    </div>
-                    <div className='flex-1 pt-1'>
-                      <h3 className='text-gold text-sm font-semibold uppercase tracking-[0.2em] mb-2'>
-                        Savoir-faire artisanal
-                      </h3>
-                      <p className='text-cream/75 text-sm leading-[1.6]'>
-                        Formés aux meilleures écoles, nous perpétuons les gestes authentiques du
-                        métier avec passion et rigueur.
-                      </p>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    className='flex items-center gap-4 group'
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.6, delay: 1.4 }}>
-                    <div className='flex-shrink-0 relative'>
-                      <motion.div
-                        className='w-14 h-14 flex items-center justify-center border border-gold/30 bg-gold/5'
-                        whileHover={{
-                          borderColor: 'rgba(156, 131, 88, 0.6)',
-                          backgroundColor: 'rgba(156, 131, 88, 0.1)',
-                        }}
-                        transition={{ duration: 0.3 }}>
-                        <svg
-                          className='w-7 h-7 text-gold'
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='currentColor'
-                          strokeWidth='1.5'
-                          strokeLinecap='round'
-                          strokeLinejoin='round'>
-                          <path d='M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z' />
-                          <path d='M20 3v4' />
-                          <path d='M22 5h-4' />
-                          <path d='M4 17v2' />
-                          <path d='M5 18H3' />
-                        </svg>
-                      </motion.div>
-                      <div className='absolute -top-2 -right-2 text-[10px] font-title text-gold/40 tracking-wider'>
-                        02
-                      </div>
-                    </div>
-                    <div className='flex-1 pt-1'>
-                      <h3 className='text-gold text-sm font-semibold uppercase tracking-[0.2em] mb-2'>
-                        Produits premium
-                      </h3>
-                      <p className='text-cream/75 text-sm leading-[1.6]'>
-                        Huiles essentielles, baumes naturels et cosmétiques haut de gamme pour un
-                        résultat impeccable.
-                      </p>
-                    </div>
-                  </motion.div>
-                </div>
               </div>
             </div>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-12 md:mt-16'>
-              {PRODUCT_GRID.map((img, i) => (
-                <motion.div
+            {/* Benefits Block - Full Width Stacked */}
+            <div className='mt-20 md:mt-32 grid grid-cols-2 gap-8 md:gap-12'>
+              {[
+                {
+                  title: 'Savoir-faire artisanal',
+                  desc: 'Formés aux meilleures écoles, nous perpétuons les gestes authentiques du métier avec passion et rigueur.',
+                  image: ABOUT_IMAGES.savoirFaire.src,
+                  badge: '01',
+                },
+                {
+                  title: 'Produits premium',
+                  desc: 'Huiles essentielles, baumes naturels et cosmétiques haut de gamme pour un résultat impeccable.',
+                  image: PRODUCT_GRID[3].src,
+                  badge: '02',
+                },
+              ].map((item, i) => (
+                <Reveal
                   key={i}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{ duration: 0.5, delay: 0.1 * i }}>
-                  <motion.div
-                    className='relative aspect-square overflow-hidden group border border-gold/30 shadow-xl cursor-pointer touch-image-zoom'
-                    whileHover={{ borderColor: 'rgba(156, 131, 88, 0.6)' }}
-                    transition={{ duration: 0.3 }}>
-                    <div
-                      className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
-                      style={{ backgroundImage: `url('${img.src}')` }}
-                    />
-                    <div className='absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent' />
-                    {/* Corner accent */}
-                    <motion.div
-                      className='absolute top-0 left-0 border-t border-l border-gold/20'
-                      initial={{ width: 24, height: 24 }}
-                      whileHover={{ width: 40, height: 40, borderColor: 'rgba(156, 131, 88, 0.5)' }}
-                      transition={{ duration: 0.5 }}
-                    />
-                    <motion.div
-                      className='absolute bottom-0 right-0 border-b border-r border-gold/20'
-                      initial={{ width: 24, height: 24 }}
-                      whileHover={{ width: 40, height: 40, borderColor: 'rgba(156, 131, 88, 0.5)' }}
-                      transition={{ duration: 0.5 }}
-                    />
-                  </motion.div>
-                </motion.div>
+                  variant='scale-up'
+                  className='relative h-[400px] md:h-[500px] w-full group'>
+                  <div className='relative w-full h-full overflow-hidden rounded-sm border border-gold/20 shadow-2xl shadow-black/40'>
+                    <div className='absolute inset-0 transition-transform duration-[3000ms] group-hover:scale-105'>
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className='object-cover'
+                        sizes='(max-width: 1280px) 100vw, 1280px'
+                        priority={i === 0}
+                      />
+                    </div>
+                    <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent pointer-events-none' />
+
+                    {/* Number badge */}
+                    <div className='absolute top-6 right-6 text-xs md:text-sm font-title text-gold/80 tracking-widest z-10 border border-gold/20 px-3 py-1 rounded-full backdrop-blur-sm'>
+                      {item.badge}
+                    </div>
+
+                    {/* Text content */}
+                    <div className='absolute bottom-0 left-0 p-8 md:p-12 z-10 max-w-2xl'>
+                      <h4 className='text-3xl md:text-4xl font-title text-gold mb-4 tracking-[-1px]'>
+                        {item.title}
+                      </h4>
+                      <p className='text-cream/90 text-base md:text-lg font-light leading-relaxed'>
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                  {/* Corner accents - outside frame */}
+                  <div className='absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-gold/40 pointer-events-none transition-all duration-500 group-hover:border-gold/80' />
+                  <div className='absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-gold/40 pointer-events-none transition-all duration-500 group-hover:border-gold/80' />
+                </Reveal>
               ))}
             </div>
 
             <motion.div
-              className='flex justify-center mt-12'
+              className='flex justify-center mt-20 md:mt-32'
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.6 }}>
+              transition={{ duration: 0.6, delay: 0.2 }}>
               <Button href='/salon'>Découvrir notre univers</Button>
             </motion.div>
           </div>
