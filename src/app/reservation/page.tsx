@@ -1606,6 +1606,446 @@ function ReservationContent() {
             max-width: none !important;
           }
         }
+
+        /* ═══════════════════════════════════════════════
+           GIFT VOUCHER MODULE – Navy & Gold Theme
+           ═══════════════════════════════════════════════ */
+
+        /* ── Gift voucher main container ── */
+        [class*='gift_voucher-module'],
+        [class*='gift_voucher_module'],
+        #planity-widget-container [class*='gift_voucher'],
+        #planity-widget-container [class*='giftVoucher'],
+        #planity-widget-container [class*='gift-voucher'] {
+          background-color: #07181e !important;
+          background: #07181e !important;
+          color: #f4f1ec !important;
+          border: none !important;
+          border-radius: 10px !important;
+        }
+
+        /* ── Gift voucher card / tile ── */
+        [class*='gift_voucher-module_card'],
+        [class*='gift_voucher-module_item'],
+        [class*='gift_voucher-module_voucher'],
+        [class*='gift_voucher-module_tile'],
+        #planity-widget-container [class*='gift_voucher'][class*='card'],
+        #planity-widget-container [class*='gift_voucher'][class*='item'] {
+          background-color: #0d2330 !important;
+          background: #0d2330 !important;
+          border: none !important;
+          border-radius: 8px !important;
+          transition: all 0.3s ease !important;
+        }
+        [class*='gift_voucher-module_card']:hover,
+        [class*='gift_voucher-module_item']:hover,
+        [class*='gift_voucher-module_voucher']:hover,
+        [class*='gift_voucher-module_tile']:hover {
+          box-shadow: 0 4px 20px rgba(175, 151, 120, 0.15) !important;
+          transform: translateY(-2px) !important;
+        }
+
+        /* ── Gift voucher title / heading ── */
+        [class*='gift_voucher-module_title'],
+        [class*='gift_voucher-module_name'],
+        [class*='gift_voucher-module_heading'],
+        [class*='gift_voucher-module_voucherName'],
+        [class*='gift_voucher-module_voucherTitle'],
+        #planity-widget-container [class*='gift_voucher'] h1,
+        #planity-widget-container [class*='gift_voucher'] h2,
+        #planity-widget-container [class*='gift_voucher'] h3,
+        #planity-widget-container [class*='gift_voucher'] h4,
+        #planity-widget-container [class*='gift_voucher'][class*='title'],
+        #planity-widget-container [class*='gift_voucher'][class*='name'],
+        #planity-widget-container [class*='gift_voucher'][class*='heading'],
+        #planity-widget-container [class*='gift_voucher'] [class*='title'],
+        #planity-widget-container [class*='gift_voucher'] [class*='name'],
+        #planity-widget-container [class*='gift_voucher'] [class*='heading'] {
+          color: #af9778 !important;
+          font-family: 'Playfair Display', serif !important;
+          font-weight: 600 !important;
+        }
+
+        /* ── Gift voucher price / amount display ── */
+        [class*='gift_voucher-module_price'],
+        [class*='gift_voucher-module_amount'],
+        [class*='gift_voucher-module_value'],
+        [class*='gift_voucher-module_voucherPrice'],
+        [class*='gift_voucher-module_voucherAmount'],
+        #planity-widget-container [class*='gift_voucher'][class*='price'],
+        #planity-widget-container [class*='gift_voucher'][class*='amount'],
+        #planity-widget-container [class*='gift_voucher'][class*='value'],
+        #planity-widget-container [class*='gift_voucher'] [class*='price'],
+        #planity-widget-container [class*='gift_voucher'] [class*='amount'],
+        #planity-widget-container [class*='gift_voucher'] [class*='value'] {
+          color: #af9778 !important;
+          font-weight: 700 !important;
+        }
+
+        /* ── Gift voucher description / subtitle ── */
+        [class*='gift_voucher-module_description'],
+        [class*='gift_voucher-module_subtitle'],
+        [class*='gift_voucher-module_details'],
+        [class*='gift_voucher-module_text'],
+        [class*='gift_voucher-module_voucherDescription'],
+        [class*='gift_voucher-module_voucherSubtitle'],
+        #planity-widget-container [class*='gift_voucher'][class*='description'],
+        #planity-widget-container [class*='gift_voucher'][class*='subtitle'],
+        #planity-widget-container [class*='gift_voucher'][class*='details'],
+        #planity-widget-container [class*='gift_voucher'] [class*='description'],
+        #planity-widget-container [class*='gift_voucher'] [class*='subtitle'],
+        #planity-widget-container [class*='gift_voucher'] p,
+        #planity-widget-container
+          [class*='gift_voucher']
+          span:not([class*='price']):not([class*='amount']):not([class*='value']) {
+          color: rgba(244, 241, 236, 0.85) !important;
+          line-height: 1.6 !important;
+        }
+
+        /* ── Gift voucher CTA / select button ── */
+        [class*='gift_voucher-module_button'],
+        [class*='gift_voucher-module_cta'],
+        [class*='gift_voucher-module_select'],
+        [class*='gift_voucher-module_choose'],
+        #planity-widget-container [class*='gift_voucher'] button {
+          background-color: transparent !important;
+          background: transparent !important;
+          border: 2px solid #af9778 !important;
+          color: #af9778 !important;
+          padding: 12px 24px !important;
+          border-radius: 2px !important;
+          font-weight: 600 !important;
+          text-transform: uppercase !important;
+          letter-spacing: 0.2em !important;
+          font-size: 11px !important;
+          transition: all 0.5s ease !important;
+        }
+        [class*='gift_voucher-module_button']:hover,
+        [class*='gift_voucher-module_cta']:hover,
+        [class*='gift_voucher-module_select']:hover,
+        [class*='gift_voucher-module_choose']:hover,
+        #planity-widget-container [class*='gift_voucher'] button:hover {
+          background-color: #af9778 !important;
+          background: #af9778 !important;
+          color: #07181e !important;
+          box-shadow: 0 0 30px rgba(175, 151, 120, 0.4) !important;
+          letter-spacing: 0.25em !important;
+          transform: scale(1.02) !important;
+        }
+
+        /* ── Gift voucher amount / quantity inputs ── */
+        [class*='gift_voucher-module'] input[type='number'],
+        [class*='gift_voucher-module'] input[type='text'],
+        [class*='gift_voucher-module'] input,
+        #planity-widget-container [class*='gift_voucher'] input {
+          background-color: rgba(20, 34, 51, 0.8) !important;
+          border: 1px solid rgba(175, 151, 120, 0.3) !important;
+          color: #f4f1ec !important;
+          border-radius: 4px !important;
+          padding: 10px 14px !important;
+          transition: all 0.3s ease !important;
+        }
+        [class*='gift_voucher-module'] input:focus,
+        #planity-widget-container [class*='gift_voucher'] input:focus {
+          border-color: #af9778 !important;
+          outline: none !important;
+          box-shadow: 0 0 0 2px rgba(175, 151, 120, 0.2) !important;
+        }
+        [class*='gift_voucher-module'] input::placeholder,
+        #planity-widget-container [class*='gift_voucher'] input::placeholder {
+          color: rgba(244, 241, 236, 0.4) !important;
+        }
+
+        /* ── Gift voucher form labels ── */
+        [class*='gift_voucher-module'] label,
+        [class*='gift_voucher-module_label'],
+        #planity-widget-container [class*='gift_voucher'] label {
+          color: #f4f1ec !important;
+          font-weight: 500 !important;
+          font-size: 14px !important;
+        }
+
+        /* ── Gift voucher form section headers ── */
+        [class*='gift_voucher-module'] h1,
+        [class*='gift_voucher-module'] h2,
+        [class*='gift_voucher-module'] h3,
+        [class*='gift_voucher-module'] h4,
+        [class*='gift_voucher-module_sectionTitle'],
+        [class*='gift_voucher-module_sectionName'] {
+          color: #af9778 !important;
+          font-family: 'Playfair Display', serif !important;
+        }
+
+        /* ── Gift voucher divider / separator ── */
+        [class*='gift_voucher-module_divider'],
+        [class*='gift_voucher-module_separator'],
+        [class*='gift_voucher-module'] hr {
+          border: none !important;
+        }
+
+        /* ── Gift voucher selected / active state ── */
+        [class*='gift_voucher-module'][class*='selected'],
+        [class*='gift_voucher-module'][class*='active'],
+        [class*='gift_voucher-module_card'][class*='selected'],
+        [class*='gift_voucher-module_card'][class*='active'] {
+          background-color: rgba(175, 151, 120, 0.08) !important;
+          box-shadow: 0 0 20px rgba(175, 151, 120, 0.2) !important;
+        }
+
+        /* ── Gift voucher recap / summary ── */
+        [class*='gift_voucher-module_recap'],
+        [class*='gift_voucher-module_summary'],
+        [class*='gift_voucher-module_total'] {
+          background-color: #0d2330 !important;
+          border: none !important;
+          border-radius: 8px !important;
+          padding: 16px !important;
+          color: #f4f1ec !important;
+        }
+
+        /* ── Gift voucher total price ── */
+        [class*='gift_voucher-module_totalPrice'],
+        [class*='gift_voucher-module_totalAmount'] {
+          color: #af9778 !important;
+          font-weight: 700 !important;
+          font-size: 20px !important;
+        }
+
+        /* ═══════════════════════════════════════════════
+           SERVICE ITEM & VOUCHER – Specific Class Fixes
+           ═══════════════════════════════════════════════ */
+
+        /* ── Service item title ── */
+        [class*='service_item-module_title'],
+        #planity-widget-container [class*='service_item-module_title'],
+        #planity-widget-container [class*='service_item-module'] [class*='title'] {
+          color: #f4f1ec !important;
+          font-weight: 600 !important;
+          font-size: 15px !important;
+        }
+
+        /* ── Voucher name (Planity renders as id="voucher-name") ── */
+        #voucher-name,
+        [id='voucher-name'],
+        [id*='voucher-name'],
+        [id*='voucher_name'],
+        [id*='voucherName'],
+        #planity-widget-container #voucher-name,
+        #planity-widget-container [id='voucher-name'],
+        #planity-widget-container [id*='voucher-name'],
+        #planity-widget-container [id*='voucher_name'],
+        #planity-widget-container [id*='voucherName'],
+        #planity-widget-container span#voucher-name,
+        #planity-widget-container span[id*='voucher-name'],
+        #planity-widget-container p[id*='voucher-name'],
+        #planity-widget-container div[id*='voucher-name'] {
+          color: #af9778 !important;
+          font-family: 'Playfair Display', serif !important;
+          font-weight: 600 !important;
+          font-size: 16px !important;
+        }
+
+        /* ── Service item simple price ── */
+        [class*='service_item-module_simplePrice'],
+        #planity-widget-container [class*='service_item-module_simplePrice'],
+        #planity-widget-container [class*='service_item-module'] [class*='simplePrice'],
+        #planity-widget-container [class*='service_item-module'] [class*='price'] {
+          color: #af9778 !important;
+          font-weight: 600 !important;
+          font-size: 14px !important;
+        }
+
+        /* ── Service item variable price label ── */
+        [class*='service_item-module_variable'],
+        [id*='service_item-module_variable'],
+        #planity-widget-container [class*='service_item-module_variable'],
+        #planity-widget-container [id*='service_item-module_variable'],
+        #planity-widget-container span[class*='service_item-module_variable'],
+        #planity-widget-container span[id*='service_item-module_variable'],
+        #planity-widget-container [class*='service_item-module'] [class*='variable'],
+        #planity-widget-container [class*='service_item-module'] [id*='variable'] {
+          color: rgba(244, 241, 236, 0.7) !important;
+          font-size: 13px !important;
+          font-style: italic !important;
+          font-weight: 400 !important;
+        }
+
+        /* ── Gift voucher customisation container ── */
+        [class*='gift_voucher_customisation-module_giftVoucherCustomisation'],
+        [class*='gift_voucher_customisation-module'],
+        [id*='gift_voucher_customisation'],
+        [id*='giftVoucherCustomisation'],
+        #planity-widget-container [class*='gift_voucher_customisation-module'],
+        #planity-widget-container [class*='giftVoucherCustomisation'],
+        #planity-widget-container [id*='gift_voucher_customisation'],
+        #planity-widget-container [id*='giftVoucherCustomisation'] {
+          background-color: #07181e !important;
+          background: #07181e !important;
+          color: #f4f1ec !important;
+          border: none !important;
+          border-radius: 8px !important;
+        }
+
+        /* ── Gift voucher customisation – text ── */
+        #planity-widget-container [class*='gift_voucher_customisation-module'] p,
+        #planity-widget-container [class*='gift_voucher_customisation-module'] span,
+        #planity-widget-container [class*='gift_voucher_customisation-module'] label,
+        #planity-widget-container [id*='gift_voucher_customisation'] p,
+        #planity-widget-container [id*='gift_voucher_customisation'] span,
+        #planity-widget-container [id*='gift_voucher_customisation'] label,
+        #planity-widget-container [id*='giftVoucherCustomisation'] p,
+        #planity-widget-container [id*='giftVoucherCustomisation'] span,
+        #planity-widget-container [id*='giftVoucherCustomisation'] label {
+          color: rgba(244, 241, 236, 0.85) !important;
+        }
+
+        /* ── Gift voucher customisation – headings ── */
+        #planity-widget-container [class*='gift_voucher_customisation-module'] h1,
+        #planity-widget-container [class*='gift_voucher_customisation-module'] h2,
+        #planity-widget-container [class*='gift_voucher_customisation-module'] h3,
+        #planity-widget-container [class*='gift_voucher_customisation-module'] h4,
+        #planity-widget-container [id*='gift_voucher_customisation'] h1,
+        #planity-widget-container [id*='gift_voucher_customisation'] h2,
+        #planity-widget-container [id*='gift_voucher_customisation'] h3,
+        #planity-widget-container [id*='giftVoucherCustomisation'] h2,
+        #planity-widget-container [id*='giftVoucherCustomisation'] h3 {
+          color: #af9778 !important;
+          font-family: 'Playfair Display', serif !important;
+        }
+
+        /* ── Gift voucher customisation – inputs ── */
+        #planity-widget-container [class*='gift_voucher_customisation-module'] input,
+        #planity-widget-container [class*='gift_voucher_customisation-module'] textarea,
+        #planity-widget-container [id*='gift_voucher_customisation'] input,
+        #planity-widget-container [id*='gift_voucher_customisation'] textarea,
+        #planity-widget-container [id*='giftVoucherCustomisation'] input,
+        #planity-widget-container [id*='giftVoucherCustomisation'] textarea {
+          background-color: rgba(20, 34, 51, 0.8) !important;
+          color: #f4f1ec !important;
+          border: none !important;
+          border-radius: 4px !important;
+        }
+        #planity-widget-container [class*='gift_voucher_customisation-module'] input:focus,
+        #planity-widget-container [class*='gift_voucher_customisation-module'] textarea:focus,
+        #planity-widget-container [id*='giftVoucherCustomisation'] input:focus,
+        #planity-widget-container [id*='giftVoucherCustomisation'] textarea:focus {
+          outline: none !important;
+          box-shadow: 0 0 0 2px rgba(175, 151, 120, 0.3) !important;
+        }
+
+        /* ── Gift voucher customisation – buttons ── */
+        #planity-widget-container [class*='gift_voucher_customisation-module'] button,
+        #planity-widget-container [id*='gift_voucher_customisation'] button,
+        #planity-widget-container [id*='giftVoucherCustomisation'] button {
+          background-color: transparent !important;
+          border: 2px solid #af9778 !important;
+          color: #af9778 !important;
+          text-transform: uppercase !important;
+          letter-spacing: 0.2em !important;
+          font-size: 11px !important;
+          font-weight: 600 !important;
+          transition: all 0.5s ease !important;
+        }
+        #planity-widget-container [class*='gift_voucher_customisation-module'] button:hover,
+        #planity-widget-container [id*='giftVoucherCustomisation'] button:hover {
+          background-color: #af9778 !important;
+          color: #07181e !important;
+        }
+
+        /* ── Gift voucher form textarea ── */
+        #gift-voucher-form-textarea,
+        [id='gift-voucher-form-textarea'],
+        [id*='gift-voucher-form-textarea'],
+        [id*='giftVoucherFormTextarea'],
+        [class*='gift-voucher-form-textarea'],
+        [class*='giftVoucherFormTextarea'],
+        #planity-widget-container #gift-voucher-form-textarea,
+        #planity-widget-container [id='gift-voucher-form-textarea'],
+        #planity-widget-container [id*='gift-voucher-form-textarea'],
+        #planity-widget-container [id*='giftVoucherFormTextarea'],
+        #planity-widget-container [class*='gift-voucher-form-textarea'],
+        #planity-widget-container textarea[id*='gift-voucher'],
+        #planity-widget-container textarea[id*='giftVoucher'],
+        #planity-widget-container textarea[class*='gift-voucher'],
+        #planity-widget-container textarea[class*='giftVoucher'] {
+          background-color: rgba(13, 35, 48, 0.9) !important;
+          background: rgba(13, 35, 48, 0.9) !important;
+          color: #f4f1ec !important;
+          -webkit-text-fill-color: #f4f1ec !important;
+          border: none !important;
+          border-radius: 6px !important;
+          padding: 14px 16px !important;
+          font-family: 'Mulish', system-ui, sans-serif !important;
+          font-size: 14px !important;
+          line-height: 1.6 !important;
+          resize: vertical !important;
+          transition: box-shadow 0.3s ease !important;
+        }
+        #planity-widget-container #gift-voucher-form-textarea:focus,
+        #planity-widget-container [id*='gift-voucher-form-textarea']:focus,
+        #planity-widget-container textarea[id*='gift-voucher']:focus,
+        #planity-widget-container textarea[class*='gift-voucher']:focus {
+          outline: none !important;
+          box-shadow: 0 0 0 2px rgba(175, 151, 120, 0.3) !important;
+        }
+        #planity-widget-container #gift-voucher-form-textarea::placeholder,
+        #planity-widget-container [id*='gift-voucher-form-textarea']::placeholder,
+        #planity-widget-container textarea[id*='gift-voucher']::placeholder,
+        #planity-widget-container textarea[class*='gift-voucher']::placeholder {
+          color: rgba(244, 241, 236, 0.35) !important;
+          -webkit-text-fill-color: rgba(244, 241, 236, 0.35) !important;
+        }
+
+        /* ── Gift voucher choice container ── */
+        [class*='gift_voucher_choice-module_giftVoucherChoice'],
+        [class*='gift_voucher_choice-module'],
+        #planity-widget-container [class*='gift_voucher_choice-module'],
+        #planity-widget-container [class*='giftVoucherChoice'] {
+          background-color: #07181e !important;
+          background: #07181e !important;
+          color: #f4f1ec !important;
+          border: none !important;
+          border-radius: 8px !important;
+          padding: 20px !important;
+          transition: all 0.3s ease !important;
+        }
+
+        /* ── Gift voucher choice – text inside ── */
+        #planity-widget-container [class*='gift_voucher_choice-module'] p,
+        #planity-widget-container [class*='gift_voucher_choice-module'] span,
+        #planity-widget-container [class*='giftVoucherChoice'] p,
+        #planity-widget-container [class*='giftVoucherChoice'] span {
+          color: rgba(244, 241, 236, 0.85) !important;
+        }
+
+        /* ── Gift voucher choice – heading inside ── */
+        #planity-widget-container [class*='gift_voucher_choice-module'] h1,
+        #planity-widget-container [class*='gift_voucher_choice-module'] h2,
+        #planity-widget-container [class*='gift_voucher_choice-module'] h3,
+        #planity-widget-container [class*='gift_voucher_choice-module'] h4,
+        #planity-widget-container [class*='giftVoucherChoice'] h1,
+        #planity-widget-container [class*='giftVoucherChoice'] h2,
+        #planity-widget-container [class*='giftVoucherChoice'] h3,
+        #planity-widget-container [class*='giftVoucherChoice'] h4 {
+          color: #af9778 !important;
+          font-family: 'Playfair Display', serif !important;
+        }
+
+        /* ── Gift voucher choice – hover state ── */
+        [class*='gift_voucher_choice-module_giftVoucherChoice']:hover,
+        #planity-widget-container [class*='gift_voucher_choice-module']:hover {
+          box-shadow: 0 4px 20px rgba(175, 151, 120, 0.15) !important;
+        }
+
+        /* ── Gift voucher choice – selected / active ── */
+        [class*='gift_voucher_choice-module_giftVoucherChoice'][class*='selected'],
+        [class*='gift_voucher_choice-module_giftVoucherChoice'][class*='active'],
+        [class*='gift_voucher_choice-module_giftVoucherChoice'][class*='checked'],
+        #planity-widget-container [class*='gift_voucher_choice-module'][class*='selected'],
+        #planity-widget-container [class*='gift_voucher_choice-module'][class*='active'] {
+          background-color: rgba(175, 151, 120, 0.08) !important;
+          box-shadow: 0 0 20px rgba(175, 151, 120, 0.2) !important;
+        }
       `}</style>
 
       <main className='min-h-screen bg-navy'>
@@ -1644,7 +2084,7 @@ function ReservationContent() {
                 </p>
 
                 <div className='pt-8'>
-                  <Button href='#planity-widget-container'>MOMENT DE DÉTENTE</Button>
+                  <Button href='#planity-container'>MOMENT DE DÉTENTE</Button>
                 </div>
               </div>
             </Reveal>
@@ -1652,12 +2092,15 @@ function ReservationContent() {
         </section>
 
         {/* PLANITY WIDGET SECTION */}
-        <Section className='py-16 md:py-24 bg-navy relative' id='planity-widget-container'>
+        <Section className='py-16 md:py-24 bg-navy relative' id='planity-container'>
           <Container>
             {/* Wrapper for spacing/shadow */}
             <div className='relative z-10 w-full max-w-[1200px] mx-auto'>
               {/* Planity Container - DO NOT TOUCH ID */}
-              <div className='w-full min-h-[600px] rounded-xl overflow-hidden border border-gold/10 bg-navy/50 shadow-2xl backdrop-blur-sm' />
+              <div
+                id='planity-widget-container'
+                className='w-full min-h-[600px] rounded-xl overflow-hidden border border-gold/10 bg-navy/50 shadow-2xl backdrop-blur-sm'
+              />
             </div>
           </Container>
         </Section>

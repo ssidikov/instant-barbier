@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 
 type ButtonProps = {
@@ -6,6 +8,7 @@ type ButtonProps = {
   className?: string
   external?: boolean
   onClick?: (e: React.MouseEvent) => void
+  variant?: 'primary' | 'outline'
 }
 
 export default function Button({
@@ -51,6 +54,22 @@ export default function Button({
       <button className={sharedClassName} onClick={onClick}>
         {content}
       </button>
+    )
+  }
+
+  if (href.startsWith('#')) {
+    const handleAnchorClick = (e: React.MouseEvent) => {
+      e.preventDefault()
+      const target = document.querySelector(href)
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+      onClick?.(e)
+    }
+    return (
+      <a href={href} className={sharedClassName} onClick={handleAnchorClick}>
+        {content}
+      </a>
     )
   }
 
