@@ -1665,7 +1665,6 @@ function ReservationContent() {
           font-family: 'Playfair Display', serif !important;
           font-weight: 600 !important;
         }
-
         /* ── Gift voucher price / amount display ── */
         [class*='gift_voucher-module_price'],
         [class*='gift_voucher-module_amount'],
@@ -1810,7 +1809,6 @@ function ReservationContent() {
           font-weight: 700 !important;
           font-size: 20px !important;
         }
-
         /* ═══════════════════════════════════════════════
            SERVICE ITEM & VOUCHER – Specific Class Fixes
            ═══════════════════════════════════════════════ */
@@ -2097,10 +2095,7 @@ function ReservationContent() {
             {/* Wrapper for spacing/shadow */}
             <div className='relative z-10 w-full max-w-[1200px] mx-auto'>
               {/* Planity Container - DO NOT TOUCH ID */}
-              <div
-                id='planity-widget-container'
-                className='w-full min-h-[600px] rounded-xl overflow-hidden border border-gold/10 bg-navy/50 shadow-2xl backdrop-blur-sm'
-              />
+              <div className='w-full min-h-[600px] rounded-xl overflow-hidden border border-gold/10 bg-navy/50 shadow-2xl backdrop-blur-sm' />
             </div>
           </Container>
         </Section>
