@@ -1652,15 +1652,12 @@ function ReservationContent() {
         </section>
 
         {/* PLANITY WIDGET SECTION */}
-        <Section className='py-16 md:py-24 bg-navy relative'>
+        <Section className='py-16 md:py-24 bg-navy relative' id='planity-widget-container'>
           <Container>
             {/* Wrapper for spacing/shadow */}
             <div className='relative z-10 w-full max-w-[1200px] mx-auto'>
               {/* Planity Container - DO NOT TOUCH ID */}
-              <div
-                id='planity-widget-container'
-                className='w-full min-h-[600px] rounded-xl overflow-hidden border border-gold/10 bg-navy/50 shadow-2xl backdrop-blur-sm'
-              />
+              <div className='w-full min-h-[600px] rounded-xl overflow-hidden border border-gold/10 bg-navy/50 shadow-2xl backdrop-blur-sm' />
             </div>
           </Container>
         </Section>
