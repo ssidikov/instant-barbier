@@ -2082,7 +2082,7 @@ function ReservationContent() {
                 </p>
 
                 <div className='pt-8'>
-                  <Button href='#planity-container'>MOMENT DE DÉTENTE</Button>
+                  <Button href='#planitycontainer'>MOMENT DE DÉTENTE</Button>
                 </div>
               </div>
             </Reveal>
@@ -2090,7 +2090,8 @@ function ReservationContent() {
         </section>
 
         {/* PLANITY WIDGET SECTION */}
-        <Section className='py-16 md:py-24 bg-navy relative' id='planity-container'>
+        <div id='planitycontainer'></div>
+        <Section className='py-16 md:py-24 bg-navy relative' id='planity-widget-container'>
           <Container>
             {/* Wrapper for spacing/shadow */}
             <div className='relative z-10 w-full max-w-[1200px] mx-auto'>
