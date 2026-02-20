@@ -376,7 +376,7 @@ export default function Home() {
             </div>
 
             {/* Benefits Block - Full Width Stacked */}
-            <div className='mt-20 md:mt-32 grid grid-cols-2 gap-8 md:gap-12'>
+            <div className='mt-20 md:mt-32 grid md:grid-cols-2 gap-8 md:gap-12'>
               {[
                 {
                   title: 'Savoir-faire artisanal',
