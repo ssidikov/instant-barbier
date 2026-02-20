@@ -513,9 +513,13 @@ export default function AboutSection() {
                     d='M 50, 50 m -42, 0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0'
                     fill='none'
                   />
-                  <text className='text-[10px] font-title font-light tracking-[0.15em] uppercase fill-gold/80'>
-                    <textPath href='#badgeTextPath' startOffset='0%'>
-                      PARIS LE MARAIS • 43 RUE DE TURENNE •
+                  <text className='text-[8.5px] font-title font-light tracking-[0.1em] uppercase fill-gold/80'>
+                    <textPath
+                      href='#badgeTextPath'
+                      startOffset='0%'
+                      textLength='264'
+                      lengthAdjust='spacing'>
+                      PARIS LE MARAIS • 43 RUE DE TURENNE • PARIS LE MARAIS • 43 RUE DE TURENNE •
                     </textPath>
                   </text>
                 </svg>
