@@ -471,9 +471,11 @@ export default function AboutSection() {
             <div
               ref={videoWrapRef}
               className='relative'
-              style={{ clipPath: 'inset(100% 0 0 0)', opacity: 0 }}
-              tabIndex={0}>
-              <div className='relative aspect-[4/5] w-full overflow-hidden border-2 border-gold/30 shadow-2xl shadow-black/60 group cursor-pointer lg:cursor-default focus:outline-none'>
+              style={{ clipPath: 'inset(100% 0 0 0)', opacity: 0 }}>
+              <div
+                className='relative aspect-[4/5] w-full overflow-hidden border-2 border-gold/30 shadow-2xl shadow-black/60 group cursor-pointer lg:cursor-default focus:outline-none'
+                tabIndex={0}
+                onTouchStart={() => {}}>
                 <video
                   ref={videoRef}
                   loop
@@ -619,7 +621,8 @@ export default function AboutSection() {
               key={item.badge}
               ref={item.ref}
               className='group relative h-[400px] md:h-[520px] w-full overflow-hidden opacity-0 cursor-pointer lg:cursor-default focus:outline-none'
-              tabIndex={0}>
+              tabIndex={0}
+              onTouchStart={() => {}}>
               {/* Main card border + shadow */}
               <div className='absolute inset-0 border border-gold/20 group-hover:border-gold/45 group-focus-within:border-gold/45 transition-colors duration-700 z-10 pointer-events-none' />
 
