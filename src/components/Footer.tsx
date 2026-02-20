@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { CONTACT, SOCIAL, SITE_NAME } from '@/lib/constants'
 import Image from 'next/image'
 import Reveal from '@/components/Reveal'
+import { LOGOS } from '@/lib/images'
 
 export default function Footer() {
   return (
@@ -15,17 +16,16 @@ export default function Footer() {
         </Reveal>
 
         {/* Logo Marquee - Moved under Headline */}
-        <div className='relative w-screen left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] overflow-hidden py-6 md:py-8 mb-8 md:mb-12'>
-          <div className='animate-marquee-rtl flex items-center gap-16 w-max'>
-            {/* Duplicate logos for seamless loop - increased count for speed matching */}
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className='relative shrink-0'>
+        <div className='relative w-screen left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] h-40 overflow-hidden z-20 flex items-end pointer-events-none py-6 md:py-8 mb-8 md:mb-12'>
+          <div className='flex items-center w-max animate-marquee-rtl relative z-10'>
+            {[...Array(30)].map((_, i) => (
+              <div key={i} className='shrink-0 px-6 lg:px-10 opacity-25'>
                 <Image
-                  src='/logo/logo-golden.svg'
-                  alt="L'Instant Barbier"
-                  width={120}
-                  height={120}
-                  className='h-20 sm:h-32 md:h-40 lg:h-80 w-auto object-contain opacity-80'
+                  src={LOGOS.golden.src}
+                  alt={LOGOS.golden.alt}
+                  width={240}
+                  height={160}
+                  className='w-auto h-24 lg:h-32 object-contain'
                 />
               </div>
             ))}
