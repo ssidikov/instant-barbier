@@ -12,13 +12,13 @@ import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useParallax, useParallaxStyle, useParallaxXY } from '@/hooks/useParallax'
-import CountUp from '@/components/CountUp'
-import { LOGOS, VIDEO, PRODUCT_GRID, ABOUT_IMAGES, BACKGROUNDS } from '@/lib/images'
+import { LOGOS, BACKGROUNDS } from '@/lib/images'
 import GoogleMap from '@/components/GoogleMap'
 import GalleryLightbox from '@/components/GalleryLightbox'
 import SectionTitle from '@/components/SectionTitle'
 import StarRating from '@/components/StarRating'
 import { services, team, galleryImages, reviews, hours } from '@/lib/data'
+import AboutSection from '@/components/AboutSection'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PAGE PRINCIPALE
@@ -26,12 +26,10 @@ import { services, team, galleryImages, reviews, hours } from '@/lib/data'
 
 export default function Home() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
   const shouldReduceMotion = useReducedMotion()
 
   // ── Section container refs (for Framer Motion useScroll targeting) ──────
   const heroSectionRef = useRef<HTMLElement>(null)
-  const aboutSectionRef = useRef<HTMLElement>(null)
   const atmosphereSectionRef = useRef<HTMLElement>(null)
   const galerieSectionRef = useRef<HTMLElement>(null)
   const avisSectionRef = useRef<HTMLElement>(null)
@@ -48,11 +46,6 @@ export default function Home() {
   const heroOrb2Y = useParallaxStyle(heroSectionRef, { outputRange: [60, -60] })
   const heroGridY = useParallaxStyle(heroSectionRef, { outputRange: [-20, 40] })
   const heroDecorY = useParallaxStyle(heroSectionRef, { outputRange: [30, -50] })
-
-  // ── About section parallax layers ───────────────────────────────────────
-  const aboutOrb1 = useParallaxXY(aboutSectionRef, [-10, 10], [-50, 30])
-  const aboutOrb2 = useParallaxXY(aboutSectionRef, [8, -8], [30, -50])
-  const aboutStampY = useParallaxStyle(aboutSectionRef, { outputRange: [-40, 60] })
 
   // ── Atmosphère section parallax layers ──────────────────────────────────
   const atmosphereOrb1 = useParallaxXY(atmosphereSectionRef, [-15, 15], [-60, 40])
@@ -85,30 +78,6 @@ export default function Home() {
     // Add event listener
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            video.play().catch(() => {
-              /* Autoplay blocked by browser — expected */
-            })
-          } else {
-            video.pause()
-          }
-        })
-      },
-      { threshold: 0.5 },
-    )
-
-    observer.observe(video)
-
-    return () => observer.disconnect()
   }, [])
 
   // Particles removed for performance/anim cleanup as requested
@@ -540,230 +509,9 @@ export default function Home() {
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
-          À PROPOS SECTION
+          À PROPOS SECTION — GSAP animated (see AboutSection.tsx)
       ═══════════════════════════════════════════════════════════════════ */}
-        <Section
-          id='a-propos'
-          ref={aboutSectionRef as React.RefObject<HTMLElement>}
-          className='bg-navy relative overflow-hidden py-16 md:py-24 lg:py-32'>
-          <div className='absolute inset-0 pointer-events-none'>
-            {/* Parallax large orb top-right */}
-            <motion.div
-              style={{ x: aboutOrb1.x, y: aboutOrb1.y }}
-              className='absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[100px]'
-            />
-            {/* Parallax large orb bottom-left */}
-            <motion.div
-              style={{ x: aboutOrb2.x, y: aboutOrb2.y }}
-              className='absolute bottom-0 left-0 w-[400px] h-[400px] bg-gold/4 rounded-full blur-[80px]'
-            />
-            {/* Rotating decorative squares — combined rotation + parallax */}
-            <motion.div
-              className='absolute top-1/4 right-1/4 w-96 h-96 border border-gold/10 opacity-10'
-              animate={{ rotate: 360 }}
-              style={{ y: aboutOrb1.y }}
-              transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-            />
-            <motion.div
-              className='absolute bottom-1/4 left-1/4 w-64 h-64 border border-gold/10 opacity-10'
-              animate={{ rotate: -360 }}
-              style={{ y: aboutOrb2.y }}
-              transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
-            />
-          </div>
-
-          <Container>
-            <div className='flex items-center justify-center gap-4 mb-16'>
-              <motion.div
-                className='w-16 h-px bg-gradient-to-r from-transparent to-gold'
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              />
-              <TextReveal
-                className='text-gold text-[10px] uppercase tracking-[0.4em] font-medium'
-                delay={0.4}>
-                À propos
-              </TextReveal>
-              <motion.div
-                className='w-16 h-px bg-gradient-to-r from-gold to-transparent'
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              />
-            </div>
-          </Container>
-
-          <div className='max-w-7xl mx-auto px-4 md:px-6 lg:px-12'>
-            <div className='grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-stretch'>
-              <motion.div
-                className='relative h-full'
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}>
-                <div className='relative h-full'>
-                  <motion.div
-                    className='relative aspect-[4/5] lg:aspect-auto lg:h-full w-full overflow-hidden group border-2 border-gold/30 shadow-xl'
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.4 }}>
-                    <video
-                      ref={videoRef}
-                      loop
-                      muted
-                      playsInline
-                      className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'>
-                      <source src={VIDEO.aboutSection.src} type={VIDEO.aboutSection.type} />
-                    </video>
-                    <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent' />
-                  </motion.div>
-                  {/* Corner accents - outside frame, not affected by hover */}
-                  <div className='absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-gold/40 pointer-events-none' />
-                  <div className='absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-gold/40 pointer-events-none' />
-                </div>
-              </motion.div>
-
-              <div className='space-y-12 lg:space-y-16'>
-                {/* Logo stamp - bottom left */}
-                <motion.div
-                  style={{ y: aboutStampY }}
-                  className='absolute bottom-10 left-4 md:bottom-20 md:left-10 pointer-events-none z-0'>
-                  <Image
-                    src={LOGOS.linstant.src}
-                    alt=''
-                    width={180}
-                    height={180}
-                    className='opacity-[0.03] -rotate-12 select-none w-32 h-32 md:w-48 md:h-48'
-                    aria-hidden='true'
-                  />
-                </motion.div>
-                {/* Headline */}
-                <div className='mb-4 xl:mb-14'>
-                  <h2 className='flex items-baseline gap-3'>
-                    <motion.span
-                      className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold font-light leading-[0.8] tracking-[-2px]'
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.8, delay: 0.2 }}>
-                      <CountUp end={23} duration={2.2} threshold={0.5} />
-                    </motion.span>
-                    <span className='flex flex-col'>
-                      <TextReveal
-                        className='text-xl md:text-2xl lg:text-3xl xl:text-4xl font-title text-gold/80 uppercase tracking-[1px]'
-                        delay={0.4}>
-                        ans
-                      </TextReveal>
-                    </span>
-                  </h2>
-                  <div className='flex justify-start mb-6'>
-                    <TextReveal
-                      className='text-2xl md:text-3xl lg:text-4xl font-title text-cream/60 leading-[0.8] xl:leading-[-0.05em] tracking-[1px] mt-[-10px] xl:mt-[-24px]'
-                      delay={0.5}>
-                      au service du style masculin
-                    </TextReveal>
-                  </div>
-                  <motion.div
-                    className='w-20 h-px bg-linear-to-r from-gold via-gold/40 to-transparent'
-                    initial={{ scaleX: 0, originX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: 0.7 }}
-                  />
-                </div>
-
-                {/* Description */}
-                <div className='mt-0 mb-6 space-y-4'>
-                  <div className='flex justify-start'>
-                    <TextReveal
-                      className='text-cream/95 text-lg lg:text-xl leading-[1.7] tracking-wide font-light'
-                      delay={0.8}
-                      stagger={0.02}>
-                      Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de 23 ans, nous
-                      maîtrisons les techniques classiques comme les tendances contemporaines dans
-                      notre salon du Marais.
-                    </TextReveal>
-                  </div>
-                  <div className='flex justify-start'>
-                    <TextReveal
-                      className='text-cream/70 text-base leading-[1.7] tracking-wide'
-                      delay={1}
-                      stagger={0.015}>
-                      Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est
-                      précis.
-                    </TextReveal>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Benefits Block - Full Width Stacked */}
-            <div className='mt-20 md:mt-32 grid md:grid-cols-2 gap-8 md:gap-12'>
-              {[
-                {
-                  title: 'Savoir-faire artisanal',
-                  desc: 'Formés aux meilleures écoles, nous perpétuons les gestes authentiques du métier avec passion et rigueur.',
-                  image: ABOUT_IMAGES.savoirFaire.src,
-                  badge: '01',
-                },
-                {
-                  title: 'Produits premium',
-                  desc: 'Huiles essentielles, baumes naturels et cosmétiques haut de gamme pour un résultat impeccable.',
-                  image: PRODUCT_GRID[3].src,
-                  badge: '02',
-                },
-              ].map((item, i) => (
-                <Reveal
-                  key={i}
-                  variant='scale-up'
-                  className='relative h-[400px] md:h-[500px] w-full group'>
-                  <div className='relative w-full h-full overflow-hidden rounded-sm border border-gold/20 shadow-2xl shadow-black/40'>
-                    <div className='absolute inset-0 transition-transform duration-[3000ms] group-hover:scale-105'>
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        fill
-                        className='object-cover'
-                        sizes='(max-width: 1280px) 100vw, 1280px'
-                        priority={i === 0}
-                      />
-                    </div>
-                    <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent pointer-events-none' />
-
-                    {/* Number badge */}
-                    <div className='absolute top-6 right-6 text-xs md:text-sm font-title text-gold/80 tracking-widest z-10 border border-gold/20 px-3 py-1 rounded-full backdrop-blur-sm'>
-                      {item.badge}
-                    </div>
-
-                    {/* Text content */}
-                    <div className='absolute bottom-0 left-0 p-8 md:p-12 z-10 max-w-2xl'>
-                      <h4 className='text-3xl md:text-4xl font-title text-gold mb-4 tracking-[-1px]'>
-                        {item.title}
-                      </h4>
-                      <p className='text-cream/90 text-base md:text-lg font-light leading-relaxed'>
-                        {item.desc}
-                      </p>
-                    </div>
-                  </div>
-                  {/* Corner accents - outside frame */}
-                  <div className='absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-gold/40 pointer-events-none transition-all duration-500 group-hover:border-gold/80' />
-                  <div className='absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-gold/40 pointer-events-none transition-all duration-500 group-hover:border-gold/80' />
-                </Reveal>
-              ))}
-            </div>
-
-            <motion.div
-              className='flex justify-center mt-20 md:mt-32'
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}>
-              <Button href='/salon'>Découvrir notre univers</Button>
-            </motion.div>
-          </div>
-        </Section>
+        <AboutSection />
 
         {/* ═══════════════════════════════════════════════════════════════════
           SERVICES SECTION
