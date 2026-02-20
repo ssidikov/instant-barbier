@@ -677,6 +677,21 @@ function ReservationContent() {
           font-size: 16px !important;
         }
 
+        /* ── Timetable Desktop Wrap Fix ── */
+        // @media (min-width: 768px) {
+        //   #planity-widget-container [class*='step-module_timetable'] {
+        //     display: flex !important;
+        //     flex-wrap: nowrap !important;
+        //     align-items: flex-start !important;
+        //   }
+        //   /* Reset the global 100% width on generic containers that forces wrapping */
+        //   #planity-widget-container [class*='step-module_timetable'] div[class*='_container'],
+        //   #planity-widget-container [class*='step-module_timetable'] div[class*='_wrapper'],
+        //   #planity-widget-container [class*='step-module_timetable'] > div {
+        //     width: auto !important;
+        //   }
+        // }
+
         /* ── Day steps (date picker) ── */
         .planity_appointment_steps_step {
           background-color: #07181e !important;
@@ -1599,7 +1614,7 @@ function ReservationContent() {
           button[class*='submit'],
           .planity_ui_button_root,
           button[id*='signup-comp__submit'] {
-            width: 100% !important;
+            width: 90% !important;
             margin-left: 0 !important;
             margin-right: 0 !important;
             display: block !important;
@@ -2091,7 +2106,9 @@ function ReservationContent() {
 
         {/* PLANITY WIDGET SECTION */}
         <div id='planitycontainer'></div>
-        <Section className='py-16 md:py-24 bg-navy relative' id='planity-widget-container'>
+        <Section
+          className='py-16 md:py-24 bg-navy relative max-w-11/12 xl:max-w-12/12 mx-auto'
+          id='planity-widget-container'>
           <Container>
             {/* Wrapper for spacing/shadow */}
             <div className='relative z-10 w-full max-w-[1200px] mx-auto'>
