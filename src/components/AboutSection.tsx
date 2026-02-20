@@ -502,7 +502,7 @@ export default function AboutSection() {
             </div>
 
             {/* Experience badge — floats over video bottom-right */}
-            <div className='hidden lg:flex absolute -bottom-8 -right-8 z-10 items-center justify-center w-40 h-40'>
+            <div className='flex absolute -bottom-6 -right-6 md:-bottom-8 md:-right-8 z-10 items-center justify-center w-32 h-32 md:w-36 md:h-36 lg:w-40 lg:h-40'>
               {/* Rotating text ring */}
               <div className='absolute inset-0 animate-[spin_20s_linear_infinite] pointer-events-none'>
                 <svg viewBox='0 0 100 100' className='w-full h-full overflow-visible'>

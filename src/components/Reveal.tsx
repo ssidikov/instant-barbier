@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 
 type RevealVariant = 'fade-up' | 'fade-side' | 'blur-in' | 'scale-up' | 'mask-reveal'
 
-interface RevealProps {
+interface RevealProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   className?: string
   variant?: RevealVariant
@@ -20,6 +20,7 @@ export default function Reveal({
   delay = 0,
   duration = 0.8,
   threshold = 0.2,
+  ...rest
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
@@ -79,7 +80,8 @@ export default function Reveal({
     <div
       ref={ref}
       className={`${className} ${transitionClass} ease-premium ${getVariantStyles()}`}
-      style={baseStyle}>
+      style={baseStyle}
+      {...rest}>
       {children}
     </div>
   )

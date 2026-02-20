@@ -8,8 +8,10 @@ import GoogleMap from '@/components/GoogleMap'
 import { BACKGROUNDS, LOGOS } from '@/lib/images'
 import { SITE_URL } from '@/lib/constants'
 
+import { useEffect, useRef } from 'react'
+
 // ═══════════════════════════════════════════════════════════════════════════
-// PREMIUM IMAGE COMPONENT (Replaces Parallax)
+// PREMIUM IMAGE COMPONENT (Replaces Parallax with GSAP ScrollTrigger)
 // ═══════════════════════════════════════════════════════════════════════════
 
 function PremiumImage({
@@ -21,9 +23,48 @@ function PremiumImage({
   alt: string
   className?: string
 }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    let ctx: { revert: () => void } | null = null
+
+    ;(async () => {
+      const { gsap } = await import('gsap')
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+      gsap.registerPlugin(ScrollTrigger)
+
+      if (containerRef.current && imageRef.current) {
+        ctx = gsap.context(() => {
+          gsap.fromTo(
+            imageRef.current,
+            { yPercent: -15, scale: 1.1 },
+            {
+              yPercent: 15,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: containerRef.current,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1.2,
+              },
+            },
+          )
+        })
+      }
+    })()
+
+    return () => ctx?.revert()
+  }, [])
+
   return (
-    <div className={`relative overflow-hidden w-full h-full ${className}`}>
-      <div className='absolute inset-0 transition-transform duration-[2000ms] hover:scale-105'>
+    <div ref={containerRef} className={`relative overflow-hidden w-full h-full ${className}`}>
+      <div
+        ref={imageRef}
+        className='absolute inset-[-15%] transition-transform duration-[2000ms] group-hover:scale-[1.05] group-focus-within:scale-[1.05] hover:scale-[1.05] focus-within:scale-[1.05]'>
         <Image src={src} alt={alt} fill className='object-cover' />
       </div>
       <div className='absolute inset-0 bg-gradient-to-t from-navy via-transparent to-navy/30 pointer-events-none' />
@@ -261,10 +302,12 @@ export default function SalonPage() {
                   { label: 'Conseils', desc: 'Personnalisés' },
                 ].map((item, i) => (
                   <Reveal key={i} variant='fade-up' delay={i * 0.1}>
-                    <div className='group flex items-start gap-4 cursor-default'>
+                    <div
+                      className='group flex items-start gap-4 cursor-pointer lg:cursor-default focus:outline-none'
+                      tabIndex={0}>
                       <span className='text-gold/30 text-xs font-mono mt-1'>0{i + 1}</span>
                       <div>
-                        <span className='text-cream text-xl font-title block group-hover:text-gold transition-colors duration-500'>
+                        <span className='text-cream text-xl font-title block group-hover:text-gold group-focus-within:text-gold transition-colors duration-500'>
                           {item.label}
                         </span>
                         <span className='text-cream/40 text-sm'>{item.desc}</span>
@@ -275,7 +318,10 @@ export default function SalonPage() {
               </div>
 
               {/* Center - Large image */}
-              <Reveal variant='scale-up' className='lg:col-span-5 h-[50vh] md:h-[70vh] relative'>
+              <Reveal
+                variant='scale-up'
+                className='lg:col-span-5 h-[50vh] md:h-[70vh] relative group cursor-pointer lg:cursor-default focus:outline-none'
+                tabIndex={0}>
                 <PremiumImage
                   src={BACKGROUNDS.salonExpertise.src}
                   alt={BACKGROUNDS.salonExpertise.alt}
@@ -326,7 +372,8 @@ export default function SalonPage() {
               {/* Large card */}
               <Reveal
                 variant='scale-up'
-                className='md:col-span-2 lg:col-span-2 lg:row-span-2 relative h-[400px] lg:h-full overflow-hidden group'>
+                className='md:col-span-2 lg:col-span-2 lg:row-span-2 relative h-[400px] lg:h-full overflow-hidden group cursor-pointer lg:cursor-default focus:outline-none'
+                tabIndex={0}>
                 <PremiumImage
                   src={BACKGROUNDS.salonExperienceLarge.src}
                   alt={BACKGROUNDS.salonExperienceLarge.alt}
@@ -361,7 +408,8 @@ export default function SalonPage() {
                   key={i}
                   variant='scale-up'
                   delay={0.2 + i * 0.15}
-                  className='relative h-[300px] overflow-hidden group'>
+                  className='relative h-[300px] overflow-hidden group cursor-pointer lg:cursor-default focus:outline-none'
+                  tabIndex={0}>
                   <PremiumImage src={item.image} alt={item.title} className='absolute inset-0' />
                   <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent' />
                   <div className='absolute bottom-0 left-0 p-6'>
