@@ -6,6 +6,7 @@ import ScrollToTop from '@/components/ScrollToTop'
 import PageTransition from '@/components/PageTransition'
 import ScrollProgressBar from '@/components/ScrollProgressBar'
 import CookieConsent from '@/components/CookieConsent'
+import SmoothScroll from '@/components/SmoothScroll'
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, CONTACT, SOCIAL } from '@/lib/constants'
 import { Analytics } from '@vercel/analytics/next'
 
@@ -163,7 +164,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <ScrollProgressBar />
         <Header />
-        <PageTransition>{children}</PageTransition>
+        <SmoothScroll>
+          <PageTransition>{children}</PageTransition>
+        </SmoothScroll>
         <Analytics />
         <CookieConsent />
       </body>
