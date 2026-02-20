@@ -284,7 +284,15 @@ function ReservationContent() {
           transition: all 0.5s ease !important;
           position: relative !important;
           overflow: hidden !important;
+          box-sizing: border-box !important;
+          max-width: 100% !important;
         }
+
+        #voucher-choose-0 {
+          width: 90% !important;
+          margin-top: 12px !important;
+        }
+
         .planity_appointment_service_button:hover,
         button.planity_appointment_service_button:hover,
         #planity-widget-container button.planity_appointment_service_button:hover,
@@ -1593,6 +1601,9 @@ function ReservationContent() {
           [class*='service_set-module_card'] {
             padding: 12px 0px !important;
           }
+          [class*='service_item-module_card'] {
+            padding-left: 0 !important;
+          }
 
           /* Adjust margins for lists */
           .planity_ui_item-list-element {
@@ -1614,7 +1625,7 @@ function ReservationContent() {
           button[class*='submit'],
           .planity_ui_button_root,
           button[id*='signup-comp__submit'] {
-            width: 90% !important;
+            width: 100% !important;
             margin-left: 0 !important;
             margin-right: 0 !important;
             display: block !important;
@@ -1733,6 +1744,8 @@ function ReservationContent() {
           letter-spacing: 0.2em !important;
           font-size: 11px !important;
           transition: all 0.5s ease !important;
+          box-sizing: border-box !important;
+          max-width: 100% !important;
         }
         [class*='gift_voucher-module_button']:hover,
         [class*='gift_voucher-module_cta']:hover,
