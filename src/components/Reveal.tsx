@@ -48,8 +48,13 @@ export default function Reveal({
       if (!ref.current) return
 
       ctx = gsap.context(() => {
-        // We use a custom start string, converting threshold to percentage
-        const startTrigger = `top ${100 - threshold * 100}%`
+        // We use a custom start string, converting threshold to percentage.
+        // CRITICAL BUGFIX: On mobile/tablet, the max scroll distance is often shorter than
+        // the required trigger height (e.g. 15% up the screen), leaving elements invisible forever.
+        // By forcing the trigger to 100% (absolute bottom of screen) for touch devices, we guarantee they fire!
+        const isMobile = window.innerWidth < 1024
+        const resolvedThreshold = isMobile ? 100 : 100 - threshold * 100
+        const startTrigger = `top ${resolvedThreshold}%`
 
         let fromState: gsap.TweenVars = {}
         let toState: gsap.TweenVars = {

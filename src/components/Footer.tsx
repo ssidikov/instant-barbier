@@ -221,7 +221,7 @@ export default function Footer() {
         </Reveal>
 
         {/* Copyright */}
-        <Reveal variant='fade-up' delay={0.8} threshold={0.1}>
+        <Reveal variant='fade-up' delay={0.4} threshold={0}>
           <p className='text-center text-xs text-cream/40 mt-6'>
             © {new Date().getFullYear()} {SITE_NAME}. Tous droits réservés.
           </p>

@@ -907,14 +907,11 @@ export default function Home() {
               {galleryImages.slice(0, galleryCount).map((image, index) => {
                 const isFirst = index === 0
                 return (
-                  <div
+                  <Reveal
                     key={index}
-                    className={`${isFirst ? 'col-span-2 row-span-2' : ''} aspect-square transition-all ease-premium opacity-100 scale-100`}
-                    style={{
-                      transitionDuration: '0.8s',
-                      transitionDelay: `${index * 0.1}s`,
-                      willChange: 'transform, opacity, filter',
-                    }}>
+                    variant='scale-up'
+                    delay={index * 0.1}
+                    className={`${isFirst ? 'col-span-2 row-span-2' : ''} aspect-square`}>
                     <div className={`${isFirst ? 'h-full' : 'aspect-square'}`}>
                       <div
                         onClick={() => setLightboxIndex(index)}
@@ -946,7 +943,7 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Reveal>
                 )
               })}
             </div>

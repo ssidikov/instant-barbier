@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import { PLANITY_URL, SITE_URL } from '@/lib/constants'
 import Reveal from '@/components/Reveal'
 import { GALLERY_IMAGES, LOGOS, BACKGROUNDS, type GalleryImageData } from '@/lib/images'
+import GalleryLightbox from '@/components/GalleryLightbox'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // GALLERY DATA
@@ -28,126 +29,6 @@ type Category = (typeof categories)[number]
 const galleryImages = GALLERY_IMAGES
 
 // ═══════════════════════════════════════════════════════════════════════════
-// LIGHTBOX COMPONENT
-// ═══════════════════════════════════════════════════════════════════════════
-
-function Lightbox({
-  images,
-  currentIndex,
-  onClose,
-}: {
-  images: GalleryImageData[]
-  currentIndex: number
-  onClose: () => void
-}) {
-  const [index, setIndex] = useState(currentIndex)
-  const [isAnimating, setIsAnimating] = useState(false)
-
-  const goTo = useCallback(
-    (newIndex: number) => {
-      setIsAnimating(true)
-      setTimeout(() => {
-        setIndex(((newIndex % images.length) + images.length) % images.length)
-        setIsAnimating(false)
-      }, 300) // Match transition duration
-    },
-    [images.length],
-  )
-
-  const goNext = useCallback(() => goTo(index + 1), [goTo, index])
-  const goPrev = useCallback(() => goTo(index - 1), [goTo, index])
-
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-      if (e.key === 'ArrowRight') goNext()
-      if (e.key === 'ArrowLeft') goPrev()
-    }
-    window.addEventListener('keydown', handleKey)
-    document.body.style.overflow = 'hidden'
-    return () => {
-      window.removeEventListener('keydown', handleKey)
-      document.body.style.overflow = ''
-    }
-  }, [onClose, goNext, goPrev])
-
-  return (
-    <div className='fixed inset-0 z-[200] flex items-center justify-center animate-in fade-in duration-300'>
-      {/* Backdrop */}
-      <div className='absolute inset-0 bg-navy/95 backdrop-blur-md' onClick={onClose} />
-
-      {/* Close button */}
-      <button
-        onClick={onClose}
-        className='absolute top-6 right-6 z-50 w-12 h-12 flex items-center justify-center border border-gold/30 text-gold hover:bg-gold hover:text-navy transition-all duration-300 group'>
-        <svg
-          className='w-5 h-5'
-          viewBox='0 0 24 24'
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='1.5'>
-          <path d='M18 6L6 18M6 6l12 12' />
-        </svg>
-      </button>
-
-      {/* Counter */}
-      <div className='absolute top-8 left-8 z-50'>
-        <span className='text-gold/60 text-xs uppercase tracking-[0.3em] font-mono'>
-          {String(index + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
-        </span>
-      </div>
-
-      {/* Navigation arrows */}
-      <button
-        onClick={goPrev}
-        className='absolute left-4 md:left-8 z-50 w-12 h-12 flex items-center justify-center border border-gold/20 text-gold/70 hover:text-gold hover:border-gold/50 transition-all duration-300 hover:scale-110'>
-        <svg
-          className='w-5 h-5'
-          viewBox='0 0 24 24'
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='1.5'>
-          <path d='M15 19l-7-7 7-7' />
-        </svg>
-      </button>
-      <button
-        onClick={goNext}
-        className='absolute right-4 md:right-8 z-50 w-12 h-12 flex items-center justify-center border border-gold/20 text-gold/70 hover:text-gold hover:border-gold/50 transition-all duration-300 hover:scale-110'>
-        <svg
-          className='w-5 h-5'
-          viewBox='0 0 24 24'
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='1.5'>
-          <path d='M9 5l7 7-7 7' />
-        </svg>
-      </button>
-
-      {/* Image Container */}
-      <div
-        className={`relative z-40 w-[90vw] h-[80vh] flex items-center justify-center transition-opacity duration-300 ${isAnimating ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
-        <div className='relative w-full h-full max-w-5xl'>
-          <Image
-            src={images[index].src}
-            alt={images[index].alt}
-            fill
-            className='object-contain'
-            sizes='90vw'
-            priority
-          />
-        </div>
-      </div>
-
-      {/* Caption */}
-      <div
-        className={`absolute bottom-8 left-0 right-0 text-center z-50 transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
-        <p className='text-cream/60 text-sm font-light'>{images[index].alt}</p>
-      </div>
-    </div>
-  )
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
 // GALLERY CARD COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -164,13 +45,10 @@ function GalleryCard({
   const isFirst = index === 0
 
   return (
-    <div
-      className={`${isFirst ? 'col-span-2 row-span-2' : ''} aspect-square transition-all ease-premium opacity-100 scale-100`}
-      style={{
-        transitionDuration: '0.8s',
-        transitionDelay: `${index * 0.1}s`,
-        willChange: 'transform, opacity, filter',
-      }}>
+    <Reveal
+      variant='scale-up'
+      delay={(index % 6) * 0.1} // Modulo prevents delays from getting endlessly huge when loading more
+      className={`${isFirst ? 'col-span-2 row-span-2' : ''} aspect-square`}>
       <div className={`${isFirst ? 'h-full' : 'aspect-square'}`}>
         <div className='relative w-full h-full overflow-hidden group cursor-pointer touch-feedback touch-highlight'>
           {/* Image background */}
@@ -200,7 +78,7 @@ function GalleryCard({
           </div>
         </div>
       </div>
-    </div>
+    </Reveal>
   )
 }
 
@@ -571,7 +449,7 @@ export default function GaleriePage() {
 
       {/* Lightbox */}
       {lightboxIndex !== null && (
-        <Lightbox
+        <GalleryLightbox
           images={filteredImages}
           currentIndex={lightboxIndex}
           onClose={() => setLightboxIndex(null)}
