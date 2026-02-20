@@ -34,6 +34,18 @@
     /* Prevent horizontal scroll */
   }
 
+  /* Force iOS/touch devices to enable :hover states on tap for interactive elements */
+  @media (hover: none) {
+    .group, a, button, [tabindex] {
+      cursor: pointer;
+    }
+  }
+
+  /* Remove default blue tap overlay on mobile to keep things premium */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   h1,
   h2,
   h3,

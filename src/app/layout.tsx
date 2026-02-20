@@ -155,6 +155,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
         />
+        {/* Forces iOS Safari to correctly trigger CSS :hover states on touch */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: 'document.addEventListener("touchstart", function(){}, {passive:true});',
+          }}
+        />
         <ScrollProgressBar />
         <Header />
         <PageTransition>{children}</PageTransition>

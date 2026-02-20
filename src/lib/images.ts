@@ -54,6 +54,10 @@ export const VIDEO = {
     src: "/video/l'instant-barbier-paris.mp4",
     type: 'video/mp4',
   },
+  vrSalon: {
+    src: '/video/vr-salon.mp4',
+    type: 'video/mp4',
+  },
 } as const
 
 // ── Gallery Images ─────────────────────────────────────────────────────────
