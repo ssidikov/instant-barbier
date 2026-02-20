@@ -471,21 +471,22 @@ export default function AboutSection() {
             <div
               ref={videoWrapRef}
               className='relative'
-              style={{ clipPath: 'inset(100% 0 0 0)', opacity: 0 }}>
-              <div className='relative aspect-[4/5] w-full overflow-hidden border-2 border-gold/30 shadow-2xl shadow-black/60 group'>
+              style={{ clipPath: 'inset(100% 0 0 0)', opacity: 0 }}
+              tabIndex={0}>
+              <div className='relative aspect-[4/5] w-full overflow-hidden border-2 border-gold/30 shadow-2xl shadow-black/60 group cursor-pointer lg:cursor-default focus:outline-none'>
                 <video
                   ref={videoRef}
                   loop
                   muted
                   playsInline
-                  className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]'>
+                  className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03] group-focus-within:scale-[1.03]'>
                   <source src={VIDEO.aboutSection.src} type={VIDEO.aboutSection.type} />
                 </video>
                 <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/10 to-transparent' />
 
                 {/* Hover gold shimmer overlay */}
                 <div
-                  className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500'
+                  className='absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-500'
                   style={{
                     background:
                       'linear-gradient(135deg, rgba(175,151,120,0.06) 0%, transparent 60%)',
@@ -501,15 +502,33 @@ export default function AboutSection() {
             </div>
 
             {/* Experience badge — floats over video bottom-right */}
-            <div
-              className='hidden lg:flex absolute -bottom-6 -right-6 z-10 flex-col items-center justify-center w-28 h-28 rounded-full border border-gold/25 backdrop-blur-md'
-              style={{ background: 'rgba(7,24,30,0.85)' }}>
-              <span className='text-3xl font-title text-gold leading-none'>23</span>
-              <span className='text-[0.55rem] uppercase tracking-[0.15em] text-gold/60 mt-1 text-center leading-tight'>
-                ans
-                <br />
-                d&rsquo;expérience
-              </span>
+            <div className='hidden lg:flex absolute -bottom-8 -right-8 z-10 items-center justify-center w-40 h-40'>
+              {/* Rotating text ring */}
+              <div className='absolute inset-0 animate-[spin_20s_linear_infinite] pointer-events-none'>
+                <svg viewBox='0 0 100 100' className='w-full h-full overflow-visible'>
+                  <path
+                    id='badgeTextPath'
+                    d='M 50, 50 m -42, 0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0'
+                    fill='none'
+                  />
+                  <text className='text-[10px] font-title font-light tracking-[0.15em] uppercase fill-gold/80'>
+                    <textPath href='#badgeTextPath' startOffset='0%'>
+                      PARIS LE MARAIS • 43 RUE DE TURENNE •
+                    </textPath>
+                  </text>
+                </svg>
+              </div>
+
+              {/* Center static badge (Logo) */}
+              <div className='flex items-center justify-center w-[72px] h-[72px] relative z-10 animate-[spin_25s_linear_infinite_reverse]'>
+                <Image
+                  src={LOGOS.linstant.src}
+                  alt='L instant Barbier'
+                  width={64}
+                  height={64}
+                  className='object-contain w-full h-full'
+                />
+              </div>
             </div>
           </div>
 
@@ -599,9 +618,10 @@ export default function AboutSection() {
             <div
               key={item.badge}
               ref={item.ref}
-              className='group relative h-[400px] md:h-[520px] w-full overflow-hidden opacity-0'>
+              className='group relative h-[400px] md:h-[520px] w-full overflow-hidden opacity-0 cursor-pointer lg:cursor-default focus:outline-none'
+              tabIndex={0}>
               {/* Main card border + shadow */}
-              <div className='absolute inset-0 border border-gold/20 group-hover:border-gold/45 transition-colors duration-700 z-10 pointer-events-none' />
+              <div className='absolute inset-0 border border-gold/20 group-hover:border-gold/45 group-focus-within:border-gold/45 transition-colors duration-700 z-10 pointer-events-none' />
 
               {/* Parallax image */}
               <div className='about-card-img absolute inset-[-12%] overflow-hidden'>
@@ -609,7 +629,7 @@ export default function AboutSection() {
                   src={item.image}
                   alt={item.title}
                   fill
-                  className='object-cover'
+                  className='object-cover transition-transform duration-1000 group-hover:scale-[1.05] group-focus-within:scale-[1.05]'
                   sizes='(max-width: 1280px) 100vw, 640px'
                 />
               </div>
@@ -618,7 +638,7 @@ export default function AboutSection() {
               <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/45 to-transparent z-[1]' />
               {/* Hover gold side glow */}
               <div
-                className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-[2]'
+                className='absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-700 z-[2]'
                 style={{
                   background:
                     'linear-gradient(to right, rgba(175,151,120,0.07) 0%, transparent 40%)',
@@ -627,22 +647,22 @@ export default function AboutSection() {
 
               {/* Number badge */}
               <div
-                className='absolute top-6 right-6 z-20 text-xs font-title text-gold/80 tracking-widest border border-gold/20 group-hover:border-gold/50 px-3 py-1 rounded-full backdrop-blur-sm transition-colors duration-500'
+                className='absolute top-6 right-6 z-20 text-xs font-title text-gold/80 tracking-widest border border-gold/20 group-hover:border-gold/50 group-focus-within:border-gold/50 px-3 py-1 rounded-full backdrop-blur-sm transition-colors duration-500'
                 style={{ background: 'rgba(7,24,30,0.6)' }}>
                 {item.badge}
               </div>
 
               {/* Top corner accent */}
-              <div className='absolute top-0 left-0 w-10 h-10 border-t-2 border-l-2 border-gold/35 group-hover:border-gold/80 transition-colors duration-500 z-20' />
+              <div className='absolute top-0 left-0 w-10 h-10 border-t-2 border-l-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20' />
 
               {/* Text content */}
               <div className='absolute bottom-0 left-0 right-0 p-8 md:p-10 z-20'>
                 {/* Animated gold rule above title */}
                 <div
-                  className='w-0 h-px mb-4 group-hover:w-12 transition-all duration-500 origin-left'
+                  className='w-0 h-px mb-4 group-hover:w-12 group-focus-within:w-12 transition-all duration-500 origin-left'
                   style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
                 />
-                <h4 className='text-3xl md:text-4xl font-title text-gold mb-3 tracking-[-1px] transition-transform duration-500 group-hover:-translate-y-1'>
+                <h4 className='text-3xl md:text-4xl font-title text-gold mb-3 tracking-[-1px] transition-transform duration-500 group-hover:-translate-y-1 group-focus-within:-translate-y-1'>
                   {item.title}
                 </h4>
                 <p className='text-cream/85 text-sm md:text-base font-light leading-relaxed max-w-sm'>
@@ -651,7 +671,7 @@ export default function AboutSection() {
               </div>
 
               {/* Bottom-right corner accent */}
-              <div className='absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-gold/35 group-hover:border-gold/80 transition-colors duration-500 z-20' />
+              <div className='absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20' />
             </div>
           ))}
         </div>

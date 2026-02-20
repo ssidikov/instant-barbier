@@ -411,20 +411,35 @@ export default function Home() {
                     scale: 1.03,
                     transition: { duration: 0.25 },
                   }}
+                  whileFocus={{
+                    borderColor: 'rgba(175,151,120,0.35)',
+                    background: 'rgba(7,24,30,0.75)',
+                    scale: 1.03,
+                    transition: { duration: 0.25 },
+                  }}
+                  whileTap={{
+                    borderColor: 'rgba(175,151,120,0.35)',
+                    background: 'rgba(7,24,30,0.75)',
+                    scale: 1.03,
+                    transition: { duration: 0.25 },
+                  }}
                   transition={{
                     duration: shouldReduceMotion ? 0.2 : 0.8,
                     delay: shouldReduceMotion ? 0 : 0.9 + i * 0.18,
                     ease: [0.22, 1, 0.36, 1],
-                  }}>
+                  }}
+                  tabIndex={0}>
                   {/* Hover shimmer sweep */}
                   <motion.div
-                    className='absolute inset-0 -skew-x-12 pointer-events-none opacity-0 group-hover:opacity-100'
+                    className='absolute inset-0 -skew-x-12 pointer-events-none opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'
                     style={{
                       background:
                         'linear-gradient(105deg, transparent 30%, rgba(175,151,120,0.08) 50%, transparent 70%)',
                     }}
                     initial={{ x: '-100%' }}
                     whileHover={{ x: '200%' }}
+                    whileFocus={{ x: '200%' }}
+                    whileTap={{ x: '200%' }}
                     transition={{ duration: 0.6, ease: 'easeOut' }}
                   />
                   {/* Left gold accent bar */}

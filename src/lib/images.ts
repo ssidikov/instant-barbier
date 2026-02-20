@@ -75,13 +75,7 @@ export const GALLERY_IMAGES: GalleryImageData[] = [
     category: 'Barbe',
     span: 'tall',
   },
-  {
-    src: '/images/gallery/Ambiance/Ambiance (1).jpg',
-    alt: 'Ambiance',
-    shortAlt: 'Ambiance',
-    category: 'Ambiance',
-    span: 'normal',
-  },
+
   {
     src: '/images/gallery/Barbiers/Barbiers- (1).jpg',
     alt: 'Barbiers',
@@ -90,14 +84,22 @@ export const GALLERY_IMAGES: GalleryImageData[] = [
     span: 'wide',
   },
   {
-    src: '/images/gallery/Outils/Outils (1).jpg',
+    src: '/images/gallery/Ambiance/Ambiance (1).jpg',
+    alt: 'Ambiance',
+    shortAlt: 'Ambiance',
+    category: 'Ambiance',
+    span: 'normal',
+  },
+
+  {
+    src: '/images/gallery/Outils/Outils-1.jpg',
     alt: 'Outils',
     shortAlt: 'Outils',
     category: 'Outils',
     span: 'normal',
   },
   {
-    src: '/images/gallery/Produit/Produit (1).jpeg',
+    src: '/images/gallery/Produit/Produit (1).jpg',
     alt: 'Produit',
     shortAlt: 'Produit',
     category: 'Produit',

@@ -210,14 +210,14 @@ export default function PrestationsPage() {
             <div className='grid grid-cols-1 lg:grid-cols-12 gap-12'>
               <div className='lg:col-span-6'>
                 <Reveal variant='scale-up' duration={1}>
-                  <span className='text-gold text-[6rem] md:text-[8rem] font-serif leading-none opacity-10 block'>
-                    ✂
+                  <span className='opacity-10'>
+                    <Image src='/icons/cut.png' alt='Scissors' width={128} height={128} />
                   </span>
                 </Reveal>
                 <Reveal variant='fade-up' delay={0.2}>
                   <h2 className='text-3xl md:text-5xl font-title text-cream leading-[0.8] tracking-[-2px] -mt-12'>
                     Des prestations
-                    <span className='block text-gold'>sur mesure</span>
+                    <span className='block text-gold pl-[50px] md:pl-[83px]'>sur mesure</span>
                   </h2>
                 </Reveal>
               </div>
