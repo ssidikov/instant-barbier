@@ -2,6 +2,7 @@ import '@/app/globals.css'
 import { Playfair_Display, Mulish } from 'next/font/google'
 import type { Metadata } from 'next'
 import Header from '@/components/Header'
+import ScrollToTop from '@/components/ScrollToTop'
 import CookieConsent from '@/components/CookieConsent'
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, CONTACT, SOCIAL } from '@/lib/constants'
 import { Analytics } from '@vercel/analytics/next'
@@ -147,6 +148,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel='dns-prefetch' href='https://widget.planity.com' />
       </head>
       <body className='bg-navy text-cream font-body antialiased flex flex-col min-h-screen'>
+        <ScrollToTop />
         <script
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
