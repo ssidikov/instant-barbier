@@ -29,40 +29,33 @@ export default function Reveal({
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
-          observer.disconnect() // Run once
+          observer.disconnect()
         }
       },
       { threshold },
     )
 
     const currentRef = ref.current
-    if (currentRef) {
-      observer.observe(currentRef)
-    }
+    if (currentRef) observer.observe(currentRef)
 
     return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef)
-      }
+      if (currentRef) observer.unobserve(currentRef)
     }
   }, [threshold])
 
-  // Base transition styles
+  // ── Inline styles ──────────────────────────────────────────────────────────
   const baseStyle: React.CSSProperties = {
     transitionDuration: `${duration}s`,
     transitionDelay: `${delay}s`,
-    willChange: variant === 'mask-reveal' ? 'transform' : 'transform, opacity, filter', // remove clip-path from will-change to avoid glitches
+    willChange: variant === 'mask-reveal' ? 'transform' : 'transform, opacity, filter',
   }
 
-  // Handle mask-reveal separately via inline styles for reliability
   if (variant === 'mask-reveal') {
-    // If visible, remove clip-path entirely to avoid any stacking context issues, or set to full reveal
     baseStyle.clipPath = isVisible ? 'inset(0 0 0 0)' : 'inset(100% 0 0 0)'
-    // Ensure transition property includes clip-path
     baseStyle.transitionProperty = 'clip-path, opacity'
   }
 
-  // Variant styles (classes)
+  // ── Variant classes ────────────────────────────────────────────────────────
   const getVariantStyles = () => {
     switch (variant) {
       case 'fade-up':
@@ -74,22 +67,18 @@ export default function Reveal({
       case 'scale-up':
         return isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
       case 'mask-reveal':
-        return 'opacity-100' // Base opacity is always 100 for mask, clip-path handles visibility
+        return 'opacity-100'
       default:
         return ''
     }
   }
 
-  // Easing class
-  const easingClass = 'ease-premium' // Defined in globals.css
-
-  // Determine standard transition class based on variant
   const transitionClass = variant === 'mask-reveal' ? '' : 'transition-all'
 
   return (
     <div
       ref={ref}
-      className={`${className} ${transitionClass} ${easingClass} ${getVariantStyles()}`}
+      className={`${className} ${transitionClass} ease-premium ${getVariantStyles()}`}
       style={baseStyle}>
       {children}
     </div>

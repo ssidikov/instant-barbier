@@ -516,17 +516,29 @@
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
+  /* CSS keyframe animations */
   .animate-logo-slide-in {
     animation: none;
     opacity: 1;
     transform: none;
     filter: none;
   }
-  
+
   .animate-glow-pulse,
-  .animate-cta-glow {
+  .animate-cta-glow,
+  .animate-marquee-rtl,
+  .animate-marquee-vertical-up,
+  .animate-slide-in-up {
     animation: none;
-    opacity: 0.4;
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Disable all CSS transitions for non-essential decorative movement */
+  .touch-card-lift,
+  .touch-feedback,
+  .touch-image-zoom {
+    transition: none;
   }
 }
 

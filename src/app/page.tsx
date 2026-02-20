@@ -10,7 +10,9 @@ import { useState, useEffect, useRef } from 'react'
 import ContactForm from '@/components/ContactForm'
 import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
+import { useParallax, useParallaxStyle, useParallaxXY } from '@/hooks/useParallax'
+import CountUp from '@/components/CountUp'
 import { LOGOS, VIDEO, PRODUCT_GRID, ABOUT_IMAGES, BACKGROUNDS } from '@/lib/images'
 import GoogleMap from '@/components/GoogleMap'
 import GalleryLightbox from '@/components/GalleryLightbox'
@@ -25,6 +27,48 @@ import { services, team, galleryImages, reviews, hours } from '@/lib/data'
 export default function Home() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const shouldReduceMotion = useReducedMotion()
+
+  // ── Section container refs (for Framer Motion useScroll targeting) ──────
+  const heroSectionRef = useRef<HTMLElement>(null)
+  const aboutSectionRef = useRef<HTMLElement>(null)
+  const atmosphereSectionRef = useRef<HTMLElement>(null)
+  const galerieSectionRef = useRef<HTMLElement>(null)
+  const avisSectionRef = useRef<HTMLElement>(null)
+  const ctaSectionRef = useRef<HTMLElement>(null)
+
+  // ── GSAP parallax refs — lazy-load GSAP, respect prefers-reduced-motion ─
+  const heroBgRef = useParallax<HTMLDivElement>(0.25)
+  const atmosphereBgRef = useParallax<HTMLDivElement>(0.3)
+  const interiorBgRef = useParallax<HTMLDivElement>(0.4)
+  const ctaBgRef = useParallax<HTMLDivElement>(0.2, 1.5)
+
+  // ── Hero section parallax layers ────────────────────────────────────────
+  const heroOrb1Y = useParallaxStyle(heroSectionRef, { outputRange: [-80, 80] })
+  const heroOrb2Y = useParallaxStyle(heroSectionRef, { outputRange: [60, -60] })
+  const heroGridY = useParallaxStyle(heroSectionRef, { outputRange: [-20, 40] })
+  const heroDecorY = useParallaxStyle(heroSectionRef, { outputRange: [30, -50] })
+
+  // ── About section parallax layers ───────────────────────────────────────
+  const aboutOrb1 = useParallaxXY(aboutSectionRef, [-10, 10], [-50, 30])
+  const aboutOrb2 = useParallaxXY(aboutSectionRef, [8, -8], [30, -50])
+  const aboutStampY = useParallaxStyle(aboutSectionRef, { outputRange: [-40, 60] })
+
+  // ── Atmosphère section parallax layers ──────────────────────────────────
+  const atmosphereOrb1 = useParallaxXY(atmosphereSectionRef, [-15, 15], [-60, 40])
+  const atmosphereOrb2 = useParallaxXY(atmosphereSectionRef, [12, -12], [40, -60])
+
+  // ── Galerie section parallax layers ─────────────────────────────────────
+  const galerieWatermarkY = useParallaxStyle(galerieSectionRef, { outputRange: [-50, 70] })
+  const galerieOrb1 = useParallaxXY(galerieSectionRef, [-8, 8], [-40, 40])
+
+  // ── Avis section parallax layers ────────────────────────────────────────
+  const avisWatermarkY = useParallaxStyle(avisSectionRef, { outputRange: [-60, 60] })
+  const avisOrb1 = useParallaxXY(avisSectionRef, [10, -10], [-50, 50])
+
+  // ── CTA section parallax layers ─────────────────────────────────────────
+  const ctaOrb1Y = useParallaxStyle(ctaSectionRef, { outputRange: [-70, 50] })
+  const ctaOrb2Y = useParallaxStyle(ctaSectionRef, { outputRange: [50, -70] })
 
   // State for gallery count
   const [galleryCount, setGalleryCount] = useState(6)
@@ -74,122 +118,308 @@ export default function Home() {
     <>
       <main className='grow'>
         {/* ═══════════════════════════════════════════════════════════════════
-          HERO SECTION
+          HERO SECTION — Premium Animated
       ═══════════════════════════════════════════════════════════════════ */}
-        <section className='relative min-h-screen flex items-center overflow-hidden'>
-          {/* Static Background Patterns */}
-          <div className='absolute inset-0 opacity-10 hidden md:block'>
-            <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-gold rounded-full blur-[120px]' />
-            <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold rounded-full blur-[120px]' />
-          </div>
-
-          {/* Background Image - extends behind header */}
-          <div className='absolute inset-0'>
-            <div className='absolute inset-0 scale-110'>
-              <div
+        <section
+          ref={heroSectionRef}
+          className='relative min-h-screen flex items-center overflow-hidden'>
+          {/* ── Ken Burns Background ─────────────────────────────────────────── */}
+          <div className='absolute inset-0 overflow-hidden'>
+            <div ref={heroBgRef} className='absolute inset-0 scale-[1.15] will-change-transform'>
+              <motion.div
                 className='absolute inset-0 bg-cover bg-center'
                 style={{ backgroundImage: `url('${BACKGROUNDS.homeHero.src}')` }}
+                initial={{ scale: 1.08 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 12, ease: [0.25, 0.46, 0.45, 0.94] }}
               />
-              {/* Main gradient overlay - stronger on left for text readability */}
+              {/* Gradient overlay — left heavy for text legibility */}
               <div
                 className='absolute inset-0'
                 style={{
                   background:
-                    'linear-gradient(to right, rgba(7, 24, 30, 0.96) 0%, rgba(7, 24, 30, 0.90) 35%, rgba(7, 24, 30, 0.60) 65%, transparent 100%)',
+                    'linear-gradient(to right, rgba(7,24,30,0.97) 0%, rgba(7,24,30,0.92) 30%, rgba(7,24,30,0.65) 60%, rgba(7,24,30,0.20) 100%)',
                 }}
               />
-              {/* Subtle vignette effect */}
+              {/* Bottom fade into next section */}
+              <div className='absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-navy to-transparent' />
+              {/* Radial vignette */}
               <div
                 className='absolute inset-0'
                 style={{
                   background:
-                    'radial-gradient(ellipse at center, transparent 0%, rgba(7, 24, 30, 0.3) 100%)',
+                    'radial-gradient(ellipse at center, transparent 40%, rgba(7,24,30,0.45) 100%)',
                 }}
               />
             </div>
           </div>
 
-          {/* Decorative Gold Line */}
-          <div className='absolute left-0 top-0 h-full w-[1.5px] bg-gradient-to-b from-transparent via-gold/60 to-transparent origin-top opacity-40'></div>
+          {/* ── Animated Parallax Orbs ───────────────────────────────────────── */}
+          <div className='absolute inset-0 pointer-events-none'>
+            <motion.div
+              className='absolute top-[20%] left-[15%] w-[500px] h-[500px] rounded-full blur-[140px]'
+              style={{
+                y: heroOrb1Y,
+                background: 'radial-gradient(circle, rgba(175,151,120,0.14) 0%, transparent 70%)',
+              }}
+              animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.div
+              className='absolute bottom-[20%] right-[20%] w-[400px] h-[400px] rounded-full blur-[120px]'
+              style={{
+                y: heroOrb2Y,
+                background: 'radial-gradient(circle, rgba(175,151,120,0.10) 0%, transparent 70%)',
+              }}
+              animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.9, 0.5] }}
+              transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+            />
+            <motion.div
+              className='absolute top-[35%] right-[30%] w-[250px] h-[250px] rounded-full blur-[90px]'
+              style={{
+                y: heroDecorY,
+                background: 'radial-gradient(circle, rgba(175,151,120,0.07) 0%, transparent 70%)',
+              }}
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+            />
+          </div>
 
-          {/* Grid Overlay */}
-          <div className='absolute inset-0 bg-[linear-gradient(rgba(156,131,88,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(156,131,88,0.03)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]' />
+          {/* ── Parallax Grid Overlay ────────────────────────────────────────── */}
+          <motion.div
+            className='absolute inset-0 pointer-events-none'
+            style={{
+              y: heroGridY,
+              backgroundImage:
+                'linear-gradient(rgba(175,151,120,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(175,151,120,0.035) 1px, transparent 1px)',
+              backgroundSize: '100px 100px',
+              maskImage: 'radial-gradient(ellipse 70% 60% at 30% 50%, black, transparent)',
+            }}
+          />
 
-          {/* Content - True vertical centering */}
+          {/* ── Flying Gold Particles ────────────────────────────────────────── */}
+          <div className='absolute inset-0 pointer-events-none overflow-hidden hidden md:block'>
+            {[...Array(12)].map((_, i) => (
+              <motion.div
+                key={i}
+                className='absolute w-[2px] h-[2px] rounded-full bg-gold'
+                style={{
+                  left: `${8 + ((i * 7) % 55)}%`,
+                  top: `${15 + ((i * 11) % 70)}%`,
+                  opacity: 0,
+                }}
+                animate={{
+                  y: [0, -80 - i * 12],
+                  opacity: [0, 0.6 + (i % 3) * 0.15, 0],
+                  x: [0, (i % 2 === 0 ? 1 : -1) * (10 + i * 3)],
+                  scale: [0, 1.5, 0],
+                }}
+                transition={{
+                  duration: 5 + i * 0.7,
+                  repeat: Infinity,
+                  delay: i * 0.9,
+                  ease: 'easeInOut',
+                }}
+              />
+            ))}
+          </div>
+
+          {/* ── Animated Left Border Line ────────────────────────────────────── */}
+          <motion.div
+            className='absolute left-0 top-0 w-[1.5px] bg-gradient-to-b from-transparent via-gold to-transparent'
+            initial={{ scaleY: 0, opacity: 0 }}
+            animate={{ scaleY: 1, opacity: 0.45 }}
+            transition={{ duration: 1.4, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            style={{ height: '100%', transformOrigin: 'top' }}
+          />
+          {/* Animated Right Accent Line */}
+          <motion.div
+            className='absolute right-0 top-0 w-[1px] bg-gradient-to-b from-transparent via-gold/30 to-transparent hidden xl:block'
+            initial={{ scaleY: 0, opacity: 0 }}
+            animate={{ scaleY: 1, opacity: 1 }}
+            transition={{ duration: 1.6, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            style={{ height: '100%', transformOrigin: 'top' }}
+          />
+
+          {/* ── MAIN CONTENT ─────────────────────────────────────────────────── */}
           <div className='relative z-10 w-full pt-4 translate-y-[100px] md:translate-y-[0px]'>
             <Container>
               <div className='max-w-4xl'>
-                {/* Main Title - Grand Badge Design */}
-                {/* Mobile Stats - Text Style at Top */}
+                {/* Mobile Stats Row */}
                 <div className='flex flex-row items-center mx-auto justify-between gap-4 lg:hidden max-w-md translate-y-[-240px] md:translate-y-[-140px]'>
                   {[
                     { label: 'Expérience', val: '23 ans' },
                     { label: 'Avis Google', val: '★★★★★' },
                     { label: 'Clients', val: '2000+' },
                   ].map((stat, i) => (
-                    <Reveal key={i} variant='fade-up' delay={0.1 + i * 0.1}>
-                      <div className='flex flex-col items-center'>
-                        <span className='text-2xl font-title text-gold font-light leading-none mb-1'>
-                          {stat.val}
-                        </span>
-                        <span className='text-[0.6rem] text-cream/60 tracking-[0.1em] font-light uppercase leading-tight'>
-                          {stat.label}
-                        </span>
-                      </div>
-                    </Reveal>
+                    <motion.div
+                      key={i}
+                      className='flex flex-col items-center'
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.6,
+                        delay: 0.3 + i * 0.12,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}>
+                      <span className='text-2xl font-title text-gold font-light leading-none mb-1'>
+                        {stat.val}
+                      </span>
+                      <span className='text-[0.6rem] text-cream/60 tracking-[0.1em] font-light uppercase leading-tight'>
+                        {stat.label}
+                      </span>
+                    </motion.div>
                   ))}
                 </div>
 
-                {/* Main Title - Grand Badge Design */}
+                {/* ── Grand Badge Title ─────────────────────────────────────── */}
                 <div className='mb-6'>
-                  <Reveal variant='blur-in' delay={0.3} duration={0.9}>
-                    <div className='relative block lg:inline-block group ml-0 lg:ml-[-8px]'>
-                      {/* Badge Content - New Asymmetric Design */}
-                      <h1 className='relative flex flex-col items-center lg:items-start lg:items-center justify-center text-center md:text-left lg:text-center md:translate-y-[100px] lg:translate-y-[40px]'>
-                        {/* Main Composition */}
-                        <span className='relative flex flex-col items-center md:items-start lg:items-center justify-center lg:mb-8'>
-                          {/* Center Content - Mobile: stacked, Tablet: one line, Desktop: stacked */}
-                          <span className='flex flex-col gap-2 md:gap-3 lg:gap-0 items-center md:items-start lg:items-center'>
-                            {/* COIFFEUR */}
-                            <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9] tracking-[-0.02em]'>
-                              COIFFEUR
-                            </span>
+                  <div className='relative block lg:inline-block ml-0 lg:ml-[-8px]'>
+                    {/* Animated Gold Scan Line — sweeps across title on load */}
+                    <motion.div
+                      className='absolute inset-0 pointer-events-none z-20 overflow-hidden hidden md:block'
+                      initial={{ opacity: 1 }}
+                      animate={{ opacity: 0 }}
+                      transition={{ duration: 0.3, delay: 2.2 }}>
+                      <motion.div
+                        className='absolute top-0 bottom-0 w-[3px] blur-[2px]'
+                        style={{
+                          background:
+                            'linear-gradient(to bottom, transparent 0%, rgba(175,151,120,0.9) 40%, rgba(255,220,150,1) 50%, rgba(175,151,120,0.9) 60%, transparent 100%)',
+                        }}
+                        initial={{ left: '-5%' }}
+                        animate={{ left: '110%' }}
+                        transition={{ duration: 1.5, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                      />
+                    </motion.div>
 
-                            {/* & BARBIER - Mobile: flex row, Tablet: continue same row, Desktop: flex row */}
-                            <span className='flex items-center gap-4 md:gap-6'>
-                              <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9]'>
-                                &
-                              </span>
-                              <span className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9] tracking-[-0.04em]'>
-                                BARBIER
-                              </span>
-                            </span>
+                    {/* COIFFEUR word — staggered blur-slide-in */}
+                    <h1 className='relative flex flex-col items-center lg:items-start lg:items-center justify-center text-center md:text-left lg:text-center md:translate-y-[100px] lg:translate-y-[40px]'>
+                      <span className='relative flex flex-col items-center md:items-start lg:items-center justify-center lg:mb-8'>
+                        <span className='flex flex-col gap-2 md:gap-3 lg:gap-0 items-center md:items-start lg:items-center'>
+                          {/* COIFFEUR */}
+                          <motion.span
+                            className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9] tracking-[-0.02em] relative inline-block'
+                            initial={
+                              shouldReduceMotion
+                                ? false
+                                : { opacity: 0, y: 40, filter: 'blur(20px)' }
+                            }
+                            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                            transition={{ duration: 1.0, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}>
+                            COIFFEUR
+                            {/* Shimmer overlay on the word */}
+                            <motion.span
+                              className='absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none'
+                              initial={{ x: '-150%' }}
+                              animate={{ x: '250%' }}
+                              transition={{ duration: 0.8, delay: 1.8, ease: 'easeOut' }}
+                            />
+                          </motion.span>
+
+                          {/* & BARBIER */}
+                          <span className='flex items-center gap-4 md:gap-6'>
+                            <motion.span
+                              className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9]'
+                              initial={
+                                shouldReduceMotion
+                                  ? false
+                                  : { opacity: 0, y: 40, filter: 'blur(20px)' }
+                              }
+                              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                              transition={{ duration: 1.0, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}>
+                              &amp;
+                            </motion.span>
+                            <motion.span
+                              className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9] tracking-[-0.04em] relative inline-block'
+                              initial={
+                                shouldReduceMotion
+                                  ? false
+                                  : { opacity: 0, y: 40, filter: 'blur(20px)' }
+                              }
+                              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                              transition={{ duration: 1.0, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}>
+                              BARBIER
+                              <motion.span
+                                className='absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none'
+                                initial={{ x: '-150%' }}
+                                animate={{ x: '250%' }}
+                                transition={{ duration: 0.8, delay: 2.05, ease: 'easeOut' }}
+                              />
+                            </motion.span>
                           </span>
                         </span>
+                      </span>
 
-                        {/* Bottom Script with Lines - 280px gap on tablet only */}
-                        <span className='flex items-center gap-4 w-full justify-center lg:justify-start lg:justify-center lg:mb-8 mt-2 md:mt-[4px] lg:mt-[-20px]'>
-                          <span className='h-[1px] w-8 md:w-24 bg-gradient-to-r from-transparent to-gold/50' />
-                          <span className='text-xl lg:text-3xl italic text-gold/80 tracking-[0.01em] font-light [text-shadow:0_2px_16px_rgba(7,24,30,0.8)]'>
-                            à Paris le Marais
-                          </span>
-                          <span className='h-[1px] w-8 md:w-24 bg-gradient-to-l from-transparent to-gold/50' />
-                        </span>
-                      </h1>
-                      <Reveal variant='fade-up' delay={0.7} duration={0.7}>
-                        <div className='relative flex mt-8 mb-4 md:translate-y-32 lg:translate-y-4 justify-center items-center'>
-                          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-40 bg-gold/15 blur-3xl rounded-full animate-cta-glow' />
-                          <Button href='/reservation'>Prendre rendez-vous</Button>
-                        </div>
-                      </Reveal>
-                    </div>
-                  </Reveal>
+                      {/* à Paris le Marais — with animated lines expanding outward */}
+                      <motion.span
+                        className='flex items-center gap-4 w-full justify-center lg:justify-start lg:justify-center lg:mb-8 mt-2 md:mt-[4px] lg:mt-[-20px]'
+                        initial={shouldReduceMotion ? false : { opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.8, delay: 1.0 }}>
+                        <motion.span
+                          className='h-[1px] bg-gradient-to-r from-transparent to-gold/60'
+                          initial={{ width: 0 }}
+                          animate={{ width: 'clamp(2rem, 6vw, 6rem)' }}
+                          transition={{ duration: 0.8, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
+                        />
+                        <motion.span
+                          className='text-xl lg:text-3xl italic text-gold/80 tracking-[0.01em] font-light'
+                          initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.7, delay: 1.15 }}
+                          style={{ textShadow: '0 2px 24px rgba(7,24,30,0.9)' }}>
+                          à Paris le Marais
+                        </motion.span>
+                        <motion.span
+                          className='h-[1px] bg-gradient-to-l from-transparent to-gold/60'
+                          initial={{ width: 0 }}
+                          animate={{ width: 'clamp(2rem, 6vw, 6rem)' }}
+                          transition={{ duration: 0.8, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
+                        />
+                      </motion.span>
+                    </h1>
+
+                    {/* CTA Button with magnetic glow */}
+                    <motion.div
+                      className='relative flex mt-8 mb-4 md:translate-y-32 lg:translate-y-4 justify-center items-center'
+                      initial={shouldReduceMotion ? false : { opacity: 0, y: 20, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: 0.8, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}>
+                      {/* Pulsing glow ring */}
+                      <motion.div
+                        className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-20 rounded-full pointer-events-none'
+                        style={{
+                          background:
+                            'radial-gradient(ellipse, rgba(175,151,120,0.25) 0%, transparent 70%)',
+                        }}
+                        animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0.9, 0.5] }}
+                        transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+                      />
+                      {/* Secondary outer glow ring */}
+                      <motion.div
+                        className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-32 rounded-full pointer-events-none'
+                        style={{
+                          background:
+                            'radial-gradient(ellipse, rgba(175,151,120,0.10) 0%, transparent 70%)',
+                        }}
+                        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.7, 0.3] }}
+                        transition={{
+                          duration: 3.6,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                          delay: 0.5,
+                        }}
+                      />
+                      <Button href='/reservation'>Prendre rendez-vous</Button>
+                    </motion.div>
+                  </div>
                 </div>
               </div>
             </Container>
           </div>
 
-          {/* Desktop & Tablet Stats - Right side */}
+          {/* ── Desktop Stat Cards — right side ─────────────────────────────── */}
           <div className='hidden lg:block absolute top-1/2 -translate-y-1/2 right-6 md:right-8 lg:right-12 xl:right-20 z-20'>
             <div className='flex flex-col gap-6'>
               {[
@@ -197,22 +427,79 @@ export default function Home() {
                 { label: 'Clients satisfaits', val: '2000+' },
                 { label: 'Note Google', val: '5★' },
               ].map((stat, i) => (
-                <div
+                <motion.div
                   key={stat.label}
-                  className='flex items-center gap-3 md:gap-5 lg:gap-6 bg-white/[0.03] backdrop-blur-2xl border border-white/[0.06] rounded-2xl px-4 py-3 md:px-6 md:py-4 xl:px-8 lg:py-6 shadow-2xl ring-1 ring-white/[0.02] animate-slide-in-up opacity-0 transition-all duration-300'
-                  style={{ animationDelay: `${800 + i * 200}ms` }}>
-                  <div className='text-3xl lg:text-6xl font-title text-gold font-light leading-none'>
+                  className='group relative flex items-center gap-3 md:gap-5 lg:gap-6 backdrop-blur-2xl rounded-2xl px-4 py-3 md:px-6 md:py-4 xl:px-8 lg:py-6 shadow-2xl overflow-hidden cursor-default'
+                  style={{
+                    background: 'rgba(7,24,30,0.55)',
+                    border: '1px solid rgba(175,151,120,0.10)',
+                  }}
+                  initial={{ opacity: 0, x: 40, filter: 'blur(8px)' }}
+                  animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                  whileHover={{
+                    borderColor: 'rgba(175,151,120,0.35)',
+                    background: 'rgba(7,24,30,0.75)',
+                    scale: 1.03,
+                    transition: { duration: 0.25 },
+                  }}
+                  transition={{
+                    duration: shouldReduceMotion ? 0.2 : 0.8,
+                    delay: shouldReduceMotion ? 0 : 0.9 + i * 0.18,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}>
+                  {/* Hover shimmer sweep */}
+                  <motion.div
+                    className='absolute inset-0 -skew-x-12 pointer-events-none opacity-0 group-hover:opacity-100'
+                    style={{
+                      background:
+                        'linear-gradient(105deg, transparent 30%, rgba(175,151,120,0.08) 50%, transparent 70%)',
+                    }}
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: '200%' }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                  />
+                  {/* Left gold accent bar */}
+                  <motion.div
+                    className='absolute left-0 top-1/4 bottom-1/4 w-[2px] rounded-full'
+                    style={{
+                      background:
+                        'linear-gradient(to bottom, transparent, rgba(175,151,120,0.7), transparent)',
+                    }}
+                    initial={{ scaleY: 0 }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.5, delay: 1.1 + i * 0.18 }}
+                  />
+                  <div className='text-3xl lg:text-5xl xl:text-6xl font-title text-gold font-light leading-none relative z-10'>
                     {stat.val}
                   </div>
-                  <div className='text-[0.6rem] lg:text-xs text-cream/60 tracking-[0.15em] font-light leading-tight uppercase max-w-[70px]'>
+                  <div className='text-[0.6rem] lg:text-xs text-cream/60 tracking-[0.15em] font-light leading-tight uppercase max-w-[70px] relative z-10'>
                     {stat.label}
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
 
-          {/* Bottom Logo Marquee */}
+          {/* ── Animated Scroll Indicator ────────────────────────────────────── */}
+          <motion.div
+            className='absolute bottom-44 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-2'
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 2.0 }}>
+            <motion.span
+              className='text-[9px] uppercase tracking-[0.3em] text-gold/50 font-light'
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2.5, repeat: Infinity }}>
+              Défiler
+            </motion.span>
+            <motion.div
+              className='w-[1px] h-10 bg-gradient-to-b from-gold/60 to-transparent'
+              animate={{ scaleY: [0, 1, 0], originY: 'top' }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </motion.div>
+
+          {/* ── Bottom Logo Marquee ──────────────────────────────────────────── */}
           <div className='absolute bottom-0 left-0 w-full h-40 overflow-hidden z-20 flex items-end pointer-events-none'>
             <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent' />
             <div className='flex items-center w-max animate-marquee-rtl relative z-10'>
@@ -230,24 +517,57 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Decorative Corners */}
-          <div className='absolute top-32 right-16 w-24 h-24 border-t border-r border-gold/15 hidden md:block'></div>
-          <div className='absolute bottom-32 left-16 w-24 h-24 border-b border-l border-gold/15 hidden md:block'></div>
+          {/* ── Animated Decorative Corners ─────────────────────────────────── */}
+          <motion.div
+            className='absolute top-32 right-16 w-28 h-28 border-t border-r border-gold/20 hidden md:block'
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
+          />
+          <motion.div
+            className='absolute bottom-44 left-16 w-28 h-28 border-b border-l border-gold/20 hidden md:block'
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 1.7, ease: [0.22, 1, 0.36, 1] }}
+          />
+          {/* Extra top-left accent */}
+          <motion.div
+            className='absolute top-32 left-16 w-16 h-16 border-t border-l border-gold/12 hidden xl:block'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.0, delay: 1.9 }}
+          />
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
           À PROPOS SECTION
       ═══════════════════════════════════════════════════════════════════ */}
-        <Section id='a-propos' className='bg-navy relative overflow-hidden py-16 md:py-24 lg:py-32'>
-          <div className='absolute inset-0 pointer-events-none opacity-5'>
+        <Section
+          id='a-propos'
+          ref={aboutSectionRef as React.RefObject<HTMLElement>}
+          className='bg-navy relative overflow-hidden py-16 md:py-24 lg:py-32'>
+          <div className='absolute inset-0 pointer-events-none'>
+            {/* Parallax large orb top-right */}
             <motion.div
-              className='absolute top-1/4 right-1/4 w-96 h-96 border border-gold/10'
+              style={{ x: aboutOrb1.x, y: aboutOrb1.y }}
+              className='absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[100px]'
+            />
+            {/* Parallax large orb bottom-left */}
+            <motion.div
+              style={{ x: aboutOrb2.x, y: aboutOrb2.y }}
+              className='absolute bottom-0 left-0 w-[400px] h-[400px] bg-gold/4 rounded-full blur-[80px]'
+            />
+            {/* Rotating decorative squares — combined rotation + parallax */}
+            <motion.div
+              className='absolute top-1/4 right-1/4 w-96 h-96 border border-gold/10 opacity-10'
               animate={{ rotate: 360 }}
+              style={{ y: aboutOrb1.y }}
               transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
             />
             <motion.div
-              className='absolute bottom-1/4 left-1/4 w-64 h-64 border border-gold/10'
+              className='absolute bottom-1/4 left-1/4 w-64 h-64 border border-gold/10 opacity-10'
               animate={{ rotate: -360 }}
+              style={{ y: aboutOrb2.y }}
               transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
             />
           </div>
@@ -307,14 +627,18 @@ export default function Home() {
 
               <div className='space-y-12 lg:space-y-16'>
                 {/* Logo stamp - bottom left */}
-                <Image
-                  src={LOGOS.linstant.src}
-                  alt=''
-                  width={180}
-                  height={180}
-                  className='absolute bottom-10 left-4 md:bottom-20 md:left-10 opacity-[0.03] -rotate-12 select-none pointer-events-none z-0 w-32 h-32 md:w-48 md:h-48'
-                  aria-hidden='true'
-                />
+                <motion.div
+                  style={{ y: aboutStampY }}
+                  className='absolute bottom-10 left-4 md:bottom-20 md:left-10 pointer-events-none z-0'>
+                  <Image
+                    src={LOGOS.linstant.src}
+                    alt=''
+                    width={180}
+                    height={180}
+                    className='opacity-[0.03] -rotate-12 select-none w-32 h-32 md:w-48 md:h-48'
+                    aria-hidden='true'
+                  />
+                </motion.div>
                 {/* Headline */}
                 <div className='mb-4 xl:mb-14'>
                   <h2 className='flex items-baseline gap-3'>
@@ -324,7 +648,7 @@ export default function Home() {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.8, delay: 0.2 }}>
-                      23
+                      <CountUp end={23} duration={2.2} threshold={0.5} />
                     </motion.span>
                     <span className='flex flex-col'>
                       <TextReveal
@@ -526,12 +850,25 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           ATMOSPHÈRE SECTION
       ═══════════════════════════════════════════════════════════════════ */}
-        <section className='relative py-16 md:py-24 lg:py-32 xl:py-40 bg-dark overflow-hidden'>
+        <section
+          ref={atmosphereSectionRef}
+          className='relative py-16 md:py-24 lg:py-32 xl:py-40 bg-dark overflow-hidden'>
+          {/* Background — GSAP parallax replaces CSS bg-fixed */}
           <div
-            className='absolute inset-0 bg-cover bg-center bg-scroll md:bg-fixed'
+            ref={atmosphereBgRef}
+            className='absolute inset-0 scale-[1.2] bg-cover bg-center will-change-transform'
             style={{ backgroundImage: `url('${BACKGROUNDS.homeAtmosphere.src}')` }}
           />
           <div className='absolute inset-0 bg-dark/85' />
+          {/* Parallax floating accent orbs over the bg */}
+          <motion.div
+            style={{ x: atmosphereOrb1.x, y: atmosphereOrb1.y }}
+            className='absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-gold/6 rounded-full blur-[100px] pointer-events-none'
+          />
+          <motion.div
+            style={{ x: atmosphereOrb2.x, y: atmosphereOrb2.y }}
+            className='absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-gold/4 rounded-full blur-[80px] pointer-events-none'
+          />
           <Container className='relative z-10'>
             <div className='max-w-2xl lg:max-w-4xl mx-auto text-center'>
               <Reveal variant='fade-up'>
@@ -719,7 +1056,10 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           GALERIE SECTION
       ═══════════════════════════════════════════════════════════════════ */}
-        <Section id='galerie' className='bg-navy border-t border-gold/10 relative overflow-hidden'>
+        <Section
+          id='galerie'
+          ref={galerieSectionRef as React.RefObject<HTMLElement>}
+          className='bg-navy border-t border-gold/10 relative overflow-hidden'>
           {/* Decorative background elements */}
           <div className='absolute inset-0 pointer-events-none'>
             {/* Logo stamp - bottom right */}
@@ -731,8 +1071,10 @@ export default function Home() {
               className='absolute bottom-10 right-4 md:bottom-20 md:right-10 opacity-[0.04] rotate-6 select-none w-24 h-24 md:w-36 md:h-36'
               aria-hidden='true'
             />
-            {/* Large watermark scissors icon */}
-            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]'>
+            {/* Large watermark scissors icon — parallax drift */}
+            <motion.div
+              style={{ y: galerieWatermarkY }}
+              className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]'>
               <svg
                 className='w-[12rem] h-[12rem] md:w-[25rem] md:h-[25rem] lg:w-[35rem] lg:h-[35rem] xl:w-[45rem] xl:h-[45rem] text-gold'
                 viewBox='0 0 24 24'
@@ -767,9 +1109,12 @@ export default function Home() {
                   fill='none'
                 />
               </svg>
-            </div>
-            {/* Gradient orbs */}
-            <div className='absolute top-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl' />
+            </motion.div>
+            {/* Gradient orbs — parallax */}
+            <motion.div
+              style={{ x: galerieOrb1.x, y: galerieOrb1.y }}
+              className='absolute top-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl'
+            />
             <div className='absolute bottom-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl' />
           </div>
 
@@ -866,11 +1211,11 @@ export default function Home() {
           INTERIOR IMAGE BREAK
       ═══════════════════════════════════════════════════════════════════ */}
         <section className='relative h-[40vh] md:h-[60vh] overflow-hidden'>
+          {/* Background — GSAP parallax replaces CSS bg-fixed */}
           <div
-            className='absolute inset-0 bg-contain md:bg-cover bg-center bg-no-repeat md:bg-fixed'
-            style={{
-              backgroundImage: `url('${BACKGROUNDS.homeInterior.src}')`,
-            }}
+            ref={interiorBgRef}
+            className='absolute inset-0 scale-[1.2] bg-cover bg-center will-change-transform'
+            style={{ backgroundImage: `url('${BACKGROUNDS.homeInterior.src}')` }}
           />
           <div className='absolute inset-0 bg-navy/60' />
           <div className='absolute inset-0 flex items-center justify-center'>
@@ -901,7 +1246,10 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           AVIS SECTION
       ═══════════════════════════════════════════════════════════════════ */}
-        <Section id='avis' className='bg-navy border-t border-gold/10 relative overflow-hidden'>
+        <Section
+          id='avis'
+          ref={avisSectionRef as React.RefObject<HTMLElement>}
+          className='bg-navy border-t border-gold/10 relative overflow-hidden'>
           {/* Decorative background elements */}
           <div className='absolute inset-0 pointer-events-none'>
             {/* Logo stamp - top left */}
@@ -913,12 +1261,17 @@ export default function Home() {
               className='absolute top-4 left-4 md:top-10 md:left-10 opacity-[0.04] -rotate-6 select-none w-24 h-24 md:w-44 md:h-44'
               aria-hidden='true'
             />
-            {/* Large watermark quote */}
-            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12rem] md:text-[25rem] lg:text-[35rem] xl:text-[45rem] font-serif text-gold select-none leading-none opacity-[0.03]'>
+            {/* Large watermark quote — parallax drift */}
+            <motion.div
+              style={{ y: avisWatermarkY }}
+              className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12rem] md:text-[25rem] lg:text-[35rem] xl:text-[45rem] font-serif text-gold select-none leading-none opacity-[0.03]'>
               &ldquo;
-            </div>
-            {/* Gradient orbs */}
-            <div className='absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl' />
+            </motion.div>
+            {/* Gradient orbs — parallax */}
+            <motion.div
+              style={{ x: avisOrb1.x, y: avisOrb1.y }}
+              className='absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl'
+            />
             <div className='absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl' />
           </div>
 
@@ -1148,16 +1501,29 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════════════
           FINAL CTA SECTION
       ═══════════════════════════════════════════════════════════════════ */}
-        <section className='relative min-h-[80vh] flex items-center overflow-hidden border-t border-gold/10'>
+        <section
+          ref={ctaSectionRef}
+          className='relative min-h-[80vh] flex items-center overflow-hidden border-t border-gold/10'>
           <div className='absolute inset-0'>
+            {/* GSAP parallax background */}
             <div
-              className='absolute inset-0 bg-cover bg-center'
+              ref={ctaBgRef}
+              className='absolute inset-0 scale-[1.15] bg-cover bg-center will-change-transform'
               style={{ backgroundImage: `url('${BACKGROUNDS.homeCta.src}')` }}
             />
             <div className='absolute inset-0 bg-gradient-to-b from-navy/65 via-dark/55 to-navy/65' />
             <div className='absolute inset-0 bg-gradient-to-r from-navy/40 via-transparent to-navy/40' />
             <div className='absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:4px_4px]' />
           </div>
+          {/* Parallax floating accent orbs */}
+          <motion.div
+            style={{ y: ctaOrb1Y }}
+            className='absolute top-1/4 left-1/4 w-64 h-64 bg-gold/8 rounded-full blur-[80px] pointer-events-none'
+          />
+          <motion.div
+            style={{ y: ctaOrb2Y }}
+            className='absolute bottom-1/4 right-1/4 w-80 h-80 bg-gold/6 rounded-full blur-[100px] pointer-events-none'
+          />
 
           <Container className='relative z-10 py-20'>
             <div className='max-w-4xl mx-auto'>

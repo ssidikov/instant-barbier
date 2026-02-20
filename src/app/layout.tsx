@@ -3,6 +3,8 @@ import { Playfair_Display, Mulish } from 'next/font/google'
 import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import ScrollToTop from '@/components/ScrollToTop'
+import PageTransition from '@/components/PageTransition'
+import ScrollProgressBar from '@/components/ScrollProgressBar'
 import CookieConsent from '@/components/CookieConsent'
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, CONTACT, SOCIAL } from '@/lib/constants'
 import { Analytics } from '@vercel/analytics/next'
@@ -153,8 +155,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
         />
+        <ScrollProgressBar />
         <Header />
-        {children}
+        <PageTransition>{children}</PageTransition>
         <Analytics />
         <CookieConsent />
       </body>
