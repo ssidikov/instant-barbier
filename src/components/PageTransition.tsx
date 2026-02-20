@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
-import { useRef } from 'react'
+import { useEffect } from 'react'
 
 /**
  * Page transition wrapper.
@@ -14,27 +14,21 @@ import { useRef } from 'react'
  *   long enough to feel intentional.
  * - Reduced-motion → opacity only, no Y movement.
  */
+let isFirstMount = true
+
 export default function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const shouldReduceMotion = useReducedMotion()
 
-  // Track whether this is the initial mount (skip entrance anim on first load)
-  const isFirstMount = useRef(true)
-
-  const getInitial = () => {
-    if (isFirstMount.current) return false // no animation on first load
-    return shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }
-  }
-
-  // Mark first mount as done (runs synchronously before return)
-  const initial = getInitial()
-  if (isFirstMount.current) isFirstMount.current = false
+  useEffect(() => {
+    isFirstMount = false
+  }, [])
 
   return (
     <AnimatePresence mode='wait'>
       <motion.div
         key={pathname}
-        initial={initial}
+        initial={isFirstMount ? false : shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
         transition={{

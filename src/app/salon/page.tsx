@@ -520,10 +520,11 @@ export default function SalonPage() {
                   </div>
 
                   {/* Map - Fills space */}
-                  <div className='relative grow min-h-[300px] z-10 grayscale-50 hover:grayscale-0 transition-all duration-700'>
+                  <div className='relative grow min-h-[300px] md:min-h-[400px] z-10 grayscale-50 hover:grayscale-0 transition-all duration-700'>
                     <GoogleMap
                       address='43 rue de Turenne, 75003 Paris'
                       className='absolute inset-0 w-full h-full'
+                      hideLink={true}
                     />
                     {/* Inner shadows for depth */}
                     <div className='absolute inset-0 pointer-events-none shadow-[inset_0_0_40px_rgba(5,17,20,0.8)]' />

@@ -519,7 +519,7 @@ export default function AboutSection() {
                       startOffset='0%'
                       textLength='264'
                       lengthAdjust='spacing'>
-                      PARIS LE MARAIS • 43 RUE DE TURENNE • PARIS LE MARAIS • 43 RUE DE TURENNE •
+                      L&apos;INSTANT BARBIER • 43 RUE DE TURENNE • PARIS LE MARAIS •
                     </textPath>
                   </text>
                 </svg>

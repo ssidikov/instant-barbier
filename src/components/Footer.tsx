@@ -17,8 +17,8 @@ export default function Footer() {
         {/* Logo Marquee - Moved under Headline */}
         <div className='relative w-screen left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] overflow-hidden py-6 md:py-8 mb-8 md:mb-12'>
           <div className='animate-marquee-rtl flex items-center gap-16 w-max'>
-            {/* Duplicate logos for seamless loop - increased count for wide screens */}
-            {[...Array(3)].map((_, i) => (
+            {/* Duplicate logos for seamless loop - increased count for speed matching */}
+            {[...Array(6)].map((_, i) => (
               <div key={i} className='relative shrink-0'>
                 <Image
                   src='/logo/logo-golden.svg'
@@ -203,7 +203,7 @@ export default function Footer() {
         </div>
 
         {/* Legal Links Column */}
-        <Reveal variant='fade-up' delay={0.6}>
+        <Reveal variant='fade-up' delay={0.6} threshold={0}>
           <div className='flex flex-col items-center gap-4 mb-8 border-t border-cream/10 pt-8'>
             <div className='flex flex-col md:flex-row gap-4 md:gap-8 items-center'>
               <Link

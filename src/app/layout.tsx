@@ -151,7 +151,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel='dns-prefetch' href='https://widget.planity.com' />
       </head>
       <body className='bg-navy text-cream font-body antialiased flex flex-col min-h-screen'>
-        <ScrollToTop />
         <script
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
@@ -165,6 +164,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ScrollProgressBar />
         <Header />
         <SmoothScroll>
+          <ScrollToTop />
           <PageTransition>{children}</PageTransition>
         </SmoothScroll>
         <Analytics />
