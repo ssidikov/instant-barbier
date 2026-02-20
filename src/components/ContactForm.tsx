@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -16,9 +17,9 @@ export default function ContactForm() {
     message: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false)
 
   // Input sanitization helper
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const sanitizeInput = (input: string): string => {
     return input
       .replace(/<script[^>]*>.*?<\/script>/gi, '')
@@ -95,24 +96,38 @@ export default function ContactForm() {
     setIsSubmitting(true)
 
     try {
-      // Sanitize all inputs before submission
-      // TODO: Use sanitizedData when implementing actual form submission (API route or email service)
-      // const sanitizedData = {
-      //   name: sanitizeInput(formData.name),
-      //   phone: sanitizeInput(formData.phone),
-      //   email: sanitizeInput(formData.email),
-      //   message: sanitizeInput(formData.message),
-      // }
+      // Create a sanitized JSON payload
+      const sanitizedData = {
+        name: sanitizeInput(formData.name),
+        phone: sanitizeInput(formData.phone),
+        email: sanitizeInput(formData.email),
+        message: sanitizeInput(formData.message),
+      }
 
-      // Handle form submission
-      // TODO: Implement actual form submission (API route or email service)
+      // Dispatch request to our Nodemailer backend route
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(sanitizedData),
+      })
 
-      // Reset form on success
+      if (!response.ok) {
+        throw new Error('Erreur réseau lors de la requête')
+      }
+
+      // Reset form on true successful dispatch
       setFormData({ name: '', phone: '', email: '', message: '' })
       setFormErrors({ name: '', phone: '', email: '', message: '' })
 
-      // Show success message (you can implement a toast notification here)
-      alert('Message envoyé avec succès !')
+      // Trigger the custom Framer Motion success modal
+      setIsSuccessPopupOpen(true)
+
+      // Auto-hide the popup after 5 seconds to be non-intrusive
+      setTimeout(() => {
+        setIsSuccessPopupOpen(false)
+      }, 5000)
     } catch (error) {
       console.error("Erreur lors de l'envoi:", error)
       alert('Une erreur est survenue. Veuillez réessayer.')
@@ -210,6 +225,60 @@ export default function ContactForm() {
           )}
         </button>
       </div>
+
+      {/* ── Success Popup Modal ── */}
+      <AnimatePresence>
+        {isSuccessPopupOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className='fixed inset-0 z-[100] flex items-center justify-center px-4 bg-navy/80 backdrop-blur-md'
+            onClick={() => setIsSuccessPopupOpen(false)}>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 30 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 30 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className='bg-navy-secondary border border-gold/30 p-8 md:p-12 max-w-lg w-full relative shadow-2xl'
+              onClick={(e) => e.stopPropagation()}>
+              {/* Corner accents */}
+              <div className='absolute top-0 left-0 w-10 h-10 border-t-2 border-l-2 border-gold/40' />
+              <div className='absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-gold/40' />
+
+              <div className='flex flex-col items-center text-center'>
+                {/* Checkmark Icon */}
+                <div className='w-16 h-16 border border-gold/30 flex items-center justify-center text-gold mb-6 rounded-full bg-gold/5'>
+                  <svg
+                    className='w-8 h-8'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                    strokeWidth='1.5'>
+                    <path strokeLinecap='round' strokeLinejoin='round' d='M4.5 12.75l6 6 9-13.5' />
+                  </svg>
+                </div>
+
+                <h4 className='text-3xl font-title text-cream mb-4 tracking-[-1px]'>
+                  Message <span className='text-gold'>Envoyé</span>
+                </h4>
+
+                <p className='text-cream/70 font-light leading-relaxed mb-10'>
+                  Votre demande a bien été envoyée !
+                  <br /> Vous venez de recevoir un e-mail de confirmation.
+                </p>
+
+                <button
+                  type='button'
+                  onClick={() => setIsSuccessPopupOpen(false)}
+                  className='text-xs uppercase tracking-[0.2em] font-semibold text-navy bg-gold hover:bg-white px-10 py-4 transition-colors duration-300'>
+                  Fermer
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </form>
   )
 }
