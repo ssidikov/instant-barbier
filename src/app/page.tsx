@@ -1245,12 +1245,18 @@ export default function Home() {
                       className='text-gold hover:text-gold/80 underline underline-offset-4 transition-colors touch-link'>
                       page prestations
                     </Link>
-                    . Pour toute autre demande ou information, n&apos;hésitez pas à nous appeler ou
-                    nous envoyer un e-mail.
+                    . Pour toute autre demande ou information, n&apos;hésitez pas à nous appeler.
                   </p>
 
-                  <div className='flex items-center gap-4 mt-8'>
-                    <Button href='/contact'>Voir les coordonnées</Button>
+                  <div className='flex flex-wrap items-center gap-4 mt-8'>
+                    <Button href='tel:0145354722'>Nous appeler</Button>
+                    <Link
+                      href='/reservation'
+                      className='group relative inline-flex items-center justify-center px-10 py-5 md:px-6 md:py-4 border border-gold/30 hover:border-gold/60 transition-all duration-500 touch-button'>
+                      <span className='text-gold text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] font-semibold group-hover:text-cream transition-colors duration-300'>
+                        Prendre RDV
+                      </span>
+                    </Link>
                   </div>
                 </Reveal>
               </div>
