@@ -7,7 +7,6 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
-import ContactForm from '@/components/ContactForm'
 import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
 import { motion, useReducedMotion } from 'framer-motion'
@@ -1237,7 +1236,7 @@ export default function Home() {
                 </div>
               </Reveal>
 
-              <div>
+              <div className='flex flex-col justify-center'>
                 <Reveal variant='fade-up' delay={0.3}>
                   <p className='text-cream/70 text-sm md:text-base mb-8 leading-relaxed'>
                     Pour prendre rendez-vous, consultez notre{' '}
@@ -1246,12 +1245,13 @@ export default function Home() {
                       className='text-gold hover:text-gold/80 underline underline-offset-4 transition-colors touch-link'>
                       page prestations
                     </Link>
-                    . Pour toute autre demande ou information, contactez-nous via ce formulaire.
+                    . Pour toute autre demande ou information, n&apos;hésitez pas à nous appeler ou
+                    nous envoyer un e-mail.
                   </p>
-                </Reveal>
 
-                <Reveal variant='fade-up' delay={0.4}>
-                  <ContactForm />
+                  <div className='flex items-center gap-4 mt-8'>
+                    <Button href='/contact'>Voir les coordonnées</Button>
+                  </div>
                 </Reveal>
               </div>
             </div>

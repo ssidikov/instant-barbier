@@ -53,6 +53,7 @@ export const VIDEO = {
   aboutSection: {
     src: "/video/l'instant-barbier-paris.mp4",
     type: 'video/mp4',
+    poster: '/images/salon-instant-barbier.jpg',
   },
   vrSalon: {
     src: '/video/vr-salon.mp4',

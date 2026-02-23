@@ -1,8 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { LOGOS, VIDEO, PRODUCT_GRID, ABOUT_IMAGES } from '@/lib/images'
 import Container from '@/components/Container'
 import Button from '@/components/Button'
@@ -43,19 +42,39 @@ export default function AboutSection() {
   const square2Ref = useRef<HTMLDivElement>(null)
   const orb1Ref = useRef<HTMLDivElement>(null)
   const orb2Ref = useRef<HTMLDivElement>(null)
+  const badgeRingRef = useRef<HTMLDivElement>(null)
+
+  const [isPlaying, setIsPlaying] = useState(false)
 
   // IntersectionObserver for video autoplay
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
     const obs = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => (e.isIntersecting ? video.play().catch(() => {}) : video.pause())),
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting && !video.paused) {
+            video.pause()
+            setIsPlaying(false)
+          }
+        })
+      },
       { threshold: 0.4 },
     )
     obs.observe(video)
     return () => obs.disconnect()
   }, [])
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause()
+      } else {
+        videoRef.current.play()
+      }
+      setIsPlaying(!isPlaying)
+    }
+  }
 
   // GSAP ScrollTrigger animations
   useEffect(() => {
@@ -187,38 +206,20 @@ export default function AboutSection() {
             '-=0.5',
           )
 
-        // ── 4. Video panel — clip-path wipe from top ─────────────────────────
+        // ── 4. Video panel — soft reveal ─────────────────────────
         if (videoWrapRef.current) {
           gsap.fromTo(
             videoWrapRef.current,
-            { clipPath: 'inset(100% 0 0 0)', opacity: 0 },
+            { y: 60, scale: 0.95, opacity: 0 },
             {
-              clipPath: 'inset(0% 0 0 0)',
+              y: 0,
+              scale: 1,
               opacity: 1,
               duration: 1.4,
-              ease: 'power4.out',
+              ease: 'power3.out',
               scrollTrigger: {
                 trigger: videoWrapRef.current,
                 start: 'top 82%',
-                toggleActions: 'play none none none',
-              },
-            },
-          )
-
-          // corner accents draw in
-          const corners = videoWrapRef.current.querySelectorAll<HTMLElement>('.about-corner')
-          gsap.fromTo(
-            corners,
-            { opacity: 0, scale: 0.3 },
-            {
-              opacity: 1,
-              scale: 1,
-              duration: 0.6,
-              stagger: 0.15,
-              ease: easeBack,
-              scrollTrigger: {
-                trigger: videoWrapRef.current,
-                start: 'top 75%',
                 toggleActions: 'play none none none',
               },
             },
@@ -375,6 +376,24 @@ export default function AboutSection() {
             },
           )
         }
+
+        // ── 11. Subtle Badge Rotation on Scroll ────────────────────────────
+        if (badgeRingRef.current) {
+          gsap.fromTo(
+            badgeRingRef.current,
+            { rotate: -4 },
+            {
+              rotate: 8,
+              ease: 'power1.out',
+              scrollTrigger: {
+                trigger: videoWrapRef.current,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1.5,
+              },
+            },
+          )
+        }
       }, sectionRef)
     })()
 
@@ -470,43 +489,63 @@ export default function AboutSection() {
           <div className='relative'>
             <div
               ref={videoWrapRef}
-              className='relative'
-              style={{ clipPath: 'inset(100% 0 0 0)', opacity: 0 }}>
+              className='relative will-change-transform'
+              style={{ opacity: 0 }}>
               <div
-                className='relative aspect-[4/5] w-full overflow-hidden border-2 border-gold/30 shadow-2xl shadow-black/60 group cursor-pointer lg:cursor-default focus:outline-none'
+                className='relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-gold/20 shadow-2xl shadow-black/50 group cursor-pointer focus:outline-none'
                 tabIndex={0}
-                onTouchStart={() => {}}>
+                onClick={togglePlay}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    togglePlay()
+                  }
+                }}>
                 <video
                   ref={videoRef}
                   loop
-                  muted
                   playsInline
-                  className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03] group-focus-within:scale-[1.03]'>
+                  poster={VIDEO.aboutSection.poster}
+                  className={`absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ${isPlaying ? 'scale-[1.03]' : 'scale-100 group-hover:scale-[1.03] group-focus-within:scale-[1.03]'}`}>
                   <source src={VIDEO.aboutSection.src} type={VIDEO.aboutSection.type} />
                 </video>
-                <div className='absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/10 to-transparent' />
+
+                {/* Dark filter overlay (fades out when playing) */}
+                <div
+                  className={`absolute inset-0 bg-navy/40 transition-opacity duration-700 pointer-events-none ${isPlaying ? 'opacity-0' : 'opacity-100'}`}
+                />
+                <div className='absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent pointer-events-none' />
+
+                {/* Play Button Overlay */}
+                <div
+                  className={`absolute inset-0 flex items-center justify-center transition-all duration-700 pointer-events-none ${isPlaying ? 'opacity-0 scale-110' : 'opacity-100 scale-100'}`}>
+                  <div className='w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-gold/40 bg-navy/60 backdrop-blur-sm flex items-center justify-center group-hover:bg-gold/20 group-hover:border-gold/80 transition-all duration-500 shadow-xl shadow-black/50 group-hover:shadow-gold/20 group-hover:scale-110'>
+                    <svg
+                      className='w-6 h-6 md:w-8 md:h-8 text-gold translate-x-[2px]'
+                      fill='currentColor'
+                      viewBox='0 0 24 24'>
+                      <path d='M8 5v14l11-7z' />
+                    </svg>
+                  </div>
+                </div>
 
                 {/* Hover gold shimmer overlay */}
                 <div
-                  className='absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-500'
+                  className={`absolute inset-0 transition-opacity duration-500 pointer-events-none ${isPlaying ? 'opacity-0' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'}`}
                   style={{
                     background:
                       'linear-gradient(135deg, rgba(175,151,120,0.06) 0%, transparent 60%)',
                   }}
                 />
               </div>
-
-              {/* Corner accents drawn in by GSAP */}
-              <div className='about-corner absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-gold/50 opacity-0' />
-              <div className='about-corner absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-gold/50 opacity-0' />
-              <div className='about-corner absolute -top-3 -right-3 w-6 h-6 border-t border-r border-gold/25 opacity-0' />
-              <div className='about-corner absolute -bottom-3 -left-3 w-6 h-6 border-b border-l border-gold/25 opacity-0' />
             </div>
 
             {/* Experience badge — floats over video bottom-right */}
             <div className='flex absolute -bottom-6 -right-6 md:-bottom-8 md:-right-8 z-10 items-center justify-center w-32 h-32 md:w-36 md:h-36 lg:w-40 lg:h-40'>
               {/* Rotating text ring */}
-              <div className='absolute inset-0 animate-[spin_20s_linear_infinite] pointer-events-none'>
+              <div
+                ref={badgeRingRef}
+                className='absolute inset-0 pointer-events-none will-change-transform'>
                 <svg viewBox='0 0 100 100' className='w-full h-full overflow-visible'>
                   <path
                     id='badgeTextPath'
@@ -526,7 +565,7 @@ export default function AboutSection() {
               </div>
 
               {/* Center static badge (Logo) */}
-              <div className='flex items-center justify-center w-[72px] h-[72px] relative z-10 animate-[spin_25s_linear_infinite_reverse]'>
+              <div className='flex items-center justify-center w-[72px] h-[72px] relative z-10'>
                 <Image
                   src={LOGOS.linstant.src}
                   alt='L instant Barbier'

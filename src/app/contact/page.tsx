@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import { PLANITY_URL, SITE_URL } from '@/lib/constants'
-import ContactForm from '@/components/ContactForm'
 import Reveal from '@/components/Reveal'
 import { BACKGROUNDS, LOGOS } from '@/lib/images'
 import GoogleMap from '@/components/GoogleMap'
@@ -466,28 +465,6 @@ export default function ContactPage() {
                 </Reveal>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* ═══════════════════════════════════════════════════════════════════
-            CONTACT FORM SECTION
-            ═══════════════════════════════════════════════════════════════════ */}
-        <section className='py-16 md:py-24 lg:py-32 bg-dark relative'>
-          <div className='max-w-3xl mx-auto px-5 md:px-12 relative z-10'>
-            <div className='mb-16 text-center'>
-              <Reveal variant='fade-up'>
-                <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
-                  Une question ?
-                </span>
-                <h2 className='text-3xl md:text-5xl font-title text-cream leading-[0.8] tracking-[-2px]'>
-                  Envoyez-nous un <span className='text-gold'>message</span>
-                </h2>
-              </Reveal>
-            </div>
-
-            <Reveal variant='fade-up' delay={0.2}>
-              <ContactForm />
-            </Reveal>
           </div>
         </section>
 
