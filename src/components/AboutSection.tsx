@@ -381,15 +381,15 @@ export default function AboutSection() {
         if (badgeRingRef.current) {
           gsap.fromTo(
             badgeRingRef.current,
-            { rotate: -4 },
+            { rotate: -20 },
             {
-              rotate: 8,
-              ease: 'power1.out',
+              rotate: 70,
+              ease: 'none',
               scrollTrigger: {
                 trigger: videoWrapRef.current,
                 start: 'top bottom',
                 end: 'bottom top',
-                scrub: 1.5,
+                scrub: 0.8,
               },
             },
           )
