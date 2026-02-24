@@ -480,19 +480,83 @@ export default function AboutSection() {
             }}
           />
         </div>
+
+        {/* ── Centered text content ────────────────────────────────────────── */}
+        <div className='text-center max-w-3xl mx-auto mb-16 md:mb-20'>
+          {/* Headline */}
+          <div className='about-headline mb-6'>
+            <h2 className='flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1 mb-2'>
+              {/* "23" large counter — GSAP number ticker */}
+              <span
+                ref={counterRef}
+                className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold font-light leading-[0.82] tracking-[-2px] opacity-0'
+                aria-label='23'>
+                0
+              </span>
+              <SplitWords
+                text='ans'
+                className='text-xl md:text-2xl lg:text-3xl xl:text-4xl font-title text-gold/75 uppercase tracking-[1px]'
+              />
+            </h2>
+
+            <SplitWords
+              text='au service du style masculin'
+              className='text-2xl md:text-3xl lg:text-4xl font-title text-cream/55 leading-[0.9] tracking-tight'
+            />
+          </div>
+
+          {/* Separator line — scaleX draw */}
+          <div
+            ref={separatorRef}
+            className='w-24 h-px mx-auto mb-8 origin-center'
+            style={{
+              background:
+                'linear-gradient(to right, transparent, #AF9778 30%, #AF9778 70%, transparent)',
+            }}
+          />
+
+          {/* Description paragraphs */}
+          <div className='space-y-4 mb-8'>
+            <p className='about-para text-cream/90 text-lg lg:text-xl leading-[1.75] tracking-wide font-light opacity-0'>
+              Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
+              <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
+              comme les tendances contemporaines dans notre salon du Marais.
+            </p>
+            <p className='about-para text-cream/65 text-base leading-[1.75] tracking-wide opacity-0'>
+              Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
+            </p>
+          </div>
+
+          {/* Feature tags */}
+          <div className='about-para flex flex-wrap justify-center gap-3 opacity-0'>
+            {[
+              'Dégradés maîtrisés',
+              'Rasage serviette chaude',
+              'Produits premium',
+              'Tailleur de barbe',
+            ].map((tag) => (
+              <span
+                key={tag}
+                className='text-[0.65rem] uppercase tracking-[0.2em] text-gold/70 border border-gold/20 px-3 py-1.5 rounded-full backdrop-blur-sm'
+                style={{ background: 'rgba(175,151,120,0.04)' }}>
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
       </Container>
 
-      {/* ── Main two-column grid ──────────────────────────────────────────── */}
+      {/* ── Visual grid: video + benefit cards side-by-side ─────────────── */}
       <div className='max-w-7xl mx-auto px-4 md:px-6 lg:px-12'>
-        <div className='grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center'>
+        <div className='grid lg:grid-cols-[3fr_2fr] gap-6 md:gap-8 items-stretch'>
           {/* Left — Video panel */}
           <div className='relative'>
             <div
               ref={videoWrapRef}
-              className='relative will-change-transform'
+              className='relative will-change-transform h-full'
               style={{ opacity: 0 }}>
               <div
-                className='relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-gold/20 shadow-2xl shadow-black/50 group cursor-pointer focus:outline-none'
+                className='relative aspect-[4/5] lg:aspect-auto lg:h-full w-full overflow-hidden border border-gold/20 shadow-2xl shadow-black/50 group cursor-pointer focus:outline-none'
                 tabIndex={0}
                 onClick={togglePlay}
                 onKeyDown={(e) => {
@@ -540,8 +604,12 @@ export default function AboutSection() {
               </div>
             </div>
 
+            {/* Corner accents — outside overflow container */}
+            <div className='absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-gold/35 z-20 pointer-events-none' />
+            <div className='absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-gold/35 z-20 pointer-events-none' />
+
             {/* Experience badge — floats over video bottom-right */}
-            <div className='flex absolute -bottom-6 -right-6 md:-bottom-8 md:-right-8 z-10 items-center justify-center w-32 h-32 md:w-36 md:h-36 lg:w-40 lg:h-40'>
+            <div className='flex absolute -bottom-6 -left-6 md:-bottom-8 md:-left-8 z-10 items-center justify-center w-32 h-32 md:w-36 md:h-36 lg:w-40 lg:h-40'>
               {/* Rotating text ring */}
               <div
                 ref={badgeRingRef}
@@ -577,149 +645,86 @@ export default function AboutSection() {
             </div>
           </div>
 
-          {/* Right — Content */}
-          <div className='space-y-8 lg:space-y-10'>
-            {/* Headline */}
-            <div className='about-headline'>
-              <h2 className='flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2'>
-                {/* "23" large counter — GSAP number ticker */}
-                <span
-                  ref={counterRef}
-                  className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold font-light leading-[0.82] tracking-[-2px] opacity-0'
-                  aria-label='23'>
-                  0
-                </span>
-                <SplitWords
-                  text='ans'
-                  className='text-xl md:text-2xl lg:text-3xl xl:text-4xl font-title text-gold/75 uppercase tracking-[1px]'
-                />
-              </h2>
+          {/* Right — Stacked benefit cards */}
+          <div className='flex flex-col gap-6'>
+            {[
+              {
+                ref: benefitCard1Ref,
+                title: 'Savoir-faire artisanal',
+                desc: 'Formés aux meilleures écoles, nous perpétuons les gestes authentiques du métier avec passion et rigueur.',
+                image: ABOUT_IMAGES.savoirFaire.src,
+                badge: '01',
+              },
+              {
+                ref: benefitCard2Ref,
+                title: 'Produits premium',
+                desc: 'Huiles essentielles, baumes naturels et cosmétiques haut de gamme pour un résultat impeccable.',
+                image: PRODUCT_GRID[3].src,
+                badge: '02',
+              },
+            ].map((item) => (
+              <div
+                key={item.badge}
+                ref={item.ref}
+                className='group relative flex-1 min-h-[280px] md:min-h-[320px] w-full overflow-visible opacity-0 cursor-pointer lg:cursor-default focus:outline-none'
+                tabIndex={0}
+                onTouchStart={() => {}}>
+                {/* Main card border + shadow + clip content */}
+                <div className='absolute inset-0 overflow-hidden'>
+                  {/* Parallax image */}
+                  <div className='about-card-img absolute inset-[-12%] overflow-hidden'>
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className='object-cover transition-transform duration-1000 group-hover:scale-[1.05] group-focus-within:scale-[1.05]'
+                      sizes='(max-width: 1024px) 100vw, 40vw'
+                    />
+                  </div>
 
-              <SplitWords
-                text='au service du style masculin'
-                className='text-2xl md:text-3xl lg:text-4xl font-title text-cream/55 leading-[0.9] tracking-tight'
-              />
-            </div>
+                  {/* Gradient overlay */}
+                  <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/45 to-transparent z-[1]' />
+                  {/* Hover gold side glow */}
+                  <div
+                    className='absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-700 z-[2]'
+                    style={{
+                      background:
+                        'linear-gradient(to right, rgba(175,151,120,0.07) 0%, transparent 40%)',
+                    }}
+                  />
 
-            {/* Separator line — scaleX draw */}
-            <div
-              ref={separatorRef}
-              className='w-24 h-px origin-left'
-              style={{
-                background:
-                  'linear-gradient(to right, #AF9778 0%, rgba(175,151,120,0.3) 60%, transparent 100%)',
-              }}
-            />
+                  {/* Number badge */}
+                  <div
+                    className='absolute top-5 right-5 z-20 text-xs font-title text-gold/80 tracking-widest border border-gold/20 group-hover:border-gold/50 group-focus-within:border-gold/50 px-3 py-1 rounded-full backdrop-blur-sm transition-colors duration-500'
+                    style={{ background: 'rgba(7,24,30,0.6)' }}>
+                    {item.badge}
+                  </div>
 
-            {/* Description paragraphs */}
-            <div className='space-y-4'>
-              <p className='about-para text-cream/90 text-lg lg:text-xl leading-[1.75] tracking-wide font-light opacity-0'>
-                Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
-                <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
-                comme les tendances contemporaines dans notre salon du Marais.
-              </p>
-              <p className='about-para text-cream/65 text-base leading-[1.75] tracking-wide opacity-0'>
-                Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
-              </p>
-            </div>
+                  {/* Card border overlay */}
+                  <div className='absolute inset-0 border border-gold/20 group-hover:border-gold/45 group-focus-within:border-gold/45 transition-colors duration-700 z-10 pointer-events-none' />
 
-            {/* Feature tags */}
-            <div className='about-para flex flex-wrap gap-3 opacity-0'>
-              {[
-                'Dégradés maîtrisés',
-                'Rasage serviette chaude',
-                'Produits premium',
-                'Tailleur de barbe',
-              ].map((tag) => (
-                <span
-                  key={tag}
-                  className='text-[0.65rem] uppercase tracking-[0.2em] text-gold/70 border border-gold/20 px-3 py-1.5 rounded-full backdrop-blur-sm'
-                  style={{ background: 'rgba(175,151,120,0.04)' }}>
-                  {tag}
-                </span>
-              ))}
-            </div>
+                  {/* Text content */}
+                  <div className='absolute bottom-0 left-0 right-0 p-6 md:p-8 z-20'>
+                    {/* Animated gold rule above title */}
+                    <div
+                      className='w-0 h-px mb-3 group-hover:w-12 group-focus-within:w-12 transition-all duration-500 origin-left'
+                      style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
+                    />
+                    <h4 className='text-2xl md:text-3xl font-title text-gold mb-2 tracking-[-1px] transition-transform duration-500 group-hover:-translate-y-1 group-focus-within:-translate-y-1'>
+                      {item.title}
+                    </h4>
+                    <p className='text-cream/85 text-sm font-light leading-relaxed max-w-sm'>
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Corner accents — outside overflow container */}
+                <div className='absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20 pointer-events-none' />
+                <div className='absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20 pointer-events-none' />
+              </div>
+            ))}
           </div>
-        </div>
-
-        {/* ── Benefit Cards ───────────────────────────────────────────────── */}
-        <div className='mt-24 md:mt-36 grid md:grid-cols-2 gap-8 md:gap-10'>
-          {[
-            {
-              ref: benefitCard1Ref,
-              title: 'Savoir-faire artisanal',
-              desc: 'Formés aux meilleures écoles, nous perpétuons les gestes authentiques du métier avec passion et rigueur.',
-              image: ABOUT_IMAGES.savoirFaire.src,
-              badge: '01',
-            },
-            {
-              ref: benefitCard2Ref,
-              title: 'Produits premium',
-              desc: 'Huiles essentielles, baumes naturels et cosmétiques haut de gamme pour un résultat impeccable.',
-              image: PRODUCT_GRID[3].src,
-              badge: '02',
-            },
-          ].map((item) => (
-            <div
-              key={item.badge}
-              ref={item.ref}
-              className='group relative h-[400px] md:h-[520px] w-full overflow-hidden opacity-0 cursor-pointer lg:cursor-default focus:outline-none'
-              tabIndex={0}
-              onTouchStart={() => {}}>
-              {/* Main card border + shadow */}
-              <div className='absolute inset-0 border border-gold/20 group-hover:border-gold/45 group-focus-within:border-gold/45 transition-colors duration-700 z-10 pointer-events-none' />
-
-              {/* Parallax image */}
-              <div className='about-card-img absolute inset-[-12%] overflow-hidden'>
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className='object-cover transition-transform duration-1000 group-hover:scale-[1.05] group-focus-within:scale-[1.05]'
-                  sizes='(max-width: 1280px) 100vw, 640px'
-                />
-              </div>
-
-              {/* Gradient overlay */}
-              <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/45 to-transparent z-[1]' />
-              {/* Hover gold side glow */}
-              <div
-                className='absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-700 z-[2]'
-                style={{
-                  background:
-                    'linear-gradient(to right, rgba(175,151,120,0.07) 0%, transparent 40%)',
-                }}
-              />
-
-              {/* Number badge */}
-              <div
-                className='absolute top-6 right-6 z-20 text-xs font-title text-gold/80 tracking-widest border border-gold/20 group-hover:border-gold/50 group-focus-within:border-gold/50 px-3 py-1 rounded-full backdrop-blur-sm transition-colors duration-500'
-                style={{ background: 'rgba(7,24,30,0.6)' }}>
-                {item.badge}
-              </div>
-
-              {/* Top corner accent */}
-              <div className='absolute top-0 left-0 w-10 h-10 border-t-2 border-l-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20' />
-
-              {/* Text content */}
-              <div className='absolute bottom-0 left-0 right-0 p-8 md:p-10 z-20'>
-                {/* Animated gold rule above title */}
-                <div
-                  className='w-0 h-px mb-4 group-hover:w-12 group-focus-within:w-12 transition-all duration-500 origin-left'
-                  style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
-                />
-                <h4 className='text-3xl md:text-4xl font-title text-gold mb-3 tracking-[-1px] transition-transform duration-500 group-hover:-translate-y-1 group-focus-within:-translate-y-1'>
-                  {item.title}
-                </h4>
-                <p className='text-cream/85 text-sm md:text-base font-light leading-relaxed max-w-sm'>
-                  {item.desc}
-                </p>
-              </div>
-
-              {/* Bottom-right corner accent */}
-              <div className='absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20' />
-            </div>
-          ))}
         </div>
 
         {/* ── CTA ─────────────────────────────────────────────────────────── */}
