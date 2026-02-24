@@ -434,6 +434,14 @@ export default function AboutSection() {
           }}
         />
 
+        {/* Pulsing center orb */}
+        <div
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full animate-[aboutOrbPulse_8s_ease-in-out_infinite]'
+          style={{
+            background: 'radial-gradient(circle, rgba(175,151,120,0.04) 0%, transparent 50%)',
+          }}
+        />
+
         {/* Decorative rotating squares */}
         <div
           ref={square1Ref}
@@ -442,6 +450,59 @@ export default function AboutSection() {
         <div
           ref={square2Ref}
           className='absolute bottom-[15%] left-[8%] w-56 h-56 border border-gold/15 opacity-0'
+        />
+
+        {/* Subtle dot grid pattern */}
+        <div
+          className='absolute inset-0 opacity-[0.03]'
+          style={{
+            backgroundImage: 'radial-gradient(circle, #AF9778 1px, transparent 1px)',
+            backgroundSize: '48px 48px',
+            maskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, black, transparent)',
+            WebkitMaskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, black, transparent)',
+          }}
+        />
+
+        {/* Floating gold particles */}
+        <div className='hidden md:block'>
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className='absolute w-[2px] h-[2px] rounded-full bg-gold/60'
+              style={{
+                left: `${12 + ((i * 13) % 76)}%`,
+                top: `${10 + ((i * 17) % 80)}%`,
+                animation: `aboutParticleFloat ${6 + i * 1.2}s ease-in-out ${i * 0.8}s infinite`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Diagonal shimmer sweep */}
+        <div
+          className='absolute inset-0 hidden md:block'
+          style={{
+            background:
+              'linear-gradient(135deg, transparent 40%, rgba(175,151,120,0.03) 50%, transparent 60%)',
+            backgroundSize: '200% 200%',
+            animation: 'aboutShimmerSweep 12s ease-in-out infinite',
+          }}
+        />
+
+        {/* Horizontal gold line accents */}
+        <div
+          className='absolute top-[25%] left-0 right-0 h-px opacity-[0.06]'
+          style={{
+            background:
+              'linear-gradient(to right, transparent, #AF9778 30%, #AF9778 70%, transparent)',
+          }}
+        />
+        <div
+          className='absolute bottom-[20%] left-0 right-0 h-px opacity-[0.04]'
+          style={{
+            background:
+              'linear-gradient(to right, transparent, #AF9778 20%, #AF9778 80%, transparent)',
+          }}
         />
 
         {/* Logo watermark */}
@@ -453,7 +514,55 @@ export default function AboutSection() {
           className='absolute bottom-16 left-8 opacity-[0.025] -rotate-12 select-none w-40 h-40 md:w-64 md:h-64 pointer-events-none'
           aria-hidden='true'
         />
+
+        {/* Large watermark ampersand */}
+        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20rem] md:text-[30rem] lg:text-[40rem] font-title text-gold select-none leading-none opacity-[0.015] pointer-events-none'>
+          &
+        </div>
       </div>
+
+      {/* CSS keyframes for background animations */}
+      <style jsx>{`
+        @keyframes aboutParticleFloat {
+          0%,
+          100% {
+            transform: translateY(0) scale(0);
+            opacity: 0;
+          }
+          15% {
+            opacity: 0.7;
+            transform: translateY(-10px) scale(1.5);
+          }
+          85% {
+            opacity: 0.5;
+            transform: translateY(-60px) scale(1);
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-80px) scale(0);
+          }
+        }
+        @keyframes aboutShimmerSweep {
+          0%,
+          100% {
+            background-position: 200% 200%;
+          }
+          50% {
+            background-position: -100% -100%;
+          }
+        }
+        @keyframes aboutOrbPulse {
+          0%,
+          100% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.6;
+          }
+          50% {
+            transform: translate(-50%, -50%) scale(1.15);
+            opacity: 1;
+          }
+        }
+      `}</style>
 
       <Container className='relative z-10'>
         {/* ── Section label ──────────────────────────────────────────────── */}
