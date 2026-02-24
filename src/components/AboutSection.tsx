@@ -1087,7 +1087,7 @@ export default function AboutSection() {
             <div
               key={item.badge}
               ref={item.ref}
-              className='group relative min-h-[280px] md:min-h-[320px] w-full overflow-visible opacity-0 cursor-pointer lg:cursor-default focus:outline-none'
+              className='group relative min-h-[280px] md:min-h-[400px] lg:min-h-[450px] w-full overflow-visible opacity-0 cursor-pointer lg:cursor-default focus:outline-none'
               tabIndex={0}
               onTouchStart={() => {}}>
               {/* Main card border + shadow + clip content */}
