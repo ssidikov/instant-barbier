@@ -162,17 +162,6 @@ export default function AboutSection() {
           ))}
         </div>
 
-        {/* Diagonal shimmer sweep */}
-        <div
-          className='absolute inset-0 hidden md:block'
-          style={{
-            background:
-              'linear-gradient(135deg, transparent 40%, rgba(175,151,120,0.03) 50%, transparent 60%)',
-            backgroundSize: '200% 200%',
-            animation: 'aboutShimmerSweep 12s ease-in-out infinite',
-          }}
-        />
-
         {/* Horizontal gold line accents */}
         <div
           className='absolute top-[25%] left-0 right-0 h-px opacity-[0.06]'
@@ -226,15 +215,7 @@ export default function AboutSection() {
             transform: translateY(-80px) scale(0);
           }
         }
-        @keyframes aboutShimmerSweep {
-          0%,
-          100% {
-            background-position: 200% 200%;
-          }
-          50% {
-            background-position: -100% -100%;
-          }
-        }
+
         @keyframes aboutOrbPulse {
           0%,
           100% {
@@ -347,20 +328,20 @@ export default function AboutSection() {
           Scrolling = entering the salon
       ═══════════════════════════════════════════════════════════════════════ */}
       <div ref={cinematicPinRef} className='relative w-full'>
-        {/* ── Background Floating Typography (Creative Mask) ── */}
-        <div className='absolute inset-0 pointer-events-none flex flex-col justify-center overflow-hidden z-0 select-none'>
-          <div className='translate-y-[-10vh] md:translate-y-[-15vh] whitespace-nowrap opacity-[0.03] md:opacity-[0.04]'>
-            <span className='font-title text-[15vw] md:text-[8vw] lg:text-[10vw] uppercase tracking-tighter text-gold inline-block animate-[marquee-horizontal-left_40s_linear_infinite]'>
-              MAÎTRISE • MAÎTRISE • MAÎTRISE • MAÎTRISE • MAÎTRISE •
-            </span>
-          </div>
-          <div className='translate-y-[10vh] md:translate-y-[15vh] whitespace-nowrap opacity-[0.03] md:opacity-[0.04]'>
-            <span
-              className='font-title text-[15vw] md:text-[8vw] lg:text-[10vw] uppercase tracking-tighter text-transparent block animate-[marquee-horizontal-right_40s_linear_infinite]'
-              style={{ WebkitTextStroke: '1px #AF9778' }}>
-              ABSOLUE • ABSOLUE • ABSOLUE • ABSOLUE • ABSOLUE •
-            </span>
-          </div>
+        {/* ── Background Rotating Logo (Client Request) ── */}
+        <div className='absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0'>
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
+            className='w-[80vw] h-[80vw] md:w-[60vw] md:h-[60vw] max-w-[1000px] max-h-[1000px] opacity-[0.03] md:opacity-[0.05]'>
+            <Image
+              src={LOGOS.linstant.src}
+              alt=''
+              fill
+              className='object-contain'
+              aria-hidden='true'
+            />
+          </motion.div>
         </div>
 
         {/* Video viewport — centered portrait frame on desktop/tablet, full-width on mobile */}
@@ -405,42 +386,21 @@ export default function AboutSection() {
               }}
             />
 
-            {/* ── NEW: Decorative 'X' and Typography ── */}
+            {/* ── Text Overlay ── */}
             <div className='absolute inset-0 z-40 flex flex-col items-center justify-end pb-32 md:pb-48 pointer-events-none'>
-              {/* Box wrapper to constrain the X and Text */}
-              <div className='relative flex items-center justify-center w-full h-[250px] sm:h-[300px] md:h-[350px]'>
-                {/* The 'X' lines */}
-                <div className='absolute inset-0 flex items-center justify-center opacity-80 overflow-hidden'>
-                  <div
-                    className='absolute w-[150%] h-[2px] bg-gold/50 origin-center'
-                    style={{ transform: 'rotate(25deg)' }}
-                  />
-                  <div
-                    className='absolute w-[150%] h-[2px] bg-gold/50 origin-center'
-                    style={{ transform: 'rotate(-25deg)' }}
-                  />
-                </div>
+              {/* Box wrapper to constrain the Text */}
+              <div className='relative flex flex-col items-center w-full'>
+                <Reveal variant='fade-up' delay={0.3}>
+                  <span className='font-serif italic text-gold/90 text-3xl sm:text-4xl md:text-5xl lg:text-5xl tracking-wide opacity-90 mix-blend-overlay drop-shadow-md whitespace-nowrap mb-2'>
+                    L&apos;Art du
+                  </span>
+                </Reveal>
 
-                {/* Typography positioned into the Top & Bottom V's of the X */}
-                <div className='absolute inset-0 flex flex-col items-center justify-center pointer-events-none'>
-                  {/* Top Text */}
-                  <div className='absolute top-0 sm:top-2 md:top-4 z-10'>
-                    <Reveal variant='fade-up' delay={0.3}>
-                      <span className='font-serif italic text-gold/90 text-3xl sm:text-4xl md:text-5xl lg:text-5xl tracking-wide opacity-90 mix-blend-overlay drop-shadow-md whitespace-nowrap'>
-                        L&apos;Art du
-                      </span>
-                    </Reveal>
-                  </div>
-
-                  {/* Bottom Text */}
-                  <div className='absolute bottom-0 sm:bottom-2 md:bottom-4 z-10'>
-                    <Reveal variant='scale-up' delay={0.5}>
-                      <span className='font-title text-cream/95 text-[12vw] sm:text-6xl md:text-7xl lg:text-[6rem] uppercase font-light tracking-[-0.05em] mix-blend-overlay drop-shadow-2xl leading-none'>
-                        Détail
-                      </span>
-                    </Reveal>
-                  </div>
-                </div>
+                <Reveal variant='fade-up' delay={0.5}>
+                  <span className='font-serif italic text-gold/90 text-3xl sm:text-4xl md:text-5xl lg:text-5xl tracking-wide opacity-90 mix-blend-overlay drop-shadow-md whitespace-nowrap'>
+                    Détail
+                  </span>
+                </Reveal>
               </div>
             </div>
 
@@ -535,7 +495,7 @@ export default function AboutSection() {
         <Reveal
           variant='scale-up'
           delay={0.6}
-          className='flex absolute bottom-[10%] right-[5%] md:bottom-[5%] md:left-[calc(50%-280px)] lg:left-[calc(50%-340px)] z-30 items-center justify-center w-28 h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 pointer-events-none'>
+          className='flex absolute bottom-[-5%] -left-12 md:left-[calc(50%-280px)] lg:left-[calc(50%-340px)] z-30 items-center justify-center w-40 h-40 pointer-events-none'>
           {/* Rotating text ring tied to scroll */}
           <motion.div className='absolute inset-0' style={{ rotate: badgeRotate }}>
             <svg viewBox='0 0 100 100' className='w-full h-full overflow-visible'>

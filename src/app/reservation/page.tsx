@@ -208,8 +208,7 @@ function ReservationContent() {
         .planity_ui_item-list-element > *,
         .planity_ui_item-list-element div,
         .planity_ui_item-list-element span,
-        .planity_ui_item-list-element p,
-        * {
+        .planity_ui_item-list-element p {
           border: none !important;
           border-top: none !important;
           // border-bottom: none !important;
@@ -612,6 +611,16 @@ function ReservationContent() {
           justify-content: center !important;
         }
 
+        /* ── Save card radio buttons (base) ── */
+        #planity-widget-container span[id*='radio-save-card'] {
+          background-color: transparent !important;
+          border: 2px solid #af9778 !important;
+          border-radius: 50% !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+        }
+
         /* ── Radio span when selected (golden fill) ── */
         #planity-widget-container
           label[aria-checked='true']
@@ -644,6 +653,22 @@ function ReservationContent() {
             0 0 0 4px #af9778 !important;
         }
 
+        /* ── Save card radio buttons selected state ── */
+        #planity-widget-container input:checked + span[id*='radio-save-card'],
+        #planity-widget-container input:checked ~ span[id*='radio-save-card'],
+        #planity-widget-container input[checked] + span[id*='radio-save-card'],
+        #planity-widget-container input[checked] ~ span[id*='radio-save-card'],
+        #planity-widget-container label:has(input:checked) span[id*='radio-save-card'],
+        #planity-widget-container label[aria-checked='true'] span[id*='radio-save-card'],
+        #planity-widget-container span[id*='radio-save-card'][aria-checked='true'] {
+          background-color: #af9778 !important;
+          background: #af9778 !important;
+          border-color: #af9778 !important;
+          box-shadow:
+            0 0 0 2px #07181e,
+            0 0 0 4px #af9778 !important;
+        }
+
         /* ── Inner span (dot) when selected ── */
         #planity-widget-container
           label[aria-checked='true']
@@ -665,6 +690,31 @@ function ReservationContent() {
           width: 12px !important;
           height: 12px !important;
           border-radius: 50% !important;
+          background: #07181e !important;
+        }
+
+        /* ── Inner span (dot) for save card ── */
+        #planity-widget-container input:checked + span[id*='radio-save-card'] svg,
+        #planity-widget-container input:checked ~ span[id*='radio-save-card'] svg,
+        #planity-widget-container label:has(input:checked) span[id*='radio-save-card'] svg,
+        #planity-widget-container span[id*='radio-save-card'][aria-checked='true'] svg {
+          color: #07181e !important;
+          stroke: #07181e !important;
+          display: block !important;
+        }
+
+        /* ── Planity custom radio ::after dot (for save card specifically) ── */
+        #planity-widget-container input:checked + span[id*='radio-save-card']::after,
+        #planity-widget-container input:checked ~ span[id*='radio-save-card']::after,
+        #planity-widget-container input[checked] + span[id*='radio-save-card']::after,
+        #planity-widget-container input[checked] ~ span[id*='radio-save-card']::after,
+        #planity-widget-container label:has(input:checked) span[id*='radio-save-card']::after,
+        #planity-widget-container label[aria-checked='true'] span[id*='radio-save-card']::after,
+        #planity-widget-container span[id*='radio-save-card'][aria-checked='true']::after,
+        #planity-widget-container span.radio_picture-module_input-zcCJH[aria-checked='true']::after,
+        #planity-widget-container
+          span[class*='radio_picture-module_input'][aria-checked='true']::after {
+          background-color: #07181e !important;
           background: #07181e !important;
         }
 
@@ -1285,11 +1335,12 @@ function ReservationContent() {
         input[name='cgu_acceptance'] {
           appearance: none !important;
           -webkit-appearance: none !important;
-          width: 0 !important;
-          height: 0 !important;
           opacity: 0 !important;
           position: absolute !important;
-          pointer-events: none !important;
+          width: 20px !important;
+          height: 20px !important;
+          cursor: pointer !important;
+          z-index: 10 !important;
         }
 
         /* ── Checkbox span (custom styled) ── */
@@ -2071,6 +2122,12 @@ function ReservationContent() {
         #planity-widget-container [class*='gift_voucher_choice-module'][class*='active'] {
           background-color: rgba(175, 151, 120, 0.08) !important;
           box-shadow: 0 0 20px rgba(175, 151, 120, 0.2) !important;
+        }
+
+        /* ── Phone verification form title ── */
+        span[class*='phone_verification_form-module_title'],
+        [class*='phone_verification_form-module_title'] {
+          color: #af9778 !important;
         }
       `}</style>
 
