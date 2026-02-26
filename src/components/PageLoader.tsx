@@ -12,11 +12,12 @@ export default function PageLoader() {
 
   // ── Initial page load ─────────────────────────────────────────────────
   useEffect(() => {
-    const fadeTimer = setTimeout(() => setPhase('fading'), 600)
+    // Dramatically reduced timings for near-instant load
+    const fadeTimer = setTimeout(() => setPhase('fading'), 50)
     const hideTimer = setTimeout(() => {
       setPhase('hidden')
       isFirstLoad.current = false
-    }, 1200)
+    }, 300)
     return () => {
       clearTimeout(fadeTimer)
       clearTimeout(hideTimer)
@@ -33,8 +34,9 @@ export default function PageLoader() {
   useEffect(() => {
     if (isFirstLoad.current) return
 
-    const fadeTimer = setTimeout(() => setPhase('fading'), 400)
-    const hideTimer = setTimeout(() => setPhase('hidden'), 900)
+    // Faster route transitions
+    const fadeTimer = setTimeout(() => setPhase('fading'), 50)
+    const hideTimer = setTimeout(() => setPhase('hidden'), 350)
 
     return () => {
       clearTimeout(fadeTimer)
@@ -46,7 +48,7 @@ export default function PageLoader() {
 
   return (
     <div
-      className={`fixed inset-0 z-9999 flex items-center justify-center bg-navy transition-opacity duration-500 ${
+      className={`fixed inset-0 z-9999 flex items-center justify-center bg-navy transition-opacity duration-200 ${
         phase === 'fading' ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}>
       {/* Ambient glow */}

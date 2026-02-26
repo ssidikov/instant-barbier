@@ -13,8 +13,8 @@ function SplitWords({ text, className }: { text: string; className?: string }) {
   return (
     <span className={className} aria-label={text}>
       {text.split(' ').map((word, i) => (
-        <span key={i} className='about-word inline-block overflow-hidden mr-[0.3em]'>
-          <span className='about-word-inner inline-block translate-y-full opacity-0'>{word}</span>
+        <span key={i} className='about-word inline-block mr-[0.3em]'>
+          <span className='about-word-inner inline-block relative'>{word}</span>
         </span>
       ))}
     </span>
@@ -92,405 +92,6 @@ export default function AboutSection() {
     return () => obs.disconnect()
   }, [])
 
-  // ── GSAP ScrollTrigger animations ──────────────────────────────────────────
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-
-    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (isReducedMotion) {
-      // Instant-show everything for reduced-motion
-      sectionRef.current?.querySelectorAll('.about-word-inner').forEach((el) => {
-        ;(el as HTMLElement).style.transform = 'translateY(0)'
-        ;(el as HTMLElement).style.opacity = '1'
-      })
-      // Show cinematic video immediately
-      if (videoContainerRef.current) {
-        videoContainerRef.current.style.clipPath = 'inset(0% 0%)'
-        videoContainerRef.current.style.filter = 'blur(0px) brightness(1)'
-        videoContainerRef.current.style.transform = 'scale(1)'
-        videoContainerRef.current.style.opacity = '1'
-      }
-      if (cinematicOverlayRef.current) cinematicOverlayRef.current.style.opacity = '0'
-      if (leftPanelRef.current) leftPanelRef.current.style.opacity = '1'
-      if (rightPanelRef.current) rightPanelRef.current.style.opacity = '1'
-      return
-    }
-
-    const isMobile = window.innerWidth < 1024
-    let ctx: { revert: () => void } | null = null
-
-    ;(async () => {
-      const { gsap } = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
-      ctx = gsap.context(() => {
-        const ease = 'power3.out'
-        const easeBack = 'back.out(1.4)'
-
-        // ── 0. Decorative orbs — parallax float ─────────────────────────────
-        if (orb1Ref.current) {
-          gsap.to(orb1Ref.current, {
-            yPercent: -30,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 1.5,
-            },
-          })
-        }
-        if (orb2Ref.current) {
-          gsap.to(orb2Ref.current, {
-            yPercent: 25,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 2,
-            },
-          })
-        }
-
-        // ── 1. Decorative squares — rotate + fade on scroll ─────────────────
-        if (square1Ref.current) {
-          gsap.fromTo(
-            square1Ref.current,
-            { rotate: 0, opacity: 0 },
-            {
-              rotate: 360,
-              opacity: 0.12,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1.8,
-              },
-            },
-          )
-        }
-        if (square2Ref.current) {
-          gsap.fromTo(
-            square2Ref.current,
-            { rotate: 0, opacity: 0 },
-            {
-              rotate: -360,
-              opacity: 0.08,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 2.2,
-              },
-            },
-          )
-        }
-
-        // ── 2. Progress / reveal line (vertical gold rule left side) ────────
-        if (progressLineRef.current) {
-          gsap.fromTo(
-            progressLineRef.current,
-            { scaleY: 0 },
-            {
-              scaleY: 1,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top 80%',
-                end: 'bottom 20%',
-                scrub: 1,
-              },
-            },
-          )
-        }
-
-        // ── 3. Section label — lines expand + text fades in ─────────────────
-        const labelTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: labelTextRef.current,
-            start: 'top 88%',
-            toggleActions: 'play none none none',
-          },
-        })
-        labelTl
-          .fromTo(
-            labelLineLeftRef.current,
-            { scaleX: 0, transformOrigin: 'right' },
-            { scaleX: 1, duration: 0.7, ease },
-          )
-          .fromTo(
-            labelTextRef.current,
-            { opacity: 0, y: 6, filter: 'blur(4px)' },
-            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease },
-            '-=0.3',
-          )
-          .fromTo(
-            labelLineRightRef.current,
-            { scaleX: 0, transformOrigin: 'left' },
-            { scaleX: 1, duration: 0.7, ease },
-            '-=0.5',
-          )
-
-        // ═════════════════════════════════════════════════════════════════════
-        // ── 4. CINEMATIC VIDEO — Soft reveal on viewport entry ────────────────
-        // ═════════════════════════════════════════════════════════════════════
-        // No pinning, no scroll-to-watch — just a beautiful one-shot reveal
-
-        if (cinematicPinRef.current && videoContainerRef.current) {
-          const revealTl = gsap.timeline({
-            scrollTrigger: {
-              trigger: cinematicPinRef.current,
-              start: isMobile ? 'top 80%' : 'top 65%',
-              toggleActions: 'play none none none',
-            },
-          })
-
-          // Video: scale down, unblur, unmask — soft cinematic entrance
-          revealTl
-            .fromTo(
-              videoContainerRef.current,
-              {
-                scale: 1.06,
-                filter: 'blur(4px) brightness(0.7)',
-                opacity: 0,
-                clipPath: isMobile ? 'inset(15% 18%)' : 'inset(20% 24%)',
-              },
-              {
-                scale: 1,
-                filter: 'blur(0px) brightness(1)',
-                opacity: 1,
-                clipPath: 'inset(0% 0%)',
-                duration: 1.8,
-                ease: 'power3.out',
-              },
-            )
-            // Overlay lifts away
-            .to(cinematicOverlayRef.current, { opacity: 0, duration: 1.4, ease: 'power2.out' }, 0.2)
-            // Corner accents slide in
-            .fromTo(
-              cornerTLRef.current,
-              { opacity: 0, scale: 0.5 },
-              { opacity: 1, scale: 1, duration: 0.7, ease: 'power2.out' },
-              0.8,
-            )
-            .fromTo(
-              cornerBRRef.current,
-              { opacity: 0, scale: 0.5 },
-              { opacity: 1, scale: 1, duration: 0.7, ease: 'power2.out' },
-              0.9,
-            )
-
-          // Flanking text panels — soft slide in (desktop only)
-          if (!isMobile && leftPanelRef.current) {
-            revealTl.fromTo(
-              leftPanelRef.current,
-              { opacity: 0, x: -30, filter: 'blur(4px)' },
-              {
-                opacity: 1,
-                x: 0,
-                filter: 'blur(0px)',
-                duration: 1.0,
-                ease: 'power3.out',
-              },
-              1.0,
-            )
-          }
-          if (!isMobile && rightPanelRef.current) {
-            revealTl.fromTo(
-              rightPanelRef.current,
-              { opacity: 0, x: 30, filter: 'blur(4px)' },
-              {
-                opacity: 1,
-                x: 0,
-                filter: 'blur(0px)',
-                duration: 1.0,
-                ease: 'power3.out',
-              },
-              1.1,
-            )
-          }
-        }
-
-        // ── 5. Counter "23" — GSAP number ticker ────────────────────────────
-        if (counterRef.current) {
-          const obj = { val: 0 }
-          gsap.to(obj, {
-            val: 23,
-            duration: 2,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: counterRef.current,
-              start: 'top 80%',
-              toggleActions: 'play none none none',
-            },
-            onUpdate() {
-              if (counterRef.current) counterRef.current.textContent = String(Math.round(obj.val))
-            },
-          })
-          // Big number scale entrance
-          gsap.fromTo(
-            counterRef.current,
-            { opacity: 0, scale: 0.5, filter: 'blur(20px)' },
-            {
-              opacity: 1,
-              scale: 1,
-              filter: 'blur(0px)',
-              duration: 1.0,
-              ease: easeBack,
-              scrollTrigger: {
-                trigger: counterRef.current,
-                start: 'top 80%',
-                toggleActions: 'play none none none',
-              },
-            },
-          )
-        }
-
-        // ── 6. Headline words — staggered clip-path reveal ──────────────────
-        const allWordInners = sectionRef.current?.querySelectorAll<HTMLElement>('.about-word-inner')
-        if (allWordInners?.length) {
-          gsap.fromTo(
-            allWordInners,
-            { y: '100%', opacity: 0 },
-            {
-              y: '0%',
-              opacity: 1,
-              duration: 0.7,
-              stagger: 0.08,
-              ease,
-              scrollTrigger: {
-                trigger: allWordInners[0].closest('.about-headline') ?? allWordInners[0],
-                start: 'top 82%',
-                toggleActions: 'play none none none',
-              },
-            },
-          )
-        }
-
-        // ── 7. Separator line — scaleX draw ─────────────────────────────────
-        if (separatorRef.current) {
-          gsap.fromTo(
-            separatorRef.current,
-            { scaleX: 0, transformOrigin: 'left' },
-            {
-              scaleX: 1,
-              duration: 0.9,
-              ease,
-              scrollTrigger: {
-                trigger: separatorRef.current,
-                start: 'top 85%',
-                toggleActions: 'play none none none',
-              },
-            },
-          )
-        }
-
-        // ── 8. Paragraph lines — stagger fade-up ────────────────────────────
-        const paragraphs = sectionRef.current?.querySelectorAll<HTMLElement>('.about-para')
-        if (paragraphs?.length) {
-          paragraphs.forEach((para) => {
-            gsap.fromTo(
-              para,
-              { y: 28, opacity: 0, filter: 'blur(6px)' },
-              {
-                y: 0,
-                opacity: 1,
-                filter: 'blur(0px)',
-                duration: 0.9,
-                ease,
-                scrollTrigger: {
-                  trigger: para,
-                  start: 'top 86%',
-                  toggleActions: 'play none none none',
-                },
-              },
-            )
-          })
-        }
-
-        // ── 9. Benefit cards — scale + opacity entrance ──────────────────────
-        const cards = [benefitCard1Ref.current, benefitCard2Ref.current].filter(Boolean)
-        cards.forEach((card, i) => {
-          if (!card) return
-          gsap.fromTo(
-            card,
-            { y: 60, opacity: 0, scale: 0.92, filter: 'blur(8px)' },
-            {
-              y: 0,
-              opacity: 1,
-              scale: 1,
-              filter: 'blur(0px)',
-              duration: 1.1,
-              delay: i * 0.18,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: card,
-                start: 'top 85%',
-                toggleActions: 'play none none none',
-              },
-            },
-          )
-
-          // card inner image parallax
-          const imgEl = card.querySelector<HTMLElement>('.about-card-img')
-          if (imgEl) {
-            gsap.to(imgEl, {
-              yPercent: -12,
-              ease: 'none',
-              scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 1 },
-            })
-          }
-        })
-
-        // ── 10. CTA button — bounce in ───────────────────────────────────────
-        if (ctaRef.current) {
-          gsap.fromTo(
-            ctaRef.current,
-            { y: 30, opacity: 0, scale: 0.9 },
-            {
-              y: 0,
-              opacity: 1,
-              scale: 1,
-              duration: 0.8,
-              ease: easeBack,
-              scrollTrigger: {
-                trigger: ctaRef.current,
-                start: 'top 88%',
-                toggleActions: 'play none none none',
-              },
-            },
-          )
-        }
-
-        // ── 11. Subtle Badge Rotation on Scroll ────────────────────────────
-        if (badgeRingRef.current) {
-          gsap.fromTo(
-            badgeRingRef.current,
-            { rotate: -20 },
-            {
-              rotate: 70,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: cinematicPinRef.current,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 0.8,
-              },
-            },
-          )
-        }
-      }, sectionRef)
-    })()
-
-    return () => {
-      ctx?.revert()
-    }
-  }, [])
-
   return (
     <section
       id='a-propos'
@@ -534,11 +135,11 @@ export default function AboutSection() {
         {/* Decorative rotating squares */}
         <div
           ref={square1Ref}
-          className='absolute top-[15%] right-[10%] w-80 h-80 border border-gold/20 opacity-0'
+          className='absolute top-[15%] right-[10%] w-80 h-80 border border-gold/20 opacity-10'
         />
         <div
           ref={square2Ref}
-          className='absolute bottom-[15%] left-[8%] w-56 h-56 border border-gold/15 opacity-0'
+          className='absolute bottom-[15%] left-[8%] w-56 h-56 border border-gold/15 opacity-10'
         />
 
         {/* Subtle dot grid pattern */}
@@ -757,13 +358,6 @@ export default function AboutSection() {
             <div
               ref={videoContainerRef}
               className='absolute inset-0 overflow-hidden'
-              style={{
-                clipPath: 'inset(20% 24%)',
-                transform: 'scale(1.06)',
-                filter: 'blur(4px) brightness(0.7)',
-                opacity: 0,
-                transition: 'transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94)',
-              }}
               onMouseMove={(e) => handleMouseMove(e.nativeEvent)}
               onMouseLeave={handleMouseLeave}>
               <video
@@ -815,7 +409,7 @@ export default function AboutSection() {
           <div
             ref={leftPanelRef}
             className='hidden md:flex absolute left-6 lg:left-[4%] xl:left-[8%] top-1/2 -translate-y-1/2 flex-col items-start gap-6 max-w-[240px] lg:max-w-[260px]'
-            style={{ opacity: 0 }}>
+            style={{ opacity: 1 }}>
             {/* Decorative line */}
             <div
               className='w-10 h-px'
@@ -876,7 +470,7 @@ export default function AboutSection() {
           <div
             ref={rightPanelRef}
             className='hidden md:flex absolute right-6 lg:right-[6%] xl:right-[10%] top-1/2 -translate-y-1/2 flex-col items-start gap-5 max-w-[240px] lg:max-w-[280px]'
-            style={{ opacity: 0 }}>
+            style={{ opacity: 1 }}>
             {/* Decorative line */}
             <div
               className='w-10 h-px'
@@ -944,26 +538,26 @@ export default function AboutSection() {
       <div className='relative z-10 text-center py-14 md:py-20 lg:py-24 px-6'>
         {/* Decorative line */}
         <div
-          className='about-para w-16 h-px mx-auto mb-8 opacity-0'
+          className='about-para w-16 h-px mx-auto mb-8'
           style={{
             background: 'linear-gradient(to right, transparent, #AF9778, transparent)',
           }}
         />
 
         {/* Main creative tagline */}
-        <p className='about-para text-gold text-2xl md:text-3xl lg:text-4xl font-title font-light leading-[1.2] tracking-[-0.02em] max-w-2xl mx-auto mb-5 opacity-0'>
+        <p className='about-para text-gold text-2xl md:text-3xl lg:text-4xl font-title font-light leading-[1.2] tracking-[-0.02em] max-w-2xl mx-auto mb-5'>
           L&apos;art du geste,
           <br className='hidden md:block' /> la précision du détail
         </p>
 
         {/* Subtitle */}
-        <p className='about-para text-cream/55 text-sm md:text-base leading-[1.8] font-light tracking-wide max-w-lg mx-auto mb-6 opacity-0'>
+        <p className='about-para text-cream/55 text-sm md:text-base leading-[1.8] font-light tracking-wide max-w-lg mx-auto mb-6'>
           Chaque coupe raconte une histoire. Chaque trait de lame est un acte de précision et
           d&apos;élégance.
         </p>
 
         {/* Signature-like accent */}
-        <div className='about-para flex items-center justify-center gap-3 opacity-0'>
+        <div className='about-para flex items-center justify-center gap-3'>
           <span
             className='w-10 h-px'
             style={{ background: 'linear-gradient(to right, transparent, rgba(175,151,120,0.5))' }}
@@ -999,7 +593,7 @@ export default function AboutSection() {
             <div
               key={item.badge}
               ref={item.ref}
-              className='group relative min-h-[280px] md:min-h-[400px] lg:min-h-[450px] w-full overflow-visible opacity-0 cursor-pointer lg:cursor-default focus:outline-none'
+              className='group relative min-h-[280px] md:min-h-[400px] lg:min-h-[450px] w-full overflow-visible cursor-pointer lg:cursor-default focus:outline-none'
               tabIndex={0}
               onTouchStart={() => {}}>
               {/* Main card border + shadow + clip content */}
@@ -1060,7 +654,7 @@ export default function AboutSection() {
         </div>
 
         {/* ── CTA ─────────────────────────────────────────────────────────── */}
-        <div ref={ctaRef} className='flex justify-center mt-16 md:mt-28 opacity-0'>
+        <div ref={ctaRef} className='flex justify-center mt-16 md:mt-28'>
           <Button href='/salon'>Découvrir notre univers</Button>
         </div>
       </div>
