@@ -814,13 +814,24 @@ export default function AboutSection() {
           {/* ── Left panel — Headline + service tags (md+ only) ─────────── */}
           <div
             ref={leftPanelRef}
-            className='hidden md:flex absolute left-6 lg:left-[6%] xl:left-[10%] top-1/2 -translate-y-1/2 flex-col items-start gap-6 max-w-[220px] lg:max-w-[260px]'
+            className='hidden md:flex absolute left-6 lg:left-[4%] xl:left-[8%] top-1/2 -translate-y-1/2 flex-col items-start gap-6 max-w-[240px] lg:max-w-[260px]'
             style={{ opacity: 0 }}>
             {/* Decorative line */}
             <div
               className='w-10 h-px'
               style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
             />
+
+            {/* Intro Text */}
+            <div className='flex flex-col gap-2 mb-2'>
+              <span className='text-sm lg:text-base font-title text-cream/90 tracking-wide font-light'>
+                Entrez dans notre univers
+              </span>
+              <span className='text-xs text-gold/80 italic font-light tracking-wider flex items-center gap-2'>
+                <div className='w-4 h-px bg-gold/50' />
+                Défiler pour découvrir
+              </span>
+            </div>
 
             {/* Headline */}
             <div>
