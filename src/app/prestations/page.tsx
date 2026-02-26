@@ -175,10 +175,8 @@ export default function PrestationsPage() {
                     </span>
                   </Reveal>
                   <Reveal variant='blur-in' duration={1.2}>
-                    <h1 className='text-4xl md:text-7xl lg:text-[9rem] font-title text-gold leading-[0.85] tracking-tight'>
-                      Pres
-                      <br />
-                      <span className='text-cream'>tations</span>
+                    <h1 className='text-3xl md:text-5xl lg:text-[6rem] font-title text-gold leading-[0.8] tracking-tight mb-6'>
+                      Prestations
                     </h1>
                   </Reveal>
                 </div>
@@ -440,7 +438,7 @@ export default function PrestationsPage() {
             </Reveal>
             <Reveal variant='fade-up' delay={0.4}>
               <div className='flex flex-wrap justify-center gap-4'>
-                <Button href='/reservation'>Prendre Rendez-vous</Button>
+                <Button href='/reservation#planitycontainer'>Prendre Rendez-vous</Button>
                 <Button href='/contact'>Nous Contacter</Button>
               </div>
             </Reveal>

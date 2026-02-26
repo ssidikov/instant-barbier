@@ -1,10 +1,12 @@
 'use client'
 
+import React from 'react'
 import Image from 'next/image'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import { PLANITY_URL, SITE_URL } from '@/lib/constants'
 import Reveal from '@/components/Reveal'
+import { motion } from 'framer-motion'
 import { BACKGROUNDS, LOGOS } from '@/lib/images'
 import GoogleMap from '@/components/GoogleMap'
 
@@ -23,28 +25,67 @@ function ContactCard({
   children: React.ReactNode
   delay?: number
 }) {
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1], // power3.out
+        delay,
+        staggerChildren: 0.1,
+        delayChildren: delay + 0.2, // start staggering slightly after the card begins entering
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15, filter: 'blur(4px)' },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+    },
+  }
+
   return (
-    <Reveal
-      variant='fade-up'
-      delay={delay}
+    <motion.div
+      variants={cardVariants}
+      initial='hidden'
+      whileInView='visible'
+      viewport={{ once: true, margin: '-50px' }}
       className='group relative bg-navy-secondary/40 backdrop-blur-sm border border-gold/10 p-6 md:p-8 hover:border-gold/30 transition-all duration-700'>
       {/* Corner accent */}
-      <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-      <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
+      <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700 pointer-events-none' />
+      <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700 pointer-events-none' />
 
       {/* Icon */}
-      <div className='w-12 h-12 border border-gold/30 flex items-center justify-center mb-6 group-hover:border-gold/60 transition-colors duration-500'>
+      <motion.div
+        variants={itemVariants}
+        className='w-12 h-12 border border-gold/30 flex items-center justify-center mb-6 group-hover:border-gold/60 transition-colors duration-500'>
         <span className='text-gold'>{icon}</span>
-      </div>
+      </motion.div>
 
       {/* Label */}
-      <span className='text-gold/60 text-[10px] uppercase tracking-[0.3em] block mb-3'>
+      <motion.span
+        variants={itemVariants}
+        className='text-gold/60 text-[10px] uppercase tracking-[0.3em] block mb-3'>
         {label}
-      </span>
+      </motion.span>
 
       {/* Content */}
-      <div className='text-cream font-light leading-relaxed'>{children}</div>
-    </Reveal>
+      <div className='text-cream font-light leading-relaxed flex flex-col items-start'>
+        {/* We map over children to wrap text elements smoothly if they are provided directly.
+            For complex children, we wrap the entire block. */}
+        {React.Children.map(children, (child) => (
+          <motion.div variants={itemVariants} className='w-full'>
+            {child}
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
   )
 }
 
@@ -147,10 +188,10 @@ export default function ContactPage() {
                 <span className='inline-block text-gold/60 text-[10px] uppercase tracking-[0.5em] mb-6'>
                   Paris 3ᵉ — Le Marais
                 </span>
-                <h1 className='text-4xl md:text-7xl lg:text-[8rem] font-title text-gold leading-[0.9] tracking-tight mb-6'>
+                <h1 className='text-3xl md:text-5xl lg:text-[6rem] font-title text-gold leading-[0.8] tracking-tight mb-6'>
                   Nous
                   <br />
-                  <span className='text-cream'>Trouver</span>
+                  Trouver
                 </h1>
               </Reveal>
 
@@ -184,7 +225,7 @@ export default function ContactPage() {
                 <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                   Informations
                 </span>
-                <h2 className='text-4xl md:text-5xl lg:text-6xl font-title text-cream leading-[0.8] tracking-[-2px]'>
+                <h2 className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[0.8] tracking-[-2px]'>
                   Nous <span className='text-gold'>contacter</span>
                 </h2>
               </Reveal>
@@ -207,7 +248,7 @@ export default function ContactPage() {
                 }>
                 <a
                   href='tel:0145354722'
-                  className='text-xl text-cream hover:text-gold transition-colors duration-300 font-title'>
+                  className='text-cream hover:text-gold transition-colors duration-300'>
                   01 45 35 47 22
                 </a>
                 <p className='text-cream/40 text-sm mt-2'>Du lundi au samedi</p>
@@ -316,7 +357,7 @@ export default function ContactPage() {
                   <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                     Comment venir
                   </span>
-                  <h3 className='text-2xl md:text-3xl font-title text-cream leading-[0.8] tracking-[-2px]'>
+                  <h3 className='text-2xl md:text-3xl font-title text-cream leading-[0.8] tracking-[0px]'>
                     Transports <span className='text-gold'>&amp;</span> accès
                   </h3>
                 </Reveal>

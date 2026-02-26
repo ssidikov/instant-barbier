@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { LOGOS, VIDEO, PRODUCT_GRID, ABOUT_IMAGES } from '@/lib/images'
 import Container from '@/components/Container'
@@ -10,19 +10,6 @@ import TextReveal from '@/components/TextReveal'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
 // ── helpers ──────────────────────────────────────────────────────────────────
-
-/** Splits a string of text into individual <span> word elements */
-function SplitWords({ text, className }: { text: string; className?: string }) {
-  return (
-    <span className={className} aria-label={text}>
-      {text.split(' ').map((word, i) => (
-        <span key={i} className='about-word inline-block mr-[0.3em]'>
-          <span className='about-word-inner inline-block relative'>{word}</span>
-        </span>
-      ))}
-    </span>
-  )
-}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ABOUT SECTION COMPONENT
@@ -62,8 +49,6 @@ export default function AboutSection() {
   const cinematicOverlayRef = useRef<HTMLDivElement>(null)
   const cornerTLRef = useRef<HTMLDivElement>(null)
   const cornerBRRef = useRef<HTMLDivElement>(null)
-  const leftPanelRef = useRef<HTMLDivElement>(null)
-  const rightPanelRef = useRef<HTMLDivElement>(null)
 
   // ── IntersectionObserver for video autoplay/pause ──────────────────────────
   useEffect(() => {
@@ -538,7 +523,7 @@ export default function AboutSection() {
             duration={1.2}
             stagger={0.12}
             className='text-gold text-3xl md:text-5xl lg:text-6xl font-title font-light leading-[1.1] tracking-[-0.02em]'>
-            L'art du geste, la précision du détail
+            L&apos;art du geste, la précision du détail
           </TextReveal>
         </div>
 

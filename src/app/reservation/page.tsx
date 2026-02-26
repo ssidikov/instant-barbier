@@ -125,6 +125,37 @@ function ReservationContent() {
     }
   }, [])
 
+  // Fix for #planitycontainer hash anchor scrolling
+  // sometimes Next.js SPA navigation hits the page before the Planity DOM is fully ready/sized
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash === '#planitycontainer') {
+      const scrollWhenReady = () => {
+        const el = document.getElementById('planitycontainer')
+        if (el) {
+          // Add a slight delay to allow layout to settle
+          setTimeout(() => {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }, 500)
+        }
+      }
+
+      // Try scrolling immediately
+      scrollWhenReady()
+
+      // Also set up an observer just in case the container isn't in the DOM yet
+      const observer = new MutationObserver((mutations, obs) => {
+        const el = document.getElementById('planitycontainer')
+        if (el) {
+          scrollWhenReady()
+          obs.disconnect()
+        }
+      })
+      observer.observe(document.body, { childList: true, subtree: true })
+
+      return () => observer.disconnect()
+    }
+  }, [])
+
   return (
     <>
       <script

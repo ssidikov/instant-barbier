@@ -29,7 +29,7 @@ export default function Reveal({
     // Check reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) {
-      setIsVisible(true)
+      queueMicrotask(() => setIsVisible(true))
       return
     }
 
@@ -63,12 +63,16 @@ export default function Reveal({
   // Get base translate/scale based on variant
   const getVariantStyles = () => {
     if (isVisible) {
-      return {
+      const baseVisible: React.CSSProperties = {
         opacity: 1,
         transform: 'translate(0px, 0px) scale(1)',
         filter: 'blur(0px)',
-        clipPath: 'inset(0% 0 0 0)',
       }
+      // Only apply clipPath to mask-reveal, and give it breathing room for descenders/shadows
+      if (variant === 'mask-reveal') {
+        baseVisible.clipPath = 'inset(-20% -20% -20% -20%)'
+      }
+      return baseVisible
     }
 
     switch (variant) {

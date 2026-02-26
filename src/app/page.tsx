@@ -1159,7 +1159,7 @@ export default function Home() {
 
                   <Reveal variant='fade-up' delay={0.8}>
                     <div className='mt-12 flex justify-center lg:justify-start'>
-                      <Button href='/reservation'>Réserver un créneau</Button>
+                      <Button href='/reservation#planitycontainer'>Réserver un créneau</Button>
                     </div>
                   </Reveal>
                 </div>
@@ -1243,7 +1243,7 @@ export default function Home() {
                   <div className='flex flex-wrap items-center gap-4 mt-8'>
                     <Button href='tel:0145354722'>Nous appeler</Button>
                     <Link
-                      href='/reservation'
+                      href='/reservation#planitycontainer'
                       className='group relative inline-flex items-center justify-center px-10 py-5 md:px-6 md:py-4 border border-gold/30 hover:border-gold/60 transition-all duration-500 touch-button'>
                       <span className='text-gold text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] font-semibold group-hover:text-cream transition-colors duration-300'>
                         Prendre RDV
@@ -1313,7 +1313,9 @@ export default function Home() {
                   <Reveal variant='fade-up' delay={0.7}>
                     <div className='flex justify-center mb-10'>
                       <div className='relative'>
-                        <Button href='/reservation'>Prendre rendez-vous maintenant</Button>
+                        <Button href='/reservation#planitycontainer'>
+                          Prendre rendez-vous maintenant
+                        </Button>
                       </div>
                     </div>
                   </Reveal>

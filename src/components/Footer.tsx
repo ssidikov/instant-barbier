@@ -10,7 +10,7 @@ export default function Footer() {
       <div className='max-w-6xl mx-auto px-5 md:px-6 lg:px-8'>
         {/* Large Headline */}
         <Reveal variant='fade-up'>
-          <h2 className='text-center text-3xl md:text-5xl lg:text-6xl font-title italic text-gold mb-16'>
+          <h2 className='text-center text-3xl md:text-5xl lg:text-6xl font-title italic text-gold mb-16 leading-[0.8]'>
             Votre Style, Notre Passion
           </h2>
         </Reveal>
@@ -143,7 +143,7 @@ export default function Footer() {
                   Galerie
                 </Link>
                 <a
-                  href='/reservation'
+                  href='/reservation#planitycontainer'
                   className='text-sm uppercase tracking-widest text-cream/80 hover:text-gold transition-colors'>
                   Réservation
                 </a>
@@ -221,7 +221,7 @@ export default function Footer() {
         </Reveal>
 
         {/* Copyright */}
-        <Reveal variant='fade-up' delay={0.4} threshold={0}>
+        <div className='pt-2'>
           <p className='text-center text-xs text-cream/40 mt-6' suppressHydrationWarning>
             © {new Date().getFullYear()} {SITE_NAME}. Tous droits réservés.
           </p>
@@ -235,7 +235,7 @@ export default function Footer() {
               SIDIKOFF DIGITAL
             </a>
           </p>
-        </Reveal>
+        </div>
       </div>
     </footer>
   )

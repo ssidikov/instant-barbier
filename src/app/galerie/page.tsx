@@ -174,10 +174,10 @@ export default function GaleriePage() {
                 <span className='inline-block text-gold/60 text-[10px] uppercase tracking-[0.5em] mb-6'>
                   Barbier &amp; Coiffeur — Paris
                 </span>
-                <h1 className='text-5xl md:text-7xl lg:text-[8rem] font-title text-gold leading-[0.9] tracking-tight mb-6'>
+                <h1 className='text-3xl md:text-5xl lg:text-[6rem] font-title text-gold leading-[0.8] tracking-tight mb-6'>
                   La
                   <br />
-                  <span className='text-cream'>Galerie</span>
+                  Galerie
                 </h1>
               </Reveal>
 
@@ -215,7 +215,7 @@ export default function GaleriePage() {
                   </span>
                   <h2 className='text-3xl md:text-4xl lg:text-5xl font-title text-cream leading-[0.8] tracking-[-2px] -mt-14'>
                     Chaque image reflète
-                    <span className='block text-gold mt-2'>notre exigence</span>
+                    <span className='block text-gold mt-2 pb-2'>notre exigence</span>
                   </h2>
                 </Reveal>
               </div>
@@ -260,7 +260,7 @@ export default function GaleriePage() {
                   <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
                     Nos Réalisations
                   </span>
-                  <h3 className='text-4xl md:text-5xl lg:text-6xl font-title text-cream leading-[0.8] tracking-[-2px]'>
+                  <h3 className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[0.8] tracking-[-2px]'>
                     Explorer <span className='text-gold'>l&apos;univers</span>
                   </h3>
                 </div>
@@ -361,7 +361,7 @@ export default function GaleriePage() {
             </Reveal>
 
             <Reveal variant='blur-in' className='mb-10'>
-              <blockquote className='text-2xl md:text-4xl lg:text-5xl font-title text-cream leading-[0.8] tracking-[-2px]'>
+              <blockquote className='text-2xl md:text-4xl lg:text-5xl font-title text-cream leading-[0.8] md:tracking-[-2px] pb-2'>
                 Où tradition et modernité se rencontrent pour{' '}
                 <span className='text-gold'>sublimer le style masculin</span>
               </blockquote>

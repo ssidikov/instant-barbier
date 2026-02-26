@@ -137,7 +137,7 @@ export default function Header() {
           {/* CTA - Right side with premium glow */}
           <div ref={ctaRef} className='hidden xl:block relative'>
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-36 bg-gold/15 blur-3xl rounded-full animate-pulse-glow' />
-            <Button href='/reservation'>Prendre rendez-vous</Button>
+            <Button href='/reservation#planitycontainer'>Prendre rendez-vous</Button>
           </div>
 
           {/* Mobile Menu Toggle */}

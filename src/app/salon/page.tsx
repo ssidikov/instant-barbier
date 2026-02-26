@@ -135,10 +135,10 @@ export default function SalonPage() {
                     </span>
                   </Reveal>
                   <Reveal variant='blur-in' duration={1.2}>
-                    <h1 className='text-5xl md:text-8xl lg:text-[10rem] font-title text-gold leading-[0.85] tracking-tight'>
+                    <h1 className='text-3xl md:text-5xl lg:text-[6rem] font-title text-gold leading-[0.8] tracking-tight mb-6'>
                       Le
                       <br />
-                      <span className='text-cream'>Salon</span>
+                      Salon
                     </h1>
                   </Reveal>
                 </div>
@@ -461,7 +461,7 @@ export default function SalonPage() {
                   </p>
                 </Reveal>
                 <Reveal variant='fade-up' delay={0.3} className='flex flex-wrap gap-4'>
-                  <Button href='/reservation'>Prendre Rendez-vous</Button>
+                  <Button href='/reservation#planitycontainer'>Prendre Rendez-vous</Button>
                   <Button href='/contact'>Nous Contacter</Button>
                 </Reveal>
               </div>
