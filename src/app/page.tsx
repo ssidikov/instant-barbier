@@ -371,7 +371,7 @@ export default function Home() {
                           delay: 0.5,
                         }}
                       />
-                      <Button href='/reservation'>Prendre rendez-vous</Button>
+                      <Button href='/reservation#planitycontainer'>Prendre rendez-vous</Button>
                     </motion.div>
                   </div>
                 </div>

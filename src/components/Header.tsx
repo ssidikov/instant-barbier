@@ -181,7 +181,7 @@ export default function Header() {
             className={`pt-2 transition-all duration-300 ${
               isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
-            <Button href='/reservation'>Prendre rendez-vous</Button>
+            <Button href='/reservation#planitycontainer'>Prendre rendez-vous</Button>
           </div>
         </nav>
       </div>
