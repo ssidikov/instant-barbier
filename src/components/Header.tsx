@@ -97,20 +97,41 @@ export default function Header() {
 
           {/* Desktop Navigation - Premium centered layout */}
           <nav ref={navRef} className='hidden lg:flex items-center space-x-12'>
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className='group relative text-[0.7rem] uppercase tracking-[0.3em] text-cream/90 font-light hover:text-gold transition-all duration-300'>
-                <span className='relative z-10 [text-shadow:_0_2px_12px_rgb(11_22_34_/_90%)] group-hover:[text-shadow:_0_2px_20px_rgba(175,151,120,0.6)]'>
-                  {item.label}
-                </span>
-                {/* Premium animated underline */}
-                <span className='absolute -bottom-2 left-0 w-0 h-[2px] bg-gradient-to-r from-gold/80 via-gold to-gold/80 group-hover:w-full transition-all duration-300 shadow-[0_0_10px_rgba(175,151,120,0.5)]' />
-                {/* Glow effect */}
-                <span className='absolute inset-0 -inset-x-2 -inset-y-1 bg-gold/0 group-hover:bg-gold/5 blur-xl transition-all duration-300 rounded-lg' />
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isReservation = item.href.includes('/reservation')
+
+              if (isReservation) {
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className='group relative text-[0.7rem] uppercase tracking-[0.3em] text-cream/90 font-light hover:text-gold transition-all duration-300'>
+                    <span className='relative z-10 [text-shadow:_0_2px_12px_rgb(11_22_34_/_90%)] group-hover:[text-shadow:_0_2px_20px_rgba(175,151,120,0.6)]'>
+                      {item.label}
+                    </span>
+                    {/* Premium animated underline */}
+                    <span className='absolute -bottom-2 left-0 w-0 h-[2px] bg-gradient-to-r from-gold/80 via-gold to-gold/80 group-hover:w-full transition-all duration-300 shadow-[0_0_10px_rgba(175,151,120,0.5)]' />
+                    {/* Glow effect */}
+                    <span className='absolute inset-0 -inset-x-2 -inset-y-1 bg-gold/0 group-hover:bg-gold/5 blur-xl transition-all duration-300 rounded-lg' />
+                  </a>
+                )
+              }
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className='group relative text-[0.7rem] uppercase tracking-[0.3em] text-cream/90 font-light hover:text-gold transition-all duration-300'>
+                  <span className='relative z-10 [text-shadow:_0_2px_12px_rgb(11_22_34_/_90%)] group-hover:[text-shadow:_0_2px_20px_rgba(175,151,120,0.6)]'>
+                    {item.label}
+                  </span>
+                  {/* Premium animated underline */}
+                  <span className='absolute -bottom-2 left-0 w-0 h-[2px] bg-gradient-to-r from-gold/80 via-gold to-gold/80 group-hover:w-full transition-all duration-300 shadow-[0_0_10px_rgba(175,151,120,0.5)]' />
+                  {/* Glow effect */}
+                  <span className='absolute inset-0 -inset-x-2 -inset-y-1 bg-gold/0 group-hover:bg-gold/5 blur-xl transition-all duration-300 rounded-lg' />
+                </Link>
+              )
+            })}
           </nav>
 
           {/* CTA - Right side with premium glow */}
@@ -157,17 +178,26 @@ export default function Header() {
 
         {/* Navigation content — centered vertically */}
         <nav className='relative z-10 h-full flex flex-col items-center justify-center gap-8'>
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={closeMenu}
-              className={`text-lg uppercase tracking-[0.25em] text-cream/90 hover:text-gold transition-all duration-300 font-light ${
-                isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`}>
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isReservation = item.href.includes('/reservation')
+            const linkClassName = `text-lg uppercase tracking-[0.25em] text-cream/90 hover:text-gold transition-all duration-300 font-light ${
+              isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+            }`
+
+            if (isReservation) {
+              return (
+                <a key={item.href} href={item.href} onClick={closeMenu} className={linkClassName}>
+                  {item.label}
+                </a>
+              )
+            }
+
+            return (
+              <Link key={item.href} href={item.href} onClick={closeMenu} className={linkClassName}>
+                {item.label}
+              </Link>
+            )
+          })}
 
           {/* Separator */}
           <div

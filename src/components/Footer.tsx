@@ -142,11 +142,11 @@ export default function Footer() {
                   className='text-sm uppercase tracking-widest text-cream/80 hover:text-gold transition-colors'>
                   Galerie
                 </Link>
-                <Link
+                <a
                   href='/reservation'
                   className='text-sm uppercase tracking-widest text-cream/80 hover:text-gold transition-colors'>
                   Réservation
-                </Link>
+                </a>
                 <Link
                   href='/contact'
                   className='text-sm uppercase tracking-widest text-cream/80 hover:text-gold transition-colors'>

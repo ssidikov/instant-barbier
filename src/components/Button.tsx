@@ -57,7 +57,9 @@ export default function Button({
     )
   }
 
-  if (href.startsWith('#')) {
+  const isReservation = href.includes('/reservation')
+
+  if (href.startsWith('#') && !isReservation) {
     const handleAnchorClick = (e: React.MouseEvent) => {
       e.preventDefault()
       const target = document.querySelector(href)
@@ -73,12 +75,12 @@ export default function Button({
     )
   }
 
-  if (external) {
+  if (external || isReservation) {
     return (
       <a
         href={href}
-        target='_blank'
-        rel='noopener noreferrer'
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noopener noreferrer' : undefined}
         className={sharedClassName}
         onClick={onClick}>
         {content}
