@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 type RevealVariant = 'fade-up' | 'fade-side' | 'blur-in' | 'scale-up' | 'mask-reveal'
 
@@ -23,95 +23,83 @@ export default function Reveal({
   ...rest
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null)
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
-
-    // Fallback for reduced motion accessibility preferences
+    // Check reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion && ref.current) {
-      ref.current.style.opacity = '1'
-      ref.current.style.transform = 'none'
-      ref.current.style.filter = 'none'
-      ref.current.style.clipPath = 'none'
+    if (prefersReducedMotion) {
+      setIsVisible(true)
       return
     }
 
-    let ctx: { revert: () => void } | null = null
+    const currentRef = ref.current
+    if (!currentRef) return
 
-    ;(async () => {
-      // Dynamically import GSAP
-      const { gsap } = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
-      if (!ref.current) return
-
-      ctx = gsap.context(() => {
-        // We use a custom start string, converting threshold to percentage.
-        // CRITICAL BUGFIX: On mobile/tablet, the max scroll distance is often shorter than
-        // the required trigger height (e.g. 15% up the screen), leaving elements invisible forever.
-        // By forcing the trigger to 100% (absolute bottom of screen) for touch devices, we guarantee they fire!
-        const isMobile = window.innerWidth < 1024
-        const resolvedThreshold = isMobile ? 95 : 100 - threshold * 100
-        const startTrigger = `top ${resolvedThreshold}%`
-
-        let fromState: gsap.TweenVars = {}
-        let toState: gsap.TweenVars = {
-          duration,
-          delay,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: ref.current,
-            start: startTrigger,
-            toggleActions: 'play none none reverse',
-            fastScrollEnd: true, // Snap to final state on fast scroll (prevents stuck animations)
-          },
+    // Intersection Observer for maximum performance on scroll
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          // We only want it to reveal once, so unobserve
+          observer.unobserve(currentRef)
         }
+      },
+      {
+        threshold,
+        // Trigger slightly earlier on mobile
+        rootMargin: window.innerWidth < 768 ? '0px 0px -50px 0px' : '0px 0px -100px 0px',
+      },
+    )
 
-        switch (variant) {
-          case 'fade-up':
-            fromState = { opacity: 0, y: 60 }
-            toState = { ...toState, opacity: 1, y: 0, ease: 'power4.out' }
-            break
-          case 'fade-side':
-            fromState = { opacity: 0, x: -50 }
-            toState = { ...toState, opacity: 1, x: 0, ease: 'power3.out' }
-            break
-          case 'blur-in':
-            fromState = { opacity: 0, scale: 0.95, filter: 'blur(12px)' }
-            toState = { ...toState, opacity: 1, scale: 1, filter: 'blur(0px)', ease: 'power2.out' }
-            break
-          case 'scale-up':
-            fromState = { opacity: 0, scale: 0.85 }
-            toState = { ...toState, opacity: 1, scale: 1, ease: 'back.out(1.2)' }
-            break
-          case 'mask-reveal':
-            fromState = { clipPath: 'inset(100% 0 0 0)', opacity: 0 }
-            toState = { ...toState, clipPath: 'inset(0% 0 0 0)', opacity: 1, ease: 'power4.inOut' }
-            break
-          default:
-            fromState = { opacity: 0 }
-            toState = { ...toState, opacity: 1 }
-        }
-
-        // Apply initial hidden state immediately within the microtask context
-        gsap.set(ref.current, fromState)
-
-        // Then create the tween bound to ScrollTrigger
-        gsap.to(ref.current, toState)
-      })
-    })()
+    observer.observe(currentRef)
 
     return () => {
-      if (ctx) ctx.revert()
+      observer.disconnect()
     }
-  }, [variant, delay, duration, threshold])
+  }, [threshold])
 
-  // We set initial inline style opacity: 0 to prevent a flash of unstyled content
-  // while NextJS hydrated the React component before GSAP can lock onto it.
+  // Get base translate/scale based on variant
+  const getVariantStyles = () => {
+    if (isVisible) {
+      return {
+        opacity: 1,
+        transform: 'translate(0px, 0px) scale(1)',
+        filter: 'blur(0px)',
+        clipPath: 'inset(0% 0 0 0)',
+      }
+    }
+
+    switch (variant) {
+      case 'fade-up':
+        return { opacity: 0, transform: 'translateY(60px)', filter: 'blur(0px)' }
+      case 'fade-side':
+        return { opacity: 0, transform: 'translateX(-50px)', filter: 'blur(0px)' }
+      case 'blur-in':
+        return { opacity: 0, transform: 'scale(0.95)', filter: 'blur(12px)' }
+      case 'scale-up':
+        return { opacity: 0, transform: 'scale(0.85)', filter: 'blur(0px)' }
+      case 'mask-reveal':
+        return { opacity: 0, transform: 'translateY(0px)', clipPath: 'inset(100% 0 0 0)' }
+      default:
+        return { opacity: 0, transform: 'translateY(0px)' }
+    }
+  }
+
   return (
-    <div ref={ref} className={className} style={{ opacity: 0 }} {...rest}>
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        ...getVariantStyles(),
+        transitionProperty: 'opacity, transform, filter, clip-path',
+        transitionDuration: `${duration}s`,
+        transitionTimingFunction: 'cubic-bezier(0.2, 0.8, 0.2, 1)', // power3.out equivalent
+        transitionDelay: `${delay}s`,
+        willChange: isVisible ? 'auto' : 'opacity, transform',
+      }}
+      {...rest}>
       {children}
     </div>
   )

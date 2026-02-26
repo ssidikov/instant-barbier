@@ -26,9 +26,21 @@ export default function Header() {
 
   // Scroll-aware background + close menu on scroll
   useEffect(() => {
+    let lastScrollY = window.scrollY
+    let ticking = false
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-      if (isMenuOpen) closeMenu()
+      lastScrollY = window.scrollY
+
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const pastThreshold = lastScrollY > 50
+          setIsScrolled(pastThreshold) // React batches this and bails out if value is identical
+          if (isMenuOpen) closeMenu()
+          ticking = false
+        })
+        ticking = true
+      }
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)

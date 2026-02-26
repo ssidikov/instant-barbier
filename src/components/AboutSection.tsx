@@ -5,6 +5,9 @@ import Image from 'next/image'
 import { LOGOS, VIDEO, PRODUCT_GRID, ABOUT_IMAGES } from '@/lib/images'
 import Container from '@/components/Container'
 import Button from '@/components/Button'
+import Reveal from '@/components/Reveal'
+import TextReveal from '@/components/TextReveal'
+import { motion, useScroll, useTransform } from 'framer-motion'
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
@@ -45,7 +48,13 @@ export default function AboutSection() {
   const square2Ref = useRef<HTMLDivElement>(null)
   const orb1Ref = useRef<HTMLDivElement>(null)
   const orb2Ref = useRef<HTMLDivElement>(null)
-  const badgeRingRef = useRef<HTMLDivElement>(null)
+
+  // ── Scroll progress for interactive badge rotation ───────────────────────
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  })
+  const badgeRotate = useTransform(scrollYProgress, [0, 1], [0, 360])
 
   // ── Cinematic video refs ───────────────────────────────────────────────────
   const cinematicPinRef = useRef<HTMLDivElement>(null)
@@ -55,21 +64,6 @@ export default function AboutSection() {
   const cornerBRRef = useRef<HTMLDivElement>(null)
   const leftPanelRef = useRef<HTMLDivElement>(null)
   const rightPanelRef = useRef<HTMLDivElement>(null)
-
-  // ── Desktop cursor parallax (lg+ only) ─────────────────────────────────────
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!videoContainerRef.current || window.innerWidth < 1024) return
-    const rect = videoContainerRef.current.getBoundingClientRect()
-    const cx = (e.clientX - rect.left) / rect.width - 0.5 // -0.5 → +0.5
-    const cy = (e.clientY - rect.top) / rect.height - 0.5
-    // Max ±8px translate — very subtle
-    videoContainerRef.current.style.transform = `translate(${cx * 16}px, ${cy * 16}px)`
-  }, [])
-
-  const handleMouseLeave = useCallback(() => {
-    if (!videoContainerRef.current) return
-    videoContainerRef.current.style.transform = 'translate(0px, 0px)'
-  }, [])
 
   // ── IntersectionObserver for video autoplay/pause ──────────────────────────
   useEffect(() => {
@@ -256,7 +250,7 @@ export default function AboutSection() {
 
       <Container className='relative z-10'>
         {/* ── Section label ──────────────────────────────────────────────── */}
-        <div className='flex items-center justify-center gap-4 mb-16 md:mb-20'>
+        <Reveal variant='fade-up' className='flex items-center justify-center gap-4 mb-16 md:mb-20'>
           <span
             ref={labelLineLeftRef}
             className='block w-16 h-px'
@@ -267,7 +261,7 @@ export default function AboutSection() {
           />
           <span
             ref={labelTextRef}
-            className='text-gold text-[10px] uppercase tracking-[0.45em] font-medium opacity-0'>
+            className='text-gold text-[10px] uppercase tracking-[0.45em] font-medium'>
             À propos
           </span>
           <span
@@ -278,56 +272,59 @@ export default function AboutSection() {
               transformOrigin: 'left',
             }}
           />
-        </div>
+        </Reveal>
 
         {/* ── Centered text content ────────────────────────────────────────── */}
         <div className='text-center max-w-3xl mx-auto mb-16 md:mb-20 md:hidden'>
           {/* Headline */}
-          <div className='about-headline mb-6'>
+          <Reveal variant='fade-up' delay={0.2} className='about-headline mb-6'>
             <h2 className='flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1 mb-2'>
-              {/* "23" large counter — GSAP number ticker */}
+              {/* "23" large counter */}
               <span
                 ref={counterRef}
-                className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold font-light leading-[0.82] tracking-[-2px] opacity-0'
+                className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold font-light leading-[0.82] tracking-[-2px]'
                 aria-label='23'>
-                0
+                23
               </span>
-              <SplitWords
-                text='ans'
-                className='text-xl md:text-2xl lg:text-3xl xl:text-4xl font-title text-gold/75 uppercase tracking-[1px]'
-              />
+              <span className='text-xl md:text-2xl lg:text-3xl xl:text-4xl font-title text-gold/75 uppercase tracking-[1px]'>
+                ans
+              </span>
             </h2>
 
-            <SplitWords
-              text='au service du style masculin'
-              className='text-2xl md:text-3xl lg:text-4xl font-title text-cream/55 leading-[0.9] tracking-tight'
-            />
-          </div>
+            <span className='block text-2xl md:text-3xl lg:text-4xl font-title text-cream/55 leading-[0.9] tracking-tight'>
+              au service du style masculin
+            </span>
+          </Reveal>
 
           {/* Separator line — scaleX draw */}
-          <div
-            ref={separatorRef}
-            className='w-24 h-px mx-auto mb-8 origin-center'
-            style={{
-              background:
-                'linear-gradient(to right, transparent, #AF9778 30%, #AF9778 70%, transparent)',
-            }}
-          />
+          <Reveal variant='scale-up' delay={0.3}>
+            <div
+              ref={separatorRef}
+              className='w-24 h-px mx-auto mb-8 origin-center'
+              style={{
+                background:
+                  'linear-gradient(to right, transparent, #AF9778 30%, #AF9778 70%, transparent)',
+              }}
+            />
+          </Reveal>
 
           {/* Description paragraphs */}
-          <div className='space-y-4 mb-8'>
-            <p className='about-para text-cream/90 text-lg lg:text-xl leading-[1.75] tracking-wide font-light opacity-0'>
+          <Reveal variant='fade-up' delay={0.4} className='space-y-4 mb-8'>
+            <p className='about-para text-cream/90 text-lg lg:text-xl leading-[1.75] tracking-wide font-light'>
               Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
               <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
               comme les tendances contemporaines dans notre salon du Marais.
             </p>
-            <p className='about-para text-cream/65 text-base leading-[1.75] tracking-wide opacity-0'>
+            <p className='about-para text-cream/65 text-base leading-[1.75] tracking-wide'>
               Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
             </p>
-          </div>
+          </Reveal>
 
           {/* Feature tags */}
-          <div className='about-para flex flex-wrap justify-center gap-3 opacity-0'>
+          <Reveal
+            variant='blur-in'
+            delay={0.5}
+            className='about-para flex flex-wrap justify-center gap-3'>
             {[
               'Dégradés maîtrisés',
               'Rasage serviette chaude',
@@ -341,7 +338,7 @@ export default function AboutSection() {
                 {tag}
               </span>
             ))}
-          </div>
+          </Reveal>
         </div>
       </Container>
 
@@ -350,16 +347,32 @@ export default function AboutSection() {
           Scrolling = entering the salon
       ═══════════════════════════════════════════════════════════════════════ */}
       <div ref={cinematicPinRef} className='relative w-full'>
+        {/* ── Background Floating Typography (Creative Mask) ── */}
+        <div className='absolute inset-0 pointer-events-none flex flex-col justify-center overflow-hidden z-0 select-none'>
+          <div className='translate-y-[-10vh] md:translate-y-[-15vh] whitespace-nowrap opacity-[0.03] md:opacity-[0.04]'>
+            <span className='font-title text-[15vw] md:text-[8vw] lg:text-[10vw] uppercase tracking-tighter text-gold inline-block animate-[marquee-horizontal-left_40s_linear_infinite]'>
+              MAÎTRISE • MAÎTRISE • MAÎTRISE • MAÎTRISE • MAÎTRISE •
+            </span>
+          </div>
+          <div className='translate-y-[10vh] md:translate-y-[15vh] whitespace-nowrap opacity-[0.03] md:opacity-[0.04]'>
+            <span
+              className='font-title text-[15vw] md:text-[8vw] lg:text-[10vw] uppercase tracking-tighter text-transparent block animate-[marquee-horizontal-right_40s_linear_infinite]'
+              style={{ WebkitTextStroke: '1px #AF9778', textStroke: '1px #AF9778' }}>
+              ABSOLUE • ABSOLUE • ABSOLUE • ABSOLUE • ABSOLUE •
+            </span>
+          </div>
+        </div>
+
         {/* Video viewport — centered portrait frame on desktop/tablet, full-width on mobile */}
-        <div className='relative w-full min-h-[70vh] md:min-h-[80vh] overflow-hidden flex items-center justify-center'>
+        <div className='relative w-full min-h-[70vh] md:min-h-[80vh] flex items-center justify-center z-10'>
           {/* Portrait frame container — constrains video to natural portrait ratio */}
-          <div className='relative w-full min-h-[70vh] md:min-h-0 md:w-auto md:h-[90vh] md:max-w-[520px] lg:max-w-[600px] md:aspect-[3/4] lg:aspect-[9/16]'>
-            {/* Video container — receives clip-path, scale, blur, and cursor parallax */}
-            <div
-              ref={videoContainerRef}
-              className='absolute inset-0 overflow-hidden'
-              onMouseMove={(e) => handleMouseMove(e.nativeEvent)}
-              onMouseLeave={handleMouseLeave}>
+          <Reveal
+            variant='fade-up'
+            duration={1.5}
+            threshold={0}
+            className='relative w-full min-h-[70vh] md:min-h-0 md:w-auto md:h-[90vh] md:max-w-[520px] lg:max-w-[600px] md:aspect-3/4 lg:aspect-9/16 overflow-hidden shadow-2xl shadow-navy'>
+            {/* Video container */}
+            <div ref={videoContainerRef} className='absolute inset-0'>
               <video
                 ref={videoRef}
                 autoPlay
@@ -392,24 +405,60 @@ export default function AboutSection() {
               }}
             />
 
+            {/* ── NEW: Decorative 'X' and Typography ── */}
+            <div className='absolute inset-0 z-40 flex flex-col items-center justify-end pb-32 md:pb-48 pointer-events-none'>
+              {/* Box wrapper to constrain the X and Text */}
+              <div className='relative flex items-center justify-center w-full h-[250px] sm:h-[300px] md:h-[350px]'>
+                {/* The 'X' lines */}
+                <div className='absolute inset-0 flex items-center justify-center opacity-80 overflow-hidden'>
+                  <div
+                    className='absolute w-[150%] h-[2px] bg-gold/50 origin-center'
+                    style={{ transform: 'rotate(25deg)' }}
+                  />
+                  <div
+                    className='absolute w-[150%] h-[2px] bg-gold/50 origin-center'
+                    style={{ transform: 'rotate(-25deg)' }}
+                  />
+                </div>
+
+                {/* Typography positioned into the Top & Bottom V's of the X */}
+                <div className='absolute inset-0 flex flex-col items-center justify-center pointer-events-none'>
+                  {/* Top Text */}
+                  <div className='absolute top-0 sm:top-2 md:top-4 z-10'>
+                    <Reveal variant='fade-up' delay={0.3}>
+                      <span className='font-serif italic text-gold/90 text-3xl sm:text-4xl md:text-5xl lg:text-5xl tracking-wide opacity-90 mix-blend-overlay drop-shadow-md whitespace-nowrap'>
+                        L&apos;Art du
+                      </span>
+                    </Reveal>
+                  </div>
+
+                  {/* Bottom Text */}
+                  <div className='absolute bottom-0 sm:bottom-2 md:bottom-4 z-10'>
+                    <Reveal variant='scale-up' delay={0.5}>
+                      <span className='font-title text-cream/95 text-[12vw] sm:text-6xl md:text-7xl lg:text-[6rem] uppercase font-light tracking-[-0.05em] mix-blend-overlay drop-shadow-2xl leading-none'>
+                        Détail
+                      </span>
+                    </Reveal>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Corner accents — cinematic frame markers */}
             <div
               ref={cornerTLRef}
               className='absolute top-4 left-4 md:top-6 md:left-6 w-10 h-10 md:w-14 md:h-14 border-t-2 border-l-2 border-gold/40 z-20 pointer-events-none'
-              style={{ opacity: 0 }}
             />
             <div
               ref={cornerBRRef}
               className='absolute bottom-4 right-4 md:bottom-6 md:right-6 w-10 h-10 md:w-14 md:h-14 border-b-2 border-r-2 border-gold/40 z-20 pointer-events-none'
-              style={{ opacity: 0 }}
             />
-          </div>
+          </Reveal>
 
-          {/* ── Left panel — Headline + service tags (md+ only) ─────────── */}
-          <div
-            ref={leftPanelRef}
-            className='hidden md:flex absolute left-6 lg:left-[4%] xl:left-[8%] top-1/2 -translate-y-1/2 flex-col items-start gap-6 max-w-[240px] lg:max-w-[260px]'
-            style={{ opacity: 1 }}>
+          {/* ── Left panel — Headline + service tags (lg+ only) ─────────── */}
+          <Reveal
+            variant='fade-side'
+            className='hidden lg:flex absolute left-6 lg:left-[4%] xl:left-[8%] top-1/2 -translate-y-1/2 flex-col items-start gap-6 max-w-[240px] lg:max-w-[260px] z-20'>
             {/* Decorative line */}
             <div
               className='w-10 h-px'
@@ -417,34 +466,19 @@ export default function AboutSection() {
             />
 
             {/* Intro Text */}
-            <div className='flex flex-col gap-2 mb-2'>
-              <span className='text-sm lg:text-base font-title text-cream/90 tracking-wide font-light'>
-                Entrez dans notre univers
-              </span>
-              <span className='text-xs text-gold/80 italic font-light tracking-wider flex items-center gap-2'>
-                <div className='w-4 h-px bg-gold/50' />
-                Défiler pour découvrir
-              </span>
-            </div>
-
-            {/* Headline */}
             <div>
-              <span className='text-4xl lg:text-5xl font-title text-gold font-light leading-[0.85] tracking-[-1px] block mb-1'>
-                23
-              </span>
-              <span className='text-sm lg:text-base font-title text-gold/70 uppercase tracking-[0.15em] block mb-1'>
-                ans
-              </span>
-              <span className='text-sm lg:text-base font-title text-cream/50 leading-tight tracking-tight block'>
-                au service du style masculin
-              </span>
+              <h3 className='text-gold font-title text-2xl lg:text-3xl leading-[1.1] mb-2 font-light tracking-[-0.02em]'>
+                L&apos;Excellence
+                <br />
+                <span className='italic font-serif text-[1.15em] tracking-normal'>au Masculin</span>
+              </h3>
             </div>
 
             {/* Separator */}
             <div
               className='w-8 h-px'
               style={{
-                background: 'linear-gradient(to right, rgba(175,151,120,0.4), transparent)',
+                background: 'linear-gradient(to right, rgba(175,151,120,0.3), transparent)',
               }}
             />
 
@@ -464,13 +498,13 @@ export default function AboutSection() {
                 </span>
               ))}
             </div>
-          </div>
+          </Reveal>
 
-          {/* ── Right panel — Description text (md+ only) ─────────────────── */}
-          <div
-            ref={rightPanelRef}
-            className='hidden md:flex absolute right-6 lg:right-[6%] xl:right-[10%] top-1/2 -translate-y-1/2 flex-col items-start gap-5 max-w-[240px] lg:max-w-[280px]'
-            style={{ opacity: 1 }}>
+          {/* ── Right panel — Description text (lg+ only) ─────────────────── */}
+          <Reveal
+            variant='fade-side'
+            delay={0.2}
+            className='hidden lg:flex absolute right-6 lg:right-[6%] xl:right-[10%] top-1/2 -translate-y-1/2 flex-col items-start gap-5 max-w-[240px] lg:max-w-[280px] z-20'>
             {/* Decorative line */}
             <div
               className='w-10 h-px'
@@ -494,15 +528,16 @@ export default function AboutSection() {
             <p className='text-cream/55 text-[11px] lg:text-xs leading-[1.8] tracking-wide font-light italic'>
               Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
             </p>
-          </div>
+          </Reveal>
         </div>
 
-        {/* Experience badge — outside overflow-hidden to avoid clipping on mobile */}
-        <div className='flex absolute bottom-[3%] left-3 md:left-[calc(50%-260px)] lg:left-[calc(50%-300px)] z-30 items-center justify-center w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36'>
-          {/* Rotating text ring */}
-          <div
-            ref={badgeRingRef}
-            className='absolute inset-0 pointer-events-none will-change-transform'>
+        {/* Experience badge — positioned over the video corner */}
+        <Reveal
+          variant='scale-up'
+          delay={0.6}
+          className='flex absolute bottom-[10%] right-[5%] md:bottom-[5%] md:left-[calc(50%-280px)] lg:left-[calc(50%-340px)] z-30 items-center justify-center w-28 h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 pointer-events-none'>
+          {/* Rotating text ring tied to scroll */}
+          <motion.div className='absolute inset-0' style={{ rotate: badgeRotate }}>
             <svg viewBox='0 0 100 100' className='w-full h-full overflow-visible'>
               <path
                 id='badgeTextPath'
@@ -519,57 +554,69 @@ export default function AboutSection() {
                 </textPath>
               </text>
             </svg>
-          </div>
+          </motion.div>
 
           {/* Center static badge (Logo) */}
-          <div className='flex items-center justify-center w-[56px] h-[56px] md:w-[64px] md:h-[64px] relative z-10'>
+          <div className='flex items-center justify-center w-[64px] h-[64px] md:w-[72px] md:h-[72px] relative z-10'>
             <Image
               src={LOGOS.linstant.src}
               alt='L instant Barbier'
-              width={64}
-              height={64}
-              className='object-contain w-full h-full'
+              width={72}
+              height={72}
+              className='object-contain w-full h-full drop-shadow-2xl'
             />
           </div>
-        </div>
+        </Reveal>
       </div>
 
       {/* ── Creative editorial tagline below video ────────────────────── */}
-      <div className='relative z-10 text-center py-14 md:py-20 lg:py-24 px-6'>
-        {/* Decorative line */}
-        <div
-          className='about-para w-16 h-px mx-auto mb-8'
-          style={{
-            background: 'linear-gradient(to right, transparent, #AF9778, transparent)',
-          }}
-        />
-
+      <div className='relative z-10 text-center py-16 md:py-24 lg:py-32 px-6'>
         {/* Main creative tagline */}
-        <p className='about-para text-gold text-2xl md:text-3xl lg:text-4xl font-title font-light leading-[1.2] tracking-[-0.02em] max-w-2xl mx-auto mb-5'>
-          L&apos;art du geste,
-          <br className='hidden md:block' /> la précision du détail
-        </p>
+        <div className='max-w-3xl mx-auto mb-8'>
+          <TextReveal
+            variant='word'
+            duration={1.2}
+            stagger={0.12}
+            className='text-gold text-3xl md:text-5xl lg:text-6xl font-title font-light leading-[1.1] tracking-[-0.02em]'>
+            L'art du geste, la précision du détail
+          </TextReveal>
+        </div>
+
+        {/* Decorative line */}
+        <Reveal variant='scale-up' delay={0.4}>
+          <div
+            className='about-para w-24 h-px mx-auto mb-10'
+            style={{
+              background: 'linear-gradient(to right, transparent, #AF9778, transparent)',
+            }}
+          />
+        </Reveal>
 
         {/* Subtitle */}
-        <p className='about-para text-cream/55 text-sm md:text-base leading-[1.8] font-light tracking-wide max-w-lg mx-auto mb-6'>
-          Chaque coupe raconte une histoire. Chaque trait de lame est un acte de précision et
-          d&apos;élégance.
-        </p>
+        <Reveal variant='fade-up' delay={0.6}>
+          <p className='about-para text-cream/70 text-base md:text-lg lg:text-xl leading-[1.8] font-light tracking-wide max-w-2xl mx-auto mb-8'>
+            Chaque coupe raconte une histoire. Chaque trait de lame est un acte de précision et
+            d&apos;élégance.
+          </p>
+        </Reveal>
 
         {/* Signature-like accent */}
-        <div className='about-para flex items-center justify-center gap-3'>
+        <Reveal
+          variant='blur-in'
+          delay={0.8}
+          className='about-para flex items-center justify-center gap-4'>
           <span
-            className='w-10 h-px'
+            className='w-12 h-px'
             style={{ background: 'linear-gradient(to right, transparent, rgba(175,151,120,0.5))' }}
           />
-          <span className='text-gold/50 text-[9px] md:text-[10px] uppercase tracking-[0.4em] font-light italic'>
+          <span className='text-gold text-xs md:text-sm uppercase tracking-[0.4em] font-light italic'>
             Depuis 2002 • Paris le Marais
           </span>
           <span
-            className='w-10 h-px'
+            className='w-12 h-px'
             style={{ background: 'linear-gradient(to left, transparent, rgba(175,151,120,0.5))' }}
           />
-        </div>
+        </Reveal>
       </div>
       {/* ── Benefit cards + CTA below cinematic video ────────────────────── */}
       <div className='max-w-7xl mx-auto px-4 md:px-6 lg:px-12 mt-16 md:mt-24'>

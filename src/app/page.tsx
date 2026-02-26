@@ -10,7 +10,6 @@ import { useState, useEffect, useRef } from 'react'
 import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
 import { motion, useReducedMotion } from 'framer-motion'
-import { useParallax, useParallaxStyle, useParallaxXY } from '@/hooks/useParallax'
 import { LOGOS, BACKGROUNDS } from '@/lib/images'
 import GoogleMap from '@/components/GoogleMap'
 import GalleryLightbox from '@/components/GalleryLightbox'
@@ -34,33 +33,29 @@ export default function Home() {
   const avisSectionRef = useRef<HTMLElement>(null)
   const ctaSectionRef = useRef<HTMLElement>(null)
 
-  // ── GSAP parallax refs — lazy-load GSAP, respect prefers-reduced-motion ─
-  const heroBgRef = useParallax<HTMLDivElement>(0.25)
-  const atmosphereBgRef = useParallax<HTMLDivElement>(0.3)
-  const interiorBgRef = useParallax<HTMLDivElement>(0.4)
-  const ctaBgRef = useParallax<HTMLDivElement>(0.2, 1.5)
+  // ── GSAP parallax refs (Disabled for performance) ─
+  const heroBgRef = useRef<HTMLDivElement>(null)
+  const atmosphereBgRef = useRef<HTMLDivElement>(null)
+  const interiorBgRef = useRef<HTMLDivElement>(null)
+  const ctaBgRef = useRef<HTMLDivElement>(null)
 
-  // ── Hero section parallax layers ────────────────────────────────────────
-  const heroOrb1Y = useParallaxStyle(heroSectionRef, { outputRange: [-80, 80] })
-  const heroOrb2Y = useParallaxStyle(heroSectionRef, { outputRange: [60, -60] })
-  const heroGridY = useParallaxStyle(heroSectionRef, { outputRange: [-20, 40] })
-  const heroDecorY = useParallaxStyle(heroSectionRef, { outputRange: [30, -50] })
+  // ── Parallax layers (Static fallback for performance) ────────────────────
+  const heroOrb1Y = 0
+  const heroOrb2Y = 0
+  const heroGridY = 0
+  const heroDecorY = 0
 
-  // ── Atmosphère section parallax layers ──────────────────────────────────
-  const atmosphereOrb1 = useParallaxXY(atmosphereSectionRef, [-15, 15], [-60, 40])
-  const atmosphereOrb2 = useParallaxXY(atmosphereSectionRef, [12, -12], [40, -60])
+  const atmosphereOrb1 = { x: 0, y: 0 }
+  const atmosphereOrb2 = { x: 0, y: 0 }
 
-  // ── Galerie section parallax layers ─────────────────────────────────────
-  const galerieWatermarkY = useParallaxStyle(galerieSectionRef, { outputRange: [-50, 70] })
-  const galerieOrb1 = useParallaxXY(galerieSectionRef, [-8, 8], [-40, 40])
+  const galerieWatermarkY = 0
+  const galerieOrb1 = { x: 0, y: 0 }
 
-  // ── Avis section parallax layers ────────────────────────────────────────
-  const avisWatermarkY = useParallaxStyle(avisSectionRef, { outputRange: [-60, 60] })
-  const avisOrb1 = useParallaxXY(avisSectionRef, [10, -10], [-50, 50])
+  const avisWatermarkY = 0
+  const avisOrb1 = { x: 0, y: 0 }
 
-  // ── CTA section parallax layers ─────────────────────────────────────────
-  const ctaOrb1Y = useParallaxStyle(ctaSectionRef, { outputRange: [-70, 50] })
-  const ctaOrb2Y = useParallaxStyle(ctaSectionRef, { outputRange: [50, -70] })
+  const ctaOrb1Y = 0
+  const ctaOrb2Y = 0
 
   // State for gallery count
   const [galleryCount, setGalleryCount] = useState(6)
@@ -94,12 +89,9 @@ export default function Home() {
           {/* ── Ken Burns Background ─────────────────────────────────────────── */}
           <div className='absolute inset-0 overflow-hidden'>
             <div ref={heroBgRef} className='absolute inset-0 scale-[1.15]'>
-              <motion.div
+              <div
                 className='absolute inset-0 bg-cover bg-center'
                 style={{ backgroundImage: `url('${BACKGROUNDS.homeHero.src}')` }}
-                initial={{ scale: 1.08 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 12, ease: [0.25, 0.46, 0.45, 0.94] }}
               />
               {/* Gradient overlay — left heavy for text legibility */}
               <div

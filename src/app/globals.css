@@ -690,5 +690,17 @@
   width: 100%;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   HORIZONTAL MARQUEE ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
 
+@keyframes marquee-horizontal-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-horizontal-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
 
