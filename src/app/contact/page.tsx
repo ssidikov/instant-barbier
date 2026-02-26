@@ -32,7 +32,7 @@ function ContactCard({
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.16, 1, 0.3, 1], // power3.out
+        ease: [0.16, 1, 0.3, 1] as const, // power3.out
         delay,
         staggerChildren: 0.1,
         delayChildren: delay + 0.2, // start staggering slightly after the card begins entering
@@ -46,7 +46,7 @@ function ContactCard({
       opacity: 1,
       y: 0,
       filter: 'blur(0px)',
-      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
     },
   }
 
