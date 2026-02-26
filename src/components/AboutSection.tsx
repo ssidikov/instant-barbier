@@ -357,7 +357,7 @@ export default function AboutSection() {
           <div className='translate-y-[10vh] md:translate-y-[15vh] whitespace-nowrap opacity-[0.03] md:opacity-[0.04]'>
             <span
               className='font-title text-[15vw] md:text-[8vw] lg:text-[10vw] uppercase tracking-tighter text-transparent block animate-[marquee-horizontal-right_40s_linear_infinite]'
-              style={{ WebkitTextStroke: '1px #AF9778', textStroke: '1px #AF9778' }}>
+              style={{ WebkitTextStroke: '1px #AF9778' }}>
               ABSOLUE • ABSOLUE • ABSOLUE • ABSOLUE • ABSOLUE •
             </span>
           </div>
