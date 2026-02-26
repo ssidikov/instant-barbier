@@ -43,6 +43,16 @@ const nextConfig: NextConfig = {
         source: '/(.*)',
         headers: securityHeaders,
       },
+      // Force re-fetch for all HTML requests to avoid returning stale pages
+      {
+        source: '/:path((?!_next|images|icons|api).*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+        ],
+      },
       {
         source: '/icons/:path*',
         headers: [

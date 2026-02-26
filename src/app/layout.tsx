@@ -150,6 +150,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel='preconnect' href='https://widget.planity.com' />
         <link rel='dns-prefetch' href='https://widget.planity.com' />
+        <meta httpEquiv='Cache-Control' content='no-cache, no-store, must-revalidate' />
+        <meta httpEquiv='Pragma' content='no-cache' />
+        <meta httpEquiv='Expires' content='0' />
       </head>
       <body className='bg-navy text-cream font-body antialiased flex flex-col min-h-screen'>
         <script
