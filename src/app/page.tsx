@@ -93,7 +93,7 @@ export default function Home() {
           className='relative min-h-screen flex items-center overflow-hidden'>
           {/* ── Ken Burns Background ─────────────────────────────────────────── */}
           <div className='absolute inset-0 overflow-hidden'>
-            <div ref={heroBgRef} className='absolute inset-0 scale-[1.15] will-change-transform'>
+            <div ref={heroBgRef} className='absolute inset-0 scale-[1.15]'>
               <motion.div
                 className='absolute inset-0 bg-cover bg-center'
                 style={{ backgroundImage: `url('${BACKGROUNDS.homeHero.src}')` }}
@@ -618,7 +618,7 @@ export default function Home() {
           {/* Background — GSAP parallax replaces CSS bg-fixed */}
           <div
             ref={atmosphereBgRef}
-            className='absolute inset-0 scale-[1.2] bg-cover bg-center will-change-transform'
+            className='absolute inset-0 scale-[1.2] bg-cover bg-center'
             style={{ backgroundImage: `url('${BACKGROUNDS.homeAtmosphere.src}')` }}
           />
           <div className='absolute inset-0 bg-dark/85' />
@@ -973,7 +973,7 @@ export default function Home() {
           {/* Background — GSAP parallax replaces CSS bg-fixed */}
           <div
             ref={interiorBgRef}
-            className='absolute inset-0 scale-[1.2] bg-cover bg-center will-change-transform'
+            className='absolute inset-0 scale-[1.2] bg-cover bg-center'
             style={{ backgroundImage: `url('${BACKGROUNDS.homeInterior.src}')` }}
           />
           <div className='absolute inset-0 bg-navy/60' />
@@ -1274,7 +1274,7 @@ export default function Home() {
             {/* GSAP parallax background */}
             <div
               ref={ctaBgRef}
-              className='absolute inset-0 scale-[1.15] bg-cover bg-center will-change-transform'
+              className='absolute inset-0 scale-[1.15] bg-cover bg-center'
               style={{ backgroundImage: `url('${BACKGROUNDS.homeCta.src}')` }}
             />
             <div className='absolute inset-0 bg-gradient-to-b from-navy/65 via-dark/55 to-navy/65' />

@@ -19,7 +19,6 @@
 
 @layer base {
 
-  /* Native smooth scrolling - better performance than JS libraries */
   html {
     scroll-behavior: smooth;
     overflow-y: scroll;
@@ -630,7 +629,6 @@
 
 .touch-button {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
 }
 
 .touch-button:active {
@@ -663,7 +661,6 @@
 /* Smooth image zoom on touch */
 .touch-image-zoom {
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
 }
 
 .touch-image-zoom:active {

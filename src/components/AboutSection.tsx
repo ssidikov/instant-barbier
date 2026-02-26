@@ -51,7 +51,6 @@ export default function AboutSection() {
   const cinematicPinRef = useRef<HTMLDivElement>(null)
   const videoContainerRef = useRef<HTMLDivElement>(null)
   const cinematicOverlayRef = useRef<HTMLDivElement>(null)
-  const cinematicTextRef = useRef<HTMLDivElement>(null)
   const cornerTLRef = useRef<HTMLDivElement>(null)
   const cornerBRRef = useRef<HTMLDivElement>(null)
   const leftPanelRef = useRef<HTMLDivElement>(null)
@@ -75,7 +74,8 @@ export default function AboutSection() {
   // ── IntersectionObserver for video autoplay/pause ──────────────────────────
   useEffect(() => {
     const video = videoRef.current
-    if (!video) return
+    const container = videoContainerRef.current
+    if (!video || !container) return
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -86,9 +86,9 @@ export default function AboutSection() {
           }
         })
       },
-      { threshold: 0.3 },
+      { threshold: 0.1 },
     )
-    obs.observe(video)
+    obs.observe(container)
     return () => obs.disconnect()
   }, [])
 
@@ -111,7 +111,6 @@ export default function AboutSection() {
         videoContainerRef.current.style.opacity = '1'
       }
       if (cinematicOverlayRef.current) cinematicOverlayRef.current.style.opacity = '0'
-      if (cinematicTextRef.current) cinematicTextRef.current.style.opacity = '0'
       if (leftPanelRef.current) leftPanelRef.current.style.opacity = '1'
       if (rightPanelRef.current) rightPanelRef.current.style.opacity = '1'
       return
@@ -237,192 +236,82 @@ export default function AboutSection() {
           )
 
         // ═════════════════════════════════════════════════════════════════════
-        // ── 4. CINEMATIC VIDEO — Scroll-driven 3-phase reveal ───────────────
+        // ── 4. CINEMATIC VIDEO — Soft reveal on viewport entry ────────────────
         // ═════════════════════════════════════════════════════════════════════
+        // No pinning, no scroll-to-watch — just a beautiful one-shot reveal
 
         if (cinematicPinRef.current && videoContainerRef.current) {
-          if (!isMobile) {
-            // ── DESKTOP: Pinned scroll-driven experience ─────────────────────
-            const cinematicTl = gsap.timeline({
-              scrollTrigger: {
-                trigger: cinematicPinRef.current,
-                start: 'top top',
-                end: '+=300%', // 3× viewport height of scroll distance
-                pin: true,
-                scrub: 1.2,
-                anticipatePin: 1,
+          const revealTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: cinematicPinRef.current,
+              start: isMobile ? 'top 80%' : 'top 65%',
+              toggleActions: 'play none none none',
+            },
+          })
+
+          // Video: scale down, unblur, unmask — soft cinematic entrance
+          revealTl
+            .fromTo(
+              videoContainerRef.current,
+              {
+                scale: 1.06,
+                filter: 'blur(4px) brightness(0.7)',
+                opacity: 0,
+                clipPath: isMobile ? 'inset(15% 18%)' : 'inset(20% 24%)',
               },
-            })
-
-            // PHASE 1 — Atmospheric Entrance (0% → 30% of timeline)
-            // Video: blurred, scaled up, dim behind dark overlay
-            cinematicTl
-              .fromTo(
-                videoContainerRef.current,
-                {
-                  scale: 1.12,
-                  filter: 'blur(6px) brightness(0.6)',
-                  opacity: 0.3,
-                  clipPath: 'inset(28% 32%)',
-                },
-                {
-                  scale: 1.06,
-                  filter: 'blur(2px) brightness(0.85)',
-                  opacity: 0.8,
-                  clipPath: 'inset(28% 32%)',
-                  duration: 0.3,
-                  ease: 'power2.inOut',
-                },
-                0,
-              )
-              // Overlay darkens then starts to lift
-              .fromTo(
-                cinematicOverlayRef.current,
-                { opacity: 0.7 },
-                { opacity: 0.35, duration: 0.3, ease: 'power2.inOut' },
-                0,
-              )
-              // Atmospheric text fades in then out
-              .fromTo(
-                cinematicTextRef.current,
-                { opacity: 0, y: 20 },
-                { opacity: 1, y: 0, duration: 0.15, ease: 'power2.out' },
-                0.05,
-              )
-              .to(
-                cinematicTextRef.current,
-                { opacity: 0, y: -15, duration: 0.1, ease: 'power2.in' },
-                0.22,
-              )
-
-            // PHASE 2 — Architectural Reveal (30% → 65% of timeline)
-            // Mask expands from small centered rectangle to full viewport
-            cinematicTl
-              .to(
-                videoContainerRef.current,
-                {
-                  clipPath: 'inset(0% 0%)',
-                  scale: 1.02,
-                  filter: 'blur(0px) brightness(0.95)',
-                  opacity: 1,
-                  duration: 0.35,
-                  ease: 'power2.inOut',
-                },
-                0.3,
-              )
-              // Overlay continues fading
-              .to(
-                cinematicOverlayRef.current,
-                { opacity: 0.08, duration: 0.35, ease: 'power2.inOut' },
-                0.3,
-              )
-              // Corner accents animate in at midpoint
-              .fromTo(
-                cornerTLRef.current,
-                { opacity: 0, scale: 0.5 },
-                { opacity: 1, scale: 1, duration: 0.15, ease: 'power2.out' },
-                0.5,
-              )
-              .fromTo(
-                cornerBRRef.current,
-                { opacity: 0, scale: 0.5 },
-                { opacity: 1, scale: 1, duration: 0.15, ease: 'power2.out' },
-                0.55,
-              )
-
-            // PHASE 3 — Immersive Activation (65% → 100%)
-            // Final zoom settle, shadow softens, overlay gone
-            cinematicTl
-              .to(
-                videoContainerRef.current,
-                {
-                  scale: 1,
-                  filter: 'blur(0px) brightness(1)',
-                  duration: 0.35,
-                  ease: 'power2.out',
-                },
-                0.65,
-              )
-              .to(
-                cinematicOverlayRef.current,
-                { opacity: 0, duration: 0.3, ease: 'power2.out' },
-                0.65,
-              )
-
-            // Flanking text panels — slide in from sides during Phase 3
-            if (leftPanelRef.current) {
-              cinematicTl.fromTo(
-                leftPanelRef.current,
-                { opacity: 0, x: -40, filter: 'blur(6px)' },
-                {
-                  opacity: 1,
-                  x: 0,
-                  filter: 'blur(0px)',
-                  duration: 0.3,
-                  ease: 'power3.out',
-                },
-                0.72,
-              )
-            }
-            if (rightPanelRef.current) {
-              cinematicTl.fromTo(
-                rightPanelRef.current,
-                { opacity: 0, x: 40, filter: 'blur(6px)' },
-                {
-                  opacity: 1,
-                  x: 0,
-                  filter: 'blur(0px)',
-                  duration: 0.3,
-                  ease: 'power3.out',
-                },
-                0.78,
-              )
-            }
-          } else {
-            // ── MOBILE: One-shot reveal on viewport entry (no pinning) ───────
-            const mobileTl = gsap.timeline({
-              scrollTrigger: {
-                trigger: cinematicPinRef.current,
-                start: 'top 75%',
-                toggleActions: 'play none none none',
+              {
+                scale: 1,
+                filter: 'blur(0px) brightness(1)',
+                opacity: 1,
+                clipPath: 'inset(0% 0%)',
+                duration: 1.8,
+                ease: 'power3.out',
               },
-            })
+            )
+            // Overlay lifts away
+            .to(cinematicOverlayRef.current, { opacity: 0, duration: 1.4, ease: 'power2.out' }, 0.2)
+            // Corner accents slide in
+            .fromTo(
+              cornerTLRef.current,
+              { opacity: 0, scale: 0.5 },
+              { opacity: 1, scale: 1, duration: 0.7, ease: 'power2.out' },
+              0.8,
+            )
+            .fromTo(
+              cornerBRRef.current,
+              { opacity: 0, scale: 0.5 },
+              { opacity: 1, scale: 1, duration: 0.7, ease: 'power2.out' },
+              0.9,
+            )
 
-            mobileTl
-              .fromTo(
-                videoContainerRef.current,
-                {
-                  scale: 1.08,
-                  filter: 'blur(4px) brightness(0.7)',
-                  opacity: 0,
-                  clipPath: 'inset(20% 24%)',
-                },
-                {
-                  scale: 1,
-                  filter: 'blur(0px) brightness(1)',
-                  opacity: 1,
-                  clipPath: 'inset(0% 0%)',
-                  duration: 1.6,
-                  ease: 'power3.out',
-                },
-              )
-              .to(
-                cinematicOverlayRef.current,
-                { opacity: 0, duration: 1.2, ease: 'power2.out' },
-                0.3,
-              )
-              .fromTo(
-                cornerTLRef.current,
-                { opacity: 0, scale: 0.5 },
-                { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out' },
-                0.8,
-              )
-              .fromTo(
-                cornerBRRef.current,
-                { opacity: 0, scale: 0.5 },
-                { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out' },
-                0.9,
-              )
+          // Flanking text panels — soft slide in (desktop only)
+          if (!isMobile && leftPanelRef.current) {
+            revealTl.fromTo(
+              leftPanelRef.current,
+              { opacity: 0, x: -30, filter: 'blur(4px)' },
+              {
+                opacity: 1,
+                x: 0,
+                filter: 'blur(0px)',
+                duration: 1.0,
+                ease: 'power3.out',
+              },
+              1.0,
+            )
+          }
+          if (!isMobile && rightPanelRef.current) {
+            revealTl.fromTo(
+              rightPanelRef.current,
+              { opacity: 0, x: 30, filter: 'blur(4px)' },
+              {
+                opacity: 1,
+                x: 0,
+                filter: 'blur(0px)',
+                duration: 1.0,
+                ease: 'power3.out',
+              },
+              1.1,
+            )
           }
         }
 
@@ -859,26 +748,27 @@ export default function AboutSection() {
           CINEMATIC VIDEO — Scroll-driven reveal experience
           Scrolling = entering the salon
       ═══════════════════════════════════════════════════════════════════════ */}
-      <div ref={cinematicPinRef} className='relative w-full' style={{ minHeight: '100vh' }}>
+      <div ref={cinematicPinRef} className='relative w-full'>
         {/* Video viewport — centered portrait frame on desktop/tablet, full-width on mobile */}
-        <div className='relative w-full h-screen overflow-hidden flex items-center justify-center'>
+        <div className='relative w-full min-h-[70vh] md:min-h-[80vh] overflow-hidden flex items-center justify-center'>
           {/* Portrait frame container — constrains video to natural portrait ratio */}
-          <div className='relative w-full h-full md:w-auto md:h-[90vh] md:max-w-[520px] lg:max-w-[600px] md:aspect-[3/4] lg:aspect-[9/16]'>
+          <div className='relative w-full min-h-[70vh] md:min-h-0 md:w-auto md:h-[90vh] md:max-w-[520px] lg:max-w-[600px] md:aspect-[3/4] lg:aspect-[9/16]'>
             {/* Video container — receives clip-path, scale, blur, and cursor parallax */}
             <div
               ref={videoContainerRef}
-              className='absolute inset-0 will-change-[transform,clip-path] overflow-hidden'
+              className='absolute inset-0 overflow-hidden'
               style={{
-                clipPath: 'inset(28% 32%)',
-                transform: 'scale(1.12)',
-                filter: 'blur(6px) brightness(0.6)',
-                opacity: 0.3,
+                clipPath: 'inset(20% 24%)',
+                transform: 'scale(1.06)',
+                filter: 'blur(4px) brightness(0.7)',
+                opacity: 0,
                 transition: 'transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94)',
               }}
               onMouseMove={(e) => handleMouseMove(e.nativeEvent)}
               onMouseLeave={handleMouseLeave}>
               <video
                 ref={videoRef}
+                autoPlay
                 loop
                 muted
                 playsInline
@@ -907,32 +797,6 @@ export default function AboutSection() {
                 opacity: 0.7,
               }}
             />
-
-            {/* Atmospheric text — visible during Phase 1 only */}
-            <div
-              ref={cinematicTextRef}
-              className='absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none'>
-              <div className='text-center'>
-                <div
-                  className='w-12 h-px mx-auto mb-6'
-                  style={{
-                    background: 'linear-gradient(to right, transparent, #AF9778, transparent)',
-                  }}
-                />
-                <p className='text-gold/80 text-[10px] md:text-xs uppercase tracking-[0.5em] font-light mb-3'>
-                  Entrez dans notre univers
-                </p>
-                <p className='text-cream/40 text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-light'>
-                  Défiler pour découvrir
-                </p>
-                <div
-                  className='w-12 h-px mx-auto mt-6'
-                  style={{
-                    background: 'linear-gradient(to right, transparent, #AF9778, transparent)',
-                  }}
-                />
-              </div>
-            </div>
 
             {/* Corner accents — cinematic frame markers */}
             <div
@@ -1065,6 +929,43 @@ export default function AboutSection() {
         </div>
       </div>
 
+      {/* ── Creative editorial tagline below video ────────────────────── */}
+      <div className='relative z-10 text-center py-14 md:py-20 lg:py-24 px-6'>
+        {/* Decorative line */}
+        <div
+          className='about-para w-16 h-px mx-auto mb-8 opacity-0'
+          style={{
+            background: 'linear-gradient(to right, transparent, #AF9778, transparent)',
+          }}
+        />
+
+        {/* Main creative tagline */}
+        <p className='about-para text-gold text-2xl md:text-3xl lg:text-4xl font-title font-light leading-[1.2] tracking-[-0.02em] max-w-2xl mx-auto mb-5 opacity-0'>
+          L&apos;art du geste,
+          <br className='hidden md:block' /> la précision du détail
+        </p>
+
+        {/* Subtitle */}
+        <p className='about-para text-cream/55 text-sm md:text-base leading-[1.8] font-light tracking-wide max-w-lg mx-auto mb-6 opacity-0'>
+          Chaque coupe raconte une histoire. Chaque trait de lame est un acte de précision et
+          d&apos;élégance.
+        </p>
+
+        {/* Signature-like accent */}
+        <div className='about-para flex items-center justify-center gap-3 opacity-0'>
+          <span
+            className='w-10 h-px'
+            style={{ background: 'linear-gradient(to right, transparent, rgba(175,151,120,0.5))' }}
+          />
+          <span className='text-gold/50 text-[9px] md:text-[10px] uppercase tracking-[0.4em] font-light italic'>
+            Depuis 2002 • Paris le Marais
+          </span>
+          <span
+            className='w-10 h-px'
+            style={{ background: 'linear-gradient(to left, transparent, rgba(175,151,120,0.5))' }}
+          />
+        </div>
+      </div>
       {/* ── Benefit cards + CTA below cinematic video ────────────────────── */}
       <div className='max-w-7xl mx-auto px-4 md:px-6 lg:px-12 mt-16 md:mt-24'>
         <div className='grid md:grid-cols-2 gap-6 md:gap-8 items-stretch'>

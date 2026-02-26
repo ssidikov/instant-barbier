@@ -23,6 +23,9 @@ export function useParallax<T extends HTMLElement>(speed = 0.25, scrub = 1.2) {
     // Bail immediately under reduced-motion preference
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
+    // Skip parallax on mobile — eliminates competing scroll listeners that cause touch jank
+    if (window.innerWidth < 768) return
+
     let gsap: typeof import('gsap').gsap
     let ScrollTrigger: typeof import('gsap/ScrollTrigger').ScrollTrigger
     let ctx: ReturnType<typeof gsap.context> | null = null
@@ -103,7 +106,6 @@ export function useParallaxStyle(
           ...(typeof springConfig === 'object' ? springConfig : {}),
         }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const smoothed = useSpring(raw, springOpts ?? { stiffness: 100, damping: 30 })
 
   return springConfig !== false ? smoothed : raw

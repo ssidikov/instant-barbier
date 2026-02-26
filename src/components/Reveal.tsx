@@ -53,7 +53,7 @@ export default function Reveal({
         // the required trigger height (e.g. 15% up the screen), leaving elements invisible forever.
         // By forcing the trigger to 100% (absolute bottom of screen) for touch devices, we guarantee they fire!
         const isMobile = window.innerWidth < 1024
-        const resolvedThreshold = isMobile ? 100 : 100 - threshold * 100
+        const resolvedThreshold = isMobile ? 95 : 100 - threshold * 100
         const startTrigger = `top ${resolvedThreshold}%`
 
         let fromState: gsap.TweenVars = {}
@@ -64,7 +64,8 @@ export default function Reveal({
           scrollTrigger: {
             trigger: ref.current,
             start: startTrigger,
-            toggleActions: 'play none none reverse', // Smoothly reverses on scroll up
+            toggleActions: 'play none none reverse',
+            fastScrollEnd: true, // Snap to final state on fast scroll (prevents stuck animations)
           },
         }
 

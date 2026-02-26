@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 
@@ -8,7 +8,7 @@ export default function PageLoader() {
   const pathname = usePathname()
   const [phase, setPhase] = useState<'visible' | 'fading' | 'hidden'>('visible')
   const isFirstLoad = useRef(true)
-  const prevPathname = useRef(pathname)
+  const [prevPathname, setPrevPathname] = useState(pathname)
 
   // ── Initial page load ─────────────────────────────────────────────────
   useEffect(() => {
@@ -23,13 +23,15 @@ export default function PageLoader() {
     }
   }, [])
 
-  // ── Navigation between pages ──────────────────────────────────────────
+  // ── Navigation between pages (Derived State Pattern) ─────────────────
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname)
+    setPhase('visible')
+  }
+
+  // Handle the timeouts after the component has rendered
   useEffect(() => {
     if (isFirstLoad.current) return
-    if (pathname === prevPathname.current) return
-
-    prevPathname.current = pathname
-    setPhase('visible')
 
     const fadeTimer = setTimeout(() => setPhase('fading'), 400)
     const hideTimer = setTimeout(() => setPhase('hidden'), 900)
