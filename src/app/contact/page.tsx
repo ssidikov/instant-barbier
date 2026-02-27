@@ -340,7 +340,7 @@ export default function ContactPage() {
                 <Reveal
                   variant='scale-up'
                   delay={0.2}
-                  className='relative overflow-hidden border border-gold/10 aspect-4/3 group'>
+                  className='relative overflow-hidden border border-gold/10 w-full h-[350px] md:h-auto md:aspect-4/3 group'>
                   <GoogleMap hideLink={true} className='w-full h-full' />
                 </Reveal>
 
