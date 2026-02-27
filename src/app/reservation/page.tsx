@@ -191,8 +191,22 @@ function ReservationContent() {
           background-color: #07181e !important;
         }
 
-        /* ── Service set module cards (category containers) ── */
+        /* ── Force Box Sizing & Max Width to prevent mobile overflow ── */
+        #planity-widget-container * {
+          box-sizing: border-box !important;
+          max-width: 100% !important;
+        }
 
+        /* Prevent long text (like emails) from breaking layout */
+        [class*='planity_'],
+        div[class*='_card'],
+        div[class*='_wrapper'] {
+          overflow-wrap: break-word !important;
+          word-break: break-word !important;
+          white-space: normal !important;
+        }
+
+        /* ── Service set module cards (category containers) ── */
         [class*='service_set_module_card'],
         [class*='service_set_module'],
         [class*='service_module'],
@@ -206,19 +220,21 @@ function ReservationContent() {
           border-radius: 6px !important;
           margin: 0 !important;
           transition: all 0.3s ease !important;
-          // width: 100% !important;
         }
 
         [class*='_wrapper'] {
-          padding: 20px !important;
+          padding: 16px !important;
         }
 
         /* ── Mobile: Services container width ── */
         @media (max-width: 768px) {
           [class*='services-module_servicesContainer'],
-          .services-module_servicesContainer {
-            width: 90% !important;
-            max-width: 90% !important;
+          .services-module_servicesContainer,
+          #planity-widget-container > div {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
           }
         }
 
@@ -229,6 +245,9 @@ function ReservationContent() {
           border-radius: 6px !important;
           margin-bottom: 8px !important;
           transition: all 0.3s ease !important;
+          box-sizing: border-box !important;
+          max-width: 100% !important;
+          width: 100% !important;
         }
         .planity_ui_item-list-element:hover {
           border-color: #af9778 !important;
@@ -239,10 +258,10 @@ function ReservationContent() {
         .planity_ui_item-list-element > *,
         .planity_ui_item-list-element div,
         .planity_ui_item-list-element span,
-        .planity_ui_item-list-element p {
+        .planity_ui_item-list-element p,
+        * {
           border: none !important;
           border-top: none !important;
-          // border-bottom: none !important;
           border-left: none !important;
           border-right: none !important;
         }
@@ -1248,7 +1267,7 @@ function ReservationContent() {
           color: rgba(244, 241, 236, 0.5) !important;
         }
 
-        /* ── Auth form inputs ── */
+        /* ── Auth form inputs & textareas ── */
         [class*='booking_auth-module'] input,
         [class*='authentication-module'] input,
         [class*='appointment_user-module'] input,
@@ -1259,7 +1278,9 @@ function ReservationContent() {
         input[id*='signup-comp'],
         input[id*='input-phone'],
         input[type='email'],
-        input[type='tel'] {
+        input[type='tel'],
+        textarea[id*='comment-form-textarea'],
+        textarea {
           background-color: transparent !important;
           border: none !important;
           color: #f4f1ec !important;
@@ -1273,7 +1294,9 @@ function ReservationContent() {
         [class*='signed_out-module'] input:focus,
         [class*='input-module_container'] input:focus,
         [class*='input_password-module_container'] input:focus,
-        .planity-inputs input:focus {
+        .planity-inputs input:focus,
+        textarea[id*='comment-form-textarea']:focus,
+        textarea:focus {
           border: none !important;
           box-shadow: none !important;
           outline: none !important;
@@ -1286,17 +1309,21 @@ function ReservationContent() {
         [class*='signed_out-module'] input::placeholder,
         [class*='input-module_container'] input::placeholder,
         [class*='input_password-module_container'] input::placeholder,
-        .planity-inputs input::placeholder {
+        .planity-inputs input::placeholder,
+        textarea[id*='comment-form-textarea']::placeholder,
+        textarea::placeholder {
           color: rgba(244, 241, 236, 0.4) !important;
           -webkit-text-fill-color: rgba(244, 241, 236, 0.4) !important;
         }
 
-        /* ── Input containers ── */
+        /* ── Input containers & Textarea containers ── */
         [class*='input-module_container'],
         [class*='input_password-module_container'],
+        [class*='textarea-module_container'],
         .planity-inputs,
         div[class*='input-module_container'],
         div[class*='input_password-module_container'],
+        div[class*='textarea-module_container'],
         .input-module_container-AV5X\+,
         .input_password-module_container-8YR\+4 {
           background-color: rgba(20, 34, 51, 0.8) !important;
@@ -1306,6 +1333,7 @@ function ReservationContent() {
         }
         [class*='input-module_container']:focus-within,
         [class*='input_password-module_container']:focus-within,
+        [class*='textarea-module_container']:focus-within,
         .planity-inputs:focus-within {
           border: none !important;
           box-shadow: 0 0 0 2px rgba(175, 151, 120, 0.2) !important;
@@ -1547,7 +1575,7 @@ function ReservationContent() {
         .inline_link-module_inlineLink-Ex2nc,
         .authentication-module_recaptchaLink-dNHZJ {
           color: #af9778 !important;
-          text-decoration: underline !important;
+          // text-decoration: underline !important;
           transition: all 0.3s ease !important;
         }
         [class*='inline_link-module_inlineLink']:hover,
@@ -1592,6 +1620,12 @@ function ReservationContent() {
           background: #c9ad8c !important;
           box-shadow: 0 0 30px rgba(175, 151, 120, 0.4) !important;
           transform: scale(1.02) !important;
+        }
+
+        /* ── Prevent Primary buttons from wrapping text (e.g. PRENDRE UN RDV) ── */
+        [class*='button-module_primary'] {
+          white-space: nowrap !important;
+          min-width: max-content !important;
         }
 
         /* ── Tertiary auth button (Créer mon compte) ── */
@@ -1675,6 +1709,51 @@ function ReservationContent() {
           margin-bottom: 16px !important;
         }
 
+        /* ── Aggressive Mobile Overflow Wrappers (Signed-In & Payment Cards) ── */
+        [class*='signed_in-module_card'],
+        [class*='appointment_payment-modules_card'],
+        [class*='online_payment_wrapper'] {
+          width: 100% !important;
+          max-width: 100% !important;
+          overflow: hidden !important;
+        }
+
+        /* Force flex children to shrink and wrap */
+        [class*='signed_in-module_card'] *,
+        [class*='appointment_payment-modules_card'] *,
+        [class*='online_payment_wrapper'] * {
+          min-width: 0 !important;
+          overflow-wrap: break-word !important;
+          white-space: normal !important;
+        }
+
+        /* Force rows with Email + Modifier to wrap */
+        [class*='signed_in-module_card'] div {
+          flex-wrap: wrap !important;
+        }
+
+        /* ── Signed In Card Content Layout (Fix Text & Button Placement globally) ── */
+        [class*='selected_user_description'] {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: space-between !important;
+          align-items: flex-start !important;
+          flex-wrap: nowrap !important; /* Prevent button from dropping below if possible */
+          width: 100% !important;
+        }
+
+        /* Push the modifier button to the far right */
+        [class*='selected_user_modifyButton'] {
+          margin-left: auto !important;
+          flex-shrink: 0 !important; /* Prevent the button from squishing */
+        }
+
+        /* ── Price and Totals ── */
+        [class*='service_item-module_total'],
+        [class*='service_item_module_total'] {
+          color: #f4f1ec !important; /* Theme Light/White color */
+        }
+
         /* ── Mobile adjustments ── */
         @media (max-width: 768px) {
           /* Reduce generic wrapper padding */
@@ -1683,8 +1762,43 @@ function ReservationContent() {
           [class*='service_set-module_card'] {
             padding: 12px 0px !important;
           }
-          [class*='service_item-module_card'] {
+          [class*='service_item-module_card'],
+          [class*='signed_in-module_card'] {
             padding-left: 0 !important;
+            padding-right: 0 !important;
+          }
+
+          /* Prevent specific inner service rows from overflowing their parent containers due to padding */
+          [class*='service_item-module_service'],
+          [class*='service_item_module_service'],
+          [class*='service_item-module_info'],
+          [class*='service_item_module_info'],
+          [class*='service_item-module_info'] *,
+          [class*='service_item_module_info'] *,
+          [class*='service_item-module_voucher'],
+          [class*='service_item_module_voucher'],
+          [class*='service_item-module_variable'],
+          [class*='service_item_module_variable'],
+          [class*='service_item-module_bookingCart'],
+          [class*='service_item_module_bookingCart'] {
+            box-sizing: border-box !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding-right: 16px !important; /* adjust right padding so text doesnt hit edge */
+            padding-left: 4px !important;
+            white-space: normal !important;
+            overflow-wrap: break-word !important;
+            word-wrap: break-word !important;
+            flex-direction: column !important;
+          }
+
+          /* Force the floating price element to drop to a new line instead of pushing text */
+          [class*='service_item-module_simplePrice'] {
+            display: block !important;
+            width: 100% !important;
+            text-align: center !important;
+            margin-top: 8px !important;
           }
 
           /* Adjust margins for lists */
@@ -1699,14 +1813,13 @@ function ReservationContent() {
             margin-bottom: 12px !important;
           }
 
-          /* Force primary buttons (Prendre RDV etc) to full width on mobile */
-          button[class*='button-module_primary'],
+          /* Force primary AND secondary buttons (Prendre RDV, OFFRIR, etc) to full width on mobile */
           [class*='booking_auth-module'] button[class*='primary'],
           [class*='authentication-module'] button[class*='primary'],
-          button[class*='primary'],
           button[class*='submit'],
           .planity_ui_button_root,
-          button[id*='signup-comp__submit'] {
+          button[id*='signup-comp__submit'],
+          [class*='button-module_secondary'] {
             width: 100% !important;
             margin-left: 0 !important;
             margin-right: 0 !important;
