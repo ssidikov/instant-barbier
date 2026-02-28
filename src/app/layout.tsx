@@ -153,6 +153,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta httpEquiv='Cache-Control' content='no-cache, no-store, must-revalidate' />
         <meta httpEquiv='Pragma' content='no-cache' />
         <meta httpEquiv='Expires' content='0' />
+        <link rel='icon' href='/logo/linstant-barbier-logo.png' />
       </head>
       <body className='bg-navy text-cream font-body antialiased flex flex-col min-h-screen'>
         <script
