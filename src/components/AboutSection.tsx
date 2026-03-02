@@ -345,7 +345,6 @@ export default function AboutSection() {
                 loop
                 muted
                 playsInline
-                poster={VIDEO.aboutSection.poster}
                 className='absolute inset-0 w-full h-full object-cover'>
                 <source src={VIDEO.aboutSection.src} type={VIDEO.aboutSection.type} />
               </video>
