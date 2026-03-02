@@ -332,9 +332,9 @@ export default function LegalPage() {
                   <path d='M22 7l-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7' />
                 </svg>
                 <a
-                  href='mailto:linstantbarbier@gmail.com'
+                  href='mailto:contact@linstantbarbier.fr'
                   className='text-gold/80 hover:text-gold transition-colors duration-300 text-sm'>
-                  linstantbarbier@gmail.com
+                  contact@linstantbarbier.fr
                 </a>
               </div>
             </LegalSection>

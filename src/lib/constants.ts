@@ -9,7 +9,7 @@ export const PLANITY_KEY = process.env.NEXT_PUBLIC_PLANITY_KEY || '-NqgBt5OTqKdr
 export const CONTACT = {
   phone: '01 45 35 47 22',
   phoneHref: 'tel:+33145354722',
-  email: 'linstantbarbier@gmail.com',
+  email: 'contact@linstantbarbier.fr',
   address: '43 rue de Turenne, 75003 Paris, France',
   addressShort: '43 rue de Turenne',
   city: '75003 Paris, France',

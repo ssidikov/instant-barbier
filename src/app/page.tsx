@@ -1214,7 +1214,7 @@ export default function Home() {
                       {[
                         { label: 'Adresse', value: '43 rue de Turenne, 75003 Paris' },
                         { label: 'Téléphone', value: '+33 1 42 72 00 00' },
-                        { label: 'Email', value: 'linstantbarbier@gmail.com' },
+                        { label: 'Email', value: 'contact@linstantbarbier.fr' },
                       ].map((item, i) => (
                         <div key={i} className='group/contact-item'>
                           <p className='text-gold text-xs uppercase tracking-widest mb-2 group-hover/contact-item:text-gold/80 transition-colors'>

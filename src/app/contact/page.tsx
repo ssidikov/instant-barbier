@@ -269,9 +269,9 @@ export default function ContactPage() {
                   </svg>
                 }>
                 <a
-                  href='mailto:linstantbarbier@gmail.com'
+                  href='mailto:contact@linstantbarbier.fr'
                   className='text-cream hover:text-gold transition-colors duration-300 break-all'>
-                  linstantbarbier@gmail.com
+                  contact@linstantbarbier.fr
                 </a>
                 <p className='text-cream/40 text-sm mt-2'>Réponse sous 24h</p>
               </ContactCard>

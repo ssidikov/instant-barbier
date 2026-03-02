@@ -173,7 +173,7 @@ export default function ConfidentialitePage() {
                     01 45 35 47 22
                   </a>
                   <a
-                    href='mailto:linstantbarbier@gmail.com'
+                    href='mailto:contact@linstantbarbier.fr'
                     className='text-gold/70 hover:text-gold transition-colors duration-300 inline-flex items-center gap-2'>
                     <svg
                       className='w-3.5 h-3.5'
@@ -184,7 +184,7 @@ export default function ConfidentialitePage() {
                       <rect x='2' y='4' width='20' height='16' rx='2' />
                       <path d='M22 7l-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7' />
                     </svg>
-                    linstantbarbier@gmail.com
+                    contact@linstantbarbier.fr
                   </a>
                 </div>
               </InfoBlock>
@@ -409,9 +409,9 @@ export default function ConfidentialitePage() {
                   <path d='M22 7l-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7' />
                 </svg>
                 <a
-                  href='mailto:linstantbarbier@gmail.com'
+                  href='mailto:contact@linstantbarbier.fr'
                   className='text-gold/80 hover:text-gold transition-colors duration-300 text-sm'>
-                  linstantbarbier@gmail.com
+                  contact@linstantbarbier.fr
                 </a>
               </div>
 
