@@ -2,33 +2,22 @@
 
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { useLenis } from 'lenis/react'
 
 export default function ScrollToTop() {
   const pathname = usePathname()
   const [isVisible, setIsVisible] = useState(false)
-  const lenis = useLenis()
 
-  // Reset scroll on navigation (original functional requirement)
+  // Reset scroll on navigation
   useEffect(() => {
-    if (lenis) {
-      lenis.scrollTo(0, { immediate: true })
-    } else {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-    }
-  }, [pathname, lenis])
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [pathname])
 
   // Show/hide floating button based on scroll position
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 400) {
-        setIsVisible(true)
-      } else {
-        setIsVisible(false)
-      }
+      setIsVisible(window.scrollY > 400)
     }
 
-    // Check on initial load
     handleScroll()
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -36,14 +25,7 @@ export default function ScrollToTop() {
   }, [])
 
   const handleScrollToTop = () => {
-    if (lenis) {
-      lenis.scrollTo(0, { duration: 1.5 })
-    } else {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      })
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (

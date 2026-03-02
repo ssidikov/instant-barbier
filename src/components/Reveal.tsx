@@ -66,24 +66,27 @@ export default function Reveal({
       const baseVisible: React.CSSProperties = {
         opacity: 1,
         transform: 'translate(0px, 0px) scale(1)',
-        filter: 'blur(0px)',
       }
       // Only apply clipPath to mask-reveal, and give it breathing room for descenders/shadows
       if (variant === 'mask-reveal') {
         baseVisible.clipPath = 'inset(-20% -20% -20% -20%)'
+      }
+      // If the semantic variant is blur-in, we MUST explicitly clear it to override the server-rendered blur
+      if (variant === 'blur-in') {
+        baseVisible.filter = 'blur(0px)'
       }
       return baseVisible
     }
 
     switch (variant) {
       case 'fade-up':
-        return { opacity: 0, transform: 'translateY(60px)', filter: 'blur(0px)' }
+        return { opacity: 0, transform: 'translateY(60px)' }
       case 'fade-side':
-        return { opacity: 0, transform: 'translateX(-50px)', filter: 'blur(0px)' }
+        return { opacity: 0, transform: 'translateX(-50px)' }
       case 'blur-in':
         return { opacity: 0, transform: 'scale(0.95)', filter: 'blur(12px)' }
       case 'scale-up':
-        return { opacity: 0, transform: 'scale(0.85)', filter: 'blur(0px)' }
+        return { opacity: 0, transform: 'scale(0.85)' }
       case 'mask-reveal':
         return { opacity: 0, transform: 'translateY(0px)', clipPath: 'inset(100% 0 0 0)' }
       default:

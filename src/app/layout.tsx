@@ -5,9 +5,9 @@ import Header from '@/components/Header'
 import ScrollToTop from '@/components/ScrollToTop'
 import PageTransition from '@/components/PageTransition'
 import ScrollProgressBar from '@/components/ScrollProgressBar'
-import CookieConsent from '@/components/CookieConsent'
 import SmoothScroll from '@/components/SmoothScroll'
-import PageLoader from '@/components/PageLoader'
+import MotionProvider from '@/components/MotionProvider'
+import { ClientPageLoader, ClientCookieConsent } from '@/components/ClientShell'
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, CONTACT, SOCIAL } from '@/lib/constants'
 import { Analytics } from '@vercel/analytics/next'
 
@@ -163,15 +163,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: 'document.addEventListener("touchstart", function(){}, {passive:true});',
           }}
         />
-        <PageLoader />
-        <ScrollProgressBar />
-        <Header />
-        <SmoothScroll>
-          <ScrollToTop />
-          <PageTransition>{children}</PageTransition>
-        </SmoothScroll>
+        <ClientPageLoader />
+        <MotionProvider>
+          <ScrollProgressBar />
+          <Header />
+          <SmoothScroll>
+            <ScrollToTop />
+            <PageTransition>{children}</PageTransition>
+          </SmoothScroll>
+        </MotionProvider>
         <Analytics />
-        <CookieConsent />
+        <ClientCookieConsent />
       </body>
     </html>
   )

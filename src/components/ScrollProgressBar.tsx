@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useScroll, useSpring } from 'framer-motion'
+import { m, useScroll, useSpring } from 'framer-motion'
 
 /**
  * Thin gold progress bar fixed at top of the page.
@@ -17,7 +17,7 @@ export default function ScrollProgressBar() {
   })
 
   return (
-    <motion.div
+    <m.div
       aria-hidden='true'
       className='fixed top-0 left-0 right-0 z-999 origin-left pointer-events-none'
       style={{

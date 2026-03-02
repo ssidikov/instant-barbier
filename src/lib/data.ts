@@ -1,69 +1,37 @@
 import { TEAM, GALLERY_IMAGES } from '@/lib/images'
 
 // ═══════════════════════════════════════════════════════════════════════════
-// SERVICES
+// SERVICE ICON IDENTIFIERS
+// Icons are rendered in page.tsx to keep this file as a pure .ts data module
+// (no JSX → no client component boundary, better tree-shaking).
 // ═══════════════════════════════════════════════════════════════════════════
 
-export const services = [
+export type ServiceIconId = 'scissors' | 'razor' | 'care'
+
+export interface ServiceData {
+  iconId: ServiceIconId
+  title: string
+  description: string
+  link: string
+}
+
+export const services: ServiceData[] = [
   {
-    icon: (
-      <svg
-        className='w-10 h-10'
-        viewBox='0 0 24 24'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='1.5'
-        strokeLinecap='round'
-        strokeLinejoin='round'>
-        <circle cx='6' cy='6' r='3' />
-        <circle cx='6' cy='18' r='3' />
-        <line x1='20' y1='4' x2='8.12' y2='15.88' />
-        <line x1='14.47' y1='14.48' x2='20' y2='20' />
-        <line x1='8.12' y1='8.12' x2='12' y2='12' />
-      </svg>
-    ),
+    iconId: 'scissors',
     title: 'Cheveux – Coupe homme sur mesure',
     description:
       'Transformez votre style avec une coupe homme personnalisée, adaptée à votre morphologie et à vos envies. Du dégradé taper fade aux coupes classiques ou modernes, nous travaillons chaque détail pour un résultat net, équilibré et durable.',
     link: '/prestations',
   },
   {
-    icon: (
-      <svg
-        className='w-10 h-10'
-        viewBox='0 0 24 24'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='1.5'
-        strokeLinecap='round'
-        strokeLinejoin='round'>
-        <path d='M7 4h10' />
-        <rect x='5' y='3' width='14' height='4' rx='1' />
-        <line x1='12' y1='7' x2='12' y2='21' />
-        <line x1='9' y1='21' x2='15' y2='21' />
-      </svg>
-    ),
+    iconId: 'razor',
     title: 'Barbe – Rituel barbier à Paris',
     description:
       "Offrez à votre barbe l'attention qu'elle mérite grâce à un rituel barbe complet : taille précise, serviettes chaudes et soins aux huiles essentielles, notamment à l'ylang-ylang. Un service idéal pour un rendu élégant, structuré et naturel.",
     link: '/prestations',
   },
   {
-    icon: (
-      <svg
-        className='w-10 h-10'
-        viewBox='0 0 24 24'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='1.5'
-        strokeLinecap='round'
-        strokeLinejoin='round'>
-        <path d='M12 21c-2.4-1.2-5.7-4-5.7-9 0-3.3 3.3-6.3 5.7-9 2.4 2.7 5.7 5.7 5.7 9 0 5-3.3 7.8-5.7 9z' />
-        <path d='M12 21c1.8-1.5 5-5.5 5-9 0-3.5-3-5.5-5-5.5-2 0-5 2-5 5.5 0 3.5 3.2 7.5 5 9z' />
-        <path d='M12 11c1.1 0 2.2.4 3 1 .8.6 1.3 1.5 1.7 2.5' />
-        <path d='M12 11c-1.1 0-2.2.4-3 1-.8.6-1.3 1.5-1.7 2.5' />
-      </svg>
-    ),
+    iconId: 'care',
     title: 'Soins – Soin visage homme & bien-être',
     description:
       'Nos soins visage homme à Paris sont conçus pour revitaliser la peau et les cheveux. Nous utilisons des produits haut de gamme pour hydrater, nourrir et offrir un véritable moment de détente dans un cadre apaisant.',

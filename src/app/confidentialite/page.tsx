@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useInView, useScroll, useSpring } from 'framer-motion'
+import { m, useInView, useScroll, useSpring } from 'framer-motion'
 import Footer from '@/components/Footer'
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -21,7 +21,7 @@ function PolicySection({
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <motion.article
+    <m.article
       ref={ref}
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -39,7 +39,7 @@ function PolicySection({
       <div className='space-y-4 text-cream/60 font-light leading-relaxed text-[15px]'>
         {children}
       </div>
-    </motion.article>
+    </m.article>
   )
 }
 
@@ -92,7 +92,7 @@ export default function ConfidentialitePage() {
   return (
     <div className='bg-navy min-h-screen text-cream overflow-x-hidden selection:bg-gold selection:text-navy'>
       {/* Scroll progress */}
-      <motion.div
+      <m.div
         className='fixed top-0 left-0 right-0 h-0.5 bg-gold/80 origin-left z-100'
         style={{ scaleX: progressScaleX }}
       />
@@ -103,13 +103,13 @@ export default function ConfidentialitePage() {
             ═══════════════════════════════════════════════════════════════════ */}
         <section className='relative pt-32 md:pt-44 pb-16 md:pb-24'>
           {/* Decorative line */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 0.1, height: '20vh' }}
             transition={{ delay: 0.6, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
             className='absolute top-20 right-[10%] w-px bg-linear-to-b from-transparent via-gold to-transparent'
           />
-          <motion.div
+          <m.div
             initial={{ opacity: 0, width: 0 }}
             animate={{ opacity: 0.08, width: '12vw' }}
             transition={{ delay: 0.9, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}

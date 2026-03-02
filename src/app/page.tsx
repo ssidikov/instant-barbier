@@ -8,12 +8,12 @@ import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 import { LOGOS, BACKGROUNDS } from '@/lib/images'
 import dynamic from 'next/dynamic'
 import SectionTitle from '@/components/SectionTitle'
 import StarRating from '@/components/StarRating'
-import { services, team, galleryImages, reviews, hours } from '@/lib/data'
+import { services, team, galleryImages, reviews, hours, type ServiceIconId } from '@/lib/data'
 
 const GoogleMap = dynamic(() => import('@/components/GoogleMap'), { ssr: false })
 const GalleryLightbox = dynamic(() => import('@/components/GalleryLightbox'), { ssr: false })
@@ -25,6 +25,56 @@ const Footer = dynamic(() => import('@/components/Footer'), {
   ssr: false,
   loading: () => <div style={{ minHeight: '200px' }} />,
 })
+
+// Service icon SVGs rendered inline (moved from data.tsx so data.ts stays pure TS)
+const SERVICE_ICONS: Record<ServiceIconId, React.ReactNode> = {
+  scissors: (
+    <svg
+      className='w-10 h-10'
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'>
+      <circle cx='6' cy='6' r='3' />
+      <circle cx='6' cy='18' r='3' />
+      <line x1='20' y1='4' x2='8.12' y2='15.88' />
+      <line x1='14.47' y1='14.48' x2='20' y2='20' />
+      <line x1='8.12' y1='8.12' x2='12' y2='12' />
+    </svg>
+  ),
+  razor: (
+    <svg
+      className='w-10 h-10'
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'>
+      <path d='M7 4h10' />
+      <rect x='5' y='3' width='14' height='4' rx='1' />
+      <line x1='12' y1='7' x2='12' y2='21' />
+      <line x1='9' y1='21' x2='15' y2='21' />
+    </svg>
+  ),
+  care: (
+    <svg
+      className='w-10 h-10'
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'>
+      <path d='M12 21c-2.4-1.2-5.7-4-5.7-9 0-3.3 3.3-6.3 5.7-9 2.4 2.7 5.7 5.7 5.7 9 0 5-3.3 7.8-5.7 9z' />
+      <path d='M12 21c1.8-1.5 5-5.5 5-9 0-3.5-3-5.5-5-5.5-2 0-5 2-5 5.5 0 3.5 3.2 7.5 5 9z' />
+      <path d='M12 11c1.1 0 2.2.4 3 1 .8.6 1.3 1.5 1.7 2.5' />
+      <path d='M12 11c-1.1 0-2.2.4-3 1-.8.6-1.3 1.5-1.7 2.5' />
+    </svg>
+  ),
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PAGE PRINCIPALE
@@ -131,7 +181,7 @@ export default function Home() {
 
           {/* ── Animated Parallax Orbs ───────────────────────────────────────── */}
           <div className='absolute inset-0 pointer-events-none'>
-            <motion.div
+            <m.div
               className='absolute top-[20%] left-[15%] w-[500px] h-[500px] rounded-full blur-[140px]'
               style={{
                 y: heroOrb1Y,
@@ -140,7 +190,7 @@ export default function Home() {
               animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
               transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             />
-            <motion.div
+            <m.div
               className='absolute bottom-[20%] right-[20%] w-[400px] h-[400px] rounded-full blur-[120px]'
               style={{
                 y: heroOrb2Y,
@@ -149,7 +199,7 @@ export default function Home() {
               animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.9, 0.5] }}
               transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
             />
-            <motion.div
+            <m.div
               className='absolute top-[35%] right-[30%] w-[250px] h-[250px] rounded-full blur-[90px]'
               style={{
                 y: heroDecorY,
@@ -161,7 +211,7 @@ export default function Home() {
           </div>
 
           {/* ── Parallax Grid Overlay ────────────────────────────────────────── */}
-          <motion.div
+          <m.div
             className='absolute inset-0 pointer-events-none'
             style={{
               y: heroGridY,
@@ -172,27 +222,27 @@ export default function Home() {
             }}
           />
 
-          {/* ── Flying Gold Particles ────────────────────────────────────────── */}
+          {/* ── Flying Gold Particles (reduced from 12 to 5 for performance) ── */}
           <div className='absolute inset-0 pointer-events-none overflow-hidden hidden md:block'>
-            {[...Array(12)].map((_, i) => (
-              <motion.div
+            {[...Array(5)].map((_, i) => (
+              <m.div
                 key={i}
                 className='absolute w-[2px] h-[2px] rounded-full bg-gold'
                 style={{
-                  left: `${8 + ((i * 7) % 55)}%`,
-                  top: `${15 + ((i * 11) % 70)}%`,
+                  left: `${8 + ((i * 13) % 55)}%`,
+                  top: `${15 + ((i * 17) % 70)}%`,
                   opacity: 0,
                 }}
                 animate={{
-                  y: [0, -80 - i * 12],
+                  y: [0, -80 - i * 15],
                   opacity: [0, 0.6 + (i % 3) * 0.15, 0],
-                  x: [0, (i % 2 === 0 ? 1 : -1) * (10 + i * 3)],
+                  x: [0, (i % 2 === 0 ? 1 : -1) * (10 + i * 5)],
                   scale: [0, 1.5, 0],
                 }}
                 transition={{
-                  duration: 5 + i * 0.7,
+                  duration: 6 + i * 1.2,
                   repeat: Infinity,
-                  delay: i * 0.9,
+                  delay: i * 1.5,
                   ease: 'easeInOut',
                 }}
               />
@@ -200,7 +250,7 @@ export default function Home() {
           </div>
 
           {/* ── Animated Left Border Line ────────────────────────────────────── */}
-          <motion.div
+          <m.div
             className='absolute left-0 top-0 w-[1.5px] bg-gradient-to-b from-transparent via-gold to-transparent'
             initial={{ scaleY: 0, opacity: 0 }}
             animate={{ scaleY: 1, opacity: 0.45 }}
@@ -208,7 +258,7 @@ export default function Home() {
             style={{ height: '100%', transformOrigin: 'top' }}
           />
           {/* Animated Right Accent Line */}
-          <motion.div
+          <m.div
             className='absolute right-0 top-0 w-[1px] bg-gradient-to-b from-transparent via-gold/30 to-transparent hidden xl:block'
             initial={{ scaleY: 0, opacity: 0 }}
             animate={{ scaleY: 1, opacity: 1 }}
@@ -227,7 +277,7 @@ export default function Home() {
                     { label: 'Avis Google', val: '★★★★★' },
                     { label: 'Clients', val: '2000+' },
                   ].map((stat, i) => (
-                    <motion.div
+                    <m.div
                       key={i}
                       className='flex flex-col items-center'
                       initial={{ opacity: 0, y: 16 }}
@@ -243,7 +293,7 @@ export default function Home() {
                       <span className='text-[0.6rem] text-cream/60 tracking-[0.1em] font-light uppercase leading-tight'>
                         {stat.label}
                       </span>
-                    </motion.div>
+                    </m.div>
                   ))}
                 </div>
 
@@ -251,12 +301,12 @@ export default function Home() {
                 <div className='mb-6'>
                   <div className='relative block lg:inline-block ml-0 lg:ml-[-8px]'>
                     {/* Animated Gold Scan Line — sweeps across title on load */}
-                    <motion.div
+                    <m.div
                       className='absolute inset-0 pointer-events-none z-20 overflow-hidden hidden md:block'
                       initial={{ opacity: 1 }}
                       animate={{ opacity: 0 }}
                       transition={{ duration: 0.3, delay: 2.2 }}>
-                      <motion.div
+                      <m.div
                         className='absolute top-0 bottom-0 w-[3px] blur-[2px]'
                         style={{
                           background:
@@ -266,14 +316,14 @@ export default function Home() {
                         animate={{ left: '110%' }}
                         transition={{ duration: 1.5, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
                       />
-                    </motion.div>
+                    </m.div>
 
                     {/* COIFFEUR word — staggered blur-slide-in */}
                     <h1 className='relative flex flex-col items-center lg:items-start lg:items-center justify-center text-center md:text-left lg:text-center md:translate-y-[100px] lg:translate-y-[40px]'>
                       <span className='relative flex flex-col items-center md:items-start lg:items-center justify-center lg:mb-8'>
                         <span className='flex flex-col gap-2 md:gap-3 lg:gap-0 items-center md:items-start lg:items-center'>
                           {/* COIFFEUR */}
-                          <motion.span
+                          <m.span
                             className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9] tracking-[-0.02em] relative inline-block'
                             initial={
                               shouldReduceMotion
@@ -284,17 +334,17 @@ export default function Home() {
                             transition={{ duration: 1.0, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}>
                             COIFFEUR
                             {/* Shimmer overlay on the word */}
-                            <motion.span
+                            <m.span
                               className='absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none'
                               initial={{ x: '-150%' }}
                               animate={{ x: '250%' }}
                               transition={{ duration: 0.8, delay: 1.8, ease: 'easeOut' }}
                             />
-                          </motion.span>
+                          </m.span>
 
                           {/* & BARBIER */}
                           <span className='flex items-center gap-4 md:gap-6'>
-                            <motion.span
+                            <m.span
                               className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9]'
                               initial={
                                 shouldReduceMotion
@@ -304,8 +354,8 @@ export default function Home() {
                               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                               transition={{ duration: 1.0, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}>
                               &amp;
-                            </motion.span>
-                            <motion.span
+                            </m.span>
+                            <m.span
                               className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9] tracking-[-0.04em] relative inline-block'
                               initial={
                                 shouldReduceMotion
@@ -315,54 +365,54 @@ export default function Home() {
                               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                               transition={{ duration: 1.0, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}>
                               BARBIER
-                              <motion.span
+                              <m.span
                                 className='absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none'
                                 initial={{ x: '-150%' }}
                                 animate={{ x: '250%' }}
                                 transition={{ duration: 0.8, delay: 2.05, ease: 'easeOut' }}
                               />
-                            </motion.span>
+                            </m.span>
                           </span>
                         </span>
                       </span>
 
                       {/* à Paris le Marais — with animated lines expanding outward */}
-                      <motion.span
+                      <m.span
                         className='flex items-center gap-4 w-full justify-center lg:justify-start lg:justify-center lg:mb-8 mt-2 md:mt-[4px] lg:mt-[-20px]'
                         initial={shouldReduceMotion ? false : { opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.8, delay: 1.0 }}>
-                        <motion.span
+                        <m.span
                           className='h-[1px] bg-gradient-to-r from-transparent to-gold/60'
                           initial={{ width: 0 }}
                           animate={{ width: 'clamp(2rem, 6vw, 6rem)' }}
                           transition={{ duration: 0.8, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
                         />
-                        <motion.span
+                        <m.span
                           className='text-xl lg:text-3xl italic text-gold/80 tracking-[0.01em] font-light'
                           initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.7, delay: 1.15 }}
                           style={{ textShadow: '0 2px 24px rgba(7,24,30,0.9)' }}>
                           à Paris le Marais
-                        </motion.span>
-                        <motion.span
+                        </m.span>
+                        <m.span
                           className='h-[1px] bg-gradient-to-l from-transparent to-gold/60'
                           initial={{ width: 0 }}
                           animate={{ width: 'clamp(2rem, 6vw, 6rem)' }}
                           transition={{ duration: 0.8, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
                         />
-                      </motion.span>
+                      </m.span>
                     </h1>
 
                     {/* CTA Button with magnetic glow */}
-                    <motion.div
+                    <m.div
                       className='relative flex mt-8 mb-4 md:translate-y-32 lg:translate-y-4 justify-center items-center'
                       initial={shouldReduceMotion ? false : { opacity: 0, y: 20, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       transition={{ duration: 0.8, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}>
                       {/* Pulsing glow ring */}
-                      <motion.div
+                      <m.div
                         className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-20 rounded-full pointer-events-none'
                         style={{
                           background:
@@ -372,7 +422,7 @@ export default function Home() {
                         transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
                       />
                       {/* Secondary outer glow ring */}
-                      <motion.div
+                      <m.div
                         className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-32 rounded-full pointer-events-none'
                         style={{
                           background:
@@ -387,7 +437,7 @@ export default function Home() {
                         }}
                       />
                       <Button href='/reservation#planitycontainer'>Prendre rendez-vous</Button>
-                    </motion.div>
+                    </m.div>
                   </div>
                 </div>
               </div>
@@ -402,7 +452,7 @@ export default function Home() {
                 { label: 'Clients satisfaits', val: '2000+' },
                 { label: 'Note Google', val: '5★' },
               ].map((stat, i) => (
-                <motion.div
+                <m.div
                   key={stat.label}
                   className='group relative flex items-center gap-3 md:gap-5 lg:gap-6 backdrop-blur-2xl rounded-2xl px-4 py-3 md:px-6 md:py-4 xl:px-8 lg:py-6 shadow-2xl overflow-hidden cursor-default'
                   style={{
@@ -436,7 +486,7 @@ export default function Home() {
                   }}
                   tabIndex={0}>
                   {/* Hover shimmer sweep */}
-                  <motion.div
+                  <m.div
                     className='absolute inset-0 -skew-x-12 pointer-events-none opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'
                     style={{
                       background:
@@ -449,7 +499,7 @@ export default function Home() {
                     transition={{ duration: 0.6, ease: 'easeOut' }}
                   />
                   {/* Left gold accent bar */}
-                  <motion.div
+                  <m.div
                     className='absolute left-0 top-1/4 bottom-1/4 w-[2px] rounded-full'
                     style={{
                       background:
@@ -465,29 +515,29 @@ export default function Home() {
                   <div className='text-[0.6rem] lg:text-xs text-cream/60 tracking-[0.15em] font-light leading-tight uppercase max-w-[70px] relative z-10'>
                     {stat.label}
                   </div>
-                </motion.div>
+                </m.div>
               ))}
             </div>
           </div>
 
           {/* ── Animated Scroll Indicator ────────────────────────────────────── */}
-          <motion.div
+          <m.div
             className='absolute bottom-44 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-2'
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 2.0 }}>
-            <motion.span
+            <m.span
               className='text-[9px] uppercase tracking-[0.3em] text-gold/50 font-light'
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 2.5, repeat: Infinity }}>
               Défiler
-            </motion.span>
-            <motion.div
+            </m.span>
+            <m.div
               className='w-[1px] h-10 bg-gradient-to-b from-gold/60 to-transparent'
               animate={{ scaleY: [0, 1, 0], originY: 'top' }}
               transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
             />
-          </motion.div>
+          </m.div>
 
           {/* ── Bottom Logo Marquee ──────────────────────────────────────────── */}
           <div className='absolute bottom-0 left-0 w-full h-40 overflow-hidden z-20 flex items-end pointer-events-none'>
@@ -509,20 +559,20 @@ export default function Home() {
           </div>
 
           {/* ── Animated Decorative Corners ─────────────────────────────────── */}
-          <motion.div
+          <m.div
             className='absolute top-32 right-16 w-28 h-28 border-t border-r border-gold/20 hidden md:block'
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
           />
-          <motion.div
+          <m.div
             className='absolute bottom-44 left-16 w-28 h-28 border-b border-l border-gold/20 hidden md:block'
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 1.7, ease: [0.22, 1, 0.36, 1] }}
           />
           {/* Extra top-left accent */}
-          <motion.div
+          <m.div
             className='absolute top-32 left-16 w-16 h-16 border-t border-l border-gold/12 hidden xl:block'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -586,7 +636,7 @@ export default function Home() {
                   <article className='group text-center p-8 border border-gold/20 hover:border-gold/50 transition-all duration-500 relative overflow-hidden h-full touch-card-lift md:hover:-translate-y-2'>
                     {/* Icon */}
                     <div className='flex justify-center mb-6 relative z-10'>
-                      <div className='text-gold'>{service.icon}</div>
+                      <div className='text-gold'>{SERVICE_ICONS[service.iconId]}</div>
                     </div>
 
                     {/* Title */}
@@ -637,11 +687,11 @@ export default function Home() {
           </div>
           <div className='absolute inset-0 bg-dark/85' />
           {/* Parallax floating accent orbs over the bg */}
-          <motion.div
+          <m.div
             style={{ x: atmosphereOrb1.x, y: atmosphereOrb1.y }}
             className='absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-gold/6 rounded-full blur-[100px] pointer-events-none'
           />
-          <motion.div
+          <m.div
             style={{ x: atmosphereOrb2.x, y: atmosphereOrb2.y }}
             className='absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-gold/4 rounded-full blur-[80px] pointer-events-none'
           />
@@ -852,7 +902,7 @@ export default function Home() {
               aria-hidden='true'
             />
             {/* Large watermark scissors icon — parallax drift */}
-            <motion.div
+            <m.div
               style={{ y: galerieWatermarkY }}
               className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]'>
               <svg
@@ -889,9 +939,9 @@ export default function Home() {
                   fill='none'
                 />
               </svg>
-            </motion.div>
+            </m.div>
             {/* Gradient orbs — parallax */}
-            <motion.div
+            <m.div
               style={{ x: galerieOrb1.x, y: galerieOrb1.y }}
               className='absolute top-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl'
             />
@@ -1051,13 +1101,13 @@ export default function Home() {
               aria-hidden='true'
             />
             {/* Large watermark quote — parallax drift */}
-            <motion.div
+            <m.div
               style={{ y: avisWatermarkY }}
               className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12rem] md:text-[25rem] lg:text-[35rem] xl:text-[45rem] font-serif text-gold select-none leading-none opacity-[0.03]'>
               &ldquo;
-            </motion.div>
+            </m.div>
             {/* Gradient orbs — parallax */}
-            <motion.div
+            <m.div
               style={{ x: avisOrb1.x, y: avisOrb1.y }}
               className='absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl'
             />
@@ -1323,11 +1373,11 @@ export default function Home() {
             <div className='absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:4px_4px]' />
           </div>
           {/* Parallax floating accent orbs */}
-          <motion.div
+          <m.div
             style={{ y: ctaOrb1Y }}
             className='absolute top-1/4 left-1/4 w-64 h-64 bg-gold/8 rounded-full blur-[80px] pointer-events-none'
           />
-          <motion.div
+          <m.div
             style={{ y: ctaOrb2Y }}
             className='absolute bottom-1/4 right-1/4 w-80 h-80 bg-gold/6 rounded-full blur-[100px] pointer-events-none'
           />

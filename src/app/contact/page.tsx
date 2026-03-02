@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import { PLANITY_URL, SITE_URL } from '@/lib/constants'
 import Reveal from '@/components/Reveal'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { BACKGROUNDS, LOGOS } from '@/lib/images'
 import GoogleMap from '@/components/GoogleMap'
 
@@ -51,7 +51,7 @@ function ContactCard({
   }
 
   return (
-    <motion.div
+    <m.div
       variants={cardVariants}
       initial='hidden'
       whileInView='visible'
@@ -62,30 +62,30 @@ function ContactCard({
       <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700 pointer-events-none' />
 
       {/* Icon */}
-      <motion.div
+      <m.div
         variants={itemVariants}
         className='w-12 h-12 border border-gold/30 flex items-center justify-center mb-6 group-hover:border-gold/60 transition-colors duration-500'>
         <span className='text-gold'>{icon}</span>
-      </motion.div>
+      </m.div>
 
       {/* Label */}
-      <motion.span
+      <m.span
         variants={itemVariants}
         className='text-gold/60 text-[10px] uppercase tracking-[0.3em] block mb-3'>
         {label}
-      </motion.span>
+      </m.span>
 
       {/* Content */}
       <div className='text-cream font-light leading-relaxed flex flex-col items-start'>
         {/* We map over children to wrap text elements smoothly if they are provided directly.
             For complex children, we wrap the entire block. */}
         {React.Children.map(children, (child) => (
-          <motion.div variants={itemVariants} className='w-full'>
+          <m.div variants={itemVariants} className='w-full'>
             {child}
-          </motion.div>
+          </m.div>
         ))}
       </div>
-    </motion.div>
+    </m.div>
   )
 }
 

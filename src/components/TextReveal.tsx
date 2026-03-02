@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useInView, Variants } from 'framer-motion'
+import { m, useInView, Variants } from 'framer-motion'
 import { useRef } from 'react'
 
 interface TextRevealProps {
@@ -34,6 +34,9 @@ export default function TextReveal({
     }),
   }
 
+  // We must define filter: blur() on both hidden and visible unconditionally
+  // so that the server-rendered blur(8px) is properly hydrated and cleared
+  // on all devices. This preserves the premium animation without getting stuck.
   const child: Variants = {
     visible: {
       opacity: 1,
@@ -61,33 +64,33 @@ export default function TextReveal({
 
   if (variant === 'char') {
     return (
-      <motion.p
+      <m.p
         ref={ref}
         className={className}
         variants={container}
         initial='hidden'
         animate={isInView ? 'visible' : 'hidden'}>
         {chars.map((char, index) => (
-          <motion.span key={index} variants={child}>
+          <m.span key={index} variants={child}>
             {char}
-          </motion.span>
+          </m.span>
         ))}
-      </motion.p>
+      </m.p>
     )
   }
 
   return (
-    <motion.p
+    <m.p
       ref={ref}
       className={`${className} flex flex-wrap`}
       variants={container}
       initial='hidden'
       animate={isInView ? 'visible' : 'hidden'}>
       {words.map((word, index) => (
-        <motion.span key={index} variants={child} className='mr-[0.25em]'>
+        <m.span key={index} variants={child} className='mr-[0.25em]'>
           {word}
-        </motion.span>
+        </m.span>
       ))}
-    </motion.p>
+    </m.p>
   )
 }

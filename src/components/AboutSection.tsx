@@ -7,7 +7,7 @@ import Container from '@/components/Container'
 import Button from '@/components/Button'
 import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { m, useScroll, useTransform } from 'framer-motion'
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
@@ -315,7 +315,7 @@ export default function AboutSection() {
       <div ref={cinematicPinRef} className='relative w-full'>
         {/* ── Background Rotating Logo (Client Request) ── */}
         <div className='absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0'>
-          <motion.div
+          <m.div
             animate={{ rotate: 360 }}
             transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
             className='w-[80vw] h-[80vw] md:w-[60vw] md:h-[60vw] max-w-[1000px] max-h-[1000px] opacity-[0.03] md:opacity-[0.05]'>
@@ -326,7 +326,7 @@ export default function AboutSection() {
               className='object-contain'
               aria-hidden='true'
             />
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Video viewport — centered portrait frame on desktop/tablet, full-width on mobile */}
@@ -481,7 +481,7 @@ export default function AboutSection() {
           delay={0.6}
           className='flex absolute bottom-[-5%] -left-12 md:left-[calc(50%-280px)] lg:left-[calc(50%-340px)] z-30 items-center justify-center w-40 h-40 pointer-events-none'>
           {/* Rotating text ring tied to scroll */}
-          <motion.div className='absolute inset-0' style={{ rotate: badgeRotate }}>
+          <m.div className='absolute inset-0' style={{ rotate: badgeRotate }}>
             <svg viewBox='0 0 100 100' className='w-full h-full overflow-visible'>
               <path
                 id='badgeTextPath'
@@ -498,7 +498,7 @@ export default function AboutSection() {
                 </textPath>
               </text>
             </svg>
-          </motion.div>
+          </m.div>
 
           {/* Center static badge (Logo) */}
           <div className='flex items-center justify-center w-[64px] h-[64px] md:w-[72px] md:h-[72px] relative z-10'>
