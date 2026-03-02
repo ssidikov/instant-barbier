@@ -341,10 +341,10 @@ export default function AboutSection() {
             <div ref={videoContainerRef} className='absolute inset-0'>
               <video
                 ref={videoRef}
-                autoPlay
                 loop
                 muted
                 playsInline
+                preload='none'
                 className='absolute inset-0 w-full h-full object-cover'>
                 <source src={VIDEO.aboutSection.src} type={VIDEO.aboutSection.type} />
               </video>

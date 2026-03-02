@@ -938,7 +938,7 @@ export default function Home() {
                             alt={image.alt}
                             fill
                             loading='lazy'
-                            sizes='(max-width: 768px) 50vw, 33vw'
+                            sizes='(max-width: 768px) 100vw, 33vw'
                             className='object-cover object-center'
                           />
                         </div>
@@ -1252,7 +1252,7 @@ export default function Home() {
                     <div className='bg-navy/90 backdrop-blur-sm border border-gold/30 p-3 md:p-6 space-y-2 md:space-y-4'>
                       {[
                         { label: 'Adresse', value: '43 rue de Turenne, 75003 Paris' },
-                        { label: 'Téléphone', value: '+33 1 42 72 00 00' },
+                        { label: 'Téléphone', value: '+33 1 45 35 47 22' },
                         { label: 'Email', value: 'contact@linstantbarbier.fr' },
                       ].map((item, i) => (
                         <div key={i} className='group/contact-item'>
