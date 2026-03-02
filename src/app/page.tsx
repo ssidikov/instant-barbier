@@ -11,11 +11,13 @@ import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
 import { motion, useReducedMotion } from 'framer-motion'
 import { LOGOS, BACKGROUNDS } from '@/lib/images'
-import GoogleMap from '@/components/GoogleMap'
-import GalleryLightbox from '@/components/GalleryLightbox'
+import dynamic from 'next/dynamic'
 import SectionTitle from '@/components/SectionTitle'
 import StarRating from '@/components/StarRating'
 import { services, team, galleryImages, reviews, hours } from '@/lib/data'
+
+const GoogleMap = dynamic(() => import('@/components/GoogleMap'), { ssr: false })
+const GalleryLightbox = dynamic(() => import('@/components/GalleryLightbox'), { ssr: false })
 import AboutSection from '@/components/AboutSection'
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -89,10 +91,15 @@ export default function Home() {
           {/* ── Ken Burns Background ─────────────────────────────────────────── */}
           <div className='absolute inset-0 overflow-hidden'>
             <div ref={heroBgRef} className='absolute inset-0 scale-[1.15]'>
-              <div
-                className='absolute inset-0 bg-cover bg-center'
-                style={{ backgroundImage: `url('${BACKGROUNDS.homeHero.src}')` }}
-              />
+              <div className='absolute inset-0'>
+                <Image
+                  src={BACKGROUNDS.homeHero.src}
+                  alt='Hero Background'
+                  fill
+                  priority
+                  className='object-cover object-center'
+                />
+              </div>
               {/* Gradient overlay — left heavy for text legibility */}
               <div
                 className='absolute inset-0'
@@ -608,11 +615,15 @@ export default function Home() {
           ref={atmosphereSectionRef}
           className='relative py-16 md:py-24 lg:py-32 xl:py-40 bg-dark overflow-hidden'>
           {/* Background — GSAP parallax replaces CSS bg-fixed */}
-          <div
-            ref={atmosphereBgRef}
-            className='absolute inset-0 scale-[1.2] bg-cover bg-center'
-            style={{ backgroundImage: `url('${BACKGROUNDS.homeAtmosphere.src}')` }}
-          />
+          <div ref={atmosphereBgRef} className='absolute inset-0 scale-[1.2]'>
+            <Image
+              src={BACKGROUNDS.homeAtmosphere.src}
+              alt='Atmosphere Background'
+              fill
+              className='object-cover object-center'
+              loading='lazy'
+            />
+          </div>
           <div className='absolute inset-0 bg-dark/85' />
           {/* Parallax floating accent orbs over the bg */}
           <motion.div
