@@ -170,6 +170,8 @@ export default function ContactPage() {
               src={BACKGROUNDS.contactHero.src}
               alt={BACKGROUNDS.contactHero.alt}
               fill
+              quality={90}
+              sizes='(max-width: 768px) 300vw, 100vw'
               className='object-cover'
               priority
             />

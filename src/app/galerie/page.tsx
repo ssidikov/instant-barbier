@@ -154,6 +154,8 @@ export default function GaleriePage() {
                     src={img.src}
                     alt=''
                     fill
+                    quality={90}
+                    sizes='(max-width: 768px) 100vw, 33vw'
                     className='object-cover scale-110'
                     priority={i < 3}
                   />
@@ -338,6 +340,8 @@ export default function GaleriePage() {
               src={BACKGROUNDS.galleryQuote.src}
               alt={BACKGROUNDS.galleryQuote.alt}
               fill
+              quality={90}
+              sizes='(max-width: 768px) 300vw, 100vw'
               className='object-cover opacity-100'
             />
             <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy' />
@@ -404,6 +408,8 @@ export default function GaleriePage() {
                           src={img.src}
                           alt={img.alt}
                           fill
+                          quality={90}
+                          sizes='(max-width: 768px) 100vw, 50vw'
                           className='object-cover hover:scale-105 transition-transform duration-700'
                         />
                         <div className='absolute inset-0 bg-navy/30 hover:bg-navy/10 transition-colors duration-500' />

@@ -103,8 +103,8 @@ export default function Home() {
                   alt='Hero Background'
                   fill
                   priority
-                  quality={75}
-                  sizes='100vw'
+                  quality={90}
+                  sizes='(max-width: 768px) 300vw, 100vw'
                   className='object-cover object-center'
                 />
               </div>
@@ -629,6 +629,8 @@ export default function Home() {
               src={BACKGROUNDS.homeAtmosphere.src}
               alt='Atmosphere Background'
               fill
+              quality={90}
+              sizes='(max-width: 768px) 300vw, 100vw'
               className='object-cover object-center'
               loading='lazy'
             />
@@ -998,8 +1000,9 @@ export default function Home() {
               src={BACKGROUNDS.homeInterior.src}
               alt={BACKGROUNDS.homeInterior.alt}
               fill
+              unoptimized
+              sizes='(max-width: 768px) 300vw, 100vw'
               loading='lazy'
-              sizes='100vw'
               className='object-cover object-center'
             />
           </div>
@@ -1238,6 +1241,7 @@ export default function Home() {
                       src={BACKGROUNDS.homeMap.src}
                       alt={BACKGROUNDS.homeMap.alt}
                       fill
+                      quality={90}
                       loading='lazy'
                       sizes='(max-width: 1024px) 100vw, 50vw'
                       className='object-cover object-center'
@@ -1308,8 +1312,9 @@ export default function Home() {
                 src={BACKGROUNDS.homeCta.src}
                 alt={BACKGROUNDS.homeCta.alt}
                 fill
+                quality={90}
+                sizes='(max-width: 768px) 300vw, 100vw'
                 loading='lazy'
-                sizes='100vw'
                 className='object-cover object-center'
               />
             </div>

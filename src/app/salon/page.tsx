@@ -65,7 +65,14 @@ function PremiumImage({
       <div
         ref={imageRef}
         className='absolute inset-[-15%] transition-transform duration-[2000ms] group-hover:scale-[1.05] group-focus-within:scale-[1.05] hover:scale-[1.05] focus-within:scale-[1.05]'>
-        <Image src={src} alt={alt} fill className='object-cover' />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          quality={90}
+          sizes='(max-width: 768px) 300vw, 100vw'
+          className='object-cover'
+        />
       </div>
       <div className='absolute inset-0 bg-gradient-to-t from-navy via-transparent to-navy/30 pointer-events-none' />
     </div>
@@ -113,6 +120,8 @@ export default function SalonPage() {
               src={BACKGROUNDS.salonHero.src}
               alt={BACKGROUNDS.salonHero.alt}
               fill
+              quality={90}
+              sizes='(max-width: 768px) 300vw, 100vw'
               className='object-cover'
               priority
             />
@@ -432,6 +441,8 @@ export default function SalonPage() {
               src={BACKGROUNDS.salonLocation.src}
               alt={BACKGROUNDS.salonLocation.alt}
               fill
+              quality={90}
+              sizes='(max-width: 768px) 300vw, 100vw'
               className='object-cover'
             />
             <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-navy/60' />
