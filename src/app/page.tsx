@@ -97,6 +97,8 @@ export default function Home() {
                   alt='Hero Background'
                   fill
                   priority
+                  quality={100}
+                  sizes='100vw'
                   className='object-cover object-center'
                 />
               </div>
