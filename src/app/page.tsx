@@ -3,7 +3,6 @@
 import Container from '@/components/Container'
 import Section from '@/components/Section'
 import Button from '@/components/Button'
-import Footer from '@/components/Footer'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
@@ -18,7 +17,14 @@ import { services, team, galleryImages, reviews, hours } from '@/lib/data'
 
 const GoogleMap = dynamic(() => import('@/components/GoogleMap'), { ssr: false })
 const GalleryLightbox = dynamic(() => import('@/components/GalleryLightbox'), { ssr: false })
-import AboutSection from '@/components/AboutSection'
+const AboutSection = dynamic(() => import('@/components/AboutSection'), {
+  ssr: false,
+  loading: () => <div style={{ minHeight: '100vh' }} />,
+})
+const Footer = dynamic(() => import('@/components/Footer'), {
+  ssr: false,
+  loading: () => <div style={{ minHeight: '200px' }} />,
+})
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PAGE PRINCIPALE
@@ -97,7 +103,7 @@ export default function Home() {
                   alt='Hero Background'
                   fill
                   priority
-                  quality={100}
+                  quality={75}
                   sizes='100vw'
                   className='object-cover object-center'
                 />
@@ -487,13 +493,14 @@ export default function Home() {
           <div className='absolute bottom-0 left-0 w-full h-40 overflow-hidden z-20 flex items-end pointer-events-none'>
             <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent' />
             <div className='flex items-center w-max animate-marquee-rtl relative z-10'>
-              {[...Array(30)].map((_, i) => (
+              {[...Array(10)].map((_, i) => (
                 <div key={i} className='shrink-0 px-6 lg:px-10 opacity-25'>
                   <Image
                     src={LOGOS.golden.src}
                     alt={LOGOS.golden.alt}
                     width={240}
                     height={160}
+                    loading='lazy'
                     className='w-auto h-24 lg:h-32 object-contain'
                   />
                 </div>
@@ -738,9 +745,13 @@ export default function Home() {
                     <article className='group relative touch-card-lift'>
                       <div className='relative'>
                         <div className='relative aspect-3/4 md:aspect-3/4 overflow-hidden bg-navy'>
-                          <div
-                            className='absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105'
-                            style={{ backgroundImage: `url(${member.image})` }}
+                          <Image
+                            src={member.image}
+                            alt={member.name}
+                            fill
+                            loading='lazy'
+                            sizes='(max-width: 1024px) 100vw, 50vw'
+                            className='object-cover object-center transition-transform duration-500 group-hover:scale-105'
                           />
                           <div className='absolute inset-0 bg-linear-to-t from-navy to-navy/20' />
                         </div>
@@ -921,10 +932,16 @@ export default function Home() {
                         onClick={() => setLightboxIndex(index)}
                         className='relative w-full h-full overflow-hidden group cursor-pointer touch-feedback touch-highlight'>
                         {/* Image background */}
-                        <div
-                          className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
-                          style={{ backgroundImage: `url("${image.src}")` }}
-                        />
+                        <div className='absolute inset-0 transition-all duration-700 group-hover:scale-110'>
+                          <Image
+                            src={image.src}
+                            alt={image.alt}
+                            fill
+                            loading='lazy'
+                            sizes='(max-width: 768px) 50vw, 33vw'
+                            className='object-cover object-center'
+                          />
+                        </div>
 
                         {/* Navy overlay that becomes transparent on hover */}
                         <div className='absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors duration-500' />
@@ -976,11 +993,16 @@ export default function Home() {
       ═══════════════════════════════════════════════════════════════════ */}
         <section className='relative h-[40vh] md:h-[60vh] overflow-hidden'>
           {/* Background — GSAP parallax replaces CSS bg-fixed */}
-          <div
-            ref={interiorBgRef}
-            className='absolute inset-0 scale-[1.2] bg-cover bg-center'
-            style={{ backgroundImage: `url('${BACKGROUNDS.homeInterior.src}')` }}
-          />
+          <div ref={interiorBgRef} className='absolute inset-0 scale-[1.2]'>
+            <Image
+              src={BACKGROUNDS.homeInterior.src}
+              alt={BACKGROUNDS.homeInterior.alt}
+              fill
+              loading='lazy'
+              sizes='100vw'
+              className='object-cover object-center'
+            />
+          </div>
           <div className='absolute inset-0 bg-navy/60' />
           <div className='absolute inset-0 flex items-center justify-center'>
             <Reveal variant='fade-up' duration={1}>
@@ -1212,9 +1234,13 @@ export default function Home() {
               <Reveal variant='scale-up' delay={0.2} threshold={0.2}>
                 <div className='relative'>
                   <div className='relative aspect-4/3 overflow-hidden group transition-transform duration-500'>
-                    <div
-                      className='absolute inset-0 bg-cover bg-center'
-                      style={{ backgroundImage: `url('${BACKGROUNDS.homeMap.src}')` }}
+                    <Image
+                      src={BACKGROUNDS.homeMap.src}
+                      alt={BACKGROUNDS.homeMap.alt}
+                      fill
+                      loading='lazy'
+                      sizes='(max-width: 1024px) 100vw, 50vw'
+                      className='object-cover object-center'
                     />
                     <div className='absolute inset-0 bg-navy/40' />
                     {/* Corner accent */}
@@ -1277,11 +1303,16 @@ export default function Home() {
           className='relative min-h-[80vh] flex items-center overflow-hidden border-t border-gold/10'>
           <div className='absolute inset-0'>
             {/* GSAP parallax background */}
-            <div
-              ref={ctaBgRef}
-              className='absolute inset-0 scale-[1.15] bg-cover bg-center'
-              style={{ backgroundImage: `url('${BACKGROUNDS.homeCta.src}')` }}
-            />
+            <div ref={ctaBgRef} className='absolute inset-0 scale-[1.15]'>
+              <Image
+                src={BACKGROUNDS.homeCta.src}
+                alt={BACKGROUNDS.homeCta.alt}
+                fill
+                loading='lazy'
+                sizes='100vw'
+                className='object-cover object-center'
+              />
+            </div>
             <div className='absolute inset-0 bg-gradient-to-b from-navy/65 via-dark/55 to-navy/65' />
             <div className='absolute inset-0 bg-gradient-to-r from-navy/40 via-transparent to-navy/40' />
             <div className='absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:4px_4px]' />
