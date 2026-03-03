@@ -230,71 +230,49 @@ export default function AboutSection() {
         {/* ── Vimeo Video Background Section ── */}
         <div className='relative w-full min-h-[80vh] md:min-h-[90vh] lg:min-h-[100vh] flex items-center justify-center overflow-hidden'>
           {/* Vimeo iframe — background mode (autoplay, muted, loop, no controls) */}
-          <div
-            className='absolute inset-0 z-0'
-            style={{
-              /* 16:9 video needs to be scaled to cover the viewport area —
-                 we use a generous scale to avoid letterboxing on tall viewports */
-              overflow: 'hidden',
-            }}>
+          <div className='absolute inset-0 z-0 overflow-hidden'>
             <iframe
               src='https://player.vimeo.com/video/1169861492?background=1&autoplay=1&muted=1&loop=1&autopause=0&player_id=0&app_id=58479'
               allow='autoplay; fullscreen; picture-in-picture'
               referrerPolicy='strict-origin-when-cross-origin'
-              title="L'Instant Barbier — Salon de coiffure et barbier Paris"
-              className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none'
+              title='Salon de coiffure et barbier Paris'
+              className='pointer-events-none'
               style={{
-                width: '177.78vh' /* 100vh * 16/9 */,
-                height: '100vh',
-                minWidth: '100%',
-                minHeight: '100%',
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 'max(177.78vh, 100%)',
+                height: 'max(56.25vw, 100%)',
                 border: 'none',
               }}
             />
           </div>
 
           {/* ── Gradient overlays for text readability ── */}
-          {/* Top gradient */}
+          {/* Top-to-bottom gradient */}
           <div
-            className='absolute inset-x-0 top-0 h-[40%] z-[1] pointer-events-none'
+            className='absolute inset-x-0 top-0 h-[35%] z-[1] pointer-events-none'
             style={{
               background:
-                'linear-gradient(to bottom, rgba(7,24,30,0.95) 0%, rgba(7,24,30,0.4) 60%, transparent 100%)',
+                'linear-gradient(to bottom, rgba(7,24,30,0.75) 0%, rgba(7,24,30,0.2) 70%, transparent 100%)',
             }}
           />
-          {/* Bottom gradient */}
+          {/* Bottom-to-top gradient */}
           <div
-            className='absolute inset-x-0 bottom-0 h-[50%] z-[1] pointer-events-none'
+            className='absolute inset-x-0 bottom-0 h-[45%] z-[1] pointer-events-none'
             style={{
               background:
-                'linear-gradient(to top, rgba(7,24,30,0.95) 0%, rgba(7,24,30,0.5) 50%, transparent 100%)',
+                'linear-gradient(to top, rgba(7,24,30,0.85) 0%, rgba(7,24,30,0.3) 50%, transparent 100%)',
             }}
           />
-          {/* Side gradients for ultra-wide */}
-          <div
-            className='absolute inset-y-0 left-0 w-[20%] z-[1] pointer-events-none'
-            style={{
-              background: 'linear-gradient(to right, rgba(7,24,30,0.7) 0%, transparent 100%)',
-            }}
-          />
-          <div
-            className='absolute inset-y-0 right-0 w-[20%] z-[1] pointer-events-none'
-            style={{
-              background: 'linear-gradient(to left, rgba(7,24,30,0.7) 0%, transparent 100%)',
-            }}
-          />
-          {/* Radial vignette */}
+          {/* Subtle radial vignette + overall tint */}
           <div
             className='absolute inset-0 z-[1] pointer-events-none'
             style={{
               background:
-                'radial-gradient(ellipse at center, transparent 30%, rgba(7,24,30,0.6) 100%)',
+                'radial-gradient(ellipse at center, rgba(7,24,30,0.15) 0%, rgba(7,24,30,0.45) 100%)',
             }}
-          />
-          {/* Overall tint to maintain dark luxury mood */}
-          <div
-            className='absolute inset-0 z-[1] pointer-events-none'
-            style={{ background: 'rgba(7,24,30,0.30)' }}
           />
 
           {/* ── Centered editorial content overlay ── */}
