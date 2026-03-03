@@ -271,15 +271,15 @@ export default function AboutSection() {
 
           {/* ── CENTER — Portrait Vimeo video ── */}
           <div className='relative w-[380px] xl:w-[440px] aspect-[9/16] overflow-hidden'>
-            {/* Vimeo iframe */}
-            <div className='absolute inset-0 z-0 overflow-hidden'>
-              <iframe
-                src='https://player.vimeo.com/video/1169918554?background=1&autoplay=1&muted=1&loop=1&autopause=0&player_id=0&app_id=58479'
-                allow='autoplay; fullscreen; picture-in-picture'
-                referrerPolicy='strict-origin-when-cross-origin'
-                title='Salon de coiffure et barbier Paris'
-                className='pointer-events-none absolute inset-0 w-full h-full'
-                style={{ border: 'none' }}
+            {/* Native video background */}
+            <div className='absolute inset-0 z-0 overflow-hidden bg-navy/50'>
+              <video
+                src='/video/linstant-barbier-Paris.mp4'
+                autoPlay
+                muted
+                loop
+                playsInline
+                className='pointer-events-none absolute inset-0 w-full h-full object-cover'
               />
             </div>
 
@@ -410,22 +410,14 @@ export default function AboutSection() {
 
           {/* Full-width portrait video */}
           <div className='relative w-full min-h-[80vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden'>
-            <div className='absolute inset-0 z-0 overflow-hidden'>
-              <iframe
-                src='https://player.vimeo.com/video/1169918554?background=1&autoplay=1&muted=1&loop=1&autopause=0&player_id=0&app_id=58479'
-                allow='autoplay; fullscreen; picture-in-picture'
-                referrerPolicy='strict-origin-when-cross-origin'
-                title='Salon de coiffure et barbier Paris'
-                className='pointer-events-none'
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  width: 'max(56.25vh, 100%)',
-                  height: 'max(177.78vw, 100%)',
-                  border: 'none',
-                }}
+            <div className='absolute inset-0 z-0 overflow-hidden bg-navy'>
+              <video
+                src='/video/linstant-barbier-Paris.mp4'
+                autoPlay
+                muted
+                loop
+                playsInline
+                className='pointer-events-none absolute inset-0 w-full h-full object-cover'
               />
             </div>
 
