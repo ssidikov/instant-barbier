@@ -9,117 +9,13 @@ import Reveal from '@/components/Reveal'
 import { GALLERY_IMAGES, LOGOS, BACKGROUNDS, type GalleryImageData } from '@/lib/images'
 import GalleryLightbox from '@/components/GalleryLightbox'
 
-// ═══════════════════════════════════════════════════════════════════════════
-// GALLERY DATA
-// ═══════════════════════════════════════════════════════════════════════════
-
-const categories = [
-  'Tout',
-  'Coupes',
-  'Barbe',
-  'Ambiance',
-  'Barbiers',
-  'Outils',
-  'Produit',
-  'Salon',
-  'Soins',
-] as const
-type Category = (typeof categories)[number]
-
-const galleryImages = GALLERY_IMAGES
-
-// ═══════════════════════════════════════════════════════════════════════════
-// GALLERY CARD COMPONENT
-// ═══════════════════════════════════════════════════════════════════════════
-
-function GalleryCard({
-  image,
-  onClick,
-  index,
-}: {
-  image: GalleryImageData
-  onClick: () => void
-  index: number
-}) {
-  // Determine if this is the first item (for larger size)
-  const isFirst = index === 0
-
-  return (
-    <Reveal
-      variant='scale-up'
-      delay={(index % 6) * 0.1} // Modulo prevents delays from getting endlessly huge when loading more
-      className={`${isFirst ? 'col-span-2 row-span-2' : ''} aspect-square`}>
-      <div className={`${isFirst ? 'h-full' : 'aspect-square'}`}>
-        <div className='relative w-full h-full overflow-hidden group cursor-pointer touch-feedback touch-highlight'>
-          {/* Next.js Image — enables AVIF/WebP, lazy loading, responsive sizes */}
-          <Image
-            src={image.src}
-            alt={image.alt}
-            fill
-            quality={75}
-            sizes={isFirst ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 50vw, 33vw'}
-            className='object-cover transition-transform duration-700 group-hover:scale-110'
-            loading='lazy'
-          />
-
-          {/* Navy overlay that becomes transparent on hover */}
-          <div className='absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors duration-500' />
-
-          {/* Top-left corner accent */}
-          <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-
-          {/* Bottom-right corner accent */}
-          <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-
-          {/* Center "+" icon with backdrop blur */}
-          <div
-            className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500'
-            onClick={onClick}>
-            <div className='absolute inset-0 bg-navy/50 backdrop-blur-[2px]' />
-            <div
-              className={`relative ${isFirst ? 'w-12 h-12' : 'w-9 h-9'} border border-gold/60 flex items-center justify-center`}>
-              <span className={`text-gold ${isFirst ? 'text-2xl' : 'text-lg'}`}>+</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Reveal>
-  )
-}
+import GalleryGrid from '@/components/GalleryGrid'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // MAIN PAGE
 // ═══════════════════════════════════════════════════════════════════════════
 
 export default function GaleriePage() {
-  const [activeCategory, setActiveCategory] = useState<Category>('Tout')
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
-  const [visibleCount, setVisibleCount] = useState(6)
-
-  const filteredImages =
-    activeCategory === 'Tout'
-      ? galleryImages
-      : galleryImages.filter((img) => img.category === activeCategory)
-
-  const visibleImages = filteredImages.slice(0, visibleCount)
-  const hasMore = visibleCount < filteredImages.length
-
-  const loadMore = () => {
-    setVisibleCount((prev) => prev + 6)
-  }
-
-  // Reset visible count when category changes
-  useEffect(() => {
-    const isMobile = window.innerWidth < 768
-    const initialCount = isMobile ? 5 : 6
-    const timer = setTimeout(() => setVisibleCount(initialCount), 0)
-    return () => clearTimeout(timer)
-  }, [activeCategory])
-
-  const openLightbox = (filteredIndex: number) => {
-    setLightboxIndex(filteredIndex)
-  }
-
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -153,7 +49,7 @@ export default function GaleriePage() {
           {/* Background mosaic effect */}
           <div className='absolute inset-0 z-0 opacity-70'>
             <div className='absolute inset-0 grid grid-cols-3 gap-1'>
-              {galleryImages.slice(0, 6).map((img, i) => (
+              {GALLERY_IMAGES.slice(0, 6).map((img, i) => (
                 <div key={i} className='relative overflow-hidden'>
                   <Image
                     src={img.src}
@@ -258,80 +154,7 @@ export default function GaleriePage() {
           <div className='absolute top-1/3 left-0 w-[50vw] h-[50vw] rounded-full bg-gold/3 blur-3xl -translate-x-1/3 pointer-events-none' />
 
           <div className='max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10'>
-            {/* Section header + Filter */}
-            <div className='mb-16'>
-              <Reveal
-                variant='fade-up'
-                className='flex flex-col md:flex-row md:items-end md:justify-between gap-8'>
-                <div>
-                  <span className='text-gold/60 text-xs uppercase tracking-[0.3em] mb-4 block'>
-                    Nos Réalisations
-                  </span>
-                  <h3 className='text-3xl md:text-5xl lg:text-6xl font-title text-cream leading-[0.8] tracking-[-2px]'>
-                    Explorer <span className='text-gold'>l&apos;univers</span>
-                  </h3>
-                </div>
-
-                {/* Category filter */}
-                <div className='flex flex-wrap gap-2 md:gap-1 justify-start md:justify-end'>
-                  {categories.map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => setActiveCategory(cat)}
-                      className={`relative px-3 py-2 md:px-5 md:py-2.5 text-[10px] md:text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] transition-all duration-300 whitespace-nowrap ${
-                        activeCategory === cat
-                          ? 'text-navy bg-gold'
-                          : 'text-cream/50 hover:text-cream hover:bg-white/5'
-                      }`}>
-                      <span className='relative z-10'>{cat}</span>
-                    </button>
-                  ))}
-                </div>
-              </Reveal>
-            </div>
-
-            {/* Gallery grid */}
-            <div className='grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4'>
-              {visibleImages.map((image, i) => (
-                <GalleryCard
-                  key={`${activeCategory}-${i}`}
-                  image={image}
-                  onClick={() => openLightbox(i)}
-                  index={i}
-                />
-              ))}
-            </div>
-
-            {/* Load More Button */}
-            {hasMore && (
-              <Reveal variant='fade-up' delay={0.3} className='mt-16 text-center'>
-                <button
-                  onClick={loadMore}
-                  className='group relative inline-flex items-center gap-4 px-10 py-4 border border-gold/30 text-gold hover:bg-gold hover:text-navy transition-all duration-500 overflow-hidden'>
-                  {/* Background shine effect */}
-                  <div className='absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-gold/10 to-transparent' />
-
-                  <span className='relative text-sm uppercase tracking-[0.3em] font-light'>
-                    Voir plus
-                  </span>
-
-                  {/* Animated arrow */}
-                  <svg
-                    className='relative w-4 h-4 transition-transform duration-500 group-hover:translate-y-1'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    stroke='currentColor'
-                    strokeWidth='1.5'>
-                    <path d='M12 5v14M19 12l-7 7-7-7' />
-                  </svg>
-                </button>
-
-                {/* Display counter */}
-                <p className='mt-6 text-cream/40 text-xs tracking-wider'>
-                  <span className='text-gold'>{visibleCount}</span> / {filteredImages.length} images
-                </p>
-              </Reveal>
-            )}
+            <GalleryGrid layout='page' />
           </div>
         </section>
 
@@ -399,10 +222,10 @@ export default function GaleriePage() {
               <Reveal variant='scale-up' className='relative'>
                 <div className='grid grid-cols-2 gap-3'>
                   {[
-                    galleryImages.find((img) => img.src.includes('Coupes (19)')),
-                    galleryImages.find((img) => img.src.includes('Ambiance (23)')),
-                    galleryImages.find((img) => img.src.includes('Soins (4)')),
-                    galleryImages.find((img) => img.src.includes('Barbe (23)')),
+                    GALLERY_IMAGES.find((img) => img.src.includes('Coupes-19')),
+                    GALLERY_IMAGES.find((img) => img.src.includes('Ambiance-23')),
+                    GALLERY_IMAGES.find((img) => img.src.includes('Soins-4')),
+                    GALLERY_IMAGES.find((img) => img.src.includes('Barbe-23')),
                   ].map((img, i) => {
                     if (!img) return null
                     return (
@@ -458,14 +281,7 @@ export default function GaleriePage() {
 
       <Footer />
 
-      {/* Lightbox */}
-      {lightboxIndex !== null && (
-        <GalleryLightbox
-          images={filteredImages}
-          currentIndex={lightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-        />
-      )}
+      <Footer />
     </div>
   )
 }

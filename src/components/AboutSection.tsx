@@ -576,67 +576,68 @@ export default function AboutSection() {
               image: PRODUCT_GRID[3].src,
               badge: '02',
             },
-          ].map((item) => (
-            <div
-              key={item.badge}
-              ref={item.ref}
-              className='group relative min-h-[280px] md:min-h-[400px] lg:min-h-[450px] w-full overflow-visible cursor-pointer lg:cursor-default focus:outline-none'
-              tabIndex={0}
-              onTouchStart={() => {}}>
-              {/* Main card border + shadow + clip content */}
-              <div className='absolute inset-0 overflow-hidden z-0 transform-gpu bg-navy'>
-                {/* Image */}
-                <div className='absolute inset-0 overflow-hidden'>
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className='object-cover transition-transform duration-1000 group-hover:scale-105 group-focus-within:scale-105'
-                    sizes='(max-width: 768px) 100vw, 50vw'
-                  />
-                </div>
+          ].map((item, index) => (
+            <Reveal key={item.badge} variant='fade-up' delay={index * 0.2} className='w-full'>
+              <div
+                ref={item.ref}
+                className='group relative min-h-[280px] md:min-h-[400px] lg:min-h-[450px] w-full overflow-visible cursor-pointer lg:cursor-default focus:outline-none'
+                tabIndex={0}
+                onTouchStart={() => {}}>
+                {/* Main card border + shadow + clip content */}
+                <div className='absolute inset-0 overflow-hidden z-0 transform-gpu bg-navy'>
+                  {/* Image */}
+                  <div className='absolute inset-0 overflow-hidden'>
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className='object-cover transition-transform duration-1000 group-hover:scale-105 group-focus-within:scale-105'
+                      sizes='(max-width: 768px) 100vw, 50vw'
+                    />
+                  </div>
 
-                {/* Gradient overlay */}
-                <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/45 to-transparent z-[1]' />
-                {/* Hover gold side glow */}
-                <div
-                  className='absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-700 z-[2]'
-                  style={{
-                    background:
-                      'linear-gradient(to right, rgba(175,151,120,0.07) 0%, transparent 40%)',
-                  }}
-                />
-
-                {/* Number badge */}
-                <div
-                  className='absolute top-5 right-5 z-20 text-xs font-title text-gold/80 tracking-widest border border-gold/20 group-hover:border-gold/50 group-focus-within:border-gold/50 px-3 py-1 rounded-full backdrop-blur-sm transition-colors duration-500'
-                  style={{ background: 'rgba(7,24,30,0.6)' }}>
-                  {item.badge}
-                </div>
-
-                {/* Card border overlay */}
-                <div className='absolute inset-0 border border-gold/20 group-hover:border-gold/45 group-focus-within:border-gold/45 transition-colors duration-700 z-10 pointer-events-none' />
-
-                {/* Text content */}
-                <div className='absolute bottom-0 left-0 right-0 p-6 md:p-8 z-20'>
-                  {/* Animated gold rule above title */}
+                  {/* Gradient overlay */}
+                  <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/45 to-transparent z-[1]' />
+                  {/* Hover gold side glow */}
                   <div
-                    className='w-0 h-px mb-3 group-hover:w-12 group-focus-within:w-12 transition-all duration-500 origin-left'
-                    style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
+                    className='absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-700 z-[2]'
+                    style={{
+                      background:
+                        'linear-gradient(to right, rgba(175,151,120,0.07) 0%, transparent 40%)',
+                    }}
                   />
-                  <h4 className='text-2xl md:text-3xl font-title text-gold mb-2 tracking-[-1px] transition-transform duration-500 group-hover:-translate-y-1 group-focus-within:-translate-y-1'>
-                    {item.title}
-                  </h4>
-                  <p className='text-cream/85 text-sm font-light leading-relaxed max-w-sm'>
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
 
-              {/* Corner accents — outside overflow container */}
-              <div className='absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20 pointer-events-none' />
-              <div className='absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20 pointer-events-none' />
-            </div>
+                  {/* Number badge */}
+                  <div
+                    className='absolute top-5 right-5 z-20 text-xs font-title text-gold/80 tracking-widest border border-gold/20 group-hover:border-gold/50 group-focus-within:border-gold/50 px-3 py-1 rounded-full backdrop-blur-sm transition-colors duration-500'
+                    style={{ background: 'rgba(7,24,30,0.6)' }}>
+                    {item.badge}
+                  </div>
+
+                  {/* Card border overlay */}
+                  <div className='absolute inset-0 border border-gold/20 group-hover:border-gold/45 group-focus-within:border-gold/45 transition-colors duration-700 z-10 pointer-events-none' />
+
+                  {/* Text content */}
+                  <div className='absolute bottom-0 left-0 right-0 p-6 md:p-8 z-20'>
+                    {/* Animated gold rule above title */}
+                    <div
+                      className='w-0 h-px mb-3 group-hover:w-12 group-focus-within:w-12 transition-all duration-500 origin-left'
+                      style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
+                    />
+                    <h4 className='text-2xl md:text-3xl font-title text-gold mb-2 tracking-[-1px] transition-transform duration-500 group-hover:-translate-y-1 group-focus-within:-translate-y-1'>
+                      {item.title}
+                    </h4>
+                    <p className='text-cream/85 text-sm font-light leading-relaxed max-w-sm'>
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Corner accents — outside overflow container */}
+                <div className='absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20 pointer-events-none' />
+                <div className='absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20 pointer-events-none' />
+              </div>
+            </Reveal>
           ))}
         </div>
 
