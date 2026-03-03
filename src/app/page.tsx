@@ -1222,9 +1222,9 @@ export default function Home() {
                   <p className='text-cream/70 text-sm md:text-base mb-8 leading-relaxed'>
                     Pour prendre rendez-vous, consultez notre{' '}
                     <Link
-                      href='/prestations'
+                      href='/reservation'
                       className='text-gold hover:text-gold/80 underline underline-offset-4 transition-colors touch-link'>
-                      page prestations
+                      page réservation
                     </Link>
                     . Pour toute autre demande ou information, n&apos;hésitez pas à nous appeler.
                   </p>
