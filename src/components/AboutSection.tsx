@@ -588,14 +588,14 @@ export default function AboutSection() {
               tabIndex={0}
               onTouchStart={() => {}}>
               {/* Main card border + shadow + clip content */}
-              <div className='absolute inset-0 overflow-hidden'>
-                {/* Parallax image */}
-                <div className='about-card-img absolute inset-[-12%] overflow-hidden'>
+              <div className='absolute inset-0 overflow-hidden z-0 transform-gpu bg-navy'>
+                {/* Image */}
+                <div className='absolute inset-0 overflow-hidden'>
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
-                    className='object-cover transition-transform duration-1000 group-hover:scale-[1.05] group-focus-within:scale-[1.05]'
+                    className='object-cover transition-transform duration-1000 group-hover:scale-105 group-focus-within:scale-105'
                     sizes='(max-width: 768px) 100vw, 50vw'
                   />
                 </div>
