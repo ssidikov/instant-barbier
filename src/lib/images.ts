@@ -114,7 +114,7 @@ export const ABOUT_IMAGES = {
 export const BACKGROUNDS = {
   // ── Home page ──
   homeHero: {
-    src: '/images/hero-barbershop.jpg',
+    src: '/images/hero-barbershop-reduced.jpg',
     alt: "L'Instant Barbier — salon de coiffure et barbier à Paris",
   },
   homeAtmosphere: {

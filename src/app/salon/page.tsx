@@ -70,7 +70,7 @@ function PremiumImage({
           alt={alt}
           fill
           quality={90}
-          sizes='(max-width: 768px) 300vw, 100vw'
+          sizes='(max-width: 768px) 100vw, 100vw'
           className='object-cover'
         />
       </div>
@@ -120,10 +120,11 @@ export default function SalonPage() {
               src={BACKGROUNDS.salonHero.src}
               alt={BACKGROUNDS.salonHero.alt}
               fill
-              quality={90}
-              sizes='(max-width: 768px) 300vw, 100vw'
-              className='object-cover'
               priority
+              fetchPriority='high'
+              quality={100}
+              sizes='(max-width: 768px) 100vw, 100vw'
+              className='object-cover'
             />
             <div className='absolute inset-0 bg-navy/85 mix-blend-multiply' />
           </div>
@@ -442,7 +443,7 @@ export default function SalonPage() {
               alt={BACKGROUNDS.salonLocation.alt}
               fill
               quality={90}
-              sizes='(max-width: 768px) 300vw, 100vw'
+              sizes='(max-width: 768px) 100vw, 100vw'
               className='object-cover'
             />
             <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-navy/60' />

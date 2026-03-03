@@ -170,10 +170,11 @@ export default function ContactPage() {
               src={BACKGROUNDS.contactHero.src}
               alt={BACKGROUNDS.contactHero.alt}
               fill
-              quality={90}
-              sizes='(max-width: 768px) 300vw, 100vw'
-              className='object-cover'
               priority
+              fetchPriority='high'
+              quality={100}
+              sizes='(max-width: 768px) 100vw, 100vw'
+              className='object-cover'
             />
             <div className='absolute inset-0 bg-navy/70' />
             <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent' />

@@ -1,42 +1,36 @@
 'use client'
 
-import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
- * Page transition wrapper.
+ * Lightweight page transition — CSS-only fade-in.
  *
- * Key behaviour:
- * - First load → NO opacity animation. Page appears instantly so that
- *   Reveal (IntersectionObserver + CSS) animations are visible immediately.
- * - Navigations → short fade + lift (0.3s). Fast enough not to feel sluggish,
- *   long enough to feel intentional.
- * - Reduced-motion → opacity only, no Y movement.
+ * Previous implementation used Framer Motion's AnimatePresence which
+ * keeps the ENTIRE outgoing page tree in memory during exit animation.
+ * This CSS approach gives the same visual effect with zero JS overhead
+ * and no memory duplication.
  */
-let isFirstMount = true
-
 export default function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const shouldReduceMotion = useReducedMotion()
+  const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
-    isFirstMount = false
-  }, [])
+    // Brief fade on route change
+    setIsVisible(false)
+    const timer = requestAnimationFrame(() => {
+      setIsVisible(true)
+    })
+    return () => cancelAnimationFrame(timer)
+  }, [pathname])
 
   return (
-    <AnimatePresence mode='wait'>
-      <m.div
-        key={pathname}
-        initial={isFirstMount ? false : shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
-        transition={{
-          duration: 0.3,
-          ease: [0.22, 1, 0.36, 1],
-        }}>
-        {children}
-      </m.div>
-    </AnimatePresence>
+    <div
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transition: 'opacity 0.2s ease-out',
+      }}>
+      {children}
+    </div>
   )
 }

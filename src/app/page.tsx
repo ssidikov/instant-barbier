@@ -153,8 +153,9 @@ export default function Home() {
                   alt='Hero Background'
                   fill
                   priority
-                  quality={90}
-                  sizes='(max-width: 768px) 300vw, 100vw'
+                  fetchPriority='high'
+                  quality={100}
+                  sizes='(max-width: 768px) 100vw, 100vw'
                   className='object-cover object-center'
                 />
               </div>
@@ -680,7 +681,7 @@ export default function Home() {
               alt='Atmosphere Background'
               fill
               quality={90}
-              sizes='(max-width: 768px) 300vw, 100vw'
+              sizes='(max-width: 768px) 100vw, 100vw'
               className='object-cover object-center'
               loading='lazy'
             />
@@ -1051,7 +1052,7 @@ export default function Home() {
               alt={BACKGROUNDS.homeInterior.alt}
               fill
               unoptimized
-              sizes='(max-width: 768px) 300vw, 100vw'
+              sizes='(max-width: 768px) 100vw, 100vw'
               loading='lazy'
               className='object-cover object-center'
             />
@@ -1363,7 +1364,7 @@ export default function Home() {
                 alt={BACKGROUNDS.homeCta.alt}
                 fill
                 quality={90}
-                sizes='(max-width: 768px) 300vw, 100vw'
+                sizes='(max-width: 768px) 100vw, 100vw'
                 loading='lazy'
                 className='object-cover object-center'
               />

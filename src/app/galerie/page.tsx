@@ -51,10 +51,15 @@ function GalleryCard({
       className={`${isFirst ? 'col-span-2 row-span-2' : ''} aspect-square`}>
       <div className={`${isFirst ? 'h-full' : 'aspect-square'}`}>
         <div className='relative w-full h-full overflow-hidden group cursor-pointer touch-feedback touch-highlight'>
-          {/* Image background */}
-          <div
-            className='absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110'
-            style={{ backgroundImage: `url("${image.src}")` }}
+          {/* Next.js Image — enables AVIF/WebP, lazy loading, responsive sizes */}
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            quality={75}
+            sizes={isFirst ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 50vw, 33vw'}
+            className='object-cover transition-transform duration-700 group-hover:scale-110'
+            loading='lazy'
           />
 
           {/* Navy overlay that becomes transparent on hover */}
@@ -341,7 +346,7 @@ export default function GaleriePage() {
               alt={BACKGROUNDS.galleryQuote.alt}
               fill
               quality={90}
-              sizes='(max-width: 768px) 300vw, 100vw'
+              sizes='(max-width: 768px) 100vw, 100vw'
               className='object-cover opacity-100'
             />
             <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy' />
