@@ -9,7 +9,7 @@
 
 A premium, highly animated website built for **L'Instant Barbier**, a men's hair salon and barbershop in the heart of Paris (Le Marais). This project serves as a modern digital storefront focused on high-end aesthetics, smooth interactions, and performant user experience.
 
-🔗 **Live Website**: [linstantbarbier.fr](https://www.linstantbarbier.fr) (or your deployment URL)
+🔗 **Live Website**: [linstantbarbier.fr](https://www.linstantbarbier.fr)
 
 ## 📌 Features
 
@@ -18,7 +18,6 @@ A premium, highly animated website built for **L'Instant Barbier**, a men's hair
 - **Custom Image Gallery**: A masonry-style gallery featuring a touch-optimized, full-screen lightbox, categorized filtering, and smooth swipe gestures.
 - **SEO & Performance Optimized**: Fully Static Site Generation (SSG), rigorous `<head>` metadata, Schema.org LD-JSON implementation (LocalBusiness), and perfectly tuned image and font caching configurations for maximum Lighthouse scores.
 - **Custom Booking Integration**: Connects with Planity for seamless reservation flows directly via CTAs throughout the site.
-- **Contact Form**: Integrated functional email handling via Nodemailer backing Next.js API Routes.
 - **Responsive & Accessible**: Pixel-perfect from mobile to high-resolution desktop screens, with custom touch-handling logic for iOS devices (like native scroll locks).
 
 ## 🛠️ Tech Stack
@@ -27,7 +26,6 @@ A premium, highly animated website built for **L'Instant Barbier**, a men's hair
 - **Language**: TypeScript
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/) & [GSAP](https://gsap.com/)
-- **Email Delivery**: Nodemailer
 - **Analytics**: Vercel Analytics
 - **Deployment**: Vercel
 
@@ -69,10 +67,8 @@ Make sure you have Node.js 20+ installed.
 3. Setup environment variables by copying the example or creating a `.env.local` file:
 
    ```env
-   # Required for the contact form functionality
-   EMAIL_USER=your_email@gmail.com
-   EMAIL_PASS=your_app_password
-   # (And any other Planity/Vercel keys)
+    # (Planity keys)
+    NEXT_PUBLIC_PLANITY_KEY=your_planity_api_key
    ```
 
 4. Start the development server (using Turbopack):

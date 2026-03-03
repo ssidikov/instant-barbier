@@ -6,7 +6,7 @@ import { useRef } from 'react'
 interface TextRevealProps {
   children: string
   className?: string
-  variant?: 'word' | 'char'
+  variant?: 'word' | 'char' | 'line'
   delay?: number
   duration?: number
   stagger?: number
@@ -17,68 +17,85 @@ export default function TextReveal({
   className = '',
   variant = 'word',
   delay = 0,
-  duration = 1.2, // increased duration for luxury feel
-  stagger = 0.03, // tighter stagger
+  duration = 0.8,
+  stagger = 0.05,
 }: TextRevealProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-10% 0px -10% 0px' })
 
-  // Split logic
-  const elements = variant === 'word' ? children.split(' ') : children.split('')
-
-  // Ultra-premium cinematic easing curve
-  const premiumEase = [0.76, 0, 0.24, 1] as [number, number, number, number]
+  const words = children.split(' ')
+  const chars = children.split('')
 
   const container: Variants = {
-    hidden: {},
+    hidden: { opacity: 0 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      transition: { staggerChildren: stagger, delayChildren: delay * i },
+    }),
+  }
+
+  // Removed `filter: blur()` entirely. While it creates a premium effect on desktop,
+  // applying `filter: blur(0px)` on mobile Safari/Chrome often leaves the text permanently
+  // fuzzy or breaks sub-pixel anti-aliasing. Now relies on a clean fade and y-translate.
+  // Clean, native-feeling easing curve (easeOutQuint) that is hardware accelerated.
+  // We explicitly avoid spring physics here as calculating physics for dozens of
+  // words simultaneously drops framerates. This guarantees a smooth 60fps premium feel.
+  const child: Variants = {
     visible: {
+      opacity: 1,
+      y: 0,
       transition: {
-        staggerChildren: stagger,
-        delayChildren: delay,
+        duration: duration,
+        ease: [0.22, 1, 0.36, 1], // premium smooth deceleration
+      },
+    },
+    hidden: {
+      opacity: 0,
+      y: 30, // Slightly stronger drop for better reveal drama
+      transition: {
+        duration: duration,
+        ease: [0.22, 1, 0.36, 1],
       },
     },
   }
 
-  // Instead of just fading and sliding, we slide UP from completely hidden (120%)
-  // behind a clipping mask. The parent span provides overflow:hidden.
-  const child: Variants = {
-    hidden: {
-      y: '120%',
-      // slight rotation for an even more dynamic entrance if desired, but
-      // y-translate alone with this bezier is extremely premium.
-      rotate: 2,
-    },
-    visible: {
-      y: '0%',
-      rotate: 0,
-      transition: {
-        duration: duration,
-        ease: premiumEase,
-      },
-    },
+  if (variant === 'char') {
+    return (
+      <m.p
+        ref={ref}
+        className={className}
+        variants={container}
+        initial='hidden'
+        animate={isInView ? 'visible' : 'hidden'}>
+        {chars.map((char, index) => (
+          <m.span
+            key={index}
+            variants={child}
+            className='inline-block'
+            style={{ willChange: 'opacity, transform' }}>
+            {char === ' ' ? '\u00A0' : char}
+          </m.span>
+        ))}
+      </m.p>
+    )
   }
 
   return (
-    <m.div
+    <m.p
       ref={ref}
-      className={`flex flex-wrap ${className}`}
+      className={`${className} flex flex-wrap`}
       variants={container}
       initial='hidden'
       animate={isInView ? 'visible' : 'hidden'}>
-      {elements.map((el, index) => {
-        // If variant is word, we need to preserve spaces between words.
-        return (
-          <span key={index} className='overflow-hidden relative inline-flex pb-1 -mb-1'>
-            <m.span variants={child} className='inline-block origin-top-left'>
-              {el}
-            </m.span>
-            {/* Add spacing back for words */}
-            {variant === 'word' && index < elements.length - 1 && (
-              <span className='inline-block'>&nbsp;</span>
-            )}
-          </span>
-        )
-      })}
-    </m.div>
+      {words.map((word, index) => (
+        <m.span
+          key={index}
+          variants={child}
+          className='mr-[0.25em] inline-block'
+          style={{ willChange: 'opacity, transform' }}>
+          {word}
+        </m.span>
+      ))}
+    </m.p>
   )
 }

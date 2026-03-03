@@ -699,42 +699,38 @@ export default function Home() {
                   </TextReveal>
                   <TextReveal
                     className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-cream/60 leading-[0.8] tracking-[-2px] lg:tracking-[-4px]'
-                    delay={0.1}>
+                    delay={0.05}>
                     salon
                   </TextReveal>
                 </div>
                 <div className='flex justify-center gap-x-3 md:gap-x-4'>
                   <TextReveal
                     className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-cream/60 leading-[0.8] tracking-[-2px] lg:tracking-[-4px]'
-                    delay={0.2}>
+                    delay={0.1}>
                     de
                   </TextReveal>
                   <TextReveal
-                    variant='char'
-                    stagger={0.05}
                     className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-[0.8] tracking-[-2px] lg:tracking-[-4px]'
-                    delay={0.3}>
+                    delay={0.15}>
                     barbier
                   </TextReveal>
                 </div>
                 <div className='flex justify-center'>
                   <TextReveal
                     className='font-title text-gold text-2xl md:text-3xl lg:text-[3.5rem] leading-[1.2] tracking-[-2px] lg:tracking-[-4px]'
-                    delay={0.5}>
+                    delay={0.2}>
                     dans le Marais
                   </TextReveal>
                 </div>
-                <div className='flex justify-center pt-2'>
+                <div className='flex justify-center '>
                   <TextReveal
                     className='font-title text-cream/70 text-2xl md:text-3xl lg:text-[3.5rem] leading-[0.5] tracking-[-2px] lg:tracking-[-4px] italic'
-                    delay={0.65}>
+                    delay={0.4}>
                     au style
                   </TextReveal>
                   <TextReveal
-                    variant='char'
-                    stagger={0.06}
-                    className='font-title text-gold text-2xl md:text-3xl lg:text-[3.5rem] leading-[0.5] tracking-[-1px] lg:tracking-[-4px] italic ml-3 md:ml-4'
-                    delay={0.8}>
+                    className='font-title text-gold text-2xl md:text-3xl lg:text-[3.5rem] leading-[0.5] tracking-[-1px] lg:tracking-[-4px] italic'
+                    delay={0.45}>
                     unique
                   </TextReveal>
                 </div>
