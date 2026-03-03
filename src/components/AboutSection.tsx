@@ -366,6 +366,48 @@ export default function AboutSection() {
 
         {/* ── Mobile / Tablet: stacked layout (below lg) ── */}
         <div className='lg:hidden'>
+          {/* Mobile: À propos label + Title (above video) */}
+          <div className='mb-8'>
+            <Container className='relative z-10'>
+              <Reveal
+                variant='fade-up'
+                className='flex items-center justify-center gap-4 mt-8 md:mt-12 mb-0'>
+                <span
+                  className='block w-16 h-px'
+                  style={{ background: 'linear-gradient(to right, transparent, #AF9778)' }}
+                />
+                <span className='text-gold text-[10px] uppercase tracking-[0.45em] font-medium'>
+                  À propos
+                </span>
+                <span
+                  className='block w-16 h-px'
+                  style={{ background: 'linear-gradient(to left, transparent, #AF9778)' }}
+                />
+              </Reveal>
+            </Container>
+
+            <div className='relative z-10 text-center pt-8 px-6 max-w-3xl mx-auto'>
+              <Reveal variant='fade-up' delay={0.1} className='mb-4'>
+                <h2 className='flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1'>
+                  <span
+                    className='text-6xl md:text-8xl font-title text-gold font-light leading-[0.82] tracking-[-2px]'
+                    aria-label='23'>
+                    23
+                  </span>
+                  <span className='text-2xl md:text-3xl font-title text-gold/80 uppercase tracking-[1px]'>
+                    ans
+                  </span>
+                </h2>
+              </Reveal>
+
+              <Reveal variant='fade-up' delay={0.25}>
+                <span className='block text-2xl md:text-3xl font-title text-cream/70 leading-[1.1] tracking-tight'>
+                  au service du style masculin
+                </span>
+              </Reveal>
+            </div>
+          </div>
+
           {/* Full-width portrait video */}
           <div className='relative w-full min-h-[80vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden'>
             <div className='absolute inset-0 z-0 overflow-hidden'>
@@ -475,46 +517,9 @@ export default function AboutSection() {
         </Reveal>
       </div>
 
-      {/* ── Mobile: À propos label + text content below video (below lg) ── */}
+      {/* ── Mobile: text content below video (below lg) ── */}
       <div className='lg:hidden'>
-        {/* À propos label */}
-        <Container className='relative z-10'>
-          <Reveal variant='fade-up' className='flex items-center justify-center gap-4 mt-16 mb-0'>
-            <span
-              className='block w-16 h-px'
-              style={{ background: 'linear-gradient(to right, transparent, #AF9778)' }}
-            />
-            <span className='text-gold text-[10px] uppercase tracking-[0.45em] font-medium'>
-              À propos
-            </span>
-            <span
-              className='block w-16 h-px'
-              style={{ background: 'linear-gradient(to left, transparent, #AF9778)' }}
-            />
-          </Reveal>
-        </Container>
-
-        {/* Text content */}
         <div className='relative z-10 text-center py-16 md:py-24 px-6 max-w-3xl mx-auto'>
-          <Reveal variant='fade-up' delay={0.1} className='mb-6 md:mb-8'>
-            <h2 className='flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1'>
-              <span
-                className='text-6xl md:text-8xl font-title text-gold font-light leading-[0.82] tracking-[-2px]'
-                aria-label='23'>
-                23
-              </span>
-              <span className='text-2xl md:text-3xl font-title text-gold/80 uppercase tracking-[1px]'>
-                ans
-              </span>
-            </h2>
-          </Reveal>
-
-          <Reveal variant='fade-up' delay={0.25} className='mb-6'>
-            <span className='block text-2xl md:text-3xl font-title text-cream/70 leading-[1.1] tracking-tight'>
-              au service du style masculin
-            </span>
-          </Reveal>
-
           <Reveal variant='scale-up' delay={0.35}>
             <div
               className='w-24 h-px mx-auto mb-8 origin-center'
