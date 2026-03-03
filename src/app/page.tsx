@@ -1229,11 +1229,13 @@ export default function Home() {
                     . Pour toute autre demande ou information, n&apos;hésitez pas à nous appeler.
                   </p>
 
-                  <div className='flex flex-wrap items-center gap-4 mt-8'>
-                    <Button href='tel:0145354722'>Nous appeler</Button>
+                  <div className='flex flex-col md:flex-row flex-wrap items-center gap-4 mt-8 w-full md:w-auto'>
+                    <Button href='tel:0145354722' className='w-full md:w-auto'>
+                      Nous appeler
+                    </Button>
                     <Link
                       href='/reservation#planitycontainer'
-                      className='group relative inline-flex items-center justify-center px-10 py-5 md:px-6 md:py-4 border border-gold/30 hover:border-gold/60 transition-all duration-500 touch-button'>
+                      className='group relative inline-flex items-center justify-center px-10 py-5 md:px-6 md:py-4 border border-gold/30 hover:border-gold/60 transition-all duration-500 touch-button w-full md:w-auto'>
                       <span className='text-gold text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] font-semibold group-hover:text-cream transition-colors duration-300'>
                         Prendre RDV
                       </span>
