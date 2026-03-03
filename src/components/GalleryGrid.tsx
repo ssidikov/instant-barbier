@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import Reveal from '@/components/Reveal'
 import { GALLERY_IMAGES, type GalleryImageData } from '@/lib/images'
 import dynamic from 'next/dynamic'

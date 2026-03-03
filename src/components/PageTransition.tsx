@@ -14,15 +14,22 @@ import { useEffect, useState } from 'react'
 export default function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [isVisible, setIsVisible] = useState(true)
+  const [prevPath, setPrevPath] = useState(pathname)
+
+  if (pathname !== prevPath) {
+    setPrevPath(pathname)
+    setIsVisible(false)
+  }
 
   useEffect(() => {
-    // Brief fade on route change
-    setIsVisible(false)
-    const timer = requestAnimationFrame(() => {
-      setIsVisible(true)
-    })
-    return () => cancelAnimationFrame(timer)
-  }, [pathname])
+    if (!isVisible) {
+      // Brief fade on route change
+      const timer = requestAnimationFrame(() => {
+        setIsVisible(true)
+      })
+      return () => cancelAnimationFrame(timer)
+    }
+  }, [isVisible])
 
   return (
     <div

@@ -5,7 +5,7 @@ import Section from '@/components/Section'
 import Button from '@/components/Button'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState, useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
 import { m, useReducedMotion } from 'framer-motion'
@@ -13,7 +13,7 @@ import { LOGOS, BACKGROUNDS } from '@/lib/images'
 import dynamic from 'next/dynamic'
 import SectionTitle from '@/components/SectionTitle'
 import StarRating from '@/components/StarRating'
-import { services, team, galleryImages, reviews, hours, type ServiceIconId } from '@/lib/data'
+import { services, team, reviews, hours, type ServiceIconId } from '@/lib/data'
 
 const GoogleMap = dynamic(() => import('@/components/GoogleMap'), { ssr: false })
 const GalleryGrid = dynamic(() => import('@/components/GalleryGrid'), { ssr: false })

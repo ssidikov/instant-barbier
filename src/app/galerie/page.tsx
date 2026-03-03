@@ -1,13 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import { PLANITY_URL, SITE_URL } from '@/lib/constants'
 import Reveal from '@/components/Reveal'
-import { GALLERY_IMAGES, LOGOS, BACKGROUNDS, type GalleryImageData } from '@/lib/images'
-import GalleryLightbox from '@/components/GalleryLightbox'
+import { GALLERY_IMAGES, LOGOS, BACKGROUNDS } from '@/lib/images'
 
 import GalleryGrid from '@/components/GalleryGrid'
 
