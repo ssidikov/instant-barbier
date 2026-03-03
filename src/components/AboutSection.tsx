@@ -6,7 +6,6 @@ import { LOGOS, PRODUCT_GRID, ABOUT_IMAGES } from '@/lib/images'
 import Container from '@/components/Container'
 import Button from '@/components/Button'
 import Reveal from '@/components/Reveal'
-import TextReveal from '@/components/TextReveal'
 import { m, useScroll, useTransform } from 'framer-motion'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -228,7 +227,7 @@ export default function AboutSection() {
         </div>
 
         {/* ── Vimeo Video Background Section ── */}
-        <div className='relative w-full min-h-[80vh] md:min-h-[90vh] lg:min-h-[100vh] flex items-center justify-center overflow-hidden'>
+        <div className='relative w-full h-screen flex items-center justify-center overflow-hidden'>
           {/* Vimeo iframe — background mode (autoplay, muted, loop, no controls) */}
           <div className='absolute inset-0 z-0 overflow-hidden'>
             <iframe
@@ -275,72 +274,6 @@ export default function AboutSection() {
             }}
           />
 
-          {/* ── Centered editorial content overlay ── */}
-          <div className='relative z-10 flex flex-col items-center justify-center text-center px-6 py-24 md:py-32 lg:py-40 max-w-3xl mx-auto'>
-            {/* "23 ans" counter */}
-            <Reveal variant='fade-up' delay={0.1} className='mb-6 md:mb-8'>
-              <h2 className='flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1'>
-                <span
-                  ref={counterRef}
-                  className='text-6xl md:text-8xl lg:text-9xl font-title text-gold font-light leading-[0.82] tracking-[-2px] drop-shadow-lg'
-                  aria-label='23'>
-                  23
-                </span>
-                <span className='text-2xl md:text-3xl lg:text-4xl font-title text-gold/80 uppercase tracking-[1px]'>
-                  ans
-                </span>
-              </h2>
-            </Reveal>
-
-            {/* Tagline */}
-            <Reveal variant='fade-up' delay={0.25} className='mb-6'>
-              <span className='block text-2xl md:text-3xl lg:text-4xl font-title text-cream/70 leading-[1.1] tracking-tight'>
-                au service du style masculin
-              </span>
-            </Reveal>
-
-            {/* Separator */}
-            <Reveal variant='scale-up' delay={0.35}>
-              <div
-                ref={separatorRef}
-                className='w-24 h-px mx-auto mb-8 origin-center'
-                style={{
-                  background:
-                    'linear-gradient(to right, transparent, #AF9778 30%, #AF9778 70%, transparent)',
-                }}
-              />
-            </Reveal>
-
-            {/* Description */}
-            <Reveal variant='fade-up' delay={0.45} className='space-y-4 mb-8'>
-              <p className='text-cream/90 text-base md:text-lg lg:text-xl leading-[1.75] tracking-wide font-light'>
-                Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
-                <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
-                comme les tendances contemporaines dans notre salon du Marais.
-              </p>
-              <p className='text-cream/60 text-sm md:text-base leading-[1.75] tracking-wide font-light'>
-                Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
-              </p>
-            </Reveal>
-
-            {/* Feature tags — glassmorphism pills */}
-            <Reveal variant='blur-in' delay={0.55} className='flex flex-wrap justify-center gap-3'>
-              {[
-                'Dégradés maîtrisés',
-                'Rasage serviette chaude',
-                'Produits premium',
-                'Tailleur de barbe',
-              ].map((tag) => (
-                <span
-                  key={tag}
-                  className='text-[0.6rem] md:text-[0.65rem] uppercase tracking-[0.2em] text-gold/80 border border-gold/25 px-3 py-1.5 rounded-full backdrop-blur-md'
-                  style={{ background: 'rgba(175,151,120,0.08)' }}>
-                  {tag}
-                </span>
-              ))}
-            </Reveal>
-          </div>
-
           {/* ── Corner accents — cinematic frame markers ── */}
           <Reveal
             variant='fade-up'
@@ -356,7 +289,7 @@ export default function AboutSection() {
           </Reveal>
 
           {/* ── Decorative text overlay — "L'Art du Détail" ── */}
-          <div className='absolute inset-0 z-[2] flex flex-col items-center justify-end pb-12 md:pb-16 pointer-events-none'>
+          <div className='absolute inset-0 z-[2] flex flex-col items-center justify-end pb-8 pointer-events-none'>
             <Reveal variant='fade-up' delay={0.6}>
               <div className='flex flex-col items-center'>
                 <span className='font-serif italic text-gold/30 text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-wide drop-shadow-md whitespace-nowrap mb-1'>
@@ -408,53 +341,69 @@ export default function AboutSection() {
         </Reveal>
       </div>
 
-      {/* ── Creative editorial tagline below video ────────────────────── */}
-      <div className='relative z-10 text-center py-16 md:py-24 lg:py-32 px-6'>
-        {/* Main creative tagline */}
-        <div className='max-w-3xl mx-auto mb-8'>
-          <TextReveal
-            variant='word'
-            duration={1.2}
-            stagger={0.12}
-            className='text-gold text-3xl md:text-5xl lg:text-6xl font-title font-light leading-[1.1] tracking-[-0.02em]'>
-            L&apos;art du geste, la précision du détail
-          </TextReveal>
-        </div>
+      {/* ── Text content below video ────────────────────── */}
+      <div className='relative z-10 text-center py-16 md:py-24 lg:py-32 px-6 max-w-3xl mx-auto'>
+        {/* "23 ans" counter */}
+        <Reveal variant='fade-up' delay={0.1} className='mb-6 md:mb-8'>
+          <h2 className='flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1'>
+            <span
+              ref={counterRef}
+              className='text-6xl md:text-8xl lg:text-9xl font-title text-gold font-light leading-[0.82] tracking-[-2px]'
+              aria-label='23'>
+              23
+            </span>
+            <span className='text-2xl md:text-3xl lg:text-4xl font-title text-gold/80 uppercase tracking-[1px]'>
+              ans
+            </span>
+          </h2>
+        </Reveal>
 
-        {/* Decorative line */}
-        <Reveal variant='scale-up' delay={0.4}>
+        {/* Tagline */}
+        <Reveal variant='fade-up' delay={0.25} className='mb-6'>
+          <span className='block text-2xl md:text-3xl lg:text-4xl font-title text-cream/70 leading-[1.1] tracking-tight'>
+            au service du style masculin
+          </span>
+        </Reveal>
+
+        {/* Separator */}
+        <Reveal variant='scale-up' delay={0.35}>
           <div
-            className='about-para w-24 h-px mx-auto mb-10'
+            ref={separatorRef}
+            className='w-24 h-px mx-auto mb-8 origin-center'
             style={{
-              background: 'linear-gradient(to right, transparent, #AF9778, transparent)',
+              background:
+                'linear-gradient(to right, transparent, #AF9778 30%, #AF9778 70%, transparent)',
             }}
           />
         </Reveal>
 
-        {/* Subtitle */}
-        <Reveal variant='fade-up' delay={0.6}>
-          <p className='about-para text-cream/70 text-base md:text-lg lg:text-xl leading-[1.8] font-light tracking-wide max-w-2xl mx-auto mb-8'>
-            Chaque coupe raconte une histoire. Chaque trait de lame est un acte de précision et
-            d&apos;élégance.
+        {/* Description */}
+        <Reveal variant='fade-up' delay={0.45} className='space-y-4 mb-8'>
+          <p className='text-cream/90 text-base md:text-lg lg:text-xl leading-[1.75] tracking-wide font-light'>
+            Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
+            <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
+            comme les tendances contemporaines dans notre salon du Marais.
+          </p>
+          <p className='text-cream/60 text-sm md:text-base leading-[1.75] tracking-wide font-light'>
+            Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
           </p>
         </Reveal>
 
-        {/* Signature-like accent */}
-        <Reveal
-          variant='blur-in'
-          delay={0.8}
-          className='about-para flex items-center justify-center gap-4'>
-          <span
-            className='w-12 h-px'
-            style={{ background: 'linear-gradient(to right, transparent, rgba(175,151,120,0.5))' }}
-          />
-          <span className='text-gold text-xs md:text-sm uppercase tracking-[0.4em] font-light italic'>
-            Depuis 2002 • Paris le Marais
-          </span>
-          <span
-            className='w-12 h-px'
-            style={{ background: 'linear-gradient(to left, transparent, rgba(175,151,120,0.5))' }}
-          />
+        {/* Feature tags */}
+        <Reveal variant='blur-in' delay={0.55} className='flex flex-wrap justify-center gap-3'>
+          {[
+            'Dégradés maîtrisés',
+            'Rasage serviette chaude',
+            'Produits premium',
+            'Tailleur de barbe',
+          ].map((tag) => (
+            <span
+              key={tag}
+              className='text-[0.6rem] md:text-[0.65rem] uppercase tracking-[0.2em] text-gold/80 border border-gold/25 px-3 py-1.5 rounded-full'
+              style={{ background: 'rgba(175,151,120,0.06)' }}>
+              {tag}
+            </span>
+          ))}
         </Reveal>
       </div>
       {/* ── Benefit cards + CTA below cinematic video ────────────────────── */}
