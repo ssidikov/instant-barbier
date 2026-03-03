@@ -1,27 +1,21 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import Image from 'next/image'
-import { LOGOS, VIDEO, PRODUCT_GRID, ABOUT_IMAGES } from '@/lib/images'
+import { LOGOS, PRODUCT_GRID, ABOUT_IMAGES } from '@/lib/images'
 import Container from '@/components/Container'
 import Button from '@/components/Button'
 import Reveal from '@/components/Reveal'
 import TextReveal from '@/components/TextReveal'
 import { m, useScroll, useTransform } from 'framer-motion'
 
-// ── helpers ──────────────────────────────────────────────────────────────────
-
 // ─────────────────────────────────────────────────────────────────────────────
 // ABOUT SECTION COMPONENT
-// Scroll-driven cinematic video experience with three-phase reveal:
-//   Phase 1 (0–30%)  — Atmospheric Entrance: blur, scale, dark overlay
-//   Phase 2 (30–65%) — Architectural Reveal: clip-path mask expansion
-//   Phase 3 (65–100%) — Immersive Activation: parallax settle, unpin
+// Premium full-width Vimeo background with editorial overlays
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
   const labelLineLeftRef = useRef<HTMLSpanElement>(null)
   const labelLineRightRef = useRef<HTMLSpanElement>(null)
   const labelTextRef = useRef<HTMLSpanElement>(null)
@@ -42,34 +36,6 @@ export default function AboutSection() {
     offset: ['start end', 'end start'],
   })
   const badgeRotate = useTransform(scrollYProgress, [0, 1], [0, 360])
-
-  // ── Cinematic video refs ───────────────────────────────────────────────────
-  const cinematicPinRef = useRef<HTMLDivElement>(null)
-  const videoContainerRef = useRef<HTMLDivElement>(null)
-  const cinematicOverlayRef = useRef<HTMLDivElement>(null)
-  const cornerTLRef = useRef<HTMLDivElement>(null)
-  const cornerBRRef = useRef<HTMLDivElement>(null)
-
-  // ── IntersectionObserver for video autoplay/pause ──────────────────────────
-  useEffect(() => {
-    const video = videoRef.current
-    const container = videoContainerRef.current
-    if (!video || !container) return
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            video.play().catch(() => {})
-          } else if (!video.paused) {
-            video.pause()
-          }
-        })
-      },
-      { threshold: 0.1 },
-    )
-    obs.observe(container)
-    return () => obs.disconnect()
-  }, [])
 
   return (
     <section
@@ -239,81 +205,13 @@ export default function AboutSection() {
             }}
           />
         </Reveal>
-
-        {/* ── Centered text content ────────────────────────────────────────── */}
-        <div className='text-center max-w-3xl mx-auto mb-16 md:mb-20 md:hidden'>
-          {/* Headline */}
-          <Reveal variant='fade-up' delay={0.2} className='about-headline mb-6'>
-            <h2 className='flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1 mb-2'>
-              {/* "23" large counter */}
-              <span
-                ref={counterRef}
-                className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold font-light leading-[0.82] tracking-[-2px]'
-                aria-label='23'>
-                23
-              </span>
-              <span className='text-xl md:text-2xl lg:text-3xl xl:text-4xl font-title text-gold/75 uppercase tracking-[1px]'>
-                ans
-              </span>
-            </h2>
-
-            <span className='block text-2xl md:text-3xl lg:text-4xl font-title text-cream/55 leading-[0.9] tracking-tight'>
-              au service du style masculin
-            </span>
-          </Reveal>
-
-          {/* Separator line — scaleX draw */}
-          <Reveal variant='scale-up' delay={0.3}>
-            <div
-              ref={separatorRef}
-              className='w-24 h-px mx-auto mb-8 origin-center'
-              style={{
-                background:
-                  'linear-gradient(to right, transparent, #AF9778 30%, #AF9778 70%, transparent)',
-              }}
-            />
-          </Reveal>
-
-          {/* Description paragraphs */}
-          <Reveal variant='fade-up' delay={0.4} className='space-y-4 mb-8'>
-            <p className='about-para text-cream/90 text-lg lg:text-xl leading-[1.75] tracking-wide font-light'>
-              Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
-              <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
-              comme les tendances contemporaines dans notre salon du Marais.
-            </p>
-            <p className='about-para text-cream/65 text-base leading-[1.75] tracking-wide'>
-              Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
-            </p>
-          </Reveal>
-
-          {/* Feature tags */}
-          <Reveal
-            variant='blur-in'
-            delay={0.5}
-            className='about-para flex flex-wrap justify-center gap-3'>
-            {[
-              'Dégradés maîtrisés',
-              'Rasage serviette chaude',
-              'Produits premium',
-              'Tailleur de barbe',
-            ].map((tag) => (
-              <span
-                key={tag}
-                className='text-[0.65rem] uppercase tracking-[0.2em] text-gold/70 border border-gold/20 px-3 py-1.5 rounded-full backdrop-blur-sm'
-                style={{ background: 'rgba(175,151,120,0.04)' }}>
-                {tag}
-              </span>
-            ))}
-          </Reveal>
-        </div>
       </Container>
 
       {/* ═══════════════════════════════════════════════════════════════════════
-          CINEMATIC VIDEO — Scroll-driven reveal experience
-          Scrolling = entering the salon
+          CINEMATIC VIMEO BACKGROUND — Full-width immersive video experience
       ═══════════════════════════════════════════════════════════════════════ */}
-      <div ref={cinematicPinRef} className='relative w-full'>
-        {/* ── Background Rotating Logo (Client Request) ── */}
+      <div className='relative w-full'>
+        {/* ── Background Rotating Logo ── */}
         <div className='absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0'>
           <m.div
             animate={{ rotate: 360 }}
@@ -329,105 +227,126 @@ export default function AboutSection() {
           </m.div>
         </div>
 
-        {/* Video viewport — centered portrait frame on desktop/tablet, full-width on mobile */}
-        <div className='relative w-full min-h-[70vh] md:min-h-[80vh] flex items-center justify-center z-10'>
-          {/* Portrait frame container — constrains video to natural portrait ratio */}
-          <Reveal
-            variant='fade-up'
-            duration={1.5}
-            threshold={0}
-            className='relative w-full min-h-[70vh] md:min-h-0 md:w-auto md:h-[90vh] md:max-w-[520px] lg:max-w-[600px] md:aspect-3/4 lg:aspect-9/16 overflow-hidden shadow-2xl shadow-navy'>
-            {/* Video container */}
-            <div ref={videoContainerRef} className='absolute inset-0'>
-              <video
-                ref={videoRef}
-                loop
-                muted
-                playsInline
-                preload='none'
-                className='absolute inset-0 w-full h-full object-cover'>
-                <source src={VIDEO.aboutSection.src} type={VIDEO.aboutSection.type} />
-              </video>
-
-              {/* Subtle gradient vignette — always present for depth */}
-              <div
-                className='absolute inset-0 pointer-events-none'
-                style={{
-                  background:
-                    'radial-gradient(ellipse at center, transparent 50%, rgba(7,24,30,0.4) 100%)',
-                }}
-              />
-            </div>
-
-            {/* Dark atmospheric overlay — fades out during scroll */}
-            <div
-              ref={cinematicOverlayRef}
-              className='absolute inset-0 pointer-events-none'
+        {/* ── Vimeo Video Background Section ── */}
+        <div className='relative w-full min-h-[80vh] md:min-h-[90vh] lg:min-h-[100vh] flex items-center justify-center overflow-hidden'>
+          {/* Vimeo iframe — background mode (autoplay, muted, loop, no controls) */}
+          <div
+            className='absolute inset-0 z-0'
+            style={{
+              /* 16:9 video needs to be scaled to cover the viewport area —
+                 we use a generous scale to avoid letterboxing on tall viewports */
+              overflow: 'hidden',
+            }}>
+            <iframe
+              src='https://player.vimeo.com/video/1169861492?background=1&autoplay=1&muted=1&loop=1&autopause=0&player_id=0&app_id=58479'
+              allow='autoplay; fullscreen; picture-in-picture'
+              referrerPolicy='strict-origin-when-cross-origin'
+              title="L'Instant Barbier — Salon de coiffure et barbier Paris"
+              className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none'
               style={{
-                background:
-                  'linear-gradient(to bottom, rgba(7,24,30,0.85) 0%, rgba(7,24,30,0.6) 40%, rgba(7,24,30,0.75) 100%)',
-                opacity: 0.7,
+                width: '177.78vh' /* 100vh * 16/9 */,
+                height: '100vh',
+                minWidth: '100%',
+                minHeight: '100%',
+                border: 'none',
               }}
             />
+          </div>
 
-            {/* ── Text Overlay ── */}
-            <div className='absolute inset-0 z-40 flex flex-col items-center justify-end pb-32 md:pb-48 pointer-events-none'>
-              {/* Box wrapper to constrain the Text */}
-              <div className='relative flex flex-col items-center w-full'>
-                <Reveal variant='fade-up' delay={0.3}>
-                  <span className='font-serif italic text-gold/90 text-3xl sm:text-4xl md:text-5xl lg:text-5xl tracking-wide opacity-90 mix-blend-overlay drop-shadow-md whitespace-nowrap mb-2'>
-                    L&apos;Art du
-                  </span>
-                </Reveal>
+          {/* ── Gradient overlays for text readability ── */}
+          {/* Top gradient */}
+          <div
+            className='absolute inset-x-0 top-0 h-[40%] z-[1] pointer-events-none'
+            style={{
+              background:
+                'linear-gradient(to bottom, rgba(7,24,30,0.95) 0%, rgba(7,24,30,0.4) 60%, transparent 100%)',
+            }}
+          />
+          {/* Bottom gradient */}
+          <div
+            className='absolute inset-x-0 bottom-0 h-[50%] z-[1] pointer-events-none'
+            style={{
+              background:
+                'linear-gradient(to top, rgba(7,24,30,0.95) 0%, rgba(7,24,30,0.5) 50%, transparent 100%)',
+            }}
+          />
+          {/* Side gradients for ultra-wide */}
+          <div
+            className='absolute inset-y-0 left-0 w-[20%] z-[1] pointer-events-none'
+            style={{
+              background: 'linear-gradient(to right, rgba(7,24,30,0.7) 0%, transparent 100%)',
+            }}
+          />
+          <div
+            className='absolute inset-y-0 right-0 w-[20%] z-[1] pointer-events-none'
+            style={{
+              background: 'linear-gradient(to left, rgba(7,24,30,0.7) 0%, transparent 100%)',
+            }}
+          />
+          {/* Radial vignette */}
+          <div
+            className='absolute inset-0 z-[1] pointer-events-none'
+            style={{
+              background:
+                'radial-gradient(ellipse at center, transparent 30%, rgba(7,24,30,0.6) 100%)',
+            }}
+          />
+          {/* Overall tint to maintain dark luxury mood */}
+          <div
+            className='absolute inset-0 z-[1] pointer-events-none'
+            style={{ background: 'rgba(7,24,30,0.30)' }}
+          />
 
-                <Reveal variant='fade-up' delay={0.5}>
-                  <span className='font-serif italic text-gold/90 text-3xl sm:text-4xl md:text-5xl lg:text-5xl tracking-wide opacity-90 mix-blend-overlay drop-shadow-md whitespace-nowrap'>
-                    Détail
-                  </span>
-                </Reveal>
-              </div>
-            </div>
+          {/* ── Centered editorial content overlay ── */}
+          <div className='relative z-10 flex flex-col items-center justify-center text-center px-6 py-24 md:py-32 lg:py-40 max-w-3xl mx-auto'>
+            {/* "23 ans" counter */}
+            <Reveal variant='fade-up' delay={0.1} className='mb-6 md:mb-8'>
+              <h2 className='flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1'>
+                <span
+                  ref={counterRef}
+                  className='text-6xl md:text-8xl lg:text-9xl font-title text-gold font-light leading-[0.82] tracking-[-2px] drop-shadow-lg'
+                  aria-label='23'>
+                  23
+                </span>
+                <span className='text-2xl md:text-3xl lg:text-4xl font-title text-gold/80 uppercase tracking-[1px]'>
+                  ans
+                </span>
+              </h2>
+            </Reveal>
 
-            {/* Corner accents — cinematic frame markers */}
-            <div
-              ref={cornerTLRef}
-              className='absolute top-4 left-4 md:top-6 md:left-6 w-10 h-10 md:w-14 md:h-14 border-t-2 border-l-2 border-gold/40 z-20 pointer-events-none'
-            />
-            <div
-              ref={cornerBRRef}
-              className='absolute bottom-4 right-4 md:bottom-6 md:right-6 w-10 h-10 md:w-14 md:h-14 border-b-2 border-r-2 border-gold/40 z-20 pointer-events-none'
-            />
-          </Reveal>
-
-          {/* ── Left panel — Headline + service tags (lg+ only) ─────────── */}
-          <Reveal
-            variant='fade-side'
-            className='hidden lg:flex absolute left-6 lg:left-[4%] xl:left-[8%] top-1/2 -translate-y-1/2 flex-col items-start gap-6 max-w-[240px] lg:max-w-[260px] z-20'>
-            {/* Decorative line */}
-            <div
-              className='w-10 h-px'
-              style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
-            />
-
-            {/* Intro Text */}
-            <div>
-              <h3 className='text-gold font-title text-2xl lg:text-3xl leading-[1.1] mb-2 font-light tracking-[-0.02em]'>
-                L&apos;Excellence
-                <br />
-                <span className='italic font-serif text-[1.15em] tracking-normal'>au Masculin</span>
-              </h3>
-            </div>
+            {/* Tagline */}
+            <Reveal variant='fade-up' delay={0.25} className='mb-6'>
+              <span className='block text-2xl md:text-3xl lg:text-4xl font-title text-cream/70 leading-[1.1] tracking-tight'>
+                au service du style masculin
+              </span>
+            </Reveal>
 
             {/* Separator */}
-            <div
-              className='w-8 h-px'
-              style={{
-                background: 'linear-gradient(to right, rgba(175,151,120,0.3), transparent)',
-              }}
-            />
+            <Reveal variant='scale-up' delay={0.35}>
+              <div
+                ref={separatorRef}
+                className='w-24 h-px mx-auto mb-8 origin-center'
+                style={{
+                  background:
+                    'linear-gradient(to right, transparent, #AF9778 30%, #AF9778 70%, transparent)',
+                }}
+              />
+            </Reveal>
 
-            {/* Service tags — rounded pills */}
-            <div className='flex flex-col gap-2'>
+            {/* Description */}
+            <Reveal variant='fade-up' delay={0.45} className='space-y-4 mb-8'>
+              <p className='text-cream/90 text-base md:text-lg lg:text-xl leading-[1.75] tracking-wide font-light'>
+                Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
+                <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
+                comme les tendances contemporaines dans notre salon du Marais.
+              </p>
+              <p className='text-cream/60 text-sm md:text-base leading-[1.75] tracking-wide font-light'>
+                Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
+              </p>
+            </Reveal>
+
+            {/* Feature tags — glassmorphism pills */}
+            <Reveal variant='blur-in' delay={0.55} className='flex flex-wrap justify-center gap-3'>
               {[
                 'Dégradés maîtrisés',
                 'Rasage serviette chaude',
@@ -436,43 +355,41 @@ export default function AboutSection() {
               ].map((tag) => (
                 <span
                   key={tag}
-                  className='text-[0.6rem] lg:text-[0.65rem] uppercase tracking-[0.18em] text-gold/70 border border-gold/20 px-3 py-1.5 rounded-full'
-                  style={{ background: 'rgba(175,151,120,0.06)' }}>
+                  className='text-[0.6rem] md:text-[0.65rem] uppercase tracking-[0.2em] text-gold/80 border border-gold/25 px-3 py-1.5 rounded-full backdrop-blur-md'
+                  style={{ background: 'rgba(175,151,120,0.08)' }}>
                   {tag}
                 </span>
               ))}
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
 
-          {/* ── Right panel — Description text (lg+ only) ─────────────────── */}
+          {/* ── Corner accents — cinematic frame markers ── */}
           <Reveal
-            variant='fade-side'
+            variant='fade-up'
             delay={0.2}
-            className='hidden lg:flex absolute right-6 lg:right-[6%] xl:right-[10%] top-1/2 -translate-y-1/2 flex-col items-start gap-5 max-w-[240px] lg:max-w-[280px] z-20'>
-            {/* Decorative line */}
-            <div
-              className='w-10 h-px'
-              style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
-            />
-
-            <p className='text-cream/85 text-xs lg:text-sm leading-[1.8] tracking-wide font-light'>
-              Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
-              <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
-              comme les tendances contemporaines dans notre salon du Marais.
-            </p>
-
-            {/* Separator */}
-            <div
-              className='w-8 h-px'
-              style={{
-                background: 'linear-gradient(to right, rgba(175,151,120,0.3), transparent)',
-              }}
-            />
-
-            <p className='text-cream/55 text-[11px] lg:text-xs leading-[1.8] tracking-wide font-light italic'>
-              Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
-            </p>
+            className='absolute top-6 left-6 md:top-10 md:left-10 z-10 pointer-events-none'>
+            <div className='w-12 h-12 md:w-16 md:h-16 border-t-2 border-l-2 border-gold/40' />
           </Reveal>
+          <Reveal
+            variant='fade-up'
+            delay={0.3}
+            className='absolute bottom-6 right-6 md:bottom-10 md:right-10 z-10 pointer-events-none'>
+            <div className='w-12 h-12 md:w-16 md:h-16 border-b-2 border-r-2 border-gold/40' />
+          </Reveal>
+
+          {/* ── Decorative text overlay — "L'Art du Détail" ── */}
+          <div className='absolute inset-0 z-[2] flex flex-col items-center justify-end pb-12 md:pb-16 pointer-events-none'>
+            <Reveal variant='fade-up' delay={0.6}>
+              <div className='flex flex-col items-center'>
+                <span className='font-serif italic text-gold/30 text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-wide drop-shadow-md whitespace-nowrap mb-1'>
+                  L&apos;Art du
+                </span>
+                <span className='font-serif italic text-gold/30 text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-wide drop-shadow-md whitespace-nowrap'>
+                  Détail
+                </span>
+              </div>
+            </Reveal>
+          </div>
         </div>
 
         {/* Experience badge — positioned over the video corner */}
