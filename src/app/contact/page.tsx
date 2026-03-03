@@ -173,7 +173,7 @@ export default function ContactPage() {
               priority
               fetchPriority='high'
               quality={100}
-              sizes='(max-width: 768px) 100vw, 100vw'
+              unoptimized
               className='object-cover'
             />
             <div className='absolute inset-0 bg-navy/70' />

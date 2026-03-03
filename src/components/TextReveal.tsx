@@ -34,14 +34,13 @@ export default function TextReveal({
     }),
   }
 
-  // We must define filter: blur() on both hidden and visible unconditionally
-  // so that the server-rendered blur(8px) is properly hydrated and cleared
-  // on all devices. This preserves the premium animation without getting stuck.
+  // Removed `filter: blur()` entirely. While it creates a premium effect on desktop,
+  // applying `filter: blur(0px)` on mobile Safari/Chrome often leaves the text permanently
+  // fuzzy or breaks sub-pixel anti-aliasing. Now relies on a clean fade and y-translate.
   const child: Variants = {
     visible: {
       opacity: 1,
       y: 0,
-      filter: 'blur(0px)',
       transition: {
         type: 'spring',
         damping: 12,
@@ -52,7 +51,6 @@ export default function TextReveal({
     hidden: {
       opacity: 0,
       y: 20,
-      filter: 'blur(8px)',
       transition: {
         type: 'spring',
         damping: 12,

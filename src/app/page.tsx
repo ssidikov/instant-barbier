@@ -155,7 +155,7 @@ export default function Home() {
                   priority
                   fetchPriority='high'
                   quality={100}
-                  sizes='(max-width: 768px) 100vw, 100vw'
+                  unoptimized
                   className='object-cover object-center'
                 />
               </div>
