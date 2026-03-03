@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# L'Instant Barbier
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js_16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
+![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 
-First, run the development server:
+A premium, highly animated website built for **L'Instant Barbier**, a men's hair salon and barbershop in the heart of Paris (Le Marais). This project serves as a modern digital storefront focused on high-end aesthetics, smooth interactions, and performant user experience.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+🔗 **Live Website**: [linstantbarbier.fr](https://www.linstantbarbier.fr) (or your deployment URL)
+
+## 📌 Features
+
+- **Premium UI/UX**: Custom design with "glassmorphism", dark mode aesthetic, and intricate gold accents to reflect luxury and craftsmanship.
+- **Advanced Animations**: Powered by a combination of **Framer Motion** (for entrance/exit and gesture animations) and **GSAP** with native scroll (for scroll-linked parallax, stagger, and reveal effects).
+- **Custom Image Gallery**: A masonry-style gallery featuring a touch-optimized, full-screen lightbox, categorized filtering, and smooth swipe gestures.
+- **SEO & Performance Optimized**: Fully Static Site Generation (SSG), rigorous `<head>` metadata, Schema.org LD-JSON implementation (LocalBusiness), and perfectly tuned image and font caching configurations for maximum Lighthouse scores.
+- **Custom Booking Integration**: Connects with Planity for seamless reservation flows directly via CTAs throughout the site.
+- **Contact Form**: Integrated functional email handling via Nodemailer backing Next.js API Routes.
+- **Responsive & Accessible**: Pixel-perfect from mobile to high-resolution desktop screens, with custom touch-handling logic for iOS devices (like native scroll locks).
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router, Turbopack)
+- **Language**: TypeScript
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/) & [GSAP](https://gsap.com/)
+- **Email Delivery**: Nodemailer
+- **Analytics**: Vercel Analytics
+- **Deployment**: Vercel
+
+## 📂 Project Structure
+
+```text
+├── src/
+│   ├── app/             # Next.js 16 App Router pages (Home, Gallery, Booking, Legal, etc.)
+│   ├── components/      # Reusable, highly animated UI elements (GalleryLightbox, SmoothScroll, Reveal, Header, Footer)
+│   ├── lib/             # Shared utilities, constants, and structured image/asset data
+│   └── globals.css      # Core Tailwind directives & raw native CSS variables/utilities
+├── public/              # Static assets (fonts, video, favicons, raw images)
+├── tailwind.config.ts   # Tailwind setup and custom theme extensions
+├── next.config.ts       # Cache policies, header injections, and image optimization controls
+└── package.json         # Dependencies and scripts
 ```
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Make sure you have Node.js 20+ installed.
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/linstant-barbier.git
+   cd linstant-barbier
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Setup environment variables by copying the example or creating a `.env.local` file:
+
+   ```env
+   # Required for the contact form functionality
+   EMAIL_USER=your_email@gmail.com
+   EMAIL_PASS=your_app_password
+   # (And any other Planity/Vercel keys)
+   ```
+
+4. Start the development server (using Turbopack):
+   ```bash
+   npm run dev
+   ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧠 Technical Highlights
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Complex Scroll Handling & Lightbox Portals
 
-## Learn More
+The application tackles notoriously difficult UI challenges for luxury web design:
 
-To learn more about Next.js, take a look at the following resources:
+- A custom `SmoothScroll` implementation utilizing native scrolling while registering GSAP `ScrollTrigger` instances, preventing "jank" and ensuring high scroll frame rates.
+- A fully custom `GalleryLightbox` component rendered exclusively via React `createPortal` to escape CSS hierarchy limitations (`overflow: hidden`), allowing true z-index: 99999 viewport dominance.
+- Robust scroll-locking mechanisms utilizing both CSS and native browser passive event listeners to handle mobile/iOS touch-move edge cases when overlays are open.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Caching Strategy & Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The app takes full advantage of Vercel Edge caching and Next.js Image Optimization caching directives (`stale-while-revalidate`, `immutable`) customized specifically for frequently changed, identically named static assets without busting performance limits.
 
-## Deploy on Vercel
+## 📝 License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is proprietary and intended for **L'Instant Barbier**. The source code is showcased here for portfolio purposes only.
