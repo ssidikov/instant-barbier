@@ -280,8 +280,6 @@ export default function GaleriePage() {
       </main>
 
       <Footer />
-
-      <Footer />
     </div>
   )
 }

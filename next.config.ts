@@ -34,8 +34,9 @@ const nextConfig: NextConfig = {
     qualities: [50, 75, 90, 100],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // Cache optimized images for 1 year (they're content-addressed)
-    minimumCacheTTL: 31536000,
+    // On Vercel, the CDN is purged on every deploy — no need for long TTLs.
+    // 60s minimum so the image optimizer doesn't hammer the origin constantly.
+    minimumCacheTTL: 60,
     remotePatterns: [
       {
         protocol: 'https',
@@ -49,9 +50,31 @@ const nextConfig: NextConfig = {
         source: '/(.*)',
         headers: securityHeaders,
       },
-      // Force re-fetch for all HTML requests to avoid returning stale pages
+      // ─── HTML pages: always revalidate (Vercel purges CDN on deploy) ───────
       {
-        source: '/:path((?!_next|images|icons|api).*)',
+        source: '/:path((?!_next|images|icons|video|fonts|api).*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+        ],
+      },
+      // ─── /_next/static: SAFE to keep immutable ────────────────────────────
+      // Next.js content-hashes every filename, so URLs change on every build.
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // ─── Public mutable assets: no-cache (Vercel CDN purge on deploy) ─────
+      // Do NOT use `immutable` — files can be overwritten with the same name.
+      {
+        source: '/images/:path*',
         headers: [
           {
             key: 'Cache-Control',
@@ -64,45 +87,25 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            value: 'public, max-age=0, must-revalidate',
           },
         ],
       },
-      {
-        source: '/images/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
-        source: '/_next/static/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      // Video assets — large, immutable content
       {
         source: '/video/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            value: 'public, max-age=0, must-revalidate',
           },
         ],
       },
-      // Fonts
       {
         source: '/fonts/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            value: 'public, max-age=0, must-revalidate',
           },
         ],
       },
