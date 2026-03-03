@@ -1,27 +1,20 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import Image from 'next/image'
-import { LOGOS, VIDEO, PRODUCT_GRID, ABOUT_IMAGES } from '@/lib/images'
+import { LOGOS, PRODUCT_GRID, ABOUT_IMAGES } from '@/lib/images'
 import Container from '@/components/Container'
 import Button from '@/components/Button'
 import Reveal from '@/components/Reveal'
-import TextReveal from '@/components/TextReveal'
 import { m, useScroll, useTransform } from 'framer-motion'
-
-// ── helpers ──────────────────────────────────────────────────────────────────
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ABOUT SECTION COMPONENT
-// Scroll-driven cinematic video experience with three-phase reveal:
-//   Phase 1 (0–30%)  — Atmospheric Entrance: blur, scale, dark overlay
-//   Phase 2 (30–65%) — Architectural Reveal: clip-path mask expansion
-//   Phase 3 (65–100%) — Immersive Activation: parallax settle, unpin
+// Premium full-width Vimeo background with editorial overlays
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
   const labelLineLeftRef = useRef<HTMLSpanElement>(null)
   const labelLineRightRef = useRef<HTMLSpanElement>(null)
   const labelTextRef = useRef<HTMLSpanElement>(null)
@@ -42,34 +35,6 @@ export default function AboutSection() {
     offset: ['start end', 'end start'],
   })
   const badgeRotate = useTransform(scrollYProgress, [0, 1], [0, 360])
-
-  // ── Cinematic video refs ───────────────────────────────────────────────────
-  const cinematicPinRef = useRef<HTMLDivElement>(null)
-  const videoContainerRef = useRef<HTMLDivElement>(null)
-  const cinematicOverlayRef = useRef<HTMLDivElement>(null)
-  const cornerTLRef = useRef<HTMLDivElement>(null)
-  const cornerBRRef = useRef<HTMLDivElement>(null)
-
-  // ── IntersectionObserver for video autoplay/pause ──────────────────────────
-  useEffect(() => {
-    const video = videoRef.current
-    const container = videoContainerRef.current
-    if (!video || !container) return
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            video.play().catch(() => {})
-          } else if (!video.paused) {
-            video.pause()
-          }
-        })
-      },
-      { threshold: 0.1 },
-    )
-    obs.observe(container)
-    return () => obs.disconnect()
-  }, [])
 
   return (
     <section
@@ -214,9 +179,14 @@ export default function AboutSection() {
         }
       `}</style>
 
-      <Container className='relative z-10'>
-        {/* ── Section label ──────────────────────────────────────────────── */}
-        <Reveal variant='fade-up' className='flex items-center justify-center gap-4 mb-16 md:mb-20'>
+      {/* ═══════════════════════════════════════════════════════════════════════
+          DESKTOP: À propos + three-column (left text | portrait video | right text)
+          MOBILE:  full-width video → À propos → text below
+      ═══════════════════════════════════════════════════════════════════════ */}
+
+      {/* ── Desktop "À propos" label (lg+ only, above the columns) ── */}
+      <Container className='relative z-10 hidden lg:block'>
+        <Reveal variant='fade-up' className='flex items-center justify-center gap-4 mb-16'>
           <span
             ref={labelLineLeftRef}
             className='block w-16 h-px'
@@ -239,81 +209,11 @@ export default function AboutSection() {
             }}
           />
         </Reveal>
-
-        {/* ── Centered text content ────────────────────────────────────────── */}
-        <div className='text-center max-w-3xl mx-auto mb-16 md:mb-20 md:hidden'>
-          {/* Headline */}
-          <Reveal variant='fade-up' delay={0.2} className='about-headline mb-6'>
-            <h2 className='flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1 mb-2'>
-              {/* "23" large counter */}
-              <span
-                ref={counterRef}
-                className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold font-light leading-[0.82] tracking-[-2px]'
-                aria-label='23'>
-                23
-              </span>
-              <span className='text-xl md:text-2xl lg:text-3xl xl:text-4xl font-title text-gold/75 uppercase tracking-[1px]'>
-                ans
-              </span>
-            </h2>
-
-            <span className='block text-2xl md:text-3xl lg:text-4xl font-title text-cream/55 leading-[0.9] tracking-tight'>
-              au service du style masculin
-            </span>
-          </Reveal>
-
-          {/* Separator line — scaleX draw */}
-          <Reveal variant='scale-up' delay={0.3}>
-            <div
-              ref={separatorRef}
-              className='w-24 h-px mx-auto mb-8 origin-center'
-              style={{
-                background:
-                  'linear-gradient(to right, transparent, #AF9778 30%, #AF9778 70%, transparent)',
-              }}
-            />
-          </Reveal>
-
-          {/* Description paragraphs */}
-          <Reveal variant='fade-up' delay={0.4} className='space-y-4 mb-8'>
-            <p className='about-para text-cream/90 text-lg lg:text-xl leading-[1.75] tracking-wide font-light'>
-              Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
-              <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
-              comme les tendances contemporaines dans notre salon du Marais.
-            </p>
-            <p className='about-para text-cream/65 text-base leading-[1.75] tracking-wide'>
-              Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
-            </p>
-          </Reveal>
-
-          {/* Feature tags */}
-          <Reveal
-            variant='blur-in'
-            delay={0.5}
-            className='about-para flex flex-wrap justify-center gap-3'>
-            {[
-              'Dégradés maîtrisés',
-              'Rasage serviette chaude',
-              'Produits premium',
-              'Tailleur de barbe',
-            ].map((tag) => (
-              <span
-                key={tag}
-                className='text-[0.65rem] uppercase tracking-[0.2em] text-gold/70 border border-gold/20 px-3 py-1.5 rounded-full backdrop-blur-sm'
-                style={{ background: 'rgba(175,151,120,0.04)' }}>
-                {tag}
-              </span>
-            ))}
-          </Reveal>
-        </div>
       </Container>
 
-      {/* ═══════════════════════════════════════════════════════════════════════
-          CINEMATIC VIDEO — Scroll-driven reveal experience
-          Scrolling = entering the salon
-      ═══════════════════════════════════════════════════════════════════════ */}
-      <div ref={cinematicPinRef} className='relative w-full'>
-        {/* ── Background Rotating Logo (Client Request) ── */}
+      {/* ── Three-column desktop layout / stacked mobile ── */}
+      <div className='relative w-full'>
+        {/* ── Background Rotating Logo ── */}
         <div className='absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0'>
           <m.div
             animate={{ rotate: 360 }}
@@ -329,104 +229,123 @@ export default function AboutSection() {
           </m.div>
         </div>
 
-        {/* Video viewport — centered portrait frame on desktop/tablet, full-width on mobile */}
-        <div className='relative w-full min-h-[70vh] md:min-h-[80vh] flex items-center justify-center z-10'>
-          {/* Portrait frame container — constrains video to natural portrait ratio */}
-          <Reveal
-            variant='fade-up'
-            duration={1.5}
-            threshold={0}
-            className='relative w-full min-h-[70vh] md:min-h-0 md:w-auto md:h-[90vh] md:max-w-[520px] lg:max-w-[600px] md:aspect-3/4 lg:aspect-9/16 overflow-hidden shadow-2xl shadow-navy'>
-            {/* Video container */}
-            <div ref={videoContainerRef} className='absolute inset-0'>
-              <video
-                ref={videoRef}
-                loop
-                muted
-                playsInline
-                preload='none'
-                className='absolute inset-0 w-full h-full object-cover'>
-                <source src={VIDEO.aboutSection.src} type={VIDEO.aboutSection.type} />
-              </video>
-
-              {/* Subtle gradient vignette — always present for depth */}
-              <div
-                className='absolute inset-0 pointer-events-none'
-                style={{
-                  background:
-                    'radial-gradient(ellipse at center, transparent 50%, rgba(7,24,30,0.4) 100%)',
-                }}
-              />
-            </div>
-
-            {/* Dark atmospheric overlay — fades out during scroll */}
-            <div
-              ref={cinematicOverlayRef}
-              className='absolute inset-0 pointer-events-none'
-              style={{
-                background:
-                  'linear-gradient(to bottom, rgba(7,24,30,0.85) 0%, rgba(7,24,30,0.6) 40%, rgba(7,24,30,0.75) 100%)',
-                opacity: 0.7,
-              }}
-            />
-
-            {/* ── Text Overlay ── */}
-            <div className='absolute inset-0 z-40 flex flex-col items-center justify-end pb-32 md:pb-48 pointer-events-none'>
-              {/* Box wrapper to constrain the Text */}
-              <div className='relative flex flex-col items-center w-full'>
-                <Reveal variant='fade-up' delay={0.3}>
-                  <span className='font-serif italic text-gold/90 text-3xl sm:text-4xl md:text-5xl lg:text-5xl tracking-wide opacity-90 mix-blend-overlay drop-shadow-md whitespace-nowrap mb-2'>
-                    L&apos;Art du
-                  </span>
-                </Reveal>
-
-                <Reveal variant='fade-up' delay={0.5}>
-                  <span className='font-serif italic text-gold/90 text-3xl sm:text-4xl md:text-5xl lg:text-5xl tracking-wide opacity-90 mix-blend-overlay drop-shadow-md whitespace-nowrap'>
-                    Détail
-                  </span>
-                </Reveal>
-              </div>
-            </div>
-
-            {/* Corner accents — cinematic frame markers */}
-            <div
-              ref={cornerTLRef}
-              className='absolute top-4 left-4 md:top-6 md:left-6 w-10 h-10 md:w-14 md:h-14 border-t-2 border-l-2 border-gold/40 z-20 pointer-events-none'
-            />
-            <div
-              ref={cornerBRRef}
-              className='absolute bottom-4 right-4 md:bottom-6 md:right-6 w-10 h-10 md:w-14 md:h-14 border-b-2 border-r-2 border-gold/40 z-20 pointer-events-none'
-            />
-          </Reveal>
-
-          {/* ── Left panel — Headline + service tags (lg+ only) ─────────── */}
+        {/* ── Desktop: three-column grid (lg+) ── */}
+        <div className='hidden lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-8 xl:gap-12 lg:items-center lg:max-w-7xl lg:mx-auto lg:px-8 xl:px-12 relative z-10'>
+          {/* ── LEFT PANEL — 23 ans + tagline + separator ── */}
           <Reveal
             variant='fade-side'
-            className='hidden lg:flex absolute left-6 lg:left-[4%] xl:left-[8%] top-1/2 -translate-y-1/2 flex-col items-start gap-6 max-w-[240px] lg:max-w-[260px] z-20'>
+            className='flex flex-col items-end text-right gap-6 max-w-[320px] ml-auto'>
             {/* Decorative line */}
             <div
-              className='w-10 h-px'
-              style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
+              className='w-12 h-px'
+              style={{ background: 'linear-gradient(to left, #AF9778, transparent)' }}
             />
 
-            {/* Intro Text */}
+            {/* 23 ans counter */}
             <div>
-              <h3 className='text-gold font-title text-2xl lg:text-3xl leading-[1.1] mb-2 font-light tracking-[-0.02em]'>
-                L&apos;Excellence
-                <br />
-                <span className='italic font-serif text-[1.15em] tracking-normal'>au Masculin</span>
-              </h3>
+              <h2 className='flex flex-wrap items-baseline justify-end gap-x-3 gap-y-1 mb-2'>
+                <span
+                  ref={counterRef}
+                  className='text-7xl xl:text-8xl font-title text-gold font-light leading-[0.82] tracking-[-2px]'
+                  aria-label='23'>
+                  23
+                </span>
+                <span className='text-3xl xl:text-4xl font-title text-gold/80 uppercase tracking-[1px]'>
+                  ans
+                </span>
+              </h2>
+              <span className='block text-2xl xl:text-3xl font-title text-cream/70 leading-[1.1] tracking-tight'>
+                au service du style masculin
+              </span>
             </div>
 
             {/* Separator */}
             <div
-              className='w-8 h-px'
+              ref={separatorRef}
+              className='w-20 h-px origin-right'
+              style={{
+                background: 'linear-gradient(to left, #AF9778 30%, transparent)',
+              }}
+            />
+          </Reveal>
+
+          {/* ── CENTER — Portrait Vimeo video ── */}
+          <div className='relative w-[380px] xl:w-[440px] aspect-[9/16] overflow-hidden'>
+            {/* Vimeo iframe */}
+            <div className='absolute inset-0 z-0 overflow-hidden'>
+              <iframe
+                src='https://player.vimeo.com/video/1169918554?background=1&autoplay=1&muted=1&loop=1&autopause=0&player_id=0&app_id=58479'
+                allow='autoplay; fullscreen; picture-in-picture'
+                referrerPolicy='strict-origin-when-cross-origin'
+                title='Salon de coiffure et barbier Paris'
+                className='pointer-events-none absolute inset-0 w-full h-full'
+                style={{ border: 'none' }}
+              />
+            </div>
+
+            {/* Gradient overlays */}
+            <div
+              className='absolute inset-x-0 top-0 h-[30%] z-1 pointer-events-none'
+              style={{
+                background: 'linear-gradient(to bottom, rgba(7,24,30,0.6) 0%, transparent 100%)',
+              }}
+            />
+            <div
+              className='absolute inset-x-0 bottom-0 h-[40%] z-1 pointer-events-none'
+              style={{
+                background: 'linear-gradient(to top, rgba(7,24,30,0.7) 0%, transparent 100%)',
+              }}
+            />
+
+            {/* Corner accents */}
+            <div className='absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-gold/40 z-10 pointer-events-none' />
+            <div className='absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-gold/40 z-10 pointer-events-none' />
+
+            {/* "L'Art du Détail" decorative text */}
+            <div className='absolute inset-0 z-2 flex flex-col items-center justify-end pb-6 pointer-events-none'>
+              <Reveal variant='fade-up' delay={0.6}>
+                <div className='flex flex-col items-center'>
+                  <span className='font-serif italic text-gold/30 text-4xl xl:text-5xl tracking-wide drop-shadow-md whitespace-nowrap mb-1'>
+                    L&apos;Art du
+                  </span>
+                  <span className='font-serif italic text-gold/30 text-4xl xl:text-5xl tracking-wide drop-shadow-md whitespace-nowrap'>
+                    Détail
+                  </span>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+
+          {/* ── RIGHT PANEL — Description + service tags ── */}
+          <Reveal
+            variant='fade-side'
+            delay={0.2}
+            className='flex flex-col items-start gap-6 max-w-[320px]'>
+            {/* Decorative line */}
+            <div
+              className='w-12 h-px'
+              style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
+            />
+
+            <p className='text-cream/85 text-sm xl:text-base leading-[1.8] tracking-wide font-light'>
+              Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
+              <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
+              comme les tendances contemporaines dans notre salon du Marais.
+            </p>
+
+            {/* Separator */}
+            <div
+              className='w-10 h-px'
               style={{
                 background: 'linear-gradient(to right, rgba(175,151,120,0.3), transparent)',
               }}
             />
 
-            {/* Service tags — rounded pills */}
+            <p className='text-cream/55 text-xs xl:text-sm leading-[1.8] tracking-wide font-light italic'>
+              Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
+            </p>
+
+            {/* Service tags */}
             <div className='flex flex-col gap-2'>
               {[
                 'Dégradés maîtrisés',
@@ -436,51 +355,138 @@ export default function AboutSection() {
               ].map((tag) => (
                 <span
                   key={tag}
-                  className='text-[0.6rem] lg:text-[0.65rem] uppercase tracking-[0.18em] text-gold/70 border border-gold/20 px-3 py-1.5 rounded-full'
+                  className='text-[0.6rem] xl:text-[0.65rem] uppercase tracking-[0.18em] text-gold/70 border border-gold/20 px-3 py-1.5 rounded-full w-fit'
                   style={{ background: 'rgba(175,151,120,0.06)' }}>
                   {tag}
                 </span>
               ))}
             </div>
           </Reveal>
+        </div>
 
-          {/* ── Right panel — Description text (lg+ only) ─────────────────── */}
-          <Reveal
-            variant='fade-side'
-            delay={0.2}
-            className='hidden lg:flex absolute right-6 lg:right-[6%] xl:right-[10%] top-1/2 -translate-y-1/2 flex-col items-start gap-5 max-w-[240px] lg:max-w-[280px] z-20'>
-            {/* Decorative line */}
+        {/* ── Mobile / Tablet: stacked layout (below lg) ── */}
+        <div className='lg:hidden'>
+          {/* Mobile: À propos label + Title (above video) */}
+          <div className='mb-8'>
+            <Container className='relative z-10'>
+              <Reveal
+                variant='fade-up'
+                className='flex items-center justify-center gap-4 mt-8 md:mt-12 mb-0'>
+                <span
+                  className='block w-16 h-px'
+                  style={{ background: 'linear-gradient(to right, transparent, #AF9778)' }}
+                />
+                <span className='text-gold text-[10px] uppercase tracking-[0.45em] font-medium'>
+                  À propos
+                </span>
+                <span
+                  className='block w-16 h-px'
+                  style={{ background: 'linear-gradient(to left, transparent, #AF9778)' }}
+                />
+              </Reveal>
+            </Container>
+
+            <div className='relative z-10 text-center pt-8 px-6 max-w-3xl mx-auto'>
+              <Reveal variant='fade-up' delay={0.1} className='mb-4'>
+                <h2 className='flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1'>
+                  <span
+                    className='text-6xl md:text-8xl font-title text-gold font-light leading-[0.82] tracking-[-2px]'
+                    aria-label='23'>
+                    23
+                  </span>
+                  <span className='text-2xl md:text-3xl font-title text-gold/80 uppercase tracking-[1px]'>
+                    ans
+                  </span>
+                </h2>
+              </Reveal>
+
+              <Reveal variant='fade-up' delay={0.25}>
+                <span className='block text-2xl md:text-3xl font-title text-cream/70 leading-[1.1] tracking-tight'>
+                  au service du style masculin
+                </span>
+              </Reveal>
+            </div>
+          </div>
+
+          {/* Full-width portrait video */}
+          <div className='relative w-full min-h-[80vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden'>
+            <div className='absolute inset-0 z-0 overflow-hidden'>
+              <iframe
+                src='https://player.vimeo.com/video/1169918554?background=1&autoplay=1&muted=1&loop=1&autopause=0&player_id=0&app_id=58479'
+                allow='autoplay; fullscreen; picture-in-picture'
+                referrerPolicy='strict-origin-when-cross-origin'
+                title='Salon de coiffure et barbier Paris'
+                className='pointer-events-none'
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: 'max(56.25vh, 100%)',
+                  height: 'max(177.78vw, 100%)',
+                  border: 'none',
+                }}
+              />
+            </div>
+
+            {/* Gradient overlays */}
             <div
-              className='w-10 h-px'
-              style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
-            />
-
-            <p className='text-cream/85 text-xs lg:text-sm leading-[1.8] tracking-wide font-light'>
-              Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
-              <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
-              comme les tendances contemporaines dans notre salon du Marais.
-            </p>
-
-            {/* Separator */}
-            <div
-              className='w-8 h-px'
+              className='absolute inset-x-0 top-0 h-[35%] z-1 pointer-events-none'
               style={{
-                background: 'linear-gradient(to right, rgba(175,151,120,0.3), transparent)',
+                background:
+                  'linear-gradient(to bottom, rgba(7,24,30,0.75) 0%, rgba(7,24,30,0.2) 70%, transparent 100%)',
+              }}
+            />
+            <div
+              className='absolute inset-x-0 bottom-0 h-[45%] z-1 pointer-events-none'
+              style={{
+                background:
+                  'linear-gradient(to top, rgba(7,24,30,0.85) 0%, rgba(7,24,30,0.3) 50%, transparent 100%)',
+              }}
+            />
+            <div
+              className='absolute inset-0 z-1 pointer-events-none'
+              style={{
+                background:
+                  'radial-gradient(ellipse at center, rgba(7,24,30,0.15) 0%, rgba(7,24,30,0.45) 100%)',
               }}
             />
 
-            <p className='text-cream/55 text-[11px] lg:text-xs leading-[1.8] tracking-wide font-light italic'>
-              Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
-            </p>
-          </Reveal>
+            {/* Corner accents */}
+            <Reveal
+              variant='fade-up'
+              delay={0.2}
+              className='absolute top-6 left-6 z-10 pointer-events-none'>
+              <div className='w-12 h-12 border-t-2 border-l-2 border-gold/40' />
+            </Reveal>
+            <Reveal
+              variant='fade-up'
+              delay={0.3}
+              className='absolute bottom-6 right-6 z-10 pointer-events-none'>
+              <div className='w-12 h-12 border-b-2 border-r-2 border-gold/40' />
+            </Reveal>
+
+            {/* "L'Art du Détail" decorative text */}
+            <div className='absolute inset-0 z-2 flex flex-col items-center justify-end pb-8 pointer-events-none'>
+              <Reveal variant='fade-up' delay={0.6}>
+                <div className='flex flex-col items-center'>
+                  <span className='font-serif italic text-gold/30 text-4xl sm:text-5xl md:text-6xl tracking-wide drop-shadow-md whitespace-nowrap mb-1'>
+                    L&apos;Art du
+                  </span>
+                  <span className='font-serif italic text-gold/30 text-4xl sm:text-5xl md:text-6xl tracking-wide drop-shadow-md whitespace-nowrap'>
+                    Détail
+                  </span>
+                </div>
+              </Reveal>
+            </div>
+          </div>
         </div>
 
-        {/* Experience badge — positioned over the video corner */}
+        {/* Experience badge */}
         <Reveal
           variant='scale-up'
           delay={0.6}
           className='flex absolute bottom-[-5%] -left-12 md:left-[calc(50%-280px)] lg:left-[calc(50%-340px)] z-30 items-center justify-center w-40 h-40 pointer-events-none'>
-          {/* Rotating text ring tied to scroll */}
           <m.div className='absolute inset-0' style={{ rotate: badgeRotate }}>
             <svg viewBox='0 0 100 100' className='w-full h-full overflow-visible'>
               <path
@@ -488,7 +494,7 @@ export default function AboutSection() {
                 d='M 50, 50 m -42, 0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0'
                 fill='none'
               />
-              <text className='text-[8.5px] font-title font-light tracking-[0.1em] uppercase fill-gold/80'>
+              <text className='text-[8.5px] font-title font-light tracking-widest uppercase fill-gold/80'>
                 <textPath
                   href='#badgeTextPath'
                   startOffset='0%'
@@ -499,8 +505,6 @@ export default function AboutSection() {
               </text>
             </svg>
           </m.div>
-
-          {/* Center static badge (Logo) */}
           <div className='flex items-center justify-center w-[64px] h-[64px] md:w-[72px] md:h-[72px] relative z-10'>
             <Image
               src={LOGOS.linstant.src}
@@ -513,54 +517,46 @@ export default function AboutSection() {
         </Reveal>
       </div>
 
-      {/* ── Creative editorial tagline below video ────────────────────── */}
-      <div className='relative z-10 text-center py-16 md:py-24 lg:py-32 px-6'>
-        {/* Main creative tagline */}
-        <div className='max-w-3xl mx-auto mb-8'>
-          <TextReveal
-            variant='word'
-            duration={1.2}
-            stagger={0.12}
-            className='text-gold text-3xl md:text-5xl lg:text-6xl font-title font-light leading-[1.1] tracking-[-0.02em]'>
-            L&apos;art du geste, la précision du détail
-          </TextReveal>
+      {/* ── Mobile: text content below video (below lg) ── */}
+      <div className='lg:hidden'>
+        <div className='relative z-10 text-center py-16 md:py-24 px-6 max-w-3xl mx-auto'>
+          <Reveal variant='scale-up' delay={0.35}>
+            <div
+              className='w-24 h-px mx-auto mb-8 origin-center'
+              style={{
+                background:
+                  'linear-gradient(to right, transparent, #AF9778 30%, #AF9778 70%, transparent)',
+              }}
+            />
+          </Reveal>
+
+          <Reveal variant='fade-up' delay={0.45} className='space-y-4 mb-8'>
+            <p className='text-cream/90 text-base md:text-lg leading-[1.75] tracking-wide font-light'>
+              Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
+              <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
+              comme les tendances contemporaines dans notre salon du Marais.
+            </p>
+            <p className='text-cream/60 text-sm md:text-base leading-[1.75] tracking-wide font-light'>
+              Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
+            </p>
+          </Reveal>
+
+          <Reveal variant='blur-in' delay={0.55} className='flex flex-wrap justify-center gap-3'>
+            {[
+              'Dégradés maîtrisés',
+              'Rasage serviette chaude',
+              'Produits premium',
+              'Tailleur de barbe',
+            ].map((tag) => (
+              <span
+                key={tag}
+                className='text-[0.6rem] md:text-[0.65rem] uppercase tracking-[0.2em] text-gold/80 border border-gold/25 px-3 py-1.5 rounded-full'
+                style={{ background: 'rgba(175,151,120,0.06)' }}>
+                {tag}
+              </span>
+            ))}
+          </Reveal>
         </div>
-
-        {/* Decorative line */}
-        <Reveal variant='scale-up' delay={0.4}>
-          <div
-            className='about-para w-24 h-px mx-auto mb-10'
-            style={{
-              background: 'linear-gradient(to right, transparent, #AF9778, transparent)',
-            }}
-          />
-        </Reveal>
-
-        {/* Subtitle */}
-        <Reveal variant='fade-up' delay={0.6}>
-          <p className='about-para text-cream/70 text-base md:text-lg lg:text-xl leading-[1.8] font-light tracking-wide max-w-2xl mx-auto mb-8'>
-            Chaque coupe raconte une histoire. Chaque trait de lame est un acte de précision et
-            d&apos;élégance.
-          </p>
-        </Reveal>
-
-        {/* Signature-like accent */}
-        <Reveal
-          variant='blur-in'
-          delay={0.8}
-          className='about-para flex items-center justify-center gap-4'>
-          <span
-            className='w-12 h-px'
-            style={{ background: 'linear-gradient(to right, transparent, rgba(175,151,120,0.5))' }}
-          />
-          <span className='text-gold text-xs md:text-sm uppercase tracking-[0.4em] font-light italic'>
-            Depuis 2002 • Paris le Marais
-          </span>
-          <span
-            className='w-12 h-px'
-            style={{ background: 'linear-gradient(to left, transparent, rgba(175,151,120,0.5))' }}
-          />
-        </Reveal>
       </div>
       {/* ── Benefit cards + CTA below cinematic video ────────────────────── */}
       <div className='max-w-7xl mx-auto px-4 md:px-6 lg:px-12 mt-16 md:mt-24'>
@@ -580,67 +576,68 @@ export default function AboutSection() {
               image: PRODUCT_GRID[3].src,
               badge: '02',
             },
-          ].map((item) => (
-            <div
-              key={item.badge}
-              ref={item.ref}
-              className='group relative min-h-[280px] md:min-h-[400px] lg:min-h-[450px] w-full overflow-visible cursor-pointer lg:cursor-default focus:outline-none'
-              tabIndex={0}
-              onTouchStart={() => {}}>
-              {/* Main card border + shadow + clip content */}
-              <div className='absolute inset-0 overflow-hidden z-0 transform-gpu bg-navy'>
-                {/* Image */}
-                <div className='absolute inset-0 overflow-hidden'>
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className='object-cover transition-transform duration-1000 group-hover:scale-105 group-focus-within:scale-105'
-                    sizes='(max-width: 768px) 100vw, 50vw'
-                  />
-                </div>
+          ].map((item, index) => (
+            <Reveal key={item.badge} variant='fade-up' delay={index * 0.2} className='w-full'>
+              <div
+                ref={item.ref}
+                className='group relative min-h-[280px] md:min-h-[400px] lg:min-h-[450px] w-full overflow-visible cursor-pointer lg:cursor-default focus:outline-none'
+                tabIndex={0}
+                onTouchStart={() => {}}>
+                {/* Main card border + shadow + clip content */}
+                <div className='absolute inset-0 overflow-hidden z-0 transform-gpu bg-navy'>
+                  {/* Image */}
+                  <div className='absolute inset-0 overflow-hidden'>
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className='object-cover transition-transform duration-1000 group-hover:scale-105 group-focus-within:scale-105'
+                      sizes='(max-width: 768px) 100vw, 50vw'
+                    />
+                  </div>
 
-                {/* Gradient overlay */}
-                <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/45 to-transparent z-[1]' />
-                {/* Hover gold side glow */}
-                <div
-                  className='absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-700 z-[2]'
-                  style={{
-                    background:
-                      'linear-gradient(to right, rgba(175,151,120,0.07) 0%, transparent 40%)',
-                  }}
-                />
-
-                {/* Number badge */}
-                <div
-                  className='absolute top-5 right-5 z-20 text-xs font-title text-gold/80 tracking-widest border border-gold/20 group-hover:border-gold/50 group-focus-within:border-gold/50 px-3 py-1 rounded-full backdrop-blur-sm transition-colors duration-500'
-                  style={{ background: 'rgba(7,24,30,0.6)' }}>
-                  {item.badge}
-                </div>
-
-                {/* Card border overlay */}
-                <div className='absolute inset-0 border border-gold/20 group-hover:border-gold/45 group-focus-within:border-gold/45 transition-colors duration-700 z-10 pointer-events-none' />
-
-                {/* Text content */}
-                <div className='absolute bottom-0 left-0 right-0 p-6 md:p-8 z-20'>
-                  {/* Animated gold rule above title */}
+                  {/* Gradient overlay */}
+                  <div className='absolute inset-0 bg-gradient-to-t from-navy via-navy/45 to-transparent z-[1]' />
+                  {/* Hover gold side glow */}
                   <div
-                    className='w-0 h-px mb-3 group-hover:w-12 group-focus-within:w-12 transition-all duration-500 origin-left'
-                    style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
+                    className='absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-700 z-[2]'
+                    style={{
+                      background:
+                        'linear-gradient(to right, rgba(175,151,120,0.07) 0%, transparent 40%)',
+                    }}
                   />
-                  <h4 className='text-2xl md:text-3xl font-title text-gold mb-2 tracking-[-1px] transition-transform duration-500 group-hover:-translate-y-1 group-focus-within:-translate-y-1'>
-                    {item.title}
-                  </h4>
-                  <p className='text-cream/85 text-sm font-light leading-relaxed max-w-sm'>
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
 
-              {/* Corner accents — outside overflow container */}
-              <div className='absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20 pointer-events-none' />
-              <div className='absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20 pointer-events-none' />
-            </div>
+                  {/* Number badge */}
+                  <div
+                    className='absolute top-5 right-5 z-20 text-xs font-title text-gold/80 tracking-widest border border-gold/20 group-hover:border-gold/50 group-focus-within:border-gold/50 px-3 py-1 rounded-full backdrop-blur-sm transition-colors duration-500'
+                    style={{ background: 'rgba(7,24,30,0.6)' }}>
+                    {item.badge}
+                  </div>
+
+                  {/* Card border overlay */}
+                  <div className='absolute inset-0 border border-gold/20 group-hover:border-gold/45 group-focus-within:border-gold/45 transition-colors duration-700 z-10 pointer-events-none' />
+
+                  {/* Text content */}
+                  <div className='absolute bottom-0 left-0 right-0 p-6 md:p-8 z-20'>
+                    {/* Animated gold rule above title */}
+                    <div
+                      className='w-0 h-px mb-3 group-hover:w-12 group-focus-within:w-12 transition-all duration-500 origin-left'
+                      style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
+                    />
+                    <h4 className='text-2xl md:text-3xl font-title text-gold mb-2 tracking-[-1px] transition-transform duration-500 group-hover:-translate-y-1 group-focus-within:-translate-y-1'>
+                      {item.title}
+                    </h4>
+                    <p className='text-cream/85 text-sm font-light leading-relaxed max-w-sm'>
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Corner accents — outside overflow container */}
+                <div className='absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20 pointer-events-none' />
+                <div className='absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-gold/35 group-hover:border-gold/80 group-focus-within:border-gold/80 transition-colors duration-500 z-20 pointer-events-none' />
+              </div>
+            </Reveal>
           ))}
         </div>
 

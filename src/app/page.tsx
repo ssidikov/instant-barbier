@@ -16,7 +16,7 @@ import StarRating from '@/components/StarRating'
 import { services, team, galleryImages, reviews, hours, type ServiceIconId } from '@/lib/data'
 
 const GoogleMap = dynamic(() => import('@/components/GoogleMap'), { ssr: false })
-const GalleryLightbox = dynamic(() => import('@/components/GalleryLightbox'), { ssr: false })
+const GalleryGrid = dynamic(() => import('@/components/GalleryGrid'), { ssr: false })
 const AboutSection = dynamic(() => import('@/components/AboutSection'), {
   ssr: false,
   loading: () => <div style={{ minHeight: '100vh' }} />,
@@ -81,7 +81,6 @@ const SERVICE_ICONS: Record<ServiceIconId, React.ReactNode> = {
 // ═══════════════════════════════════════════════════════════════════════════
 
 export default function Home() {
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const shouldReduceMotion = useReducedMotion()
 
   // ── Section container refs (for Framer Motion useScroll targeting) ──────
@@ -114,23 +113,6 @@ export default function Home() {
 
   const ctaOrb1Y = 0
   const ctaOrb2Y = 0
-
-  // State for gallery count
-  const [galleryCount, setGalleryCount] = useState(6)
-
-  useEffect(() => {
-    // Adjust gallery count based on screen width
-    const handleResize = () => {
-      setGalleryCount(window.innerWidth < 768 ? 5 : 6)
-    }
-
-    // Set initial value
-    handleResize()
-
-    // Add event listener
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   // Particles removed for performance/anim cleanup as requested
   // Parallax logic removed
@@ -949,97 +931,10 @@ export default function Home() {
             <div className='absolute bottom-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl' />
           </div>
 
-          <Container className='relative z-10'>
-            <Reveal variant='fade-up'>
-              <div className='text-center mb-16'>
-                {/* Subtitle */}
-                <div className='flex items-center justify-center gap-4 mb-6'>
-                  <span className='w-16 h-px bg-gradient-to-r from-transparent to-gold origin-right' />
-                  <span className='text-gold text-xs uppercase tracking-[0.3em]'>
-                    Notre Travail
-                  </span>
-                  <span className='w-16 h-px bg-gradient-to-r from-gold to-transparent origin-left' />
-                </div>
-
-                {/* Large Title */}
-                <h2 className='text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-title text-gold leading-tight tracking-[-2px] mb-6'>
-                  Galerie
-                </h2>
-
-                {/* Decorative line */}
-                <div className='mx-auto w-24 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent' />
-              </div>
-            </Reveal>
-
-            <div className='grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4'>
-              {galleryImages.slice(0, galleryCount).map((image, index) => {
-                const isFirst = index === 0
-                return (
-                  <Reveal
-                    key={index}
-                    variant='scale-up'
-                    delay={index * 0.1}
-                    className={`${isFirst ? 'col-span-2 row-span-2' : ''} aspect-square`}>
-                    <div className={`${isFirst ? 'h-full' : 'aspect-square'}`}>
-                      <div
-                        onClick={() => setLightboxIndex(index)}
-                        className='relative w-full h-full overflow-hidden group cursor-pointer touch-feedback touch-highlight'>
-                        {/* Image background */}
-                        <div className='absolute inset-0 transition-all duration-700 group-hover:scale-110'>
-                          <Image
-                            src={image.src}
-                            alt={image.alt}
-                            fill
-                            loading='lazy'
-                            sizes='(max-width: 768px) 100vw, 33vw'
-                            className='object-cover object-center'
-                          />
-                        </div>
-
-                        {/* Navy overlay that becomes transparent on hover */}
-                        <div className='absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors duration-500' />
-
-                        {/* Top-left corner accent */}
-                        <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-
-                        {/* Bottom-right corner accent */}
-                        <div className='absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
-
-                        {/* Center "+" icon with backdrop blur */}
-                        <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500'>
-                          <div className='absolute inset-0 bg-navy/50 backdrop-blur-[2px]' />
-                          <div
-                            className={`relative ${isFirst ? 'w-12 h-12' : 'w-9 h-9'} border border-gold/60 flex items-center justify-center`}>
-                            <span className={`text-gold ${isFirst ? 'text-2xl' : 'text-lg'}`}>
-                              +
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Reveal>
-                )
-              })}
-            </div>
-
-            <Reveal variant='fade-up' delay={0.2} className='text-center mt-10'>
-              <Link
-                href='/galerie'
-                className='inline-flex items-center gap-2 text-gold text-sm uppercase tracking-widest hover:text-cream transition-colors group touch-link'>
-                Voir plus
-                <span>→</span>
-              </Link>
-            </Reveal>
+          <Container className='relative z-10 py-16'>
+            <GalleryGrid layout='home' />
           </Container>
         </Section>
-
-        {lightboxIndex !== null && (
-          <GalleryLightbox
-            images={galleryImages}
-            currentIndex={lightboxIndex}
-            onClose={() => setLightboxIndex(null)}
-          />
-        )}
 
         {/* ═══════════════════════════════════════════════════════════════════
           INTERIOR IMAGE BREAK

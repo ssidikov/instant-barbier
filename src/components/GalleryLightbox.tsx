@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface GalleryImage {
@@ -19,8 +20,12 @@ export default function GalleryLightbox({
 }) {
   const [index, setIndex] = useState(currentIndex)
   const [direction, setDirection] = useState(0)
+  const [mounted, setMounted] = useState(false)
 
-  // Sync index if prop changes (fixes stale index bug)
+  // Only render portal after hydration
+  useEffect(() => setMounted(true), [])
+
+  // Sync index if prop changes
   useEffect(() => {
     setIndex(currentIndex)
   }, [currentIndex])
@@ -43,17 +48,30 @@ export default function GalleryLightbox({
       if (e.key === 'ArrowLeft') goPrev()
     }
     window.addEventListener('keydown', handleKey)
+
+    // Lock scroll: measure scrollbar width first to prevent layout shift
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+    document.documentElement.style.overflow = 'hidden'
     document.body.style.overflow = 'hidden'
+    document.body.style.paddingRight = `${scrollbarWidth}px`
+
+    // iOS Safari ignores overflow:hidden on body — block touchmove at document level
+    const preventTouch = (e: TouchEvent) => e.preventDefault()
+    document.addEventListener('touchmove', preventTouch, { passive: false })
+
     return () => {
       window.removeEventListener('keydown', handleKey)
+      document.removeEventListener('touchmove', preventTouch)
+      document.documentElement.style.overflow = ''
       document.body.style.overflow = ''
+      document.body.style.paddingRight = ''
     }
   }, [onClose, goNext, goPrev])
 
   // Framer Motion variants
   const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
+    enter: (dir: number) => ({
+      x: dir > 0 ? 1000 : -1000,
       opacity: 0,
     }),
     center: {
@@ -61,143 +79,155 @@ export default function GalleryLightbox({
       x: 0,
       opacity: 1,
     },
-    exit: (direction: number) => ({
+    exit: (dir: number) => ({
       zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
+      x: dir < 0 ? 1000 : -1000,
       opacity: 0,
     }),
   }
 
-  // Swipe sensitivity
   const swipeConfidenceThreshold = 10000
-  const swipePower = (offset: number, velocity: number) => {
-    return Math.abs(offset) * velocity
-  }
+  const swipePower = (offset: number, velocity: number) => Math.abs(offset) * velocity
 
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className='fixed inset-0 z-9999 flex items-center justify-center'
-      onClick={onClose}>
-      {/* Backdrop */}
-      <div className='absolute inset-0 bg-dark/95 backdrop-blur-md' />
+  if (!mounted) return null
 
-      {/* Close Button */}
-      <button
+  return createPortal(
+    <AnimatePresence>
+      <motion.div
+        key='lightbox'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
         onClick={onClose}
-        className='absolute top-6 right-6 z-50 w-12 h-12 border border-gold/40 flex items-center justify-center hover:bg-gold/10 transition-colors cursor-pointer'
-        aria-label='Fermer'>
-        <svg
-          width='20'
-          height='20'
-          viewBox='0 0 20 20'
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='1.5'
-          className='text-gold'>
-          <line x1='4' y1='4' x2='16' y2='16' />
-          <line x1='16' y1='4' x2='4' y2='16' />
-        </svg>
-      </button>
+        style={{ zIndex: 99999 }}
+        className='fixed inset-0 flex items-center justify-center'>
+        {/* Backdrop */}
+        <div className='absolute inset-0 bg-[#07181e]/97 backdrop-blur-md' />
 
-      {/* Counter */}
-      <div className='absolute top-7 left-6 z-50 text-gold/60 text-xs uppercase tracking-[0.3em] font-body'>
-        {index + 1} / {images.length}
-      </div>
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          style={{ zIndex: 100001 }}
+          className='absolute top-6 right-6 w-12 h-12 border border-[#af9778]/40 flex items-center justify-center hover:bg-[#af9778]/10 transition-colors cursor-pointer'
+          aria-label='Fermer'>
+          <svg
+            width='20'
+            height='20'
+            viewBox='0 0 20 20'
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='1.5'
+            className='text-[#af9778]'>
+            <line x1='4' y1='4' x2='16' y2='16' />
+            <line x1='16' y1='4' x2='4' y2='16' />
+          </svg>
+        </button>
 
-      {/* Caption Output */}
-      <p className='absolute bottom-8 left-1/2 -translate-x-1/2 w-[80%] text-center z-50 text-cream/50 text-xs uppercase tracking-[0.25em] font-body'>
-        {images[index].alt}
-      </p>
+        {/* Counter */}
+        <div
+          style={{ zIndex: 100001 }}
+          className='absolute top-7 left-6 text-[#af9778]/60 text-xs uppercase tracking-[0.3em] font-body'>
+          {index + 1} / {images.length}
+        </div>
 
-      {/* Prev Button */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation()
-          goPrev()
-        }}
-        className='absolute left-4 md:left-8 z-50 w-12 h-12 border border-gold/30 flex items-center shadow-lg justify-center bg-dark/40 hover:bg-gold/10 hover:border-gold/60 transition-all cursor-pointer backdrop-blur-sm'
-        aria-label='Photo précédente'>
-        <svg
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='1.5'
-          className='w-5 h-5 text-gold'
-          viewBox='0 0 24 24'>
-          <path d='M15 19l-7-7 7-7' />
-        </svg>
-      </button>
+        {/* Caption */}
+        <p
+          style={{ zIndex: 100001 }}
+          className='absolute bottom-8 left-1/2 -translate-x-1/2 w-[80%] text-center text-[#ede8d0]/50 text-xs uppercase tracking-[0.25em] font-body'>
+          {images[index].alt}
+        </p>
 
-      {/* Next Button */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation()
-          goNext()
-        }}
-        className='absolute right-4 md:right-8 z-50 w-12 h-12 border border-gold/30 flex items-center shadow-lg justify-center bg-dark/40 hover:bg-gold/10 hover:border-gold/60 transition-all cursor-pointer backdrop-blur-sm'
-        aria-label='Photo suivante'>
-        <svg
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='1.5'
-          className='w-5 h-5 text-gold'
-          viewBox='0 0 24 24'>
-          <path d='M9 5l7 7-7 7' />
-        </svg>
-      </button>
+        {/* Prev Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            goPrev()
+          }}
+          style={{ zIndex: 100001 }}
+          className='absolute left-4 md:left-8 w-12 h-12 border border-[#af9778]/30 flex items-center shadow-lg justify-center bg-[#07181e]/40 hover:bg-[#af9778]/10 hover:border-[#af9778]/60 transition-all cursor-pointer backdrop-blur-sm'
+          aria-label='Photo précédente'>
+          <svg
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='1.5'
+            className='w-5 h-5 text-[#af9778]'
+            viewBox='0 0 24 24'>
+            <path d='M15 19l-7-7 7-7' />
+          </svg>
+        </button>
 
-      {/* Main Image Slideshow Container */}
-      <div
-        className='relative w-full h-[80vh] flex items-center justify-center overflow-hidden'
-        onClick={(e) => e.stopPropagation()}>
-        <AnimatePresence initial={false} custom={direction}>
-          <motion.img
-            key={index}
-            src={images[index].src}
-            alt={images[index].alt}
-            custom={direction}
-            variants={slideVariants}
-            initial='enter'
-            animate='center'
-            exit='exit'
-            transition={{
-              x: { type: 'spring', stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 },
-            }}
-            drag='x'
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={1}
-            onDragEnd={(e, { offset, velocity }) => {
-              const swipe = swipePower(offset.x, velocity.x)
-              if (swipe < -swipeConfidenceThreshold) {
-                goNext()
-              } else if (swipe > swipeConfidenceThreshold) {
-                goPrev()
-              }
-            }}
-            className='absolute max-h-full max-w-full object-contain px-4 md:px-24'
-          />
-        </AnimatePresence>
-      </div>
+        {/* Next Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            goNext()
+          }}
+          style={{ zIndex: 100001 }}
+          className='absolute right-4 md:right-8 w-12 h-12 border border-[#af9778]/30 flex items-center shadow-lg justify-center bg-[#07181e]/40 hover:bg-[#af9778]/10 hover:border-[#af9778]/60 transition-all cursor-pointer backdrop-blur-sm'
+          aria-label='Photo suivante'>
+          <svg
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='1.5'
+            className='w-5 h-5 text-[#af9778]'
+            viewBox='0 0 24 24'>
+            <path d='M9 5l7 7-7 7' />
+          </svg>
+        </button>
 
-      {/* Dots Indicator */}
-      <div className='absolute bottom-16 left-1/2 -translate-x-1/2 z-50 flex gap-2'>
-        {images.map((_, i) => (
-          <button
-            key={i}
-            onClick={(e) => {
-              e.stopPropagation()
-              goTo(i, i > index ? 1 : -1)
-            }}
-            className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
-              i === index ? 'bg-gold w-6' : 'bg-gold/30 hover:bg-gold/60'
-            }`}
-            aria-label={`Photo ${i + 1}`}
-          />
-        ))}
-      </div>
-    </motion.div>
+        {/* Image Container — fullscreen, stops click from bubbling to backdrop */}
+        <div
+          className='relative w-full h-full flex items-center justify-center overflow-hidden'
+          onClick={(e) => e.stopPropagation()}
+          style={{ zIndex: 100000 }}>
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.img
+              key={index}
+              src={images[index].src}
+              alt={images[index].alt}
+              custom={direction}
+              variants={slideVariants}
+              initial='enter'
+              animate='center'
+              exit='exit'
+              transition={{
+                x: { type: 'spring', stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 },
+              }}
+              drag='x'
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={1}
+              onDragEnd={(_, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x)
+                if (swipe < -swipeConfidenceThreshold) goNext()
+                else if (swipe > swipeConfidenceThreshold) goPrev()
+              }}
+              className='absolute max-h-[85vh] max-w-[90vw] object-contain select-none'
+            />
+          </AnimatePresence>
+        </div>
+
+        {/* Dots Indicator */}
+        <div
+          style={{ zIndex: 100001 }}
+          className='absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-2'>
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={(e) => {
+                e.stopPropagation()
+                goTo(i, i > index ? 1 : -1)
+              }}
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                i === index ? 'bg-[#af9778] w-6' : 'bg-[#af9778]/30 w-2 hover:bg-[#af9778]/60'
+              }`}
+              aria-label={`Photo ${i + 1}`}
+            />
+          ))}
+        </div>
+      </motion.div>
+    </AnimatePresence>,
+    document.body,
   )
 }
