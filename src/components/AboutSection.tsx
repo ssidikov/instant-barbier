@@ -180,145 +180,13 @@ export default function AboutSection() {
       `}</style>
 
       {/* ═══════════════════════════════════════════════════════════════════════
-          CINEMATIC VIMEO BACKGROUND — Full-width immersive video experience
+          DESKTOP: À propos + three-column (left text | portrait video | right text)
+          MOBILE:  full-width video → À propos → text below
       ═══════════════════════════════════════════════════════════════════════ */}
-      <div className='relative w-full'>
-        {/* ── Background Rotating Logo ── */}
-        <div className='absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0'>
-          <m.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-            className='w-[80vw] h-[80vw] md:w-[60vw] md:h-[60vw] max-w-[1000px] max-h-[1000px] opacity-[0.03] md:opacity-[0.05]'>
-            <Image
-              src={LOGOS.linstant.src}
-              alt=''
-              fill
-              className='object-contain'
-              aria-hidden='true'
-            />
-          </m.div>
-        </div>
 
-        {/* ── Vimeo Video Background Section ── */}
-        <div className='relative w-full h-screen flex items-center justify-center overflow-hidden'>
-          {/* Vimeo iframe — background mode (autoplay, muted, loop, no controls) */}
-          <div className='absolute inset-0 z-0 overflow-hidden'>
-            <iframe
-              src='https://player.vimeo.com/video/1169861492?background=1&autoplay=1&muted=1&loop=1&autopause=0&player_id=0&app_id=58479'
-              allow='autoplay; fullscreen; picture-in-picture'
-              referrerPolicy='strict-origin-when-cross-origin'
-              title='Salon de coiffure et barbier Paris'
-              className='pointer-events-none'
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: 'max(177.78vh, 100%)',
-                height: 'max(56.25vw, 100%)',
-                border: 'none',
-              }}
-            />
-          </div>
-
-          {/* ── Gradient overlays for text readability ── */}
-          {/* Top-to-bottom gradient */}
-          <div
-            className='absolute inset-x-0 top-0 h-[35%] z-[1] pointer-events-none'
-            style={{
-              background:
-                'linear-gradient(to bottom, rgba(7,24,30,0.75) 0%, rgba(7,24,30,0.2) 70%, transparent 100%)',
-            }}
-          />
-          {/* Bottom-to-top gradient */}
-          <div
-            className='absolute inset-x-0 bottom-0 h-[45%] z-[1] pointer-events-none'
-            style={{
-              background:
-                'linear-gradient(to top, rgba(7,24,30,0.85) 0%, rgba(7,24,30,0.3) 50%, transparent 100%)',
-            }}
-          />
-          {/* Subtle radial vignette + overall tint */}
-          <div
-            className='absolute inset-0 z-[1] pointer-events-none'
-            style={{
-              background:
-                'radial-gradient(ellipse at center, rgba(7,24,30,0.15) 0%, rgba(7,24,30,0.45) 100%)',
-            }}
-          />
-
-          {/* ── Corner accents — cinematic frame markers ── */}
-          <Reveal
-            variant='fade-up'
-            delay={0.2}
-            className='absolute top-6 left-6 md:top-10 md:left-10 z-10 pointer-events-none'>
-            <div className='w-12 h-12 md:w-16 md:h-16 border-t-2 border-l-2 border-gold/40' />
-          </Reveal>
-          <Reveal
-            variant='fade-up'
-            delay={0.3}
-            className='absolute bottom-6 right-6 md:bottom-10 md:right-10 z-10 pointer-events-none'>
-            <div className='w-12 h-12 md:w-16 md:h-16 border-b-2 border-r-2 border-gold/40' />
-          </Reveal>
-
-          {/* ── Decorative text overlay — "L'Art du Détail" ── */}
-          <div className='absolute inset-0 z-[2] flex flex-col items-center justify-end pb-8 pointer-events-none'>
-            <Reveal variant='fade-up' delay={0.6}>
-              <div className='flex flex-col items-center'>
-                <span className='font-serif italic text-gold/30 text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-wide drop-shadow-md whitespace-nowrap mb-1'>
-                  L&apos;Art du
-                </span>
-                <span className='font-serif italic text-gold/30 text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-wide drop-shadow-md whitespace-nowrap'>
-                  Détail
-                </span>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-
-        {/* Experience badge — positioned over the video corner */}
-        <Reveal
-          variant='scale-up'
-          delay={0.6}
-          className='flex absolute bottom-[-5%] -left-12 md:left-[calc(50%-280px)] lg:left-[calc(50%-340px)] z-30 items-center justify-center w-40 h-40 pointer-events-none'>
-          {/* Rotating text ring tied to scroll */}
-          <m.div className='absolute inset-0' style={{ rotate: badgeRotate }}>
-            <svg viewBox='0 0 100 100' className='w-full h-full overflow-visible'>
-              <path
-                id='badgeTextPath'
-                d='M 50, 50 m -42, 0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0'
-                fill='none'
-              />
-              <text className='text-[8.5px] font-title font-light tracking-[0.1em] uppercase fill-gold/80'>
-                <textPath
-                  href='#badgeTextPath'
-                  startOffset='0%'
-                  textLength='264'
-                  lengthAdjust='spacing'>
-                  L&apos;INSTANT BARBIER • 43 RUE DE TURENNE • PARIS LE MARAIS •
-                </textPath>
-              </text>
-            </svg>
-          </m.div>
-
-          {/* Center static badge (Logo) */}
-          <div className='flex items-center justify-center w-[64px] h-[64px] md:w-[72px] md:h-[72px] relative z-10'>
-            <Image
-              src={LOGOS.linstant.src}
-              alt='L instant Barbier'
-              width={72}
-              height={72}
-              className='object-contain w-full h-full drop-shadow-2xl'
-            />
-          </div>
-        </Reveal>
-      </div>
-
-      {/* ── Section label ──────────────────────────────────────────────── */}
-      <Container className='relative z-10'>
-        <Reveal
-          variant='fade-up'
-          className='flex items-center justify-center gap-4 mt-16 md:mt-20 mb-0'>
+      {/* ── Desktop "À propos" label (lg+ only, above the columns) ── */}
+      <Container className='relative z-10 hidden lg:block'>
+        <Reveal variant='fade-up' className='flex items-center justify-center gap-4 mb-16'>
           <span
             ref={labelLineLeftRef}
             className='block w-16 h-px'
@@ -343,70 +211,347 @@ export default function AboutSection() {
         </Reveal>
       </Container>
 
-      {/* ── Text content below video ────────────────────── */}
-      <div className='relative z-10 text-center py-16 md:py-24 lg:py-32 px-6 max-w-3xl mx-auto'>
-        {/* "23 ans" counter */}
-        <Reveal variant='fade-up' delay={0.1} className='mb-6 md:mb-8'>
-          <h2 className='flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1'>
+      {/* ── Three-column desktop layout / stacked mobile ── */}
+      <div className='relative w-full'>
+        {/* ── Background Rotating Logo ── */}
+        <div className='absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0'>
+          <m.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
+            className='w-[80vw] h-[80vw] md:w-[60vw] md:h-[60vw] max-w-[1000px] max-h-[1000px] opacity-[0.03] md:opacity-[0.05]'>
+            <Image
+              src={LOGOS.linstant.src}
+              alt=''
+              fill
+              className='object-contain'
+              aria-hidden='true'
+            />
+          </m.div>
+        </div>
+
+        {/* ── Desktop: three-column grid (lg+) ── */}
+        <div className='hidden lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-8 xl:gap-12 lg:items-center lg:max-w-7xl lg:mx-auto lg:px-8 xl:px-12 relative z-10'>
+          {/* ── LEFT PANEL — 23 ans + tagline + separator ── */}
+          <Reveal
+            variant='fade-side'
+            className='flex flex-col items-end text-right gap-6 max-w-[320px] ml-auto'>
+            {/* Decorative line */}
+            <div
+              className='w-12 h-px'
+              style={{ background: 'linear-gradient(to left, #AF9778, transparent)' }}
+            />
+
+            {/* 23 ans counter */}
+            <div>
+              <h2 className='flex flex-wrap items-baseline justify-end gap-x-3 gap-y-1 mb-2'>
+                <span
+                  ref={counterRef}
+                  className='text-7xl xl:text-8xl font-title text-gold font-light leading-[0.82] tracking-[-2px]'
+                  aria-label='23'>
+                  23
+                </span>
+                <span className='text-3xl xl:text-4xl font-title text-gold/80 uppercase tracking-[1px]'>
+                  ans
+                </span>
+              </h2>
+              <span className='block text-2xl xl:text-3xl font-title text-cream/70 leading-[1.1] tracking-tight'>
+                au service du style masculin
+              </span>
+            </div>
+
+            {/* Separator */}
+            <div
+              ref={separatorRef}
+              className='w-20 h-px origin-right'
+              style={{
+                background: 'linear-gradient(to left, #AF9778 30%, transparent)',
+              }}
+            />
+          </Reveal>
+
+          {/* ── CENTER — Portrait Vimeo video ── */}
+          <div className='relative w-[380px] xl:w-[440px] aspect-[9/16] overflow-hidden'>
+            {/* Vimeo iframe */}
+            <div className='absolute inset-0 z-0 overflow-hidden'>
+              <iframe
+                src='https://player.vimeo.com/video/1169918554?background=1&autoplay=1&muted=1&loop=1&autopause=0&player_id=0&app_id=58479'
+                allow='autoplay; fullscreen; picture-in-picture'
+                referrerPolicy='strict-origin-when-cross-origin'
+                title='Salon de coiffure et barbier Paris'
+                className='pointer-events-none absolute inset-0 w-full h-full'
+                style={{ border: 'none' }}
+              />
+            </div>
+
+            {/* Gradient overlays */}
+            <div
+              className='absolute inset-x-0 top-0 h-[30%] z-1 pointer-events-none'
+              style={{
+                background: 'linear-gradient(to bottom, rgba(7,24,30,0.6) 0%, transparent 100%)',
+              }}
+            />
+            <div
+              className='absolute inset-x-0 bottom-0 h-[40%] z-1 pointer-events-none'
+              style={{
+                background: 'linear-gradient(to top, rgba(7,24,30,0.7) 0%, transparent 100%)',
+              }}
+            />
+
+            {/* Corner accents */}
+            <div className='absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-gold/40 z-10 pointer-events-none' />
+            <div className='absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-gold/40 z-10 pointer-events-none' />
+
+            {/* "L'Art du Détail" decorative text */}
+            <div className='absolute inset-0 z-2 flex flex-col items-center justify-end pb-6 pointer-events-none'>
+              <Reveal variant='fade-up' delay={0.6}>
+                <div className='flex flex-col items-center'>
+                  <span className='font-serif italic text-gold/30 text-4xl xl:text-5xl tracking-wide drop-shadow-md whitespace-nowrap mb-1'>
+                    L&apos;Art du
+                  </span>
+                  <span className='font-serif italic text-gold/30 text-4xl xl:text-5xl tracking-wide drop-shadow-md whitespace-nowrap'>
+                    Détail
+                  </span>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+
+          {/* ── RIGHT PANEL — Description + service tags ── */}
+          <Reveal
+            variant='fade-side'
+            delay={0.2}
+            className='flex flex-col items-start gap-6 max-w-[320px]'>
+            {/* Decorative line */}
+            <div
+              className='w-12 h-px'
+              style={{ background: 'linear-gradient(to right, #AF9778, transparent)' }}
+            />
+
+            <p className='text-cream/85 text-sm xl:text-base leading-[1.8] tracking-wide font-light'>
+              Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
+              <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
+              comme les tendances contemporaines dans notre salon du Marais.
+            </p>
+
+            {/* Separator */}
+            <div
+              className='w-10 h-px'
+              style={{
+                background: 'linear-gradient(to right, rgba(175,151,120,0.3), transparent)',
+              }}
+            />
+
+            <p className='text-cream/55 text-xs xl:text-sm leading-[1.8] tracking-wide font-light italic'>
+              Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
+            </p>
+
+            {/* Service tags */}
+            <div className='flex flex-col gap-2'>
+              {[
+                'Dégradés maîtrisés',
+                'Rasage serviette chaude',
+                'Produits premium',
+                'Tailleur de barbe',
+              ].map((tag) => (
+                <span
+                  key={tag}
+                  className='text-[0.6rem] xl:text-[0.65rem] uppercase tracking-[0.18em] text-gold/70 border border-gold/20 px-3 py-1.5 rounded-full w-fit'
+                  style={{ background: 'rgba(175,151,120,0.06)' }}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+
+        {/* ── Mobile / Tablet: stacked layout (below lg) ── */}
+        <div className='lg:hidden'>
+          {/* Full-width portrait video */}
+          <div className='relative w-full min-h-[80vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden'>
+            <div className='absolute inset-0 z-0 overflow-hidden'>
+              <iframe
+                src='https://player.vimeo.com/video/1169918554?background=1&autoplay=1&muted=1&loop=1&autopause=0&player_id=0&app_id=58479'
+                allow='autoplay; fullscreen; picture-in-picture'
+                referrerPolicy='strict-origin-when-cross-origin'
+                title='Salon de coiffure et barbier Paris'
+                className='pointer-events-none'
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: 'max(56.25vh, 100%)',
+                  height: 'max(177.78vw, 100%)',
+                  border: 'none',
+                }}
+              />
+            </div>
+
+            {/* Gradient overlays */}
+            <div
+              className='absolute inset-x-0 top-0 h-[35%] z-1 pointer-events-none'
+              style={{
+                background:
+                  'linear-gradient(to bottom, rgba(7,24,30,0.75) 0%, rgba(7,24,30,0.2) 70%, transparent 100%)',
+              }}
+            />
+            <div
+              className='absolute inset-x-0 bottom-0 h-[45%] z-1 pointer-events-none'
+              style={{
+                background:
+                  'linear-gradient(to top, rgba(7,24,30,0.85) 0%, rgba(7,24,30,0.3) 50%, transparent 100%)',
+              }}
+            />
+            <div
+              className='absolute inset-0 z-1 pointer-events-none'
+              style={{
+                background:
+                  'radial-gradient(ellipse at center, rgba(7,24,30,0.15) 0%, rgba(7,24,30,0.45) 100%)',
+              }}
+            />
+
+            {/* Corner accents */}
+            <Reveal
+              variant='fade-up'
+              delay={0.2}
+              className='absolute top-6 left-6 z-10 pointer-events-none'>
+              <div className='w-12 h-12 border-t-2 border-l-2 border-gold/40' />
+            </Reveal>
+            <Reveal
+              variant='fade-up'
+              delay={0.3}
+              className='absolute bottom-6 right-6 z-10 pointer-events-none'>
+              <div className='w-12 h-12 border-b-2 border-r-2 border-gold/40' />
+            </Reveal>
+
+            {/* "L'Art du Détail" decorative text */}
+            <div className='absolute inset-0 z-2 flex flex-col items-center justify-end pb-8 pointer-events-none'>
+              <Reveal variant='fade-up' delay={0.6}>
+                <div className='flex flex-col items-center'>
+                  <span className='font-serif italic text-gold/30 text-4xl sm:text-5xl md:text-6xl tracking-wide drop-shadow-md whitespace-nowrap mb-1'>
+                    L&apos;Art du
+                  </span>
+                  <span className='font-serif italic text-gold/30 text-4xl sm:text-5xl md:text-6xl tracking-wide drop-shadow-md whitespace-nowrap'>
+                    Détail
+                  </span>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+
+        {/* Experience badge */}
+        <Reveal
+          variant='scale-up'
+          delay={0.6}
+          className='flex absolute bottom-[-5%] -left-12 md:left-[calc(50%-280px)] lg:left-[calc(50%-340px)] z-30 items-center justify-center w-40 h-40 pointer-events-none'>
+          <m.div className='absolute inset-0' style={{ rotate: badgeRotate }}>
+            <svg viewBox='0 0 100 100' className='w-full h-full overflow-visible'>
+              <path
+                id='badgeTextPath'
+                d='M 50, 50 m -42, 0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0'
+                fill='none'
+              />
+              <text className='text-[8.5px] font-title font-light tracking-widest uppercase fill-gold/80'>
+                <textPath
+                  href='#badgeTextPath'
+                  startOffset='0%'
+                  textLength='264'
+                  lengthAdjust='spacing'>
+                  L&apos;INSTANT BARBIER • 43 RUE DE TURENNE • PARIS LE MARAIS •
+                </textPath>
+              </text>
+            </svg>
+          </m.div>
+          <div className='flex items-center justify-center w-[64px] h-[64px] md:w-[72px] md:h-[72px] relative z-10'>
+            <Image
+              src={LOGOS.linstant.src}
+              alt='L instant Barbier'
+              width={72}
+              height={72}
+              className='object-contain w-full h-full drop-shadow-2xl'
+            />
+          </div>
+        </Reveal>
+      </div>
+
+      {/* ── Mobile: À propos label + text content below video (below lg) ── */}
+      <div className='lg:hidden'>
+        {/* À propos label */}
+        <Container className='relative z-10'>
+          <Reveal variant='fade-up' className='flex items-center justify-center gap-4 mt-16 mb-0'>
             <span
-              ref={counterRef}
-              className='text-6xl md:text-8xl lg:text-9xl font-title text-gold font-light leading-[0.82] tracking-[-2px]'
-              aria-label='23'>
-              23
+              className='block w-16 h-px'
+              style={{ background: 'linear-gradient(to right, transparent, #AF9778)' }}
+            />
+            <span className='text-gold text-[10px] uppercase tracking-[0.45em] font-medium'>
+              À propos
             </span>
-            <span className='text-2xl md:text-3xl lg:text-4xl font-title text-gold/80 uppercase tracking-[1px]'>
-              ans
-            </span>
-          </h2>
-        </Reveal>
-
-        {/* Tagline */}
-        <Reveal variant='fade-up' delay={0.25} className='mb-6'>
-          <span className='block text-2xl md:text-3xl lg:text-4xl font-title text-cream/70 leading-[1.1] tracking-tight'>
-            au service du style masculin
-          </span>
-        </Reveal>
-
-        {/* Separator */}
-        <Reveal variant='scale-up' delay={0.35}>
-          <div
-            ref={separatorRef}
-            className='w-24 h-px mx-auto mb-8 origin-center'
-            style={{
-              background:
-                'linear-gradient(to right, transparent, #AF9778 30%, #AF9778 70%, transparent)',
-            }}
-          />
-        </Reveal>
-
-        {/* Description */}
-        <Reveal variant='fade-up' delay={0.45} className='space-y-4 mb-8'>
-          <p className='text-cream/90 text-base md:text-lg lg:text-xl leading-[1.75] tracking-wide font-light'>
-            Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
-            <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
-            comme les tendances contemporaines dans notre salon du Marais.
-          </p>
-          <p className='text-cream/60 text-sm md:text-base leading-[1.75] tracking-wide font-light'>
-            Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
-          </p>
-        </Reveal>
-
-        {/* Feature tags */}
-        <Reveal variant='blur-in' delay={0.55} className='flex flex-wrap justify-center gap-3'>
-          {[
-            'Dégradés maîtrisés',
-            'Rasage serviette chaude',
-            'Produits premium',
-            'Tailleur de barbe',
-          ].map((tag) => (
             <span
-              key={tag}
-              className='text-[0.6rem] md:text-[0.65rem] uppercase tracking-[0.2em] text-gold/80 border border-gold/25 px-3 py-1.5 rounded-full'
-              style={{ background: 'rgba(175,151,120,0.06)' }}>
-              {tag}
+              className='block w-16 h-px'
+              style={{ background: 'linear-gradient(to left, transparent, #AF9778)' }}
+            />
+          </Reveal>
+        </Container>
+
+        {/* Text content */}
+        <div className='relative z-10 text-center py-16 md:py-24 px-6 max-w-3xl mx-auto'>
+          <Reveal variant='fade-up' delay={0.1} className='mb-6 md:mb-8'>
+            <h2 className='flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1'>
+              <span
+                className='text-6xl md:text-8xl font-title text-gold font-light leading-[0.82] tracking-[-2px]'
+                aria-label='23'>
+                23
+              </span>
+              <span className='text-2xl md:text-3xl font-title text-gold/80 uppercase tracking-[1px]'>
+                ans
+              </span>
+            </h2>
+          </Reveal>
+
+          <Reveal variant='fade-up' delay={0.25} className='mb-6'>
+            <span className='block text-2xl md:text-3xl font-title text-cream/70 leading-[1.1] tracking-tight'>
+              au service du style masculin
             </span>
-          ))}
-        </Reveal>
+          </Reveal>
+
+          <Reveal variant='scale-up' delay={0.35}>
+            <div
+              className='w-24 h-px mx-auto mb-8 origin-center'
+              style={{
+                background:
+                  'linear-gradient(to right, transparent, #AF9778 30%, #AF9778 70%, transparent)',
+              }}
+            />
+          </Reveal>
+
+          <Reveal variant='fade-up' delay={0.45} className='space-y-4 mb-8'>
+            <p className='text-cream/90 text-base md:text-lg leading-[1.75] tracking-wide font-light'>
+              Fondé par Riccardo, maître barbier reconnu à Paris depuis plus de{' '}
+              <span className='text-gold'>23 ans</span>, nous maîtrisons les techniques classiques
+              comme les tendances contemporaines dans notre salon du Marais.
+            </p>
+            <p className='text-cream/60 text-sm md:text-base leading-[1.75] tracking-wide font-light'>
+              Du taper fade au rasage traditionnel à la serviette chaude, chaque geste est précis.
+            </p>
+          </Reveal>
+
+          <Reveal variant='blur-in' delay={0.55} className='flex flex-wrap justify-center gap-3'>
+            {[
+              'Dégradés maîtrisés',
+              'Rasage serviette chaude',
+              'Produits premium',
+              'Tailleur de barbe',
+            ].map((tag) => (
+              <span
+                key={tag}
+                className='text-[0.6rem] md:text-[0.65rem] uppercase tracking-[0.2em] text-gold/80 border border-gold/25 px-3 py-1.5 rounded-full'
+                style={{ background: 'rgba(175,151,120,0.06)' }}>
+                {tag}
+              </span>
+            ))}
+          </Reveal>
+        </div>
       </div>
       {/* ── Benefit cards + CTA below cinematic video ────────────────────── */}
       <div className='max-w-7xl mx-auto px-4 md:px-6 lg:px-12 mt-16 md:mt-24'>
