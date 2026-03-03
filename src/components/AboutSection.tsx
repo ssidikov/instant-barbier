@@ -179,33 +179,6 @@ export default function AboutSection() {
         }
       `}</style>
 
-      <Container className='relative z-10'>
-        {/* ── Section label ──────────────────────────────────────────────── */}
-        <Reveal variant='fade-up' className='flex items-center justify-center gap-4 mb-16 md:mb-20'>
-          <span
-            ref={labelLineLeftRef}
-            className='block w-16 h-px'
-            style={{
-              background: 'linear-gradient(to right, transparent, #AF9778)',
-              transformOrigin: 'right',
-            }}
-          />
-          <span
-            ref={labelTextRef}
-            className='text-gold text-[10px] uppercase tracking-[0.45em] font-medium'>
-            À propos
-          </span>
-          <span
-            ref={labelLineRightRef}
-            className='block w-16 h-px'
-            style={{
-              background: 'linear-gradient(to left, transparent, #AF9778)',
-              transformOrigin: 'left',
-            }}
-          />
-        </Reveal>
-      </Container>
-
       {/* ═══════════════════════════════════════════════════════════════════════
           CINEMATIC VIMEO BACKGROUND — Full-width immersive video experience
       ═══════════════════════════════════════════════════════════════════════ */}
@@ -340,6 +313,35 @@ export default function AboutSection() {
           </div>
         </Reveal>
       </div>
+
+      {/* ── Section label ──────────────────────────────────────────────── */}
+      <Container className='relative z-10'>
+        <Reveal
+          variant='fade-up'
+          className='flex items-center justify-center gap-4 mt-16 md:mt-20 mb-0'>
+          <span
+            ref={labelLineLeftRef}
+            className='block w-16 h-px'
+            style={{
+              background: 'linear-gradient(to right, transparent, #AF9778)',
+              transformOrigin: 'right',
+            }}
+          />
+          <span
+            ref={labelTextRef}
+            className='text-gold text-[10px] uppercase tracking-[0.45em] font-medium'>
+            À propos
+          </span>
+          <span
+            ref={labelLineRightRef}
+            className='block w-16 h-px'
+            style={{
+              background: 'linear-gradient(to left, transparent, #AF9778)',
+              transformOrigin: 'left',
+            }}
+          />
+        </Reveal>
+      </Container>
 
       {/* ── Text content below video ────────────────────── */}
       <div className='relative z-10 text-center py-16 md:py-24 lg:py-32 px-6 max-w-3xl mx-auto'>
