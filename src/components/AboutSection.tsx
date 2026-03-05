@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { LOGOS, PRODUCT_GRID, ABOUT_IMAGES } from '@/lib/images'
 import Container from '@/components/Container'
@@ -35,6 +35,34 @@ export default function AboutSection() {
     offset: ['start end', 'end start'],
   })
   const badgeRotate = useTransform(scrollYProgress, [0, 1], [0, 360])
+
+  const desktopVideoRef = useRef<HTMLVideoElement>(null)
+  const mobileVideoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target as HTMLVideoElement
+          if (entry.isIntersecting) {
+            // Lazy load source if not present
+            if (!video.src && video.dataset.src) {
+              video.src = video.dataset.src
+            }
+            video.play().catch(() => {})
+          } else {
+            video.pause()
+          }
+        })
+      },
+      { threshold: 0.1 },
+    )
+
+    if (desktopVideoRef.current) observer.observe(desktopVideoRef.current)
+    if (mobileVideoRef.current) observer.observe(mobileVideoRef.current)
+
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <section
@@ -274,8 +302,9 @@ export default function AboutSection() {
             {/* Native video background */}
             <div className='absolute inset-0 z-0 overflow-hidden bg-navy/50'>
               <video
-                src='/video/linstant-barbier-Paris.mp4'
-                autoPlay
+                ref={desktopVideoRef}
+                data-src='/video/linstant-barbier-Paris.mp4'
+                preload='none'
                 muted
                 loop
                 playsInline
@@ -412,8 +441,9 @@ export default function AboutSection() {
           <div className='relative w-full min-h-[80vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden'>
             <div className='absolute inset-0 z-0 overflow-hidden bg-navy'>
               <video
-                src='/video/linstant-barbier-Paris.mp4'
-                autoPlay
+                ref={mobileVideoRef}
+                data-src='/video/linstant-barbier-Paris.mp4'
+                preload='none'
                 muted
                 loop
                 playsInline

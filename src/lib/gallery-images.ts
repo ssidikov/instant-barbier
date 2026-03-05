@@ -517,7 +517,7 @@ export const GALLERY_IMAGES: GalleryImageData[] = [
     span: 'wide',
   },
   {
-    src: '/images/gallery/Outils/Outils-1.jpg',
+    src: '/images/gallery/Outils/Outils-10.jpg',
     alt: 'Outils',
     shortAlt: 'Outils',
     category: 'Outils',
@@ -717,13 +717,6 @@ export const GALLERY_IMAGES: GalleryImageData[] = [
     alt: 'Barbe',
     shortAlt: 'Barbe',
     category: 'Barbe',
-    span: 'normal',
-  },
-  {
-    src: '/images/gallery/Coupes/Coupes-16.jpg',
-    alt: 'Coupes',
-    shortAlt: 'Coupes',
-    category: 'Coupes',
     span: 'normal',
   },
   {
@@ -986,7 +979,7 @@ export const GALLERY_IMAGES: GalleryImageData[] = [
     span: 'normal',
   },
   {
-    src: '/images/gallery/Salon/Salon-20.jpg',
+    src: '/images/gallery/Salon/Salon-19.jpg',
     alt: 'Salon',
     shortAlt: 'Salon',
     category: 'Salon',

@@ -122,8 +122,8 @@ export default function SalonPage() {
               fill
               priority
               fetchPriority='high'
-              quality={100}
-              unoptimized
+              quality={95}
+              sizes='100vw'
               className='object-cover'
             />
             <div className='absolute inset-0 bg-navy/85 mix-blend-multiply' />

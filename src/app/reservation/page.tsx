@@ -2287,8 +2287,8 @@ function ReservationContent() {
               className='object-cover'
               priority
               fetchPriority='high'
-              quality={100}
-              unoptimized
+              quality={95}
+              sizes='100vw'
             />
             {/* Dark Overlay for readability */}
             <div className='absolute inset-0 bg-black/50' />
