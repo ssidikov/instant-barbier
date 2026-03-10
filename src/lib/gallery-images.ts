@@ -622,7 +622,7 @@ export const GALLERY_IMAGES: GalleryImageData[] = [
     span: 'normal',
   },
   {
-    src: '/images/gallery/Coupes/Coupes-36.heic',
+    src: '/images/gallery/Coupes/Coupes-36.jpg',
     alt: 'Coupes',
     shortAlt: 'Coupes',
     category: 'Coupes',
@@ -643,7 +643,7 @@ export const GALLERY_IMAGES: GalleryImageData[] = [
     span: 'normal',
   },
   {
-    src: '/images/gallery/Coupes/Coupes-39.heic',
+    src: '/images/gallery/Coupes/Coupes-39.jpg',
     alt: 'Coupes',
     shortAlt: 'Coupes',
     category: 'Coupes',
@@ -951,7 +951,7 @@ export const GALLERY_IMAGES: GalleryImageData[] = [
     span: 'normal',
   },
   {
-    src: '/images/gallery/Soins/Soins-14.heic',
+    src: '/images/gallery/Soins/Soins-14.jpg',
     alt: 'Soins',
     shortAlt: 'Soins',
     category: 'Soins',
