@@ -32,11 +32,11 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
     qualities: [50, 75, 90, 95, 100],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1600, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     // On Vercel, the CDN is purged on every deploy — no need for long TTLs.
     // 60s minimum so the image optimizer doesn't hammer the origin constantly.
-    minimumCacheTTL: 60,
+    minimumCacheTTL: 31536000,
     remotePatterns: [
       {
         protocol: 'https',
@@ -56,7 +56,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
@@ -71,14 +71,23 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // ─── Public mutable assets: no-cache (Vercel CDN purge on deploy) ─────
-      // Do NOT use `immutable` — files can be overwritten with the same name.
+
+      // Gallery images are treated as versioned static assets (rename to bust cache).
+      {
+        source: '/images/gallery/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
       {
         source: '/images/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
@@ -87,7 +96,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
@@ -96,7 +105,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
@@ -105,7 +114,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },

@@ -6,6 +6,7 @@ import Button from '@/components/Button'
 import { PLANITY_URL, SITE_URL } from '@/lib/constants'
 import Reveal from '@/components/Reveal'
 import { GALLERY_IMAGES, LOGOS, BACKGROUNDS } from '@/lib/images'
+import { DEFAULT_BLUR_DATA_URL } from '@/lib/blur'
 
 import GalleryGrid from '@/components/GalleryGrid'
 
@@ -53,10 +54,14 @@ export default function GaleriePage() {
                     src={img.src}
                     alt=''
                     fill
-                    quality={90}
+                    quality={80}
                     sizes='(max-width: 768px) 100vw, 33vw'
                     className='object-cover scale-110'
-                    priority={i < 3}
+                    priority={i === 0}
+                    fetchPriority={i === 0 ? 'high' : 'low'}
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    placeholder='blur'
+                    blurDataURL={DEFAULT_BLUR_DATA_URL}
                   />
                 </div>
               ))}
@@ -169,6 +174,9 @@ export default function GaleriePage() {
               quality={90}
               sizes='(max-width: 768px) 100vw, 100vw'
               className='object-cover opacity-100'
+              loading='lazy'
+              placeholder='blur'
+              blurDataURL={DEFAULT_BLUR_DATA_URL}
             />
             <div className='absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy' />
           </div>
@@ -180,6 +188,9 @@ export default function GaleriePage() {
             width={400}
             height={400}
             className='absolute top-1/2 right-[5%] -translate-y-1/2 w-[30vh] h-[30vh] md:w-[50vh] md:h-[50vh] object-contain opacity-[0.04] -rotate-12 select-none pointer-events-none'
+            loading='lazy'
+            placeholder='blur'
+            blurDataURL={DEFAULT_BLUR_DATA_URL}
           />
 
           <div className='max-w-5xl mx-auto px-6 md:px-12 relative z-10 text-center'>
@@ -222,7 +233,7 @@ export default function GaleriePage() {
                   {[
                     GALLERY_IMAGES.find((img) => img.src.includes('Coupes-19')),
                     GALLERY_IMAGES.find((img) => img.src.includes('Ambiance-23')),
-                    GALLERY_IMAGES.find((img) => img.src.includes('Soins-4')),
+                    GALLERY_IMAGES.find((img) => img.src.includes('Soins-7')),
                     GALLERY_IMAGES.find((img) => img.src.includes('Barbe-23')),
                   ].map((img, i) => {
                     if (!img) return null
@@ -237,6 +248,9 @@ export default function GaleriePage() {
                           quality={90}
                           sizes='(max-width: 768px) 100vw, 50vw'
                           className='object-cover hover:scale-105 transition-transform duration-700'
+                          loading='lazy'
+                          placeholder='blur'
+                          blurDataURL={DEFAULT_BLUR_DATA_URL}
                         />
                         <div className='absolute inset-0 bg-navy/30 hover:bg-navy/10 transition-colors duration-500' />
                       </div>

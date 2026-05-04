@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import Reveal from '@/components/Reveal'
 import { GALLERY_IMAGES, type GalleryImageData } from '@/lib/images'
 import dynamic from 'next/dynamic'
+import { DEFAULT_BLUR_DATA_URL } from '@/lib/blur'
 
 const GalleryLightbox = dynamic(() => import('@/components/GalleryLightbox'), { ssr: false })
 
@@ -50,6 +51,8 @@ function GalleryCard({
             sizes={isFirst ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 50vw, 33vw'}
             className='object-cover transition-transform duration-700 group-hover:scale-110'
             loading='lazy'
+            placeholder='blur'
+            blurDataURL={DEFAULT_BLUR_DATA_URL}
           />
           <div className='absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors duration-500' />
           <div className='absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/20 group-hover:border-gold/50 group-hover:w-10 group-hover:h-10 transition-all duration-700' />
@@ -74,7 +77,19 @@ interface GalleryGridProps {
 export default function GalleryGrid({ layout = 'page' }: GalleryGridProps) {
   const [activeCategory, setActiveCategory] = useState<Category>('Tout')
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
-  const [visibleCount, setVisibleCount] = useState(6)
+
+  const getInitialVisibleCount = () => {
+    if (typeof window === 'undefined') return 6
+    return window.innerWidth < 768 ? 5 : 6
+  }
+
+  const [visibleCount, setVisibleCount] = useState(() => getInitialVisibleCount())
+
+  const handleCategoryChange = (cat: Category) => {
+    setActiveCategory(cat)
+    setVisibleCount(getInitialVisibleCount())
+    setLightboxIndex(null)
+  }
 
   const filteredImages =
     activeCategory === 'Tout'
@@ -87,13 +102,6 @@ export default function GalleryGrid({ layout = 'page' }: GalleryGridProps) {
   const loadMore = () => {
     setVisibleCount((prev) => prev + 6)
   }
-
-  useEffect(() => {
-    const isMobile = window.innerWidth < 768
-    const initialCount = isMobile ? 5 : 6
-    const timer = setTimeout(() => setVisibleCount(initialCount), 0)
-    return () => clearTimeout(timer)
-  }, [activeCategory])
 
   return (
     <>
@@ -116,7 +124,7 @@ export default function GalleryGrid({ layout = 'page' }: GalleryGridProps) {
               {categories.map((cat) => (
                 <button
                   key={cat}
-                  onClick={() => setActiveCategory(cat)}
+                  onClick={() => handleCategoryChange(cat)}
                   className={`relative px-3 py-2 md:px-5 md:py-2.5 text-[10px] md:text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] transition-all duration-300 whitespace-nowrap ${
                     activeCategory === cat
                       ? 'text-navy bg-gold'
@@ -145,7 +153,7 @@ export default function GalleryGrid({ layout = 'page' }: GalleryGridProps) {
                 {categories.map((cat) => (
                   <button
                     key={cat}
-                    onClick={() => setActiveCategory(cat)}
+                    onClick={() => handleCategoryChange(cat)}
                     className={`relative px-3 py-2 md:px-5 md:py-2.5 text-[10px] md:text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] transition-all duration-300 whitespace-nowrap ${
                       activeCategory === cat
                         ? 'text-navy bg-gold'
