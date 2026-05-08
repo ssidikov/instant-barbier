@@ -308,11 +308,7 @@ export default function Home() {
                           {/* COIFFEUR */}
                           <m.span
                             className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9] tracking-[-0.02em] relative inline-block'
-                            initial={
-                              shouldReduceMotion
-                                ? false
-                                : { opacity: 0, y: 20 }
-                            }
+                            initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}>
                             COIFFEUR
@@ -329,22 +325,14 @@ export default function Home() {
                           <span className='flex items-center gap-4 md:gap-6'>
                             <m.span
                               className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9]'
-                              initial={
-                                shouldReduceMotion
-                                  ? false
-                                  : { opacity: 0, y: 20 }
-                              }
+                              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}>
                               &amp;
                             </m.span>
                             <m.span
                               className='text-6xl md:text-7xl lg:text-8xl text-gold leading-[0.7] lg:leading-[0.9] tracking-[-0.04em] relative inline-block'
-                              initial={
-                                shouldReduceMotion
-                                  ? false
-                                  : { opacity: 0, y: 20 }
-                              }
+                              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}>
                               BARBIER
