@@ -30,7 +30,7 @@ export default function CookieConsent() {
   if (!visible) return null
 
   return (
-    <div className='fixed bottom-6 right-6 z-[999] max-w-sm w-[calc(100vw-3rem)] animate-in slide-in-from-bottom-4 duration-500 fade-in'>
+    <div className='fixed bottom-6 right-6 z-30 max-w-sm w-[calc(100vw-3rem)] animate-in slide-in-from-bottom-4 duration-500 fade-in'>
       <div className='relative bg-navy/95 backdrop-blur-xl border border-gold/15 shadow-2xl shadow-black/40 p-6'>
         {/* Corner accents */}
         <div className='absolute top-0 left-0 w-5 h-5 border-t border-l border-gold/30' />
