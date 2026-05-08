@@ -163,7 +163,7 @@ export default function Home() {
           </div>
 
           {/* ── Animated Parallax Orbs ───────────────────────────────────────── */}
-          <div className='absolute inset-0 pointer-events-none'>
+          <div className='absolute inset-0 pointer-events-none hidden md:block'>
             <m.div
               className='absolute top-[20%] left-[15%] w-[500px] h-[500px] rounded-full blur-[140px]'
               style={{
@@ -267,7 +267,7 @@ export default function Home() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{
                         duration: 0.6,
-                        delay: 0.3 + i * 0.12,
+                        delay: 0.1 + i * 0.1,
                         ease: [0.22, 1, 0.36, 1],
                       }}>
                       <span className='text-2xl font-title text-gold font-light leading-none mb-1'>
@@ -288,7 +288,7 @@ export default function Home() {
                       className='absolute inset-0 pointer-events-none z-20 overflow-hidden hidden md:block'
                       initial={{ opacity: 1 }}
                       animate={{ opacity: 0 }}
-                      transition={{ duration: 0.3, delay: 2.2 }}>
+                      transition={{ duration: 0.3, delay: 1.0 }}>
                       <m.div
                         className='absolute top-0 bottom-0 w-[3px] blur-[2px]'
                         style={{
@@ -297,7 +297,7 @@ export default function Home() {
                         }}
                         initial={{ left: '-5%' }}
                         animate={{ left: '110%' }}
-                        transition={{ duration: 1.5, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: 1.0, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                       />
                     </m.div>
 
@@ -311,17 +311,17 @@ export default function Home() {
                             initial={
                               shouldReduceMotion
                                 ? false
-                                : { opacity: 0, y: 40, filter: 'blur(20px)' }
+                                : { opacity: 0, y: 20 }
                             }
-                            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                            transition={{ duration: 1.0, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}>
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}>
                             COIFFEUR
                             {/* Shimmer overlay on the word */}
                             <m.span
                               className='absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none'
                               initial={{ x: '-150%' }}
                               animate={{ x: '250%' }}
-                              transition={{ duration: 0.8, delay: 1.8, ease: 'easeOut' }}
+                              transition={{ duration: 0.8, delay: 1.0, ease: 'easeOut' }}
                             />
                           </m.span>
 
@@ -332,10 +332,10 @@ export default function Home() {
                               initial={
                                 shouldReduceMotion
                                   ? false
-                                  : { opacity: 0, y: 40, filter: 'blur(20px)' }
+                                  : { opacity: 0, y: 20 }
                               }
-                              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                              transition={{ duration: 1.0, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}>
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}>
                               &amp;
                             </m.span>
                             <m.span
@@ -343,16 +343,16 @@ export default function Home() {
                               initial={
                                 shouldReduceMotion
                                   ? false
-                                  : { opacity: 0, y: 40, filter: 'blur(20px)' }
+                                  : { opacity: 0, y: 20 }
                               }
-                              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                              transition={{ duration: 1.0, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}>
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}>
                               BARBIER
                               <m.span
                                 className='absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none'
                                 initial={{ x: '-150%' }}
                                 animate={{ x: '250%' }}
-                                transition={{ duration: 0.8, delay: 2.05, ease: 'easeOut' }}
+                                transition={{ duration: 0.8, delay: 1.2, ease: 'easeOut' }}
                               />
                             </m.span>
                           </span>
@@ -364,18 +364,18 @@ export default function Home() {
                         className='flex items-center gap-4 w-full justify-center lg:justify-start lg:justify-center lg:mb-8 mt-2 md:mt-[4px] lg:mt-[-20px]'
                         initial={shouldReduceMotion ? false : { opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 1.0 }}>
+                        transition={{ duration: 0.8, delay: 0.25 }}>
                         <m.span
                           className='h-[1px] bg-gradient-to-r from-transparent to-gold/60'
                           initial={{ width: 0 }}
                           animate={{ width: 'clamp(2rem, 6vw, 6rem)' }}
-                          transition={{ duration: 0.8, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
+                          transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
                         />
                         <m.span
                           className='text-xl lg:text-3xl italic text-gold/80 tracking-[0.01em] font-light'
                           initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
                           animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.7, delay: 1.15 }}
+                          transition={{ duration: 0.7, delay: 0.4 }}
                           style={{ textShadow: '0 2px 24px rgba(7,24,30,0.9)' }}>
                           à Paris le Marais
                         </m.span>
@@ -383,7 +383,7 @@ export default function Home() {
                           className='h-[1px] bg-gradient-to-l from-transparent to-gold/60'
                           initial={{ width: 0 }}
                           animate={{ width: 'clamp(2rem, 6vw, 6rem)' }}
-                          transition={{ duration: 0.8, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
+                          transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
                         />
                       </m.span>
                     </h1>
@@ -393,10 +393,10 @@ export default function Home() {
                       className='relative flex mt-8 mb-4 md:translate-y-32 lg:translate-y-4 justify-center items-center'
                       initial={shouldReduceMotion ? false : { opacity: 0, y: 20, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ duration: 0.8, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}>
+                      transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}>
                       {/* Pulsing glow ring */}
                       <m.div
-                        className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-20 rounded-full pointer-events-none'
+                        className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-20 rounded-full pointer-events-none hidden md:block'
                         style={{
                           background:
                             'radial-gradient(ellipse, rgba(175,151,120,0.25) 0%, transparent 70%)',

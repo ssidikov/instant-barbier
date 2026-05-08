@@ -2,18 +2,20 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useInView } from '@/hooks/useInView'
 
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false)
+  const hasScrolledToServices = useInView('#services')
 
   useEffect(() => {
     const consent = localStorage.getItem('cookie-consent')
-    if (!consent) {
-      // Small delay so it doesn't flash on load
-      const timer = setTimeout(() => setVisible(true), 1500)
+    if (!consent && hasScrolledToServices) {
+      // Show cookie consent only after scrolling to services section
+      const timer = setTimeout(() => setVisible(true), 500)
       return () => clearTimeout(timer)
     }
-  }, [])
+  }, [hasScrolledToServices])
 
   const accept = () => {
     localStorage.setItem('cookie-consent', 'accepted')
