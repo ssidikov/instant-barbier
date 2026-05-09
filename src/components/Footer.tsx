@@ -228,7 +228,7 @@ export default function Footer() {
           <p className='text-center text-xs text-cream/40 mt-2'>
             Site développé par{' '}
             <a
-              href='https://sidikoff.com/'
+              href='https://www.sidikoff.com/'
               target='_blank'
               rel='noopener noreferrer'
               className='text-gold hover:text-gold/80 transition-colors'>
